@@ -1,0 +1,115 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <title>Open Graph cover</title>
+    <style>
+      /* Fontes reais do projeto: sem elas a captura sai em fallback. */
+      @font-face {
+        font-family: "Space Grotesk";
+        src: url("../../public/assets/fonts/space-grotesk-500-700-latin.woff2") format("woff2");
+        font-weight: 500 700;
+        font-display: block;
+      }
+
+      :root {
+        --ink-50: #FAFAF9;
+        --ink-200: #E6E4E0;
+        --ink-900: #1A1815;
+        --brand-50: #EEF3ED;
+        --brand-600: #2E4934;
+        --font-display: "Space Grotesk", system-ui, sans-serif;
+      }
+
+      * { box-sizing: border-box; margin: 0; padding: 0; }
+      html, body { background: #FFF; }
+
+      .og {
+        position: relative;
+        width: 1200px;
+        height: 630px;
+        background: var(--ink-50);
+        overflow: hidden;
+        font-family: var(--font-display);
+      }
+
+      /* Campo circular suave no canto superior direito */
+      .og-orb {
+        position: absolute;
+        width: 560px; height: 560px;
+        right: -60px; top: -20px;
+        border-radius: 50%;
+        background: var(--brand-50);
+      }
+
+      /* Arco fino e o ponto da marca, a direita */
+      .og-arc {
+        position: absolute;
+        width: 520px; height: 520px;
+        right: -150px; top: 190px;
+        border-radius: 50%;
+        border: 1px solid var(--ink-200);
+      }
+      .og-dot {
+        position: absolute;
+        width: 12px; height: 12px;
+        left: 1007px; top: 449px;
+        border-radius: 50%;
+        background: var(--brand-600);
+      }
+      .og-rule-right {
+        position: absolute;
+        left: 1148px; top: 250px;
+        width: 1px; height: 330px;
+        background: var(--ink-200);
+      }
+
+      /* Réguas hairline a esquerda, a mesma linguagem do site */
+      .og-rule-top {
+        position: absolute;
+        left: 57px; top: 57px;
+        width: 1px; height: 208px;
+        background: var(--ink-200);
+      }
+      .og-rule-bottom {
+        position: absolute;
+        left: 57px; top: 578px;
+        width: 448px; height: 1px;
+        background: var(--ink-200);
+      }
+
+      .og-copy { position: absolute; left: 57px; top: 296px; }
+
+      .og-name {
+        font-weight: 700;
+        font-size: 62px;
+        letter-spacing: -0.025em;
+        line-height: 1.05;
+        color: var(--ink-900);
+      }
+
+      /* Sem mid point: virgula, igual ao resto do site. */
+      .og-role {
+        margin-top: 18px;
+        font-weight: 500;
+        font-size: 28px;
+        letter-spacing: -0.005em;
+        color: var(--brand-600);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="og" id="og">
+      <div class="og-orb"></div>
+      <div class="og-arc"></div>
+      <div class="og-rule-right"></div>
+      <div class="og-dot"></div>
+      <div class="og-rule-top"></div>
+      <div class="og-rule-bottom"></div>
+      <div class="og-copy">
+        <div class="og-name">Matthias Schaefle</div>
+        <div class="og-role">UX/UI Designer, Berlin</div>
+      </div>
+    </div>
+  </body>
+</html>

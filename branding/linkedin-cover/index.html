@@ -1,0 +1,222 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=1584, initial-scale=1.0" />
+    <title>LinkedIn cover | Matthias Schaefle</title>
+    <style>
+      @font-face {
+        font-family: "Space Grotesk";
+        src: url("../../public/assets/fonts/space-grotesk-500-700-latin.woff2") format("woff2");
+        font-style: normal;
+        font-weight: 500 700;
+        font-display: block;
+      }
+
+      @font-face {
+        font-family: "Inter";
+        src: url("../../public/assets/fonts/inter-400-600-latin.woff2") format("woff2");
+        font-style: normal;
+        font-weight: 400 600;
+        font-display: block;
+      }
+
+      @font-face {
+        font-family: "JetBrains Mono";
+        src: url("../../public/assets/fonts/jetbrains-mono-400-500-latin.woff2") format("woff2");
+        font-style: normal;
+        font-weight: 400 500;
+        font-display: block;
+      }
+
+      :root {
+        --ink-50: #FAFAF9;
+        --ink-200: #E6E4E0;
+        --ink-600: #5B574E;
+        --ink-900: #1A1815;
+        --brand-50: #EEF3ED;
+        --brand-400: #5F8E52;
+        --font-display: "Space Grotesk", system-ui, sans-serif;
+        --font-body: "Inter", system-ui, -apple-system, sans-serif;
+        --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+      }
+
+      * {
+        box-sizing: border-box;
+      }
+
+      html,
+      body {
+        width: 1584px;
+        height: 396px;
+        margin: 0;
+        overflow: hidden;
+      }
+
+      body {
+        font-family: var(--font-body);
+        color: var(--ink-900);
+        background: var(--ink-50);
+      }
+
+      .linkedin-cover {
+        position: relative;
+        width: 1584px;
+        height: 396px;
+        overflow: hidden;
+        background: var(--ink-50);
+      }
+
+      .linkedin-cover::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        z-index: 0;
+        pointer-events: none;
+        opacity: 0.34;
+        background-image:
+          linear-gradient(rgba(26, 24, 21, 0.055) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(26, 24, 21, 0.055) 1px, transparent 1px);
+        background-size: 48px 48px;
+        -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 88%);
+        mask-image: linear-gradient(to bottom, #000 0%, transparent 88%);
+      }
+
+      .cover-grid {
+        position: absolute;
+        inset: 44px 70px 44px 460px;
+        z-index: 1;
+        display: grid;
+        grid-template-rows: 1px 82px 1fr 2px;
+      }
+
+      .cover-grid > * {
+        position: relative;
+        z-index: 1;
+      }
+
+      .rule {
+        width: 100%;
+        background: var(--ink-200);
+      }
+
+      .cover-header {
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+        gap: 18px;
+        padding-top: 16px;
+      }
+
+      .cover-market {
+        font-family: var(--font-mono);
+        font-size: 11px;
+        font-weight: 500;
+        letter-spacing: 0.14em;
+        color: var(--ink-600);
+      }
+
+      .brand-mark {
+        display: block;
+        width: 64px;
+        height: 64px;
+      }
+
+      .cover-copy {
+        align-self: center;
+        height: 112px;
+      }
+
+      .hero-title {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: 64px;
+        font-weight: 700;
+        line-height: 1.02;
+        letter-spacing: -0.025em;
+        color: var(--ink-900);
+        white-space: nowrap;
+      }
+
+      .linkedin-cover[data-variant="b"] .hero-title {
+        font-size: 42px;
+      }
+
+      .hero-subtitle {
+        max-width: 460px;
+        margin: 18px 0 0;
+        font-family: var(--font-body);
+        font-size: 17px;
+        font-weight: 400;
+        line-height: 1.65;
+        color: var(--ink-600);
+      }
+
+      .linkedin-cover[data-variant="b"] .hero-subtitle {
+        display: none;
+      }
+
+      .footer-rule {
+        display: flex;
+        width: 100%;
+        height: 2px;
+        background: var(--ink-200);
+      }
+
+      .footer-rule-accent {
+        width: 92px;
+        height: 2px;
+        background: var(--brand-400);
+      }
+    </style>
+  </head>
+  <body>
+    <main
+      class="linkedin-cover"
+      id="linkedin-cover"
+      aria-label="LinkedIn cover for Matthias Schaefle, UX/UI designer in Berlin"
+    >
+      <div class="cover-grid">
+        <div class="rule" aria-hidden="true"></div>
+
+        <header class="cover-header">
+          <span class="cover-market">DE/BR</span>
+          <img
+            class="brand-mark"
+            src="../../src/assets/logo-mks.svg"
+            alt=""
+          />
+        </header>
+
+        <div class="cover-copy">
+          <h1 class="hero-title">UX/UI Designer</h1>
+          <p class="hero-subtitle">
+            Research first, prototype close to the build.
+          </p>
+        </div>
+
+        <div class="footer-rule" aria-hidden="true">
+          <span class="footer-rule-accent"></span>
+        </div>
+      </div>
+    </main>
+    <script>
+      const variants = {
+        a: {
+          title: "UX/UI Designer",
+          subtitle: "Research first, prototype close to the build.",
+        },
+        b: {
+          title: "Research first, prototype close to the build.",
+          subtitle: "",
+        },
+      };
+      const requestedVariant = new URLSearchParams(window.location.search).get("variant");
+      const variant = requestedVariant === "b" ? "b" : "a";
+      const cover = document.querySelector("#linkedin-cover");
+      cover.dataset.variant = variant;
+      cover.querySelector(".hero-title").textContent = variants[variant].title;
+      cover.querySelector(".hero-subtitle").textContent = variants[variant].subtitle;
+    </script>
+  </body>
+</html>
