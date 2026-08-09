@@ -1,0 +1,65 @@
+# ── SPA routing: every unknown path falls back to index.html ──
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+  # CV: o caminho antigo ja foi enviado em candidaturas, entao redireciona em
+  # vez de 404. Tem que vir antes do fallback do SPA, senao cai no index.html.
+  RewriteRule ^assets/portfolio/2025/08/CV_Matthias_Schaefle\.pdf$ /assets/portfolio/2026/07/CV_Matthias_Schaefle_2026-07.pdf [R=301,L]
+  # Mesma razao para a imagem de Open Graph: o caminho antigo ja circula em
+  # links compartilhados e em caches de scraper.
+  RewriteRule ^assets/portfolio/og-cover\.png$ /assets/portfolio/og-cover-2026-07.png [R=301,L]
+  RewriteRule ^index\.html$ - [L]
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule . /index.html [L]
+</IfModule>
+
+# ── Security headers ──
+# No CSP here on purpose: the pages use inline <style> blocks, so a strict
+# policy would need hashes/nonces per build. Add it only alongside that work.
+<IfModule mod_headers.c>
+  # Stop MIME sniffing (protects against content-type confusion attacks).
+  Header always set X-Content-Type-Options "nosniff"
+  # Disallow framing by other origins (clickjacking).
+  Header always set X-Frame-Options "SAMEORIGIN"
+  # Send the origin only on cross-origin requests, full URL same-origin.
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  # This site needs none of these device APIs.
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+  # Force HTTPS for a year. Safe here: http:// already 301s to https:// and both
+  # the apex and www serve valid certificates.
+  # Deliberately without includeSubDomains: other subdomains (webmail and the
+  # like) are not verified to have HTTPS, and this directive would break them.
+  # Also without preload, which is hard to undo once submitted.
+  Header always set Strict-Transport-Security "max-age=31536000"
+  # index.html must never be cached: it points at hashed asset filenames.
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+# ── Caching: hashed assets are immutable, media is long lived ──
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType image/webp "access plus 6 months"
+  ExpiresByType image/png "access plus 6 months"
+  ExpiresByType image/jpeg "access plus 6 months"
+  ExpiresByType image/svg+xml "access plus 6 months"
+  ExpiresByType video/mp4 "access plus 6 months"
+  ExpiresByType application/pdf "access plus 1 month"
+</IfModule>
+
+# ── Compression ──
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml
+  AddOutputFilterByType DEFLATE application/javascript application/json
+  AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>
+
+# ── Block access to dotfiles (except the well-known ACME path) ──
+<IfModule mod_rewrite.c>
+  RewriteCond %{REQUEST_URI} !^/\.well-known/
+  RewriteRule (^|/)\.(?!well-known) - [F,L]
+</IfModule>
