@@ -348,14 +348,14 @@ grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
 <p className="case-eyebrow">CASE STUDY / DELIVERY</p>
 <h1 className="case-title-main">The New Delivery Experience</h1>
 <p className="case-subtitle">
-Drivers were losing time at every stop on information the system already had. We redesigned the confirmation flow without touching how the app works.
+Customers were disputing deliveries they had paid for, and the records could not settle it. We redesigned the confirmation flow without touching how the app works.
 </p>
 
 <div className="case-meta-grid">
 <motion.div className="case-meta-motion" {...fadeUpImmediate(0, prefersReducedMotion)}>
 <div className="case-meta-item">
 <div className="case-meta-label">Team</div>
-<div className="case-meta-value">Matthias Karl Schaefle</div>
+<div className="case-meta-value">Two designers with the client&apos;s operations lead</div>
 </div>
 </motion.div>
 <motion.div className="case-meta-motion" {...fadeUpImmediate(1, prefersReducedMotion)}>
@@ -382,7 +382,7 @@ Drivers were losing time at every stop on information the system already had. We
 <div className="in-short">
 <div className="in-short-item">
 <div className="in-short-label">Problem</div>
-<p className="in-short-text">Drivers lost about 8 seconds per stop retyping delivery confirmations, across 80 to 130 stops a day.</p>
+<p className="in-short-text">Customers were disputing deliveries they had paid for, and the records the app captured were too thin to settle the claim either way.</p>
 </div>
 <div className="in-short-item">
 <div className="in-short-label">My role</div>
@@ -452,7 +452,7 @@ alt: "Final receiver modal UI",
 <p className="case-disclaimer">App name and visual identity have been altered to comply with a non-disclosure agreement.</p>
 <p>The app worked. But the confirmation flow had gaps that were costing time and creating disputes. We were brought in to close those gaps without changing how drivers already used the app.</p>
 <h3 className="case-subsection-title">The Problem</h3>
-<p>Each stop required drivers to type information the system already had. Receiver types like coworkers or doormen had no dedicated option, so drivers wrote free-form notes. Photos were accepted regardless of quality. None of this was dramatic on its own, but across a full route of 100 stops it added up to lost minutes, inconsistent records, and a growing number of Proof Not Received (PNR) disputes.</p>
+<p>When a customer claimed a paid delivery never arrived, the company had no way to settle it. The records the app captured were too thin to answer either way, and that turned into a growing number of Proof Not Received (PNR) disputes. The causes were spread across the flow: each stop required drivers to type information the system already had, receiver types like coworkers or doormen had no dedicated option so drivers wrote free-form notes, and photos were accepted regardless of quality. None of this was dramatic on its own, but together it left records that could not hold up.</p>
 <h3 className="case-subsection-title">Goal</h3>
 <p>Reduce friction in the delivery confirmation flow without retraining drivers or introducing new screens. The app had to feel familiar while working better.</p>
 </div>
@@ -543,7 +543,7 @@ author: "Driver, 3 years of experience",
 </div>
 <div className="research-full">
 <div className="research-grid">
-<NumberCard number="01" title="Retyping what the system already knew" description="Document numbers, recipient names, recurring notes. The system had all of it, but drivers still had to type it manually at every stop." />
+<NumberCard number="01" title="Retyping what the system already knew" description="Document numbers, recipient names, recurring notes. The system had all of it, but drivers still had to type it manually at every stop. In the field that came to about 8 seconds a stop, on routes of 80 to 130 stops a day." />
 <NumberCard number="02" title="No option for how deliveries actually happen" description="In commercial buildings, packages almost always go to a coworker or security guard. The app had no field for that, so drivers improvised with free text." />
 <NumberCard number="03" title="Photos accepted regardless of quality" description="Dark images, blurry shots, wrong angles. The app accepted everything, which meant proof of delivery was only as reliable as the driver's attention at that moment." />
 </div>

@@ -23,7 +23,7 @@ const WORK = [
     index: "01",
     context: "Product redesign, Field research, 2025",
     title: "The New Delivery Experience",
-    description: "Drivers were losing seconds at every stop on information the system already had. Two days in the field found what no survey would.",
+    description: "Customers were disputing deliveries they had paid for, and the records could not settle it. Two days in the field found what no survey would.",
     result: "7 to 8s faster per stop, 92%→98% record compliance",
     imageSrc: "/assets/portfolio/2026/03/Mockup-Hero-scaled.png",
     imageAlt: "Delivery experience mockup",
