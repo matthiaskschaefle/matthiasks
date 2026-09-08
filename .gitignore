@@ -39,3 +39,6 @@ thumbs.db
 Thumbs.db
 ehthumbs.db
 Desktop.ini
+
+# Local dev tooling (Browser pane launch config)
+.claude/

@@ -330,11 +330,11 @@ return (
 
 const CASE_SECTIONS = [
 { id: "overview", label: "overview" },
+{ id: "style-guide", label: "style guide" },
 { id: "research", label: "research" },
 { id: "evaluation", label: "evaluation" },
 { id: "wireframes", label: "wireframes" },
 { id: "ia", label: "ia" },
-{ id: "style-guide", label: "style guide" },
 { id: "the-redesign", label: "redesign" },
 { id: "outcome", label: "outcome" },
 ];
@@ -487,11 +487,11 @@ window.removeEventListener("resize", updateMotionSettings);
 
 useEffect(() => {
 applySeo({
-title: "Healthcare Redesign | UX Case Study | Matthias Schaefle",
-description: "UX case study of a plastic surgeon website redesigned for trust, clear treatment information, and independent client maintenance.",
+title: "Brand Identity for a Surgeon | UX Case Study | Matthias Schaefle",
+description: "Case study of a small identity system, logo, typography and colour, built for a plastic surgeon alongside the research and information architecture for his site.",
 path: "/doctor",
-ogTitle: "Healthcare Website Redesign | UX Case Study",
-ogDescription: "A research-led digital presence designed to help plastic surgery patients find clear, trustworthy information.",
+ogTitle: "An identity that outlived its website",
+ogDescription: "A small identity system, logo, typography and colour, built alongside the research and information architecture for a plastic surgeon's site.",
 });
 }, []);
 
@@ -961,32 +961,41 @@ height: auto;
 display: block;
 }
 
-.style-guide-logo-grid {
+/* The vertical lockup is the primary mark: it is the one applied to the
+physical items, so it gets the full column. The horizontal variant sits
+under it at a smaller scale. */
+.style-guide-logo-hero {
 margin-top: 20px;
-display: grid;
-grid-template-columns: repeat(2, minmax(0, 1fr));
-gap: 16px;
-}
-
-.style-guide-logo-card {
 background: #FFFFFF;
 border: var(--hairline);
 border-radius: 16px;
-padding: 32px 24px;
+padding: 80px 32px;
 display: flex;
 align-items: center;
 justify-content: center;
-aspect-ratio: 1 / 1;
-min-height: 0;
 }
 
-.style-guide-logo-card img {
-max-width: 100%;
-max-height: 100%;
-width: auto;
+.style-guide-logo-hero img {
+width: min(420px, 100%);
 height: auto;
 display: block;
-object-fit: contain;
+}
+
+.style-guide-logo-variant {
+margin-top: 16px;
+background: #FFFFFF;
+border: var(--hairline);
+border-radius: 16px;
+padding: 40px 24px;
+display: flex;
+align-items: center;
+justify-content: center;
+}
+
+.style-guide-logo-variant img {
+width: min(280px, 100%);
+height: auto;
+display: block;
 }
 
 /* Native Doctor style guide. These are real interface elements rather than
@@ -1308,9 +1317,8 @@ color: var(--ink-600);
 .doctor-swatch-hex { color: #995F00; }
 
 @media (max-width: 768px){
-.style-guide-logo-grid {
-grid-template-columns: 1fr;
-}
+.style-guide-logo-hero { padding: 48px 20px; }
+.style-guide-logo-variant { padding: 28px 20px; }
 
 .doctor-system-nav { display: none; }
 .doctor-system-topbar { gap: 12px; }
@@ -1409,14 +1417,16 @@ grid-template-columns: 1fr !important;
 <section className="case-hero">
 <motion.div className="case-hero-backdrop" aria-hidden="true" style={heroBackdropStyle} />
 <motion.div style={heroTextStyle}>
-<p className="case-label">CASE STUDY / HEALTHCARE</p>
+<p className="case-label">CLIENT PROJECT, BRAND IDENTITY, 2024</p>
 <h1 className="case-title-main">
-The Doctor&apos;s New Digital Presence
+An identity that outlived its website
 </h1>
 <p className="case-subtitle">
-A website redesign for a plastic surgeon in Sao Paulo, focused on
-clearer information, a warmer visual language and a smoother
-path from first visit to booking.
+Dr. H&eacute;lio needed a mark patients would trust before they ever
+met him. I built a small identity system, logo, typography and colour,
+alongside the research, information architecture and the WordPress build we
+delivered for his site. The site has since been rebuilt by another team. The
+identity stayed.
 </p>
 </motion.div>
 
@@ -1433,7 +1443,7 @@ Matthias Karl Schaefle / Leticia Magri
 <div className="case-meta-item">
 <div className="case-meta-label">Scope of work</div>
 <div className="case-meta-value">
-User research, wireframes, UI design, prototyping
+User research, wireframes, UI design, prototyping, WordPress build
 </div>
 </div>
 </motion.div>
@@ -1459,11 +1469,11 @@ User research, wireframes, UI design, prototyping
 </div>
 <div className="in-short-item">
 <div className="in-short-label">My role</div>
-<p className="in-short-text">UX/UI design from research to handoff: IA, page system, mobile.</p>
+<p className="in-short-text">UX/UI design from research to launch: IA, page system, mobile, WordPress build.</p>
 </div>
 <div className="in-short-item">
 <div className="in-short-label">Result</div>
-<p className="in-short-text">Live since 2024; the client maintains and evolves the site independently.</p>
+<p className="in-short-text">Logo and palette in use since 2024.</p>
 </div>
 </div>
 
@@ -1556,8 +1566,8 @@ healthcare context.
 I designed the information architecture and the page
 system, synthesized the patient research into content
 priorities, and created the visual identity, including
-the logo. I also prepared the style guide and the handoff
-documentation.
+the logo. I also prepared the style guide, then built the
+site in WordPress.
 </p>
 
 <p>
@@ -1570,6 +1580,73 @@ credentials easier to understand.
 </p>
 </div>
 
+</motion.section>
+
+{/* STYLE GUIDE */}
+<motion.section id="style-guide" className="case-section" variants={sectionStagger} initial="hidden" whileInView="visible" viewport={motionViewport}>
+<TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>Style guide</TypedSectionLabel>
+<div className="case-section-body">
+<h4 className="case-subsection-title">
+One reference for the whole team
+</h4>
+<p>
+I put together a structured style guide so future pages
+could follow the same visual logic. It gave the team a
+shared reference for spacing, typography, colors, and core
+components.
+</p>
+
+<DoctorSystemPreview />
+
+<h3 className="case-subsection-title">Brand identity</h3>
+<p>
+I designed the logo to feel professional, personal, and
+appropriate for a healthcare context, then used it as a core
+element of the visual system.
+</p>
+
+<div className="style-guide-logo-hero">
+<img
+src="/assets/portfolio/2025/12/Logo-Vertical.png"
+alt="Primary logo, the HA monogram stacked above the doctor's full name" loading="lazy" decoding="async" width="1200" height="800" />
+</div>
+<div className="style-guide-logo-variant">
+<img
+src="/assets/portfolio/2025/12/Logo-horizontal.png"
+alt="Horizontal variant of the logo, the monogram beside the doctor's full name" loading="lazy" decoding="async" width="1200" height="800" />
+</div>
+
+<p>
+The identity was also prepared for physical touchpoints,
+including items given to patients.
+</p>
+
+<div className="style-guide-image">
+<div className="style-guide-image-inner">
+<img
+src="/assets/portfolio/2025/09/Logobags-image.png"
+alt="Brand applied to physical items such as bags given to patients" loading="lazy" decoding="async" width="1200" height="800" />
+</div>
+</div>
+
+<h3 className="case-subsection-title">Typography</h3>
+<p>
+We chose Barlow for the header for its modern aesthetic and
+clean lines, and Montserrat for the body text for its
+legibility on various devices.
+</p>
+
+<DoctorTypography />
+
+<h3 className="case-subsection-title">Colors</h3>
+<p>
+Blue, requested by the stakeholder, for trust and
+professionalism; gray for an elegant backdrop; and orange
+for dynamic contrast and attention.
+</p>
+
+<DoctorPalette />
+</div>
 </motion.section>
 
 {/* RESEARCH */}
@@ -1808,75 +1885,6 @@ zoom
 </div>
 </motion.section>
 
-{/* STYLE GUIDE */}
-<motion.section id="style-guide" className="case-section" variants={sectionStagger} initial="hidden" whileInView="visible" viewport={motionViewport}>
-<TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>Style guide</TypedSectionLabel>
-<div className="case-section-body">
-<h4 className="case-subsection-title">
-One reference for the whole team
-</h4>
-<p>
-I put together a structured style guide so future pages
-could follow the same visual logic. It gave the team a
-shared reference for spacing, typography, colors, and core
-components.
-</p>
-
-<DoctorSystemPreview />
-
-<h3 className="case-subsection-title">Brand identity</h3>
-<p>
-I designed the logo to feel professional, personal, and
-appropriate for a healthcare context, then used it as a core
-element of the visual system.
-</p>
-
-<div className="style-guide-logo-grid">
-<div className="style-guide-logo-card">
-<img
-src="/assets/portfolio/2025/12/Logo-Vertical.png"
-alt="Vertical logo for the plastic surgeon brand" loading="lazy" decoding="async" width="1200" height="800" />
-</div>
-<div className="style-guide-logo-card">
-<img
-src="/assets/portfolio/2025/12/Logo-horizontal.png"
-alt="Horizontal logo for the plastic surgeon brand" loading="lazy" decoding="async" width="1200" height="800" />
-</div>
-</div>
-
-<p>
-The identity was also prepared for physical touchpoints,
-including items given to patients.
-</p>
-
-<div className="style-guide-image">
-<div className="style-guide-image-inner">
-<img
-src="/assets/portfolio/2025/09/Logobags-image.png"
-alt="Brand applied to physical items such as bags given to patients" loading="lazy" decoding="async" width="1200" height="800" />
-</div>
-</div>
-
-<h3 className="case-subsection-title">Typography</h3>
-<p>
-We chose Barlow for the header for its modern aesthetic and
-clean lines, and Montserrat for the body text for its
-legibility on various devices.
-</p>
-
-<DoctorTypography />
-
-<h3 className="case-subsection-title">Colors</h3>
-<p>
-Blue, requested by the stakeholder, for trust and
-professionalism; gray for an elegant backdrop; and orange
-for dynamic contrast and attention.
-</p>
-
-<DoctorPalette />
-</div>
-</motion.section>
-
 {/* THE REDESIGN */}
 <motion.section id="the-redesign" className="case-section" variants={sectionStagger} initial="hidden" whileInView="visible" viewport={motionViewport}>
 <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>The redesign</TypedSectionLabel>
@@ -1891,9 +1899,8 @@ more aligned with the level of trust patients need before
 booking a consultation.
 </p>
 <p className="case-disclaimer">
-Please note that I am not responsible for implementing the
-website, and the current live version is not under my
-control.
+Please note that the current live version of the website is
+no longer under my control.
 </p>
 </div>
 
@@ -1945,14 +1952,12 @@ style={{ marginTop: "32px" }}
 <div className="case-section-body">
 {/* [REVISÃO MATTHIAS] new Outcome section; absorbs the old "next steps" block and the delivery status note */}
 <p>
-The redesign was delivered as a complete handoff: a new
+The redesign was delivered as a complete system: a new
 information architecture, a page system covering the
 homepage and the key subpages, a mobile version, and a
-style guide documenting the visual system. The site has
-been live since 2024. Since then, the client has maintained
-and evolved the website independently, including updates
-driven by changes in Brazilian legislation. The screens
-shown here reflect the design as handed off.
+style guide documenting the visual system. I built the site
+in WordPress. The screens shown here reflect the design as
+delivered.
 </p>
 </div>
 </motion.section>
