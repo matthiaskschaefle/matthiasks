@@ -498,7 +498,7 @@ applySeo({
 title: "Brand Identity for a Surgeon | UX Case Study | Matthias Schaefle",
 description: "Case study of a small identity system, logo, typography and colour, built for a plastic surgeon alongside the research and information architecture for his site.",
 path: "/doctor",
-ogTitle: "An identity that outlived its website",
+ogTitle: "A visual identity a doctor still uses",
 ogDescription: "A small identity system, logo, typography and colour, built alongside the research and information architecture for a plastic surgeon's site.",
 });
 }, []);
@@ -1455,14 +1455,11 @@ grid-template-columns: 1fr !important;
 <motion.div style={heroTextStyle}>
 <p className="case-label">CLIENT PROJECT, BRAND IDENTITY, 2024</p>
 <h1 className="case-title-main">
-An identity that outlived its website
+A visual identity a doctor still uses
 </h1>
 <p className="case-subtitle">
-Dr. H&eacute;lio needed a mark patients would trust before they ever
-met him. I built a small identity system, logo, typography and colour,
-alongside the research, information architecture and the WordPress build we
-delivered for his site. The site has since been rebuilt by another team. The
-identity stayed.
+Logo, palette and typography for Dr. H&eacute;lio. The website has since
+changed hands. The mark stayed.
 </p>
 </motion.div>
 

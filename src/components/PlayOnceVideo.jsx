@@ -27,7 +27,9 @@ import { useEffect, useRef, useState } from "react";
  *  - threshold: visible fraction that triggers playback (default 0.5). Values
  *    near 1 are clamped when the element is taller than the viewport, which
  *    would otherwise make the trigger unreachable
- *  - controls: show the native player chrome (default false)
+ *  - controls: allow the native player chrome (default false). It is held back
+ *    until playback actually starts, so the piece reads as a still that comes
+ *    to life on scroll, and appears immediately when autoplay cannot happen
  *  - reducedMotion: "still" | "player" (default "still")
  *  - tracks: [{ src, srcLang, label, kind }] caption tracks, never default-on
  *  - requireScroll: wait for the reader's first scroll before playing, even if
@@ -53,6 +55,8 @@ export default function PlayOnceVideo({
   const [hasPlayed, setHasPlayed] = useState(false);
   const [inView, setInView] = useState(false);
   const [hasScrolled, setHasScrolled] = useState(!requireScroll);
+  const [hasStarted, setHasStarted] = useState(false);
+  const [playBlocked, setPlayBlocked] = useState(false);
   const [failed, setFailed] = useState(false);
   const [reduceMotion, setReduceMotion] = useState(true);
 
@@ -113,14 +117,21 @@ export default function PlayOnceVideo({
   const startPlayback = () => {
     if (!armed) return;
     const attempt = videoRef.current?.play();
-    // A rejection here is usually a blocked autoplay policy, not a broken
-    // file. The poster stays up and the layout holds either way.
+    // A rejection here is a blocked autoplay policy, not a broken file. The
+    // poster stays up, and the controls have to come out so the reader still
+    // has a way in.
     if (attempt && typeof attempt.catch === "function") {
-      attempt.catch(() => {});
+      attempt.catch(() => setPlayBlocked(true));
     }
   };
 
   const collapseToStill = failed || (reduceMotion && reducedMotion === "still");
+
+  // The point of the piece is a still that comes to life on scroll, so the
+  // player chrome stays out of the frame until there is something to control.
+  // It still appears whenever autoplay will not happen: reduced motion, or a
+  // browser that blocked it. Otherwise the video would be unreachable.
+  const controlsVisible = controls && (hasStarted || reduceMotion || playBlocked);
 
   if (collapseToStill) {
     return (
@@ -136,9 +147,10 @@ export default function PlayOnceVideo({
     );
   }
 
-  // With controls the player has to work before the scroll trigger fires, so
-  // the sources go in immediately; preload="none" is what keeps it cheap.
-  const mountSources = controls || armed;
+  // Sources go in when we are about to play, or when the controls are showing
+  // and the reader could press play themselves. preload="none" keeps that
+  // cheap: declaring a source is not fetching it.
+  const mountSources = armed || controlsVisible;
 
   return (
     <div ref={wrapRef} className={className} {...rest}>
@@ -149,10 +161,11 @@ export default function PlayOnceVideo({
         preload="none"
         muted
         playsInline
-        controls={controls}
-        disablePictureInPicture={!controls}
+        controls={controlsVisible}
+        disablePictureInPicture={!controlsVisible}
         aria-label={alt}
         onLoadedData={startPlayback}
+        onPlaying={() => setHasStarted(true)}
         onEnded={() => setHasPlayed(true)}
         onError={() => setFailed(true)}
       >
