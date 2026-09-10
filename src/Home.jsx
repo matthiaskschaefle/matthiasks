@@ -9,6 +9,7 @@ import TypedCaret from "./components/TypedCaret.jsx";
 import TypedSectionLabel from "./components/TypedSectionLabel.jsx";
 import { POSITIONING } from "./lib/positioning.js";
 import SiteFooter from "./components/SiteFooter.jsx";
+import PlayOnceVideo from "./components/PlayOnceVideo.jsx";
 
 const MotionLink = motion.create(Link);
 
@@ -26,18 +27,26 @@ const WORK = [
     description: "Customers were disputing deliveries they had paid for, and the records could not settle it. Two days in the field found what no survey would.",
     result: "7 to 8s faster per stop, 92%→98% record compliance",
     imageSrc: "/assets/portfolio/2026/03/Mockup-Hero-scaled.png",
-    imageAlt: "Delivery experience mockup",
+    imageAlt: "Clip from the Delivery case film: the confirmation form arriving already filled from route data",
+    video: {
+      sources: [
+        { src: "/media/delivery-short.webm", type: "video/webm" },
+        { src: "/media/delivery-short.mp4", type: "video/mp4" },
+      ],
+      poster: "/media/delivery-poster.jpg",
+      endFrame: "/media/delivery-endframe.jpg",
+    },
     featured: true,
   },
   {
     href: "/doctor",
     index: "02",
     context: "Client project, Brand identity, 2024",
-    title: "An identity that outlived its website",
-    description: "Dr. Hélio needed a mark patients would trust before they ever met him. I built a small identity system, logo, typography and colour, alongside the research, information architecture and the WordPress build we delivered for his site. The site has since been rebuilt by another team. The identity stayed.",
+    title: "A visual identity a doctor still uses",
+    description: "Logo, palette and typography for Dr. Hélio. The website has since changed hands. The mark stayed.",
     result: "Logo and palette in use since 2024.",
-    imageSrc: "/assets/portfolio/2025/08/Macbook.png",
-    imageAlt: "Website redesign mockup",
+    imageSrc: "/media/helio-identity.png",
+    imageAlt: "The Dr. Hélio identity: the HA monogram lockup in white on the brand navy, above a strip of the palette swatches",
   },
   {
     href: "/duopet",
@@ -116,7 +125,7 @@ function TitleArrow() {
   );
 }
 
-function WorkItem({ href, index, context, title, description, result, imageSrc, imageAlt, featured, order = 0 }) {
+function WorkItem({ href, index, context, title, description, result, imageSrc, imageAlt, video, featured, order = 0 }) {
   const shouldReduceMotion = useReducedMotion();
   const itemInitial = shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 };
   const itemVisible = shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 };
@@ -136,7 +145,17 @@ function WorkItem({ href, index, context, title, description, result, imageSrc, 
     >
       <div className="work-media">
         <div className="work-media-motion">
-          <img src={imageSrc} alt={imageAlt} loading={featured ? "eager" : "lazy"} decoding="async" />
+          {video ? (
+            <PlayOnceVideo
+              className="work-media-video"
+              sources={video.sources}
+              poster={video.poster}
+              endFrame={video.endFrame}
+              alt={imageAlt}
+            />
+          ) : (
+            <img src={imageSrc} alt={imageAlt} loading={featured ? "eager" : "lazy"} decoding="async" />
+          )}
         </div>
       </div>
       <div className="work-row">
@@ -433,18 +452,6 @@ img { max-width: 100%; display: block; }
   display: flex;
   align-items: center;
   justify-content: center;
-  transform: none;
-  transition: transform .4s cubic-bezier(0.2, 0, 0, 1);
-  will-change: transform;
-}
-
-.work-item:hover .work-media-motion,
-.work-item:focus-visible .work-media-motion {
-  transform: perspective(1100px) rotateX(2.5deg) rotateY(-4deg) rotate(0.4deg);
-}
-
-@media (hover: none), (prefers-reduced-motion: reduce) {
-  .work-media-motion { transform: none; transition: none; }
 }
 
 .work-media img {
@@ -458,6 +465,47 @@ img { max-width: 100%; display: block; }
 
 .work-pair .work-media { padding: 28px 24px; min-height: 260px; }
 .work-pair .work-media img { max-height: 220px; }
+
+/* The film is 16:9 and letterboxes badly inside the contain box the mockups
+   use, so it gets its own frame with the aspect ratio reserved up front. */
+.work-media-video {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  aspect-ratio: 16 / 9;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--ink-950);
+  box-shadow: 0 22px 36px rgba(15, 14, 12, 0.2);
+}
+
+.work-media-video .play-once-media {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  object-fit: cover;
+  display: block;
+  filter: none;
+}
+
+.play-once-hint {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 8px;
+  border-radius: 999px;
+  background: rgba(15, 14, 12, 0.62);
+  color: var(--ink-50);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
 
 /* Typographic row under the media */
 .work-row {
@@ -520,6 +568,13 @@ img { max-width: 100%; display: block; }
 
 .work-item:hover .work-title,
 .work-item:focus-visible .work-title { color: var(--brand-700); }
+
+/* The colour shift alone is not a focus indicator: same ring as .btn. */
+.work-item:focus-visible {
+  outline: 2px solid var(--brand-400);
+  outline-offset: 6px;
+  border-radius: 20px;
+}
 
 .work-arrow {
   display: inline-flex;

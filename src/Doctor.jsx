@@ -234,7 +234,15 @@ role="img"
 aria-label="Live preview of the Doctor website header, typography, buttons, form field, and consultation timeline"
 >
 <div className="doctor-system-topbar" aria-hidden="true">
-<span className="doctor-system-mark">HA</span>
+<img
+className="doctor-system-mark"
+src="/assets/portfolio/2025/12/helio-logo-horizontal.svg"
+alt=""
+loading="lazy"
+decoding="async"
+width="581"
+height="125"
+/>
 <div className="doctor-system-nav">
 <span>Cirurgias</span>
 <span>Sobre</span>
@@ -969,20 +977,29 @@ margin-top: 20px;
 background: #FFFFFF;
 border: var(--hairline);
 border-radius: 16px;
-padding: 80px 32px;
+padding: 64px 32px;
 display: flex;
 align-items: center;
 justify-content: center;
 }
 
+/* The logo is vector, so this is a composition choice, not a resolution
+ceiling. The primary lockup gets the full column; the variants sit under it
+at the scale they are actually used. */
 .style-guide-logo-hero img {
 width: min(420px, 100%);
 height: auto;
 display: block;
 }
 
-.style-guide-logo-variant {
+.style-guide-logo-row {
 margin-top: 16px;
+display: grid;
+grid-template-columns: 2fr 1fr;
+gap: 16px;
+}
+
+.style-guide-logo-variant {
 background: #FFFFFF;
 border: var(--hairline);
 border-radius: 16px;
@@ -992,8 +1009,15 @@ align-items: center;
 justify-content: center;
 }
 
+.style-guide-logo-row .style-guide-logo-variant:first-child img {
+width: min(300px, 100%);
+}
+
+.style-guide-logo-row .style-guide-logo-variant:last-child img {
+width: min(84px, 100%);
+}
+
 .style-guide-logo-variant img {
-width: min(280px, 100%);
 height: auto;
 display: block;
 }
@@ -1020,18 +1044,13 @@ border-bottom: 1px solid #E0E0E0;
 font-family: "Montserrat", var(--font-body);
 }
 
+/* O lockup real, nao um "HA" tipografico: esta peca existe para mostrar o
+sistema aplicado, entao a marca dentro dela tem que ser a marca. O alt fica
+vazio porque o preview inteiro ja tem role="img" e um aria-label proprio. */
 .doctor-system-mark {
-width: 34px;
-height: 34px;
-display: inline-flex;
-align-items: center;
-justify-content: center;
-border: 1px solid #092C4C;
-border-radius: 50%;
-font-family: "Barlow", var(--font-display);
-font-size: 12px;
-font-weight: 700;
-letter-spacing: 0.04em;
+width: 148px;
+height: auto;
+display: block;
 flex: 0 0 auto;
 }
 
@@ -1231,12 +1250,14 @@ font-weight: 600;
 color: #092C4C;
 }
 
+/* Era 10px em #828282, que da ~3.5:1 sobre branco e reprova em AA. Neutral-200
+e cor da paleta do cliente, legitima como amostra, mas nao como texto. */
 .doctor-type-head p {
 margin: 2px 0 0;
 font: inherit;
-font-size: 10px;
+font-size: var(--label-1-size);
 line-height: 1.4;
-color: #828282;
+color: var(--ink-600);
 }
 
 .doctor-type-scale {
@@ -1270,7 +1291,7 @@ margin-bottom: 22px;
 .doctor-palette-label {
 margin: 0 0 10px !important;
 font-family: var(--font-mono);
-font-size: 10px;
+font-size: var(--label-1-size);
 font-weight: 500;
 letter-spacing: 0.18em;
 text-transform: uppercase;
@@ -1305,11 +1326,14 @@ font-weight: 600;
 color: #092C4C;
 }
 
+/* O hex e o token sao o conteudo da secao, nao legenda: a 9px ninguem le,
+e era o dado que o leitor veio buscar. 11px e o mesmo tamanho dos rotulos
+mono do resto do site. */
 .doctor-swatch-token,
 .doctor-swatch-hex {
 overflow-wrap: anywhere;
 font-family: var(--font-mono);
-font-size: 9px;
+font-size: var(--label-1-size);
 line-height: 1.4;
 color: var(--ink-600);
 }
@@ -1319,6 +1343,18 @@ color: var(--ink-600);
 @media (max-width: 768px){
 .style-guide-logo-hero { padding: 48px 20px; }
 .style-guide-logo-variant { padding: 28px 20px; }
+.style-guide-logo-row { grid-template-columns: 1fr; }
+
+/* O preview do sistema e uma reducao de um site de 1000px dentro de 350px, e
+   nesse tamanho a tipografia dele cai para 9px. Continua sendo uma figura,
+   nao texto de leitura, mas ilegivel nao comunica nada: aqui ele volta a um
+   tamanho em que da para reconhecer o sistema. */
+.doctor-system-nav { font-size: 11px; }
+.doctor-ui-button { font-size: 11px; }
+.doctor-system-eyebrow { font-size: 11px; }
+.doctor-system-panel-label { font-size: 11px; }
+.doctor-system-panel li span { font-size: 11px; }
+.doctor-ui-field span { font-size: 11px; }
 
 .doctor-system-nav { display: none; }
 .doctor-system-topbar { gap: 12px; }
@@ -1607,13 +1643,20 @@ element of the visual system.
 
 <div className="style-guide-logo-hero">
 <img
-src="/assets/portfolio/2025/12/Logo-Vertical.png"
-alt="Primary logo, the HA monogram stacked above the doctor's full name" loading="lazy" decoding="async" width="1200" height="800" />
+src="/assets/portfolio/2025/12/helio-logo-vertical.svg"
+alt="Primary logo, the HA monogram stacked above the doctor's full name" loading="lazy" decoding="async" width="339" height="170" />
+</div>
+<div className="style-guide-logo-row">
+<div className="style-guide-logo-variant">
+<img
+src="/assets/portfolio/2025/12/helio-logo-horizontal.svg"
+alt="Horizontal variant of the logo, the monogram beside the doctor's full name" loading="lazy" decoding="async" width="581" height="125" />
 </div>
 <div className="style-guide-logo-variant">
 <img
-src="/assets/portfolio/2025/12/Logo-horizontal.png"
-alt="Horizontal variant of the logo, the monogram beside the doctor's full name" loading="lazy" decoding="async" width="1200" height="800" />
+src="/assets/portfolio/2025/12/helio-logo-mark.svg"
+alt="The HA monogram on its own, used where the full name does not fit" loading="lazy" decoding="async" width="119" height="91" />
+</div>
 </div>
 
 <p>
@@ -1625,7 +1668,7 @@ including items given to patients.
 <div className="style-guide-image-inner">
 <img
 src="/assets/portfolio/2025/09/Logobags-image.png"
-alt="Brand applied to physical items such as bags given to patients" loading="lazy" decoding="async" width="1200" height="800" />
+alt="Brand applied to physical items such as bags given to patients" loading="lazy" decoding="async" width="584" height="763" />
 </div>
 </div>
 

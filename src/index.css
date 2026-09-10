@@ -319,6 +319,15 @@ body {
   text-decoration: none;
   transition: color .16s ease;
 }
+/* O texto tem 20px de altura, pequeno demais para o dedo. Esta camada estende
+   a area de toque para 44px sem mexer no layout nem empurrar o sublinhado do
+   ::after. O recuo lateral e 6px porque o gap entre os itens e 14px: mais do
+   que isso faria as areas de dois links se sobreporem. */
+.site-nav a::before {
+  content: "";
+  position: absolute;
+  inset: -12px -6px;
+}
 .site-nav a::after {
   content: "";
   position: absolute;
@@ -370,12 +379,17 @@ body {
   letter-spacing: 0.18em;
   color: var(--ink-600);
 }
+/* Padding cancelado por margem negativa: a area de toque sobe de 21 para 27px
+   e o espacamento visual da coluna nao muda. Os 3px sao o limite antes das
+   areas dos dois links se encostarem, ja que o gap da coluna e 6px. */
 .footer-email {
   font-family: var(--font-body);
   font-weight: 500;
   font-size: 14px;
   color: var(--ink-900);
   text-decoration: none;
+  padding: 3px 0;
+  margin: -3px 0;
 }
 .footer-center {
   font-family: var(--font-body);

@@ -1,0 +1,92 @@
+WEBVTT
+
+00:00.000 --> 00:05.000
+Matthias Karl Schaefle / 01 Delivery
+UX/UI case study / Last-mile delivery
+Disputed deliveries. Stronger proof.
+Customers disputed paid deliveries.
+Weak records could not establish what happened.
+Client anonymised / Visual identity altered
+[App: Pending / Incident / Delivered / Recommend / Show on map.
+Stops and recipient details are placeholders.]
+
+00:05.000 --> 00:08.000
+Matthias Karl Schaefle / 02 Field research
+80–130 stops, every day.
+5 couriers / 2 days in the field
+Placeholder data. No real customer information.
+[Original app: Proof of delivery / Receiver type / Buyer / Receiver name /
+Document type / RG / CPF / Document number / Address type / Work / Home /
+Photos: two required / Package code / Delivery location /
+Proof of delivery, if possible / Notes / Next.]
+
+00:08.000 --> 00:12.000
+About 8 seconds lost retyping each stop.
+5 couriers / 2 days in the field
+Placeholder data. No real customer information.
+
+00:12.000 --> 00:17.000
+Matthias Karl Schaefle / 03 Design constraint
+The design decision
+Same screens. Less work.
+No new screens. No retraining.
+Route / Details / Confirm
+[App: Order information / Recipient information / Assigned hub /
+Incident / Deliver. Route and recipient details are placeholders.]
+
+00:17.000 --> 00:23.500
+Matthias Karl Schaefle / 04 Design in motion
+01 Confirmation
+Already known. Already filled.
+Confirm route data instead of typing it again.
+Auto-filled fields
+[App: Proof of delivery / Receiver type: Buyer /
+Receiver name: Rosilene da Silva, placeholder /
+Document type: RG or CPF / Masked document: ********696 /
+Address type: Work or Home / Photos: two required, 2/3 /
+Photo 1: Package code / Photo 2: Delivery location /
+Photo 3: Proof of delivery, if possible / Deliver.]
+
+00:23.500 --> 00:30.000
+02 Receiver options
+Real deliveries. Clear choices.
+Attended deliveries / Unattended deliveries
+[App: Recipient information / Recipient / Delivery without a recipient.
+Buyer / Friend / Employee / Family member / Security guard /
+Coworker / Neighbor / Doorman / Other.
+Mailbox / Gate / Door / Pickup point / Outdoor area / Porch /
+Reception / Other.]
+
+00:30.000 --> 00:33.400
+03 Photo proof
+Photo checks. At the door.
+Delivery unlocks only after both photos pass validation.
+Package / Location / Proof
+[The delivery button is disabled.]
+[App: Photos: two required, 2/3 /
+Photo 1: Package code / Photo 2: Delivery location /
+Photo 3: Proof of delivery, if possible / Deliver.]
+
+00:33.400 --> 00:36.000
+Delivery unlocks only after both photos pass validation.
+[The delivery button is now enabled and pulses with expanding gold outlines.]
+
+00:36.000 --> 00:40.000
+Matthias Karl Schaefle / 05 Pilot results
+Less friction.
+7–8s faster per stop / 2 taps eliminated per stop
+12 drivers / 3-week pilot
+
+00:40.000 --> 00:44.000
+Stronger records.
+92% → 98% record compliance
+12 drivers / 3-week pilot
+
+00:44.000 --> 00:49.034
+Matthias Karl Schaefle / 06 Full case
+Delivery confirmation redesign
+Matthias Karl Schaefle
+UI/UX Designer based in Berlin
+matthiasks.com
+Read the full case
+

@@ -1,7 +1,7 @@
-import React, { useEffect, useState, useRef } from "react";
-import { motion, useInView } from "framer-motion";
+import React, { useEffect, useState } from "react";
+import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { fadeIn, fadeScale, fadeUp, fadeUpImmediate, floatLoop, gridStagger, sectionStagger, useReducedMotion as getReducedMotion, viewport as motionViewport } from "@/lib/animations";
+import { fadeIn, fadeScale, fadeUp, fadeUpImmediate, gridStagger, sectionStagger, useReducedMotion as getReducedMotion, viewport as motionViewport } from "@/lib/animations";
 import { applySeo } from "@/lib/seo";
 import SiteHeader from "./components/SiteHeader.jsx";
 import SiteFooter from "./components/SiteFooter.jsx";
@@ -11,6 +11,7 @@ import Figure from "./components/mockups/Figure.jsx";
 import BeforeAfter from "./components/mockups/BeforeAfter.jsx";
 import CountUp from "./components/CountUp.jsx";
 import TypedSectionLabel from "./components/TypedSectionLabel.jsx";
+import PlayOnceVideo from "./components/PlayOnceVideo.jsx";
 
 /**
 * Entregas Case Study — v2.0 (EN) — DE market structure
@@ -61,9 +62,6 @@ MAIN COMPONENT
 export default function Document() {
 const [prefersReducedMotion, setPrefersReducedMotion] = useState(() => getReducedMotion());
 const childUpV = prefersReducedMotion ? fadeIn : fadeUp;
-// Float loop only runs while the hero mockup is on screen.
-const heroMockupRef = useRef(null);
-const heroMockupInView = useInView(heroMockupRef);
 
 useEffect(() => {
 const reducedQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -128,10 +126,6 @@ img { max-width:100%; display:block; }
 .in-short-text { font-family:var(--font-body); font-size:15px; line-height:1.6; color:var(--ink-700); margin:0; }
 @media(max-width:900px){ .in-short{grid-template-columns:1fr;} }
 
-.case-hero-mockup-wrap { margin-top:16px; display:flex; align-items:center; justify-content:center; position:relative; padding:24px 0 0; z-index:1; }
-.case-hero-mockup { position:relative; z-index:3; }
-.case-hero-mockup img { display:block; max-width:480px; width:100%; height:auto; }
-@media(max-width:900px){ .case-hero-mockup-wrap{padding:20px 0 14px;} .case-hero-mockup img{max-width:320px;} }
 
 /* ── LAYOUT ── */
 .case-layout { position:relative; margin-top:32px; }
@@ -210,6 +204,32 @@ body.is-mobile .research-grid>* { grid-column:1!important; }
 .kpi-card-label { font-family:var(--font-mono); font-size:13px; font-weight:600; color:var(--ink-900); letter-spacing:0.01em; }
 .kpi-card-desc { font-family:var(--font-body); font-size:13px; line-height:1.6; color:var(--ink-600); margin-top:4px; }
 @media(max-width:900px){ .kpi-grid{grid-template-columns:1fr;} }
+
+/* ── CASE FILM ── */
+/* Sits in the hero flex column, so it needs to clear the radial backdrop. */
+.case-film { margin: 8px 0 0; position: relative; z-index: 3; }
+.case-film-frame {
+position: relative;
+width: 100%;
+aspect-ratio: 16 / 9;
+border-radius: 16px;
+overflow: hidden;
+background: var(--ink-950);
+border: 1px solid rgba(168,163,153,0.28);
+}
+.case-film-frame .play-once-media {
+width: 100%;
+height: 100%;
+display: block;
+object-fit: cover;
+}
+.case-film-caption {
+font-family: var(--font-body);
+font-size: 13px;
+line-height: 1.6;
+color: var(--ink-600);
+margin-top: 10px;
+}
 
 /* ── CONTEXT CARD ── */
 .context-card {
@@ -394,11 +414,22 @@ Customers were disputing deliveries they had paid for, and the records could not
 </div>
 </div>
 
-<div className="case-hero-mockup-wrap" aria-hidden="true" ref={heroMockupRef}>
-<motion.div className="case-hero-mockup" variants={floatLoop} animate={!prefersReducedMotion && heroMockupInView ? "animate" : undefined}>
-<img src={HERO_IMG} alt="Delivery app mockups" loading="eager" decoding="async" width="960" height="640" />
-</motion.div>
-</div>
+<figure className="case-film">
+<PlayOnceVideo
+className="case-film-frame"
+sources={[{ src: "/media/delivery-full-web.mp4", type: "video/mp4" }]}
+poster="/media/delivery-poster.jpg"
+alt="Delivery case film: the disputes, the field research, the redesigned confirmation flow and the pilot numbers"
+threshold={1}
+requireScroll
+controls
+reducedMotion="player"
+tracks={[{ src: "/media/delivery-full-web.en.vtt", srcLang: "en", label: "English" }]}
+/>
+<figcaption className="case-film-caption">
+The case in 49 seconds, from the disputes to the pilot numbers. Silent, all text on screen.
+</figcaption>
+</figure>
 </section>
 
 {/* ── PINNED STORY: the case in four scroll steps ── */}
@@ -476,6 +507,7 @@ alt: "Final receiver modal UI",
 </div>
 </div>
 </div>
+
 </motion.section>
 
 {/* ══ MY ROLE ══ */}
