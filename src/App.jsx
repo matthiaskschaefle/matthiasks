@@ -10,6 +10,7 @@ const DuoPet = lazy(() => import("./DuoPet.jsx"));
 const Doctor = lazy(() => import("./Doctor.jsx"));
 const About = lazy(() => import("./About.jsx"));
 const Resume = lazy(() => import("./Resume.jsx"));
+const Legal = lazy(() => import("./Legal.jsx"));
 
 const centeredLayout = {
   minHeight: "70vh",
@@ -138,6 +139,9 @@ export default function App() {
               <Route path="/doctor" element={<Doctor />} />
               <Route path="/about" element={<About />} />
               <Route path="/resume" element={<Resume />} />
+              <Route path="/legal" element={<Legal />} />
+              {/* Um recrutador alemao procura por "Impressum", nao por "legal". */}
+              <Route path="/impressum" element={<Legal />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Suspense>

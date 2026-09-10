@@ -200,7 +200,10 @@ body.is-mobile .research-grid>* { grid-column:1!important; }
 .kpi-card { padding:16px 0 0; border-top:var(--hairline); display:flex; flex-direction:column; gap:8px; }
 .kpi-card-value { font-family:var(--font-display); font-size:40px; font-weight:600; line-height:1; color:var(--brand-700); letter-spacing:-0.02em; }
 .kpi-card-value--range { font-size:30px; }
-.kpi-card-value span { font-size:17px; font-weight:400; color:var(--ink-600); letter-spacing:0; }
+/* So a unidade, nunca o numero. O seletor antigo pegava qualquer span dentro
+   de .kpi-card-value, inclusive os spans internos do CountUp, e derrubava o
+   numero de 40px para 17px nos dois cards animados. */
+.kpi-card-unit { font-size:17px; font-weight:400; color:var(--ink-600); letter-spacing:0; }
 .kpi-card-label { font-family:var(--font-mono); font-size:13px; font-weight:600; color:var(--ink-900); letter-spacing:0.01em; }
 .kpi-card-desc { font-family:var(--font-body); font-size:13px; line-height:1.6; color:var(--ink-600); margin-top:4px; }
 @media(max-width:900px){ .kpi-grid{grid-template-columns:1fr;} }
@@ -718,22 +721,22 @@ style={{ width: "fit-content" }}
 <div className="research-full">
 <div className="kpi-grid">
 <motion.div className="kpi-card" variants={childUpV}>
-<div className="kpi-card-value kpi-card-value--range">–7 to –8<span>s</span></div>
+<div className="kpi-card-value kpi-card-value--range">–7 to –8<span className="kpi-card-unit">s</span></div>
 <div className="kpi-card-label">per delivery stop</div>
 <p className="kpi-card-desc">On a route of 100 packages, that adds up to about 13 minutes. For drivers working back-to-back shifts, that margin matters.</p>
 </motion.div>
 <motion.div className="kpi-card" variants={childUpV}>
-<div className="kpi-card-value"><CountUp value={2} /><span> taps</span></div>
+<div className="kpi-card-value"><CountUp value={2} /><span className="kpi-card-unit"> taps</span></div>
 <div className="kpi-card-label">eliminated per stop</div>
 <p className="kpi-card-desc">Two taps that used to be required at every stop are no longer needed. Over a full route the effect is noticeable.</p>
 </motion.div>
 <motion.div className="kpi-card" variants={childUpV}>
-<div className="kpi-card-value"><CountUp value={98} /><span>%</span></div>
+<div className="kpi-card-value"><CountUp value={98} /><span className="kpi-card-unit">%</span></div>
 <div className="kpi-card-label">record compliance</div>
 <p className="kpi-card-desc">Up from 92%. Records are now complete enough to hold up when a customer disputes a delivery.</p>
 </motion.div>
 <motion.div className="kpi-card" variants={childUpV}>
-<div className="kpi-card-value kpi-card-value--range">–30–40<span>%</span></div>
+<div className="kpi-card-value kpi-card-value--range">–30–40<span className="kpi-card-unit">%</span></div>
 <div className="kpi-card-label">estimated PNR disputes</div>
 <p className="kpi-card-desc">Projected from pilot data. Stronger receiver records and validated photos remove the ambiguity that turns a completed delivery into an open dispute.</p>
 </motion.div>

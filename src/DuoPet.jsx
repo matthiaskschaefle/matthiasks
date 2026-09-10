@@ -270,7 +270,7 @@ ideas: [
 
 function DecisionMatrix() {
 return (
-<figure className="dmx" aria-label="Impact and effort prioritisation matrix">
+<figure className="dmx" aria-label="Impact and effort prioritization matrix">
 <div className="dmx-board">
 {DECISION_QUADRANTS.map((quadrant) => (
 <section className={`dmx-quadrant dmx-quadrant--${quadrant.id}`} key={quadrant.id}>
@@ -293,7 +293,7 @@ return (
 <span className="dmx-axis dmx-axis--impact" aria-hidden="true">Impact ↑</span>
 <span className="dmx-axis dmx-axis--effort" aria-hidden="true">Effort →</span>
 </div>
-<figcaption>Compact view of the original prioritisation board. Hover or focus a card to expand it.</figcaption>
+<figcaption>Compact view of the original prioritization board. Hover or focus a card to expand it.</figcaption>
 </figure>
 );
 }
@@ -2550,7 +2550,7 @@ alt: "DuoPet home screen with the next appointment",
 <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>Overview</TypedSectionLabel>
 <div className="case-section-body">
 <p>
-DuoPet was a UX course project based on a common pet-care friction: booking veterinary appointments through WhatsApp often means waiting for replies, repeating information, and having little visibility over available times. In a small usability test, the prototype completed the scheduling task faster than the competitor apps we analysed.
+DuoPet was a UX course project based on a common pet-care friction: booking veterinary appointments through WhatsApp often means waiting for replies, repeating information, and having little visibility over available times. In a small usability test, the prototype completed the scheduling task faster than the competitor apps we analyzed.
 </p>
 <h3 className="case-subsection-title">The Problem</h3>
 <p>
@@ -2989,7 +2989,7 @@ With a promising concept and clear efficiency gains from a small test, the next 
 <div className="research-grid">
 <NumberCard
 number="01"
-title="Analyse search filters"
+title="Analyze search filters"
 description="Evaluate the inclusion of filters on the home page, beyond nearby veterinarians, to offer a more personalised experience."
 />
 <NumberCard

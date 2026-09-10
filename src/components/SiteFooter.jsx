@@ -41,7 +41,10 @@ export default function SiteFooter({ tagline = "Research, interface design, and 
       </div>
       <div className="footer-bottom-row">
         <div>© {new Date().getFullYear()} Matthias Karl Schaefle</div>
-        <div>Berlin, DE</div>
+        <div className="footer-bottom-links">
+          <Link className="footer-legal-link" to="/legal">Impressum</Link>
+          <span>Berlin, DE</span>
+        </div>
       </div>
     </footer>
   );

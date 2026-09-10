@@ -41,12 +41,12 @@ const WORK = [
   {
     href: "/doctor",
     index: "02",
-    context: "Client project, Brand identity, 2024",
-    title: "A visual identity a doctor still uses",
-    description: "Logo, palette and typography for Dr. Hélio. The website has since changed hands. The mark stayed.",
-    result: "Logo and palette in use since 2024.",
-    imageSrc: "/media/helio-identity.png",
-    imageAlt: "The Dr. Hélio identity: the HA monogram lockup in white on the brand navy, above a strip of the palette swatches",
+    context: "Client project, Research, UI design, 2024",
+    title: "The questions patients asked before booking",
+    description: "A plastic surgeon's site rebuilt around what patients actually wanted to know. Research, IA, UI, and the brand it runs on.",
+    result: "Logo and palette still in use, two years on.",
+    imageSrc: "/assets/portfolio/2025/11/mockup-helio.png",
+    imageAlt: "The redesigned Dr. Hélio homepage on desktop and mobile",
   },
   {
     href: "/duopet",
@@ -569,7 +569,7 @@ img { max-width: 100%; display: block; }
 .work-item:hover .work-title,
 .work-item:focus-visible .work-title { color: var(--brand-700); }
 
-/* The colour shift alone is not a focus indicator: same ring as .btn. */
+/* The color shift alone is not a focus indicator: same ring as .btn. */
 .work-item:focus-visible {
   outline: 2px solid var(--brand-400);
   outline-offset: 6px;

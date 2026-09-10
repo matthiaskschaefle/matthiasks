@@ -417,7 +417,33 @@ body {
   text-transform: uppercase;
   color: var(--ink-600);
 }
+.footer-bottom-links {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+/* Mesma tecnica dos outros links do rodape: a area de toque cresce sem mexer
+   no layout nem no tamanho aparente do texto. */
+.footer-legal-link {
+  position: relative;
+  color: var(--ink-600);
+  text-decoration: none;
+  border-bottom: 1px solid var(--ink-300);
+  padding-bottom: 1px;
+  transition: color .16s ease, border-color .16s ease;
+}
+.footer-legal-link::before {
+  content: "";
+  position: absolute;
+  inset: -12px -8px;
+}
+.footer-legal-link:hover,
+.footer-legal-link:focus-visible {
+  color: var(--ink-900);
+  border-color: var(--ink-600);
+}
 @media (max-width: 768px) {
+  .footer-bottom-links { gap: 16px; }
   .site-footer { padding: 40px 20px; }
   .site-footer-inner { flex-direction: column; align-items: flex-start; gap: 18px; }
   .footer-center { text-align: left; }

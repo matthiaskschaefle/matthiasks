@@ -338,13 +338,24 @@ return (
 
 const CASE_SECTIONS = [
 { id: "overview", label: "overview" },
-{ id: "style-guide", label: "style guide" },
 { id: "research", label: "research" },
 { id: "evaluation", label: "evaluation" },
 { id: "wireframes", label: "wireframes" },
 { id: "ia", label: "ia" },
+{ id: "the-mark", label: "the mark" },
+{ id: "style-guide", label: "style guide" },
 { id: "the-redesign", label: "redesign" },
 { id: "outcome", label: "outcome" },
+];
+
+// A faixa resumida da secao The mark: as cinco decisoes que o cliente
+// reconhece. A paleta completa de nove amostras continua no style guide.
+const MARK_PALETTE = [
+{ hex: "#092C4C" },
+{ hex: "#095399" },
+{ hex: "#CE8000" },
+{ hex: "#E0E0E0" },
+{ hex: "#F9F9F9" },
 ];
 
 // ─── Annotated mockup (hotspot system) ──────────────────────────────────────
@@ -495,11 +506,11 @@ window.removeEventListener("resize", updateMotionSettings);
 
 useEffect(() => {
 applySeo({
-title: "Brand Identity for a Surgeon | UX Case Study | Matthias Schaefle",
-description: "Case study of a small identity system, logo, typography and colour, built for a plastic surgeon alongside the research and information architecture for his site.",
+title: "Healthcare Website UX Case Study | Matthias Schaefle",
+description: "UX case study of a plastic surgeon's website rebuilt around the questions patients ask before booking: research, information architecture, UI design and the brand identity behind it.",
 path: "/doctor",
-ogTitle: "A visual identity a doctor still uses",
-ogDescription: "A small identity system, logo, typography and colour, built alongside the research and information architecture for a plastic surgeon's site.",
+ogTitle: "The questions patients asked before booking",
+ogDescription: "A plastic surgeon's site rebuilt around what patients actually wanted to know. Research, IA, UI, and the brand it runs on.",
 });
 }, []);
 
@@ -953,7 +964,15 @@ margin-top: 20px;
 }
 
 .style-guide-image {
-margin-top: 20px;
+margin: 20px 0 0;
+}
+
+.style-guide-image-caption {
+font-family: var(--font-body);
+font-size: 13px;
+line-height: 1.6;
+color: var(--ink-600);
+margin-top: 10px;
 }
 
 .style-guide-image-inner {
@@ -997,6 +1016,36 @@ margin-top: 16px;
 display: grid;
 grid-template-columns: 2fr 1fr;
 gap: 16px;
+}
+
+/* Faixa de amostras da secao The mark. Cada chip carrega o hex embaixo, e o
+hex e texto selecionavel, nao legenda desenhada. */
+.mark-swatches {
+margin-top: 20px;
+display: grid;
+grid-template-columns: repeat(5, minmax(0, 1fr));
+gap: 12px;
+}
+
+.mark-swatch {
+min-width: 0;
+display: flex;
+flex-direction: column;
+gap: 6px;
+}
+
+.mark-swatch-chip {
+display: block;
+height: 64px;
+border: 1px solid rgba(9,44,76,0.12);
+border-radius: 10px;
+}
+
+.mark-swatch-hex {
+font-family: var(--font-mono);
+font-size: var(--label-1-size);
+line-height: 1.4;
+color: var(--ink-600);
 }
 
 .style-guide-logo-variant {
@@ -1344,6 +1393,7 @@ color: var(--ink-600);
 .style-guide-logo-hero { padding: 48px 20px; }
 .style-guide-logo-variant { padding: 28px 20px; }
 .style-guide-logo-row { grid-template-columns: 1fr; }
+.mark-swatches { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 
 /* O preview do sistema e uma reducao de um site de 1000px dentro de 350px, e
    nesse tamanho a tipografia dele cai para 9px. Continua sendo uma figura,
@@ -1453,13 +1503,13 @@ grid-template-columns: 1fr !important;
 <section className="case-hero">
 <motion.div className="case-hero-backdrop" aria-hidden="true" style={heroBackdropStyle} />
 <motion.div style={heroTextStyle}>
-<p className="case-label">CLIENT PROJECT, BRAND IDENTITY, 2024</p>
+<p className="case-label">CLIENT PROJECT, RESEARCH, UI DESIGN, 2024</p>
 <h1 className="case-title-main">
-A visual identity a doctor still uses
+The questions patients asked before booking
 </h1>
 <p className="case-subtitle">
-Logo, palette and typography for Dr. H&eacute;lio. The website has since
-changed hands. The mark stayed.
+A plastic surgeon&apos;s site rebuilt around what patients actually
+wanted to know. Research, IA, UI, and the brand it runs on.
 </p>
 </motion.div>
 
@@ -1468,7 +1518,7 @@ changed hands. The mark stayed.
 <div className="case-meta-item">
 <div className="case-meta-label">Team</div>
 <div className="case-meta-value">
-Matthias Karl Schaefle / Leticia Magri
+Matthias Karl Schaefle / Leticia Magri (palette)
 </div>
 </div>
 </motion.div>
@@ -1476,7 +1526,7 @@ Matthias Karl Schaefle / Leticia Magri
 <div className="case-meta-item">
 <div className="case-meta-label">Scope of work</div>
 <div className="case-meta-value">
-User research, wireframes, UI design, prototyping, WordPress build
+User research, brand identity, IA, UI design, style guide, WordPress build
 </div>
 </div>
 </motion.div>
@@ -1498,15 +1548,15 @@ User research, wireframes, UI design, prototyping, WordPress build
 <div className="in-short">
 <div className="in-short-item">
 <div className="in-short-label">Problem</div>
-<p className="in-short-text">Patients arrived with the same questions before booking: procedures, prices, insurance.</p>
+<p className="in-short-text">Patients arrived with the same questions before booking: procedures, prices, insurance. The site did not answer them.</p>
 </div>
 <div className="in-short-item">
 <div className="in-short-label">My role</div>
-<p className="in-short-text">UX/UI design from research to launch: IA, page system, mobile, WordPress build.</p>
+<p className="in-short-text">I ran the patient research, drew the logo and the identity system, designed the information architecture and the pages, and built the site.</p>
 </div>
 <div className="in-short-item">
 <div className="in-short-label">Result</div>
-<p className="in-short-text">Logo and palette in use since 2024.</p>
+<p className="in-short-text">A site organized around patient questions, and an identity still in use two years later.</p>
 </div>
 </div>
 
@@ -1519,7 +1569,7 @@ animate={!prefersReducedMotion && heroMockupInView ? "animate" : undefined}
 >
 <img
 src="/assets/portfolio/2025/11/mockup-helio.png"
-alt="Website redesign mockup for Dr. Hélio" loading="eager" decoding="async" width="1200" height="760" />
+alt="Website redesign mockup for Dr. Hélio" loading="eager" decoding="async" width="540" height="311" />
 </motion.div>
 </motion.div>
 </div>
@@ -1615,80 +1665,6 @@ credentials easier to understand.
 
 </motion.section>
 
-{/* STYLE GUIDE */}
-<motion.section id="style-guide" className="case-section" variants={sectionStagger} initial="hidden" whileInView="visible" viewport={motionViewport}>
-<TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>Style guide</TypedSectionLabel>
-<div className="case-section-body">
-<h4 className="case-subsection-title">
-One reference for the whole team
-</h4>
-<p>
-I put together a structured style guide so future pages
-could follow the same visual logic. It gave the team a
-shared reference for spacing, typography, colors, and core
-components.
-</p>
-
-<DoctorSystemPreview />
-
-<h3 className="case-subsection-title">Brand identity</h3>
-<p>
-I designed the logo to feel professional, personal, and
-appropriate for a healthcare context, then used it as a core
-element of the visual system.
-</p>
-
-<div className="style-guide-logo-hero">
-<img
-src="/assets/portfolio/2025/12/helio-logo-vertical.svg"
-alt="Primary logo, the HA monogram stacked above the doctor's full name" loading="lazy" decoding="async" width="339" height="170" />
-</div>
-<div className="style-guide-logo-row">
-<div className="style-guide-logo-variant">
-<img
-src="/assets/portfolio/2025/12/helio-logo-horizontal.svg"
-alt="Horizontal variant of the logo, the monogram beside the doctor's full name" loading="lazy" decoding="async" width="581" height="125" />
-</div>
-<div className="style-guide-logo-variant">
-<img
-src="/assets/portfolio/2025/12/helio-logo-mark.svg"
-alt="The HA monogram on its own, used where the full name does not fit" loading="lazy" decoding="async" width="119" height="91" />
-</div>
-</div>
-
-<p>
-The identity was also prepared for physical touchpoints,
-including items given to patients.
-</p>
-
-<div className="style-guide-image">
-<div className="style-guide-image-inner">
-<img
-src="/assets/portfolio/2025/09/Logobags-image.png"
-alt="Brand applied to physical items such as bags given to patients" loading="lazy" decoding="async" width="584" height="763" />
-</div>
-</div>
-
-<h3 className="case-subsection-title">Typography</h3>
-<p>
-We chose Barlow for the header for its modern aesthetic and
-clean lines, and Montserrat for the body text for its
-legibility on various devices.
-</p>
-
-<DoctorTypography />
-
-<h3 className="case-subsection-title">Colors</h3>
-<p>
-Blue, requested by the stakeholder, for trust and
-professionalism; gray for an elegant backdrop; and orange
-for dynamic contrast and attention.
-</p>
-
-<DoctorPalette />
-</div>
-</motion.section>
-
 {/* RESEARCH */}
 <motion.section id="research" className="case-section" variants={sectionStagger} initial="hidden" whileInView="visible" viewport={motionViewport}>
 <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>Research</TypedSectionLabel>
@@ -1733,8 +1709,8 @@ easier to understand and more visible in the experience.
 Blue as part of the brand
 </h4>
 <p className="research-text">
-Blue was important to the stakeholder, so we kept it as
-part of the system while making the palette calmer and
+Blue was already part of how the doctor presented himself,
+so we kept it and built the palette around it, calmer and
 more consistent.
 </p>
 </article>
@@ -1922,6 +1898,124 @@ alt="Information architecture diagram for the redesigned website"
 zoom
 />
 </div>
+</div>
+</motion.section>
+
+{/* THE MARK */}
+<motion.section id="the-mark" className="case-section" variants={sectionStagger} initial="hidden" whileInView="visible" viewport={motionViewport}>
+<TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>The mark</TypedSectionLabel>
+<div className="case-section-body">
+<h3 className="case-subsection-title">A color he already had</h3>
+<p>
+Dr. H&eacute;lio Alves had been using the same blue since medical
+school, on his instruments and on his coats. He did not ask for a new
+color. He asked to keep that one. So the palette was not invented, it
+was identified. #092C4C became the primary, and the rest of the system
+was built to serve it: a lighter blue for interactive states, a single
+amber reserved for calls to action, four neutrals and white for
+hierarchy. Leticia Magri worked with me on the palette.
+</p>
+
+<div className="mark-swatches">
+{MARK_PALETTE.map((swatch) => (
+<div className="mark-swatch" key={swatch.hex}>
+<span className="mark-swatch-chip" style={{ background: swatch.hex }} aria-hidden="true" />
+<span className="mark-swatch-hex">{swatch.hex}</span>
+</div>
+))}
+</div>
+
+<p>
+I drew the monogram: his initials, HA, in one continuous stroke, the H
+and the A crossing through each other. A doctor&apos;s handwriting is
+the mark patients see most often, on every prescription, and almost
+never read. The lettering keeps the gesture and drops the illegibility.
+</p>
+
+<div className="style-guide-logo-hero">
+<img
+src="/assets/portfolio/2025/12/helio-logo-mark.svg"
+alt="the HA monogram on its own" loading="lazy" decoding="async" width="119" height="91" />
+</div>
+
+<p>
+Three lockups cover the real uses: the monogram alone, the vertical
+version for print and for the site header, and the horizontal one for
+narrow spaces.
+</p>
+
+<div className="style-guide-logo-row">
+<div className="style-guide-logo-variant">
+<img
+src="/assets/portfolio/2025/12/helio-logo-vertical.svg"
+alt="the monogram above the doctor's full name" loading="lazy" decoding="async" width="339" height="170" />
+</div>
+<div className="style-guide-logo-variant">
+<img
+src="/assets/portfolio/2025/12/helio-logo-horizontal.svg"
+alt="the monogram beside the doctor's full name" loading="lazy" decoding="async" width="581" height="125" />
+</div>
+</div>
+
+<p>
+Barlow for headings, Montserrat for body. Both open license, so the
+practice can produce its own material without paying for a font every
+time.
+</p>
+
+<h3 className="case-subsection-title">Still in use</h3>
+<p>
+Two years on, the logo is on the clinic, on the prescription pad, on the
+bags patients take home and on every post. When the practice widened its
+scope, the descriptor grew
+from &ldquo;Cirurgia Pl&aacute;stica&rdquo; to &ldquo;Cirurgia
+Pl&aacute;stica &amp; Est&eacute;tica&rdquo; and I extended the lockups
+without redrawing anything. The structure took it.
+</p>
+
+<figure className="style-guide-image">
+<div className="style-guide-image-inner">
+<img
+src="/assets/portfolio/2025/09/Logobags-image.png"
+alt="the mark on bags given to patients" loading="lazy" decoding="async" width="584" height="763" />
+</div>
+</figure>
+</div>
+</motion.section>
+
+{/* STYLE GUIDE */}
+<motion.section id="style-guide" className="case-section" variants={sectionStagger} initial="hidden" whileInView="visible" viewport={motionViewport}>
+<TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>Style guide</TypedSectionLabel>
+<div className="case-section-body">
+<h3 className="case-subsection-title">
+One reference for the whole team
+</h3>
+<p>
+I put together a structured style guide so future pages
+could follow the same visual logic. It gave the team a
+shared reference for spacing, typography, colors, and core
+components.
+</p>
+
+<DoctorSystemPreview />
+
+<h3 className="case-subsection-title">Typography</h3>
+<p>
+We chose Barlow for the header for its modern aesthetic and
+clean lines, and Montserrat for the body text for its
+legibility on various devices.
+</p>
+
+<DoctorTypography />
+
+<h3 className="case-subsection-title">Colors</h3>
+<p>
+The blue is the doctor&apos;s own, carried over from the mark.
+The neutrals give it an elegant backdrop, and a single amber is
+held back for calls to action.
+</p>
+
+<DoctorPalette />
 </div>
 </motion.section>
 
