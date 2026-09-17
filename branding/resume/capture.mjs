@@ -44,9 +44,11 @@ try {
       faces: Array.from(document.fonts).map((f) => ({ family: f.family.replaceAll('"', ""), status: f.status })),
       nameFont: getComputedStyle(document.querySelector(".resume-name")).fontFamily,
       role: document.querySelector(".resume-role").textContent.trim(),
-      // O 30-40% e projecao, nao resultado medido. Ver CLAUDE.md (NDA).
-      projecaoMarcada: /projected to fall 30 to 40%/.test(text),
-      medidoSeparado: /Measured results:/.test(text),
+      // Distincao aprovada no resume atual: 92-98% e 7-8s sao medidos;
+      // 30-40% continua marcado como projecao. Frases antigas do gerador
+      // ("projected to fall", "Measured results:") nao existem mais no copy.
+      projecaoMarcada: /projected 30 to 40%/.test(text),
+      medidoSeparado: /92% to 98%/.test(text) && /7 to 8 seconds/.test(text),
       dataPresente: /2026 to present/.test(text),
       semProductDesigner: !/Product Designer/.test(text),
       educacaoUnica: document.querySelectorAll(".resume-edu").length === 4,

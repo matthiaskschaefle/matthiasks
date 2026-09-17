@@ -107,28 +107,8 @@ img { max-width:100%; display:block; }
 
 /* ── HERO ── */
 .case-hero { display:flex; flex-direction:column; gap:24px; margin-bottom:0; position:relative; }
-.case-hero > :not(.case-hero-backdrop) { position:relative; z-index:1; }
-.case-hero-backdrop {
-  position:absolute;
-  inset:0;
-  z-index:0;
-  overflow:hidden;
-  pointer-events:none;
-}
-.case-hero-backdrop img {
-  position:absolute;
-  inset:0;
-  width:100%;
-  height:100%;
-  object-fit:cover;
-  object-position:68% 100%;
-  pointer-events:none;
-  user-select:none;
-}
-@media(max-width:900px){
-  .case-hero-backdrop { top:auto; height:46%; opacity:0.42; }
-  .case-hero-backdrop img { object-position:center bottom; }
-}
+.case-hero-backdrop { position:absolute; top:-140px; right:-180px; width:560px; height:560px; border-radius:50%; background:radial-gradient(circle at 35% 35%, rgba(var(--accent-rgb),0.10) 0%, rgba(var(--accent-rgb),0.045) 40%, transparent 70%); pointer-events:none; z-index:0; }
+@media(max-width:900px){ .case-hero-backdrop{display:none;} }
 .case-eyebrow { font-family:var(--font-mono); font-size:var(--label-1-size); text-transform:uppercase; letter-spacing:var(--label-1-track); color:var(--ink-600); }
 .case-title-main { font-family:var(--font-display); font-size:40px; font-weight:500; letter-spacing:-0.02em; margin:0; color:var(--ink); line-height:1.1; }
 .case-subtitle { font-family:var(--font-body); font-size:16px; line-height:1.7; font-weight:400; max-width:520px; color:var(--ink-600); margin:0; }
@@ -387,9 +367,7 @@ grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
 
 {/* ── HERO ── */}
 <section className="case-hero">
-<div className="case-hero-backdrop" aria-hidden="true">
-<img src="/assets/portfolio/delivery-route-sketch.webp" alt="" width="1536" height="1024" decoding="async" />
-</div>
+<div className="case-hero-backdrop" aria-hidden="true" />
 <p className="case-eyebrow">CASE STUDY / DELIVERY</p>
 <h1 className="case-title-main">The New Delivery Experience</h1>
 <p className="case-subtitle">
