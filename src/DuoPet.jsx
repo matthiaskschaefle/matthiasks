@@ -1354,7 +1354,7 @@ width: 100% !important;
 object-fit: cover !important;
 }
 
-/* ── Mobile: UIChangesPair — card em cima, mockups embaixo ── */
+/* ── Mobile: UIChangesPair: card em cima, mockups embaixo ── */
 body.is-mobile .ui-changes-pair {
 flex-direction: column-reverse !important;
 gap: 20px !important;
@@ -2018,7 +2018,7 @@ transform-origin: center top;
 body.is-mobile .mobile-only { display: block !important; }
 body.is-mobile .desktop-only { display: none !important; }
 
-/* ── Mobile: Insights — show bubble permanently ── */
+/* ── Mobile: Insights: show bubble permanently ── */
 body.is-mobile .insight-row { flex-direction: column !important; align-items: stretch !important; gap: 0 !important; }
 body.is-mobile .insight-left { width: 100% !important; overflow: visible !important; }
 body.is-mobile .tip--outside { order: 2 !important; margin-top: 0 !important; align-self: stretch !important; }

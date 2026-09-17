@@ -5,5 +5,5 @@ export const POSITIONING = {
   roleShort: "UX/UI designer",
   heroLine: "UX/UI designer open to product roles in Berlin/EU.",
   heroMethod: "Research first, prototype close to the build.",
-  seoTitle: "Matthias Schaefle — UX/UI Designer in Berlin",
+  seoTitle: "Matthias Schaefle: UX/UI Designer in Berlin",
 };

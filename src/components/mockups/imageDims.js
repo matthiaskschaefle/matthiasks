@@ -6,7 +6,7 @@ const warnedMissing = new Set();
 /**
  * Real intrinsic dimensions for an asset, keyed by its exact `src`.
  * Graceful fallback: returns null (render without width/height) and warns in
- * dev when the manifest has no entry — never fabricates placeholder dims.
+ * dev when the manifest has no entry: never fabricates placeholder dims.
  */
 export function getImageDims(src, consumer = "MockupSystem") {
   const dims = imageManifest[src];

@@ -86,7 +86,7 @@ description:
 },
 ];
 
-// Segundo mockup – homepage redesenhada
+// Segundo mockup: homepage redesenhada
 
 const bulletPointsSecondary = [
 {
@@ -514,7 +514,7 @@ ogDescription: "A plastic surgeon's site rebuilt around what patients actually w
 });
 }, []);
 
-// TOC – seção ativa
+// TOC: seção ativa
 
 return (
 <>
@@ -1450,7 +1450,7 @@ transition: transform .18s ease;
 .case-pagination-next .case-pagination-title { justify-content: flex-start; }
 }
 
-/* MOBILE VERSION – SnapGallery spacing */
+/* MOBILE VERSION: SnapGallery spacing */
 .mobile-version-block {
 margin-top: 24px;
 }
@@ -1854,19 +1854,19 @@ page flows before visual design decisions took over.
 <motion.div className="case-wireframes-grid" variants={gridStagger}>
 <Figure
 src="/assets/portfolio/2025/12/Wireframe-Agendar-consulta.png"
-alt="Wireframe – appointment booking flow"
+alt="Wireframe: appointment booking flow"
 zoom
 variants={tiltIn(-1.2, prefersReducedMotion)}
 />
 <Figure
 src="/assets/portfolio/2025/12/Wireframe-Procedure-2.png"
-alt="Wireframe – procedure detail page"
+alt="Wireframe: procedure detail page"
 zoom
 variants={tiltIn(0, prefersReducedMotion)}
 />
 <Figure
 src="/assets/portfolio/2025/12/Wireframe-Landing-Page-1.png"
-alt="Wireframe – landing page structure"
+alt="Wireframe: landing page structure"
 zoom
 variants={tiltIn(1.2, prefersReducedMotion)}
 />
@@ -2042,7 +2042,7 @@ no longer under my control.
 <AnimatedBulletsSecondary />
 </div>
 
-{/* Subpages – título + novo mockup com bullets */}
+{/* Subpages: título + novo mockup com bullets */}
 <div
 className="case-section-body case-section-body-secondary"
 style={{ marginTop: "32px" }}

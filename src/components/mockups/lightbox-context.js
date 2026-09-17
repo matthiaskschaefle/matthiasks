@@ -4,7 +4,7 @@ export const LightboxContext = createContext(null);
 
 /**
  * useLightbox() → { open, close, isOpen }
- * open({ src, alt, caption? }) — alt is required and reused as the dialog
+ * open({ src, alt, caption? }): alt is required and reused as the dialog
  * label fallback; caption (string) is shown under the image when present.
  */
 export function useLightbox() {

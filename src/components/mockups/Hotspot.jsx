@@ -3,10 +3,10 @@ import { AnimatePresence, motion } from "framer-motion";
 import { useReducedMotion as getReducedMotion } from "@/lib/animations";
 
 /**
- * Hotspot — accessible annotation system (popover + numbered list hybrid).
+ * Hotspot: accessible annotation system (popover + numbered list hybrid).
  *
  * HotspotMap: dots overlaid on a mockup. MUST be a direct child of the same
- * positioned (relative) container that wraps the mockup image — the popover
+ * positioned (relative) container that wraps the mockup image: the popover
  * collision logic measures against `layerRef.current.parentElement`, keeping
  * the exact geometry of the legacy SmartCard (wrapper: absolute, left/top %,
  * translate(-50%, -50%)). Interactive element is a native <button>; the

@@ -24,14 +24,14 @@ function ZoomTrigger({ src, alt, captionText, children }) {
 }
 
 /**
- * Figure — editorial media unit: <figure>/<figcaption>, real dims from the
+ * Figure: editorial media unit: <figure>/<figcaption>, real dims from the
  * manifest, aspect-ratio reserved on the media wrapper (CLS-safe), optional
  * zoom into the shared Lightbox, optional Frame containment shortcut.
  *
- * caption = { kicker?: string, text: string } — caption ≠ alt: alt describes
+ * caption = { kicker?: string, text: string }: caption ≠ alt: alt describes
  * the image, caption gives case context.
- * eager   — hero only: loading="eager" fetchpriority="high".
- * variants — override the one-shot entrance (default fadeUp; fade under RM).
+ * eager  : hero only: loading="eager" fetchpriority="high".
+ * variants: override the one-shot entrance (default fadeUp; fade under RM).
  */
 export default function Figure({
   src,
@@ -84,7 +84,7 @@ export default function Figure({
     </figcaption>
   ) : null;
 
-  // With a Frame shortcut, the Frame already runs the one-shot reveal — the
+  // With a Frame shortcut, the Frame already runs the one-shot reveal: the
   // figure stays static so entrances don't stack.
   if (frame !== "none") {
     return (

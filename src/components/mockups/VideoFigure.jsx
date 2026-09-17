@@ -1,15 +1,15 @@
 import { useRef, useState } from "react";
 
 /**
- * VideoFigure — UI flow video under the user's control (click-to-play).
+ * VideoFigure: UI flow video under the user's control (click-to-play).
  *
  * Default state: poster + 44px+ play button, preload="none" (nothing loads
  * until the gesture). After the gesture the video plays muted/loop/
- * playsInline with a PERMANENT pause/play toggle (WCAG 2.2.2 — the user can
+ * playsInline with a PERMANENT pause/play toggle (WCAG 2.2.2: the user can
  * always stop the motion). No autoplay, no audio track (no captions needed);
  * `label` describes the flow for assistive tech.
  *
- * `ratio` (e.g. "9 / 19.5") reserves the box — zero CLS. RM users get the
+ * `ratio` (e.g. "9 / 19.5") reserves the box: zero CLS. RM users get the
  * same click-to-play poster (no motion until requested).
  */
 export default function VideoFigure({

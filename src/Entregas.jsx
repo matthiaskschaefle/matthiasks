@@ -14,8 +14,8 @@ import TypedSectionLabel from "./components/TypedSectionLabel.jsx";
 import PlayOnceVideo from "./components/PlayOnceVideo.jsx";
 
 /**
-* Entregas Case Study — v2.0 (EN) — DE market structure
-* UX for a delivery app — Full portfolio pattern
+* Entregas Case Study: v2.0 (EN): DE market structure
+* UX for a delivery app: Full portfolio pattern
 * Accent: var(--brand-500) (mint)
 */
 
@@ -494,7 +494,7 @@ alt: "Final receiver modal UI",
 <span className="context-card-label">Context</span>
 <div className="context-card-grid">
 <div className="context-card-item">
-<div className="context-card-number">80–130</div>
+<div className="context-card-number">80 to 130</div>
 <div className="context-card-unit">Stops per day</div>
 <div className="context-card-context">per driver, per route</div>
 </div>
@@ -721,7 +721,7 @@ style={{ width: "fit-content" }}
 <div className="research-full">
 <div className="kpi-grid">
 <motion.div className="kpi-card" variants={childUpV}>
-<div className="kpi-card-value kpi-card-value--range">–7 to –8<span className="kpi-card-unit">s</span></div>
+<div className="kpi-card-value kpi-card-value--range">-7 to -8<span className="kpi-card-unit">s</span></div>
 <div className="kpi-card-label">per delivery stop</div>
 <p className="kpi-card-desc">On a route of 100 packages, that adds up to about 13 minutes. For drivers working back-to-back shifts, that margin matters.</p>
 </motion.div>
@@ -736,9 +736,9 @@ style={{ width: "fit-content" }}
 <p className="kpi-card-desc">Up from 92%. Records are now complete enough to hold up when a customer disputes a delivery.</p>
 </motion.div>
 <motion.div className="kpi-card" variants={childUpV}>
-<div className="kpi-card-value kpi-card-value--range">–30–40<span className="kpi-card-unit">%</span></div>
-<div className="kpi-card-label">estimated PNR disputes</div>
-<p className="kpi-card-desc">Projected from pilot data. Stronger receiver records and validated photos remove the ambiguity that turns a completed delivery into an open dispute.</p>
+<div className="kpi-card-value kpi-card-value--range">Projected 30 to 40<span className="kpi-card-unit">%</span></div>
+<div className="kpi-card-label">reduction in PNR disputes</div>
+<p className="kpi-card-desc">From pilot data. Stronger receiver records and validated photos remove the ambiguity that turns a completed delivery into an open dispute. This was not a measured production result.</p>
 </motion.div>
 </div>
 </div>

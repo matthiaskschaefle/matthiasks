@@ -25,7 +25,7 @@ phrase: "Hi! I'm Matthias and I am German and Brazilian",
 {
 img: "/assets/portfolio/2026/07/story-spitz-daisy.webp",
 alt: "Matthias's German Spitz sniffing a daisy in the grass",
-phrase: "Hi! I'm Matthias and I was a Biology teacher",
+phrase: "Hi! I'm Matthias and I changed careers into UX/UI design",
 },
 {
 img: "/assets/portfolio/2026/07/story-cars.webp",
@@ -290,15 +290,10 @@ About
 </TypedSectionLabel>
 <div className="about-body">
 <p>
-I started in Biology, doing field research: watching what
-animals actually do instead of what the hypothesis predicts.
-It trained me to observe real behavior before drawing
-conclusions.
+Today I work as a freelance UX/UI Designer in Berlin. My work covers user research, interaction design, interface design, and implementation for selected web projects.
 </p>
 <p>
-When I moved into design I kept the method: research first,
-screens second. I work as a freelancer today and I am looking
-for a product team where research drives decisions.
+I am looking for a product team where I can contribute across discovery and delivery, while continuing to deepen my experience in digital products.
 </p>
 </div>
 </div>
@@ -314,11 +309,7 @@ From Brazil to Berlin
 </TypedSectionLabel>
 <div className="about-body">
 <p>
-I was selected in Brazil for a two-year exchange in Munich,
-studying Biology at TUM. I earned my German B1 certificate,
-improved my English, and got to know my German relatives. I
-live in Berlin now, and that time abroad is why I adapt fast
-and take different perspectives seriously.
+I first lived in Germany during a two-year academic exchange in Munich. I now live in Berlin and hold German and Brazilian citizenship. Working across Portuguese, English, and German environments has made me comfortable adapting to different teams and contexts.
 </p>
 </div>
 </div>
@@ -375,7 +366,7 @@ stack.
 Skills and tools
 </TypedSectionLabel>
 <div className="about-body">
-<p className="about-skills-subtitle">What I use today and what I am building next.</p>
+<p className="about-skills-subtitle">What I use today.</p>
 <div className="about-skill-groups">
 <div>
 <h3 className="about-skill-title">Design</h3>
@@ -386,7 +377,7 @@ Skills and tools
 <li className="about-skill-chip">Wireframing</li>
 <li className="about-skill-chip">Prototyping</li>
 <li className="about-skill-chip">Design systems</li>
-<li className="about-skill-chip">Accessibility (WCAG AA)</li>
+<li className="about-skill-chip">Accessibility fundamentals</li>
 </ul>
 </div>
 <div>
@@ -402,28 +393,17 @@ Skills and tools
 </ul>
 </div>
 <div>
-<h3 className="about-skill-title">Skills in development</h3>
+<h3 className="about-skill-title">Currently studying</h3>
 <p className="about-skill-note">
-AI Software Development program at WBS Coding School. Berufssprachkurs B2 followed by the coding curriculum.
+I am completing the German B2 phase of a WBS Weiterbildung. The front-end and AI technical curriculum begins afterward.
 </p>
-<ul className="about-skill-list">
-<li className="about-skill-chip">TypeScript</li>
-<li className="about-skill-chip">Node.js</li>
-<li className="about-skill-chip">Express</li>
-<li className="about-skill-chip">MongoDB</li>
-<li className="about-skill-chip">REST APIs</li>
-<li className="about-skill-chip">LLM integration</li>
-<li className="about-skill-chip">AI agents</li>
-<li className="about-skill-chip">n8n automation</li>
-<li className="about-skill-chip">AI-assisted development</li>
-</ul>
 </div>
 <div>
 <h3 className="about-skill-title">Languages</h3>
 <ul className="about-skill-list">
 <li className="about-skill-chip">Portuguese (native)</li>
 <li className="about-skill-chip">English</li>
-<li className="about-skill-chip">German (B1)</li>
+<li className="about-skill-chip">German (B1 certified; B2 professional course in progress)</li>
 </ul>
 </div>
 </div>

@@ -22,7 +22,7 @@ const WORK = [
   {
     href: "/delivery",
     index: "01",
-    context: "Product redesign, Field research, 2025",
+    context: "Paid client work · Product redesign · Field research · 2025",
     title: "The New Delivery Experience",
     description: "Customers were disputing deliveries they had paid for, and the records could not settle it. Two days in the field found what no survey would.",
     result: "7 to 8s faster per stop, 92%→98% record compliance",
@@ -41,7 +41,7 @@ const WORK = [
   {
     href: "/doctor",
     index: "02",
-    context: "Client project, Research, UI design, 2024",
+    context: "Paid client work · Research · UI design · 2024",
     title: "The questions patients asked before booking",
     description: "A plastic surgeon's site rebuilt around what patients actually wanted to know. Research, IA, UI, and the brand it runs on.",
     result: "Logo and palette still in use, two years on.",
@@ -51,7 +51,7 @@ const WORK = [
   {
     href: "/duopet",
     index: "03",
-    context: "Course project, UX/UI, 2023",
+    context: "Educational project · UX/UI · 2023",
     title: "DuoPet",
     description: "A faster, clearer way to book veterinary appointments without WhatsApp back-and-forth.",
     result: "15.9% faster in the course usability test",

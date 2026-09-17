@@ -51,13 +51,13 @@ function SnapItem({ item }) {
 }
 
 /**
- * SnapGallery — manual scroll-snap strip (replaces the auto-scrolling
+ * SnapGallery: manual scroll-snap strip (replaces the auto-scrolling
  * MobileVersionCarousel). Native scroll + scroll-snap + prev/next buttons +
  * mono index + hairline progress. Zero rAF, zero auto-scroll, zero repeated
  * sets: every screen appears exactly once, with a real alt.
  *
- * items = [{ src, alt, caption? }] — dims come from the manifest.
- * label — accessible name, e.g. "Mobile screens".
+ * items = [{ src, alt, caption? }]: dims come from the manifest.
+ * label: accessible name, e.g. "Mobile screens".
  *
  * Keyboard: the scroll viewport is a focusable region (native arrow-key
  * scrolling); buttons are 44px hairline controls with aria-disabled at the

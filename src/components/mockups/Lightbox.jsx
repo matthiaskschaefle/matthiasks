@@ -83,7 +83,7 @@ function LightboxDialog({ content, onClose, closeRef, dialogRef }) {
 }
 
 /**
- * LightboxProvider — shared image dialog (APG dialog pattern).
+ * LightboxProvider: shared image dialog (APG dialog pattern).
  * Mount ONCE around the routed pages, inside <MotionConfig>:
  *
  *   <MotionConfig reducedMotion="user">

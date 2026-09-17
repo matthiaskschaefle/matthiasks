@@ -1,5 +1,5 @@
 /* ════════════════════════════════════════════════════════════
-   MockupSystem — styles for src/components/mockups/*
+   MockupSystem: styles for src/components/mockups/*
    Grammar: no cards, hairlines (1px var(--ink-200)), tokens only.
    Shadows allowed ONLY on .ms-frame--browser (legacy-approved) and
    on the Lightbox image (modal context). No gradients, no glow.
@@ -15,7 +15,7 @@
   white-space: nowrap;
 }
 
-/* ════════ Frame — single containment ════════ */
+/* ════════ Frame: single containment ════════ */
 .ms-frame {
   width: 100%;
   box-sizing: border-box;
@@ -24,7 +24,7 @@
   box-sizing: border-box;
 }
 
-/* browser: CSS identical to the legacy .browser-frame (Doctor) —
+/* browser: CSS identical to the legacy .browser-frame (Doctor) : 
    the only shadow in the system. */
 .ms-frame--browser {
   max-width: 872px;
@@ -84,7 +84,7 @@
   }
 }
 
-/* ════════ Figure — editorial media unit ════════ */
+/* ════════ Figure: editorial media unit ════════ */
 .ms-figure {
   margin: 0;
 }
@@ -130,7 +130,7 @@
   color: var(--ink-600);
 }
 
-/* ════════ Hotspot — accessible dots + parity list ════════ */
+/* ════════ Hotspot: accessible dots + parity list ════════ */
 /* Map renders only on larger viewports; the list below carries
    100% of the content at every breakpoint. */
 .ms-hotspot-map {
@@ -279,7 +279,7 @@
   line-height: 1.5;
 }
 
-/* Numbered parity list — visible at EVERY breakpoint */
+/* Numbered parity list: visible at EVERY breakpoint */
 /* Wrapper that ties the frame and its annotation legend to the same column */
 .ms-annotated {
   width: 100%;
@@ -342,7 +342,7 @@
   color: var(--ink-600);
 }
 
-/* ════════ BeforeAfter — static pair ════════ */
+/* ════════ BeforeAfter: static pair ════════ */
 .ms-ba {
   margin: 0;
 }
@@ -453,7 +453,7 @@
   }
 }
 
-/* ════════ SnapGallery — manual scroll-snap strip ════════ */
+/* ════════ SnapGallery: manual scroll-snap strip ════════ */
 .ms-snap__viewport {
   --ms-snap-item-width: 300px;
   overflow-x: auto;
@@ -641,7 +641,7 @@
   }
 }
 
-/* ════════ Lightbox — shared dialog (modal: shadow allowed) ════════ */
+/* ════════ Lightbox: shared dialog (modal: shadow allowed) ════════ */
 .ms-lightbox {
   position: fixed;
   inset: 0;
@@ -712,7 +712,7 @@
   }
 }
 
-/* ════════ VideoFigure — click-to-play UI video ════════ */
+/* ════════ VideoFigure: click-to-play UI video ════════ */
 .ms-video {
   margin: 0;
 }

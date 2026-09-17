@@ -25,15 +25,15 @@ function Screen({ shot }) {
 }
 
 /**
- * BeforeAfter — static side-by-side pair (replaces the scroll-linked
+ * BeforeAfter: static side-by-side pair (replaces the scroll-linked
  * UIChangesPairAnnotated + gradient MockupBadge).
  *
  * Layout: 54% media / text grid, screens side by side with 14px gap, aligned
- * by top (different heights are accepted — no ratio hacks, no ResizeObserver).
+ * by top (different heights are accepted: no ratio hacks, no ResizeObserver).
  * Stacks below 900px. Entry is a single one-shot fadeUp; ZERO scroll-linked
  * motion. Screens sit in hairline phone frames (drop-shadows are gone).
  *
- * before/after = { src, alt } — alts follow the "Before: …" / "After: …"
+ * before/after = { src, alt }: alts follow the "Before: …" / "After: …"
  * pattern. The whole pair is one <figure>; the text column is its
  * <figcaption> (title + description keep parity if images fail).
  */

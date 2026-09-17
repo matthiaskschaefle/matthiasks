@@ -47,7 +47,7 @@ try {
       // O 30-40% e projecao, nao resultado medido. Ver CLAUDE.md (NDA).
       projecaoMarcada: /projected to fall 30 to 40%/.test(text),
       medidoSeparado: /Measured results:/.test(text),
-      dataPresente: /Aug\. 2024 – Present/.test(text),
+      dataPresente: /2026 to present/.test(text),
       semProductDesigner: !/Product Designer/.test(text),
       educacaoUnica: document.querySelectorAll(".resume-edu").length === 4,
     };

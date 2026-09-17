@@ -15,6 +15,24 @@ import SiteFooter from "./components/SiteFooter.jsx";
  * renderiza PDF inline, e uma imagem do CV seria texto-como-imagem, que
  * reprova no WCAG AA. Aqui o texto e real, responsivo e selecionavel.
  */
+function ResumeEntry({ job }) {
+  return (
+    <article className="resume-job">
+      <div className="resume-job-head">
+        <h3 className="resume-job-title">{job.title}</h3>
+        <div className="resume-job-meta">
+          <span>{job.kind}</span>
+          <span>{job.period}</span>
+        </div>
+      </div>
+      <p className="resume-job-summary">{job.summary}</p>
+      <ul className="resume-bullets">
+        {job.bullets.map((b) => <li key={b.slice(0, 40)}>{b}</li>)}
+      </ul>
+    </article>
+  );
+}
+
 export default function Resume() {
   useEffect(() => {
     applySeo({
@@ -30,6 +48,13 @@ export default function Resume() {
   return (
     <>
       <style>{`
+/* .page nao e global: sem isto o header flutuante cobre o topo. */
+.page { min-height: 100vh; width: 100%; padding: 140px 16px 96px; display: flex; flex-direction: column; align-items: center; }
+.page-inner { width: 100%; max-width: 872px; }
+@media (max-width: 720px) {
+  .page { padding: 120px 16px 64px; }
+}
+
 .resume-doc { width: 100%; max-width: 820px; margin: 0 auto; }
 
 /* Barra de acao: so na tela, nunca no PDF */
@@ -89,6 +114,7 @@ export default function Resume() {
   margin-left: auto; display: flex; gap: 20px;
   font-family: var(--font-mono); font-size: 12px; color: var(--ink-600);
 }
+.resume-job + .resume-job { margin-top: 28px; }
 .resume-job-summary { margin: 8px 0 0; color: var(--ink-600); font-size: 15px; }
 .resume-bullets { list-style: none; margin: 12px 0 0; padding: 0; }
 .resume-bullets li {
@@ -142,11 +168,12 @@ export default function Resume() {
   .resume-role { font-size: 8.4pt; margin-top: 5px; }
   .resume-contact { font-size: 9.2pt; line-height: 1.7; }
   .resume-site { font-size: 8.4pt; margin-top: 8px; }
-  .resume-intro { font-size: 9.9pt; line-height: 1.5; margin-top: 17px; }
+  .resume-intro { font-size: 9.6pt; line-height: 1.45; margin-top: 12px; }
 
-  .resume-section { margin-top: 23px; }
-  .resume-label { font-size: 8.2pt; padding-bottom: 7px; margin-bottom: 12px; }
+  .resume-section { margin-top: 16px; }
+  .resume-label { font-size: 8.2pt; padding-bottom: 5px; margin-bottom: 9px; }
 
+  .resume-job + .resume-job { margin-top: 14px; }
   .resume-job-title { font-size: 12.6pt; }
   .resume-job-meta { font-size: 8.2pt; gap: 18px; }
   .resume-job-summary { font-size: 9.9pt; margin-top: 7px; }
@@ -165,7 +192,7 @@ export default function Resume() {
   .resume-edu-note { font-size: 9.9pt; line-height: 1.5; margin-top: 3px; }
 
   /* Nao quebrar uma entrada no meio entre paginas */
-  .resume-edu, .resume-block, .resume-bullets li { break-inside: avoid; }
+  .resume-edu, .resume-block, .resume-job, .resume-bullets li { break-inside: avoid; }
 }
       `}</style>
 
@@ -179,7 +206,7 @@ export default function Resume() {
                 Full resume below. The PDF has selectable text.
               </p>
               <a
-                className="btn btn-primary btn-sm"
+                className="btn btn--primary btn--sm"
                 href={RESUME_PDF_URL}
                 download
               >
@@ -209,19 +236,14 @@ export default function Resume() {
             <section className="resume-section" aria-labelledby="resume-exp">
               <h2 className="resume-label" id="resume-exp">Professional experience</h2>
               {resume.experience.map((job) => (
-                <div key={job.title}>
-                  <div className="resume-job-head">
-                    <h3 className="resume-job-title">{job.title}</h3>
-                    <div className="resume-job-meta">
-                      <span>{job.kind}</span>
-                      <span>{job.period}</span>
-                    </div>
-                  </div>
-                  <p className="resume-job-summary">{job.summary}</p>
-                  <ul className="resume-bullets">
-                    {job.bullets.map((b) => <li key={b.slice(0, 40)}>{b}</li>)}
-                  </ul>
-                </div>
+                <ResumeEntry key={job.title} job={job} />
+              ))}
+            </section>
+
+            <section className="resume-section" aria-labelledby="resume-edu-projects">
+              <h2 className="resume-label" id="resume-edu-projects">Selected educational project</h2>
+              {resume.educationalProjects.map((job) => (
+                <ResumeEntry key={job.title} job={job} />
               ))}
             </section>
 

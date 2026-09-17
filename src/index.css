@@ -75,7 +75,7 @@
 }
 
 /* ════════════════════════════════════════════════════════════
-   Design tokens — single source of truth
+   Design tokens: single source of truth
    Palette: warm ink neutrals / forest green brand / gold accent
    Type: Space Grotesk (display) / Inter (body) / JetBrains Mono (labels)
    ════════════════════════════════════════════════════════════ */
@@ -191,7 +191,7 @@ body {
   min-height: 1.35em;
 }
 
-/* ════════ Buttons — 3 variants x 3 sizes ════════ */
+/* ════════ Buttons: 3 variants x 3 sizes ════════ */
 .btn {
   display: inline-flex;
   align-items: center;

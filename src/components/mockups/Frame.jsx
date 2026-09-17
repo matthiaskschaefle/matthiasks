@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { tiltIn, useReducedMotion as getReducedMotion, viewport as motionViewport } from "@/lib/animations";
 
 /**
- * Frame — single containment grammar for mockups.
+ * Frame: single containment grammar for mockups.
  *
  * variant="browser"  Chrome bar with 3 dots; the ONLY shadow allowed in the
  *                    system (CSS identical to the legacy .browser-frame).
