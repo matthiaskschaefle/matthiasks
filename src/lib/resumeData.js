@@ -23,18 +23,17 @@ export const resume = {
   site: { value: "www.matthiasks.com", href: "https://matthiasks.com" },
 
   intro:
-    "UX/UI Designer based in Berlin with paid client experience across operational product flows and service websites. I work from field research and information architecture through interaction design, high-fidelity UI, validation, and handoff or implementation. My strongest project is a delivery confirmation redesign piloted with 12 drivers, which reduced task time and improved record compliance. I also build responsive interfaces in React and Vite.",
+    "UX/UI Designer based in Berlin with paid client experience in operational product flows and service websites. I work across research, interaction design, high-fidelity UI, validation, and responsive implementation in React and Vite.",
 
   experience: [
     {
-      title: "UX/UI Designer: Delivery operations redesign",
+      title: "UX/UI Designer: Delivery workflow",
       kind: "Paid freelance client project · Vulpes Studio",
       period: "2025",
       summary: "Redesign of a delivery confirmation flow for a small freight company in Barbacena, Brazil.",
       bullets: [
-        "Field research with 5 couriers followed by a three-week pilot with 12 drivers.",
-        "The redesigned flow was approximately 7 to 8 seconds faster per stop and increased record compliance from 92% to 98%.",
-        "A 30 to 40% reduction in proof-of-delivery disputes was projected from the pilot data. This was not a measured production result.",
+        "Conducted field research with 5 couriers and piloted the redesigned confirmation flow with 12 drivers over three weeks.",
+        "Reduced task time by approximately 7 to 8 seconds per stop and increased record compliance from 92% to 98%. Pilot data supported a projected 30 to 40% reduction in proof-of-delivery disputes.",
       ],
     },
     {
@@ -43,9 +42,8 @@ export const resume = {
       period: "2024",
       summary: "Research, information architecture, visual identity, responsive UI, and website delivery for a plastic surgeon.",
       bullets: [
-        "Used patient interviews and recurring questions from social media to define the content hierarchy.",
-        "Designed the information architecture, interface, logo, and visual system.",
-        "Delivered a website the client could update independently; the identity remains in use.",
+        "Used patient interviews and recurring social-media questions to define the information architecture, content hierarchy, and responsive interface.",
+        "Created the visual identity and delivered the website for independent client updates; the identity remains in use.",
       ],
     },
   ],
@@ -57,9 +55,7 @@ export const resume = {
       period: "2023",
       summary: "Concept for veterinary appointment booking developed during UX training.",
       bullets: [
-        "Survey with 164 pet owners and 5 follow-up interviews.",
-        "Two rounds of usability testing with small samples.",
-        "In the limited course test, the prototype averaged 45 seconds for the scheduling task. This is not a validated product outcome.",
+        "Surveyed 164 pet owners, conducted 5 follow-up interviews, and completed two small-sample usability-testing rounds.",
       ],
     },
   ],
@@ -71,11 +67,11 @@ export const resume = {
     },
     {
       title: "Tools",
-      body: "Figma, FigJam, React/Vite, HTML/CSS, Tailwind, Codex, Cursor, Claude, Notion, Linear.",
+      body: "Figma, FigJam, React/Vite, HTML/CSS, Tailwind, Cursor, Notion, Linear.",
     },
     {
       title: "Technical prototyping",
-      body: "From Figma to responsive React prototypes. AI-assisted workflows used to explore and validate faster.",
+      body: "From Figma to responsive React prototypes used to explore and validate faster.",
     },
     {
       title: "Languages",

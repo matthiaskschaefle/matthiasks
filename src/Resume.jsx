@@ -109,6 +109,7 @@ export default function Resume() {
 .resume-job-title {
   font-family: var(--font-display); font-weight: 700; font-size: 19px;
   letter-spacing: -0.015em; color: var(--ink-900); margin: 0;
+  overflow-wrap: break-word; text-wrap: wrap; text-wrap: pretty;
 }
 .resume-job-meta {
   margin-left: auto; display: flex; gap: 20px;
@@ -156,7 +157,7 @@ export default function Resume() {
 /* Impressao: esta pagina E o PDF. branding/resume/capture.mjs imprime esta
    rota, entao o que muda aqui muda no arquivo baixado. Some o cromo do site
    e a escala cai para caber em uma folha A4. */
-@page { size: A4; margin: 14mm 15mm; }
+@page { size: A4; margin: 12mm 14mm; }
 
 @media print {
   .site-header, .site-footer, .resume-actions, .skip-link { display: none !important; }
@@ -164,35 +165,41 @@ export default function Resume() {
   .page-inner { max-width: none !important; width: 100% !important; }
   .resume-doc { max-width: none; }
 
-  .resume-name { font-size: 26pt; }
-  .resume-role { font-size: 8.4pt; margin-top: 5px; }
-  .resume-contact { font-size: 9.2pt; line-height: 1.7; }
-  .resume-site { font-size: 8.4pt; margin-top: 8px; }
-  .resume-intro { font-size: 9.6pt; line-height: 1.45; margin-top: 12px; }
+  .resume-name { font-size: 22pt; }
+  .resume-role { font-size: 8.5pt; margin-top: 4px; }
+  .resume-contact { font-size: 10pt; line-height: 1.5; }
+  .resume-site { font-size: 8.5pt; margin-top: 5px; }
+  .resume-intro { font-size: 10pt; line-height: 1.45; margin-top: 12px; }
 
-  .resume-section { margin-top: 16px; }
-  .resume-label { font-size: 8.2pt; padding-bottom: 5px; margin-bottom: 9px; }
+  .resume-section { margin-top: 14px; }
+  .resume-label {
+    font-size: 8.5pt; padding-bottom: 4px; margin-bottom: 8px;
+  }
 
-  .resume-job + .resume-job { margin-top: 14px; }
-  .resume-job-title { font-size: 12.6pt; }
-  .resume-job-meta { font-size: 8.2pt; gap: 18px; }
-  .resume-job-summary { font-size: 9.9pt; margin-top: 7px; }
-  .resume-bullets { margin-top: 7px; }
-  .resume-bullets li { font-size: 9.9pt; line-height: 1.5; margin-bottom: 7px; padding-left: 13px; }
+  .resume-job + .resume-job { margin-top: 10px; }
+  .resume-job-title { font-size: 11pt; }
+  .resume-job-meta { font-size: 8.5pt; gap: 12px; }
+  .resume-job-summary { font-size: 10pt; line-height: 1.45; margin-top: 4px; }
+  .resume-bullets { margin-top: 5px; }
+  .resume-bullets li {
+    font-size: 10pt; line-height: 1.45; margin-bottom: 3px; padding-left: 12px;
+  }
+  .resume-bullets li:last-child { margin-bottom: 0; }
   .resume-bullets li::before { width: 4px; top: 0.52em; }
 
-  .resume-cols { gap: 14mm; }
-  .resume-block { margin-bottom: 14px; }
-  .resume-block-title { font-size: 10.6pt; margin-bottom: 3px; }
-  .resume-block-body { font-size: 9.9pt; line-height: 1.5; }
+  .resume-cols { gap: 10mm; }
+  .resume-block { margin-bottom: 10px; }
+  .resume-block:last-child { margin-bottom: 0; }
+  .resume-block-title { font-size: 10.5pt; margin-bottom: 2px; }
+  .resume-block-body { font-size: 10pt; line-height: 1.45; }
 
-  .resume-edu { margin-bottom: 13px; }
-  .resume-edu-name { font-size: 10.6pt; }
-  .resume-edu-meta { font-size: 8pt; margin-top: 2px; }
-  .resume-edu-note { font-size: 9.9pt; line-height: 1.5; margin-top: 3px; }
+  .resume-edu { margin-bottom: 9px; }
+  .resume-edu:last-child { margin-bottom: 0; }
+  .resume-edu-name { font-size: 10.5pt; }
+  .resume-edu-meta { font-size: 8.5pt; margin-top: 2px; }
+  .resume-edu-note { font-size: 10pt; line-height: 1.4; margin-top: 2px; }
 
-  /* Nao quebrar uma entrada no meio entre paginas */
-  .resume-edu, .resume-block, .resume-job, .resume-bullets li { break-inside: avoid; }
+  .resume-edu, .resume-block, .resume-job { break-inside: avoid; page-break-inside: avoid; }
 }
       `}</style>
 

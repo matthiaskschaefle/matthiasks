@@ -107,8 +107,28 @@ img { max-width:100%; display:block; }
 
 /* ── HERO ── */
 .case-hero { display:flex; flex-direction:column; gap:24px; margin-bottom:0; position:relative; }
-.case-hero-backdrop { position:absolute; top:-140px; right:-180px; width:560px; height:560px; border-radius:50%; background:radial-gradient(circle at 35% 35%, rgba(var(--accent-rgb),0.10) 0%, rgba(var(--accent-rgb),0.045) 40%, transparent 70%); pointer-events:none; z-index:0; }
-@media(max-width:900px){ .case-hero-backdrop{display:none;} }
+.case-hero > :not(.case-hero-backdrop) { position:relative; z-index:1; }
+.case-hero-backdrop {
+  position:absolute;
+  inset:0;
+  z-index:0;
+  overflow:hidden;
+  pointer-events:none;
+}
+.case-hero-backdrop img {
+  position:absolute;
+  inset:0;
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  object-position:68% 100%;
+  pointer-events:none;
+  user-select:none;
+}
+@media(max-width:900px){
+  .case-hero-backdrop { top:auto; height:46%; opacity:0.42; }
+  .case-hero-backdrop img { object-position:center bottom; }
+}
 .case-eyebrow { font-family:var(--font-mono); font-size:var(--label-1-size); text-transform:uppercase; letter-spacing:var(--label-1-track); color:var(--ink-600); }
 .case-title-main { font-family:var(--font-display); font-size:40px; font-weight:500; letter-spacing:-0.02em; margin:0; color:var(--ink); line-height:1.1; }
 .case-subtitle { font-family:var(--font-body); font-size:16px; line-height:1.7; font-weight:400; max-width:520px; color:var(--ink-600); margin:0; }
@@ -367,7 +387,9 @@ grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
 
 {/* ── HERO ── */}
 <section className="case-hero">
-<div className="case-hero-backdrop" aria-hidden="true" />
+<div className="case-hero-backdrop" aria-hidden="true">
+<img src="/assets/portfolio/delivery-route-sketch.webp" alt="" width="1536" height="1024" decoding="async" />
+</div>
 <p className="case-eyebrow">CASE STUDY / DELIVERY</p>
 <h1 className="case-title-main">The New Delivery Experience</h1>
 <p className="case-subtitle">
@@ -459,7 +481,7 @@ id: "insight",
 label: "The insight",
 title: "The app was asking drivers to do its job",
 body: "Document numbers and recipient names were already in the system, yet drivers retyped them at every stop. Receiver types like coworkers or doormen had no option at all. The principle became: confirmation should replace entry, not sit alongside it.",
-img: "/assets/portfolio/2026/03/Mockup-–-02-Receiver-Modal.png",
+img: "/assets/portfolio/2026/03/Mockup-02-Receiver-Modal.png",
 alt: "Wireframe of the receiver modal",
 },
 {
@@ -467,7 +489,7 @@ id: "solution",
 label: "The solution",
 title: "Same screens, doing more of the work",
 body: "Auto-filled confirmation, structured receiver options for how deliveries actually happen, and photo validation at capture. No new screens, no retraining. Drivers picked it up without being told.",
-img: "/assets/portfolio/2026/04/Mockup-%E2%80%93-02-Modal.png",
+img: "/assets/portfolio/2026/04/Mockup-02-Modal.png",
 alt: "Final receiver modal UI",
 },
 ]}
@@ -616,9 +638,9 @@ author: "Driver, 3 years of experience",
 <div className="research-full" style={{ marginTop: 24 }}>
 <span className="wireframe-grid-label">Wireframes</span>
 <div className="wireframe-grid">
-<Figure className="wireframe-glass-item" src="/assets/portfolio/2026/03/Mockup-–-01-Route-List.png" alt="Wireframe mockup: Route List" caption={{ text: "01: Route List" }} />
-<Figure className="wireframe-glass-item" src="/assets/portfolio/2026/03/Mockup-–-02-Receiver-Modal.png" alt="Wireframe mockup: Order Details" caption={{ text: "02: Order Details" }} />
-<Figure className="wireframe-glass-item" src="/assets/portfolio/2026/03/Mockup-–-03-Confirmation-Form.png" alt="Wireframe mockup: Confirmation Form" caption={{ text: "03: Confirmation" }} />
+<Figure className="wireframe-glass-item" src="/assets/portfolio/2026/03/Mockup-01-Route-List.png" alt="Wireframe mockup: Route List" caption={{ text: "01: Route List" }} />
+<Figure className="wireframe-glass-item" src="/assets/portfolio/2026/03/Mockup-02-Receiver-Modal.png" alt="Wireframe mockup: Order Details" caption={{ text: "02: Order Details" }} />
+<Figure className="wireframe-glass-item" src="/assets/portfolio/2026/03/Mockup-03-Confirmation-Form.png" alt="Wireframe mockup: Confirmation Form" caption={{ text: "03: Confirmation" }} />
 </div>
 </div>
 </motion.section>
@@ -658,8 +680,8 @@ focus="top"
 number="01"
 title="Data that shows itself"
 description="The recipient name and document number now appear automatically from route data. The driver reads, confirms with one tap, and moves on. No typing required."
-before={{ src: "/assets/portfolio/2026/04/Mockup-%E2%80%93-01-Delivery-Proofwire.png", alt: "Before: Manual data entry at every stop" }}
-after={{ src: "/assets/portfolio/2026/04/Mockup-%E2%80%93-01-Delivery-Proof.png", alt: "After: Auto-populated fields, one-tap confirmation" }}
+before={{ src: "/assets/portfolio/2026/04/Mockup-01-Delivery-Proof-Wire.png", alt: "Before: Manual data entry at every stop" }}
+after={{ src: "/assets/portfolio/2026/04/Mockup-01-Delivery-Proof.png", alt: "After: Auto-populated fields, one-tap confirmation" }}
 />
 </div>
 
@@ -670,8 +692,8 @@ className="delivery-before-after"
 number="02"
 title="A button for every real situation"
 description="The receiver modal now covers attended and unattended deliveries with labeled options. Drivers tap the right one instead of writing something that might not match next time."
-before={{ src: "/assets/portfolio/2026/04/Mockup-%E2%80%93-02-ModalWire.png", alt: "Before: Free-text input for receiver identity" }}
-after={{ src: "/assets/portfolio/2026/04/Mockup-%E2%80%93-02-Modal.png", alt: "After: Structured receiver options for attended and unattended deliveries" }}
+before={{ src: "/assets/portfolio/2026/04/Mockup-02-Modal-Wire.png", alt: "Before: Free-text input for receiver identity" }}
+after={{ src: "/assets/portfolio/2026/04/Mockup-02-Modal.png", alt: "After: Structured receiver options for attended and unattended deliveries" }}
 />
 </div>
 
@@ -683,8 +705,8 @@ focus="bottom"
 number="03"
 title="Photo feedback before the moment passes"
 description="If a photo is too dark, blurry, or not showing the right thing, the app says so immediately. The driver retakes it while still at the door."
-before={{ src: "/assets/portfolio/2026/04/Mockup-%E2%80%93-03-Proof-of-DeliveryWire.png", alt: "Before: Photo accepted without any quality check" }}
-after={{ src: "/assets/portfolio/2026/04/Mockup-%E2%80%93-03-Proof-of-Delivery.png", alt: "After: Real-time validation catches issues at the door" }}
+before={{ src: "/assets/portfolio/2026/04/Mockup-03-Proof-of-Delivery-Wire.png", alt: "Before: Photo accepted without any quality check" }}
+after={{ src: "/assets/portfolio/2026/04/Mockup-03-Proof-of-Delivery.png", alt: "After: Real-time validation catches issues at the door" }}
 />
 </div>
 

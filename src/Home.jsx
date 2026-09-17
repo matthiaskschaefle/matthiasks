@@ -1,11 +1,9 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { motion, useReducedMotion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { DURATION, EASE, STAGGER } from "@/lib/animations";
 import { applySeo } from "@/lib/seo";
-import { useTypewriter } from "@/lib/useTypewriter";
 import SiteHeader from "./components/SiteHeader.jsx";
-import TypedCaret from "./components/TypedCaret.jsx";
 import TypedSectionLabel from "./components/TypedSectionLabel.jsx";
 import { POSITIONING } from "./lib/positioning.js";
 import SiteFooter from "./components/SiteFooter.jsx";
@@ -54,19 +52,27 @@ const WORK = [
     context: "Educational project · UX/UI · 2023",
     title: "DuoPet",
     description: "A faster, clearer way to book veterinary appointments without WhatsApp back-and-forth.",
-    result: "15.9% faster in the course usability test",
+    result: "164 survey responses · 2 usability-testing rounds",
     imageSrc: "/assets/portfolio/2024/05/iPhone-12-Pro.png",
     imageAlt: "DuoPet prototype mockup",
   },
 ];
 
+function canPlayVp9Webm() {
+  if (typeof document === "undefined") return true;
+  const probe = document.createElement("video");
+  return Boolean(probe.canPlayType('video/webm; codecs="vp9"'));
+}
+
 /*
- * Animated hero character: five-second square loop on the page background.
- * The circular crop keeps the character centered inside the typographic seal
- * and hides the source frame corners. Static poster under reduced motion.
+ * Animated hero character: five-second square loop with a real alpha
+ * channel (VP9 WebM). Browsers without VP9 alpha get the same loop as
+ * an animated WebP. Static transparent poster under reduced motion.
+ * The circular crop is only the seal viewport; it is not the key.
  */
 function HeroVideo() {
   const shouldReduceMotion = useReducedMotion();
+  const [useWebm, setUseWebm] = useState(canPlayVp9Webm);
 
   if (shouldReduceMotion) {
     return (
@@ -78,40 +84,29 @@ function HeroVideo() {
     );
   }
 
+  if (!useWebm) {
+    return (
+      <img
+        className="hero-video"
+        src="/assets/hero-poses/hero-home-loop-2026.webp"
+        alt="Animated illustration of Matthias typing on a laptop"
+      />
+    );
+  }
+
   return (
     <video
       className="hero-video"
-      src="/assets/hero-poses/hero-home-loop-2026.mp4"
       poster="/assets/hero-poses/hero-home-poster-2026.webp"
       autoPlay
       muted
       loop
       playsInline
       aria-label="Animated illustration of Matthias typing on a laptop"
-    />
-  );
-}
-
-const HERO_TITLES = ["Matthias Schaefle", "UX/UI Designer", "Based in Berlin"];
-
-function TypedHeroTitle({ shouldReduceMotion }) {
-  const { text: displayedTitle } = useTypewriter(HERO_TITLES, {
-    enabled: !shouldReduceMotion,
-    paused: false,
-  });
-
-  if (shouldReduceMotion) {
-    return <h1 className="hero-title">{HERO_TITLES[0]}</h1>;
-  }
-
-  return (
-    <h1
-      className="hero-title hero-title--typed"
-      aria-label="Matthias Schaefle, UX/UI Designer, Based in Berlin"
+      onError={() => setUseWebm(false)}
     >
-      <span className="hero-title-text" aria-hidden="true">{displayedTitle}</span>
-      <TypedCaret className="hero-title-caret" />
-    </h1>
+      <source src="/assets/hero-poses/hero-home-loop-2026.webm" type="video/webm" />
+    </video>
   );
 }
 
@@ -121,6 +116,44 @@ function TitleArrow() {
       <svg viewBox="0 0 24 24" fill="none" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
         <polyline points="9 18 15 12 9 6" />
       </svg>
+    </span>
+  );
+}
+
+function wrapProductDesign(text) {
+  const marker = "Product Design";
+  const index = text.indexOf(marker);
+  if (index < 0) return text;
+  return (
+    <>
+      {text.slice(0, index)}
+      <span className="hero-nowrap">{marker}</span>
+      {text.slice(index + marker.length)}
+    </>
+  );
+}
+
+function WorkTitle({ title }) {
+  const words = title.split(" ");
+  const last = words.pop();
+  return (
+    <h2 className="work-title">
+      {words.length > 0 ? `${words.join(" ")} ` : null}
+      <span className="work-title-end">{last}<TitleArrow /></span>
+    </h2>
+  );
+}
+
+function WorkContext({ context }) {
+  const segments = context.split(" · ");
+  return (
+    <span className="work-context">
+      {segments.map((segment, index) => (
+        <span className="work-context-seg" key={`${segment}-${index}`}>
+          {segment}
+          {index < segments.length - 1 ? " · " : ""}
+        </span>
+      ))}
     </span>
   );
 }
@@ -161,10 +194,10 @@ function WorkItem({ href, index, context, title, description, result, imageSrc, 
       <div className="work-row">
         <div className="work-info">
           <span className="work-index">{index}</span>
-          <span className="work-context">{context}</span>
+          <WorkContext context={context} />
         </div>
         <div className="work-main">
-          <h2 className="work-title">{title}<TitleArrow /></h2>
+          <WorkTitle title={title} />
           <p className="work-desc">{description}</p>
           {result ? <p className="work-result">{result}</p> : null}
         </div>
@@ -179,11 +212,9 @@ export default function Document() {
   useEffect(() => {
     applySeo({
       title: POSITIONING.seoTitle,
-      description:
-        "Portfolio of Matthias Schaefle, a UX/UI Designer in Berlin focused on user research, interface design, prototyping, and design systems.",
+      description: POSITIONING.seoDescription,
       path: "/",
-      ogDescription:
-        "Research-driven UX/UI design, from user insights and wireframes to polished prototypes.",
+      ogDescription: POSITIONING.ogDescription,
     });
   }, []);
 
@@ -307,7 +338,7 @@ img { max-width: 100%; display: block; }
   justify-content: center;
   overflow: hidden;
   border-radius: 50%;
-  background: #FAFAF9;
+  background: transparent;
   z-index: 1;
 }
 
@@ -320,21 +351,20 @@ img { max-width: 100%; display: block; }
   transform: translateX(6px) scale(1.02);
 }
 
-/* Multiply makes the near-white source background resolve to the Home token. */
 .hero-video {
   position: absolute;
   inset: 0;
   width: 100%;
   height: 100%;
   object-fit: contain;
-  mix-blend-mode: multiply;
+  filter: drop-shadow(0 4px 6px rgba(26, 24, 21, 0.12));
 }
 
 .hero-content {
   flex: 1 1 auto;
   display: flex;
   flex-direction: column;
-  gap: 18px;
+  gap: 12px;
 }
 
 .hero-title {
@@ -347,27 +377,21 @@ img { max-width: 100%; display: block; }
   letter-spacing: -0.025em;
 }
 
-.hero-title--typed {
+.hero-role {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--brand-600);
+}
+
+.hero-copy {
   display: flex;
-  align-items: baseline;
-  min-height: 1.02em;
-  white-space: nowrap;
-}
-
-.hero-title-text {
-  display: inline-block;
-  white-space: nowrap;
-}
-
-.hero-title-caret {
-  display: inline-block;
-  width: 0.065em;
-  height: 0.82em;
-  margin-left: 0.09em;
-  flex: 0 0 auto;
-  border-radius: 999px;
-  background: var(--brand-600);
-  transform: translateY(0.05em);
+  flex-direction: column;
+  gap: 8px;
+  max-width: 460px;
 }
 
 .hero-subtitle {
@@ -375,8 +399,15 @@ img { max-width: 100%; display: block; }
   font-size: 17px;
   line-height: 1.65;
   font-weight: 400;
-  max-width: 460px;
+  margin: 0;
   color: var(--ink-600);
+  overflow-wrap: break-word;
+  text-wrap: wrap;
+  text-wrap: pretty;
+}
+
+.hero-nowrap {
+  white-space: nowrap;
 }
 
 @media (max-width: 1024px) { .hero-title { font-size: 52px; } }
@@ -387,7 +418,10 @@ img { max-width: 100%; display: block; }
   .hero-badge-ring svg { width: 210px; height: 210px; }
   .hero-peeps { inset: 16%; }
   .hero-peeps .hero-video { width: 100%; height: 100%; }
+  .hero-content { width: 100%; min-width: 0; }
+  .hero-copy { max-width: none; }
   .hero-title { font-size: 40px; line-height: 1.08; overflow-wrap: break-word; word-break: break-word; hyphens: none; }
+  .hero-role { font-size: 14px; }
   .hero-subtitle { font-size: 15px; }
 }
 
@@ -513,6 +547,7 @@ img { max-width: 100%; display: block; }
   grid-template-columns: minmax(150px, 220px) minmax(0, 1fr);
   gap: 12px 40px;
   margin-top: 22px;
+  min-width: 0;
 }
 
 .work-pair .work-row {
@@ -525,6 +560,7 @@ img { max-width: 100%; display: block; }
   display: flex;
   flex-direction: column;
   gap: 8px;
+  min-width: 0;
 }
 
 .work-pair .work-info {
@@ -548,6 +584,13 @@ img { max-width: 100%; display: block; }
   letter-spacing: 0.14em;
   line-height: 1.7;
   color: var(--ink-600);
+  display: flex;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.work-context-seg {
+  white-space: nowrap;
 }
 
 .work-title {
@@ -558,13 +601,17 @@ img { max-width: 100%; display: block; }
   line-height: 1.15;
   margin: 0;
   color: var(--ink-900);
-  display: flex;
-  align-items: center;
-  gap: 12px;
   transition: color .18s ease;
+  overflow-wrap: break-word;
+  text-wrap: wrap;
+  text-wrap: pretty;
 }
 
-.work-pair .work-title { font-size: 22px; gap: 10px; }
+.work-title-end {
+  white-space: nowrap;
+}
+
+.work-pair .work-title { font-size: 22px; }
 
 .work-item:hover .work-title,
 .work-item:focus-visible .work-title { color: var(--brand-700); }
@@ -579,6 +626,8 @@ img { max-width: 100%; display: block; }
 .work-arrow {
   display: inline-flex;
   align-items: center;
+  margin-left: 0.35em;
+  vertical-align: -0.12em;
   transition: transform .2s ease;
 }
 
@@ -618,6 +667,7 @@ img { max-width: 100%; display: block; }
   .work-media { padding: 24px 18px; }
   .work-row { grid-template-columns: 1fr; gap: 8px; margin-top: 16px; }
   .work-info { flex-direction: row; align-items: baseline; gap: 12px; }
+  .work-context { flex: 1 1 0; }
   .work-title { font-size: 24px; }
   .work-pair .work-title { font-size: 22px; }
   .work-desc { font-size: 15px; }
@@ -693,10 +743,12 @@ img { max-width: 100%; display: block; }
             </div>
 
             <div className="hero-content">
-              <TypedHeroTitle shouldReduceMotion={shouldReduceMotion} />
-              <p className="hero-subtitle">
-                {POSITIONING.heroLine} {POSITIONING.heroMethod}
-              </p>
+              <h1 className="hero-title">Matthias Schaefle</h1>
+              <p className="hero-role">{POSITIONING.roleShort}</p>
+              <div className="hero-copy">
+                <p className="hero-subtitle">{POSITIONING.heroLine}</p>
+                <p className="hero-subtitle">{wrapProductDesign(POSITIONING.heroMethod)}</p>
+              </div>
             </div>
           </section>
 

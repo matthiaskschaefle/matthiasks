@@ -7,10 +7,8 @@ import SiteFooter from "./components/SiteFooter.jsx";
 import StoryHero from "./components/StoryHero.jsx";
 import TypedSectionLabel from "./components/TypedSectionLabel.jsx";
 
-// Story hero frames: 1 foto + 1 frase por quadro. A parte comum das frases
-// ("Hi! I'm Matthias and I ") fica fixa; o typewriter digita so o restante.
-// As fotos ja estao recortadas em 4:5, o mesmo aspect-ratio do card, entao o
-// object-fit do CSS nao corta mais nada.
+// Fotos do StoryHero: 1 por quadro. O H1 e estatico; as frases abaixo
+// so sincronizam o slideshow de fotos (nao aparecem como titulo).
 const FRAMES = [
 {
 img: "/assets/portfolio/2026/07/story-berlin.webp",
@@ -281,7 +279,7 @@ color: var(--ink-700);
 
 <main id="main" className="page">
 <div className="page-inner">
-<StoryHero frames={FRAMES} />
+<StoryHero frames={FRAMES} heading="About Matthias Schaefle" />
 
 <section className="about-sections">
 <div className="about-row">
@@ -327,34 +325,28 @@ What differentiates me as a designer
 <div className="about-highlights">
 <div>
 <h3 className="about-highlight-title">
-Research in the field, not the deck
+Research grounded in real workflows
 </h3>
 <div className="about-highlight-text">
-<Link to="/delivery">Delivery</Link> started with driver
-routes and interviews in Barbacena, not with wireframes. The
-flows came from routes of 80 to 130 stops a day.
+For <Link to="/delivery">Delivery</Link>, I observed routes and interviewed couriers handling 80 to 130 stops a day before defining the redesigned flow.
 </div>
 </div>
 
 <div>
 <h3 className="about-highlight-title">
-Design that survives the client
+Design clients can maintain
 </h3>
 <div className="about-highlight-text">
-I designed and delivered the <Link to="/doctor">Doctor</Link>{" "}
-site in 2024. The client has updated it on their own ever
-since.
+For <Link to="/doctor">Doctor</Link>, I delivered a website and visual identity that the client has maintained independently since 2024.
 </div>
 </div>
 
 <div>
 <h3 className="about-highlight-title">
-I build what I design
+Prototypes close to implementation
 </h3>
 <div className="about-highlight-text">
-This site is my own React build, from the design tokens to the
-deploy. The <a href="#colophon">colophon below</a> lists the
-stack.
+I use React and Vite to prototype and build responsive interfaces, including <a href="#colophon">this portfolio</a>.
 </div>
 </div>
 </div>

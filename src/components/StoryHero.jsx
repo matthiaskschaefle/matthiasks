@@ -35,7 +35,7 @@ function commonPrefix(phrases) {
   return lastSpace > 0 ? prefix.slice(0, lastSpace + 1) : prefix;
 }
 
-export default function StoryHero({ frames }) {
+export default function StoryHero({ frames, heading }) {
   const shouldReduceMotion = useReducedMotion();
   const [hovered, setHovered] = useState(false);
   const [focused, setFocused] = useState(false);
@@ -118,6 +118,7 @@ export default function StoryHero({ frames }) {
 .story-hero-nav--next { right:0; }
 .story-hero-nav:focus-visible { outline:3px solid var(--ink-900); outline-offset:-3px; box-shadow:inset 0 0 0 6px var(--bg); }
 .story-hero-line { margin:22px 0 0; font-family:var(--font-mono); font-size:clamp(18px, 2.6vw, 24px); line-height:1.45; min-height:2.9em; text-align:center; max-width:640px; color:var(--ink-900); font-weight:500; }
+.story-hero-line--static { min-height:0; }
 .story-hero-variable { color:var(--brand-600); }
 .story-hero-caret { display:inline-block; width:0.55ch; height:1.05em; margin-left:2px; vertical-align:text-bottom; background:var(--brand-600); }
 @media (max-width:768px) { .story-hero { margin-bottom:56px; } .story-hero-line { margin-top:18px; } }
@@ -188,6 +189,9 @@ export default function StoryHero({ frames }) {
         />
       </div>
 
+      {heading ? (
+        <h1 className="story-hero-line story-hero-line--static">{heading}</h1>
+      ) : (
       <h1 className="story-hero-line">
         <span
           className="sr-only-stable"
@@ -208,6 +212,7 @@ export default function StoryHero({ frames }) {
           {!shouldReduceMotion && <TypedCaret className="story-hero-caret" />}
         </span>
       </h1>
+      )}
     </section>
   );
 }
