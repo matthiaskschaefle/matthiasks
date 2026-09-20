@@ -29,7 +29,7 @@ export default function SiteFooter({ tagline = "Research, interface design, and 
             </span>
             LinkedIn
           </a>
-          <button className="btn btn--secondary btn--sm" type="button" onClick={scrollToTop}>
+          <button className="btn btn--secondary btn--sm btn--glass" type="button" onClick={scrollToTop}>
             Back to top
             <span className="footer-back-top-icon" aria-hidden="true">
               <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">

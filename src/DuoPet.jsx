@@ -113,10 +113,10 @@ const COMPETITOR_FLOWS = [
 {
 app: "Vetster",
 flow: "Pet profile setup",
-image: "/assets/portfolio/2026/03/competitor-vetster-pet-profile.png",
+image: "/assets/portfolio/2026/03/competitor-vetster-mockup.png",
 alt: "Vetster pet profile form with species, breed, sex and birth date fields",
-width: 280,
-height: 609,
+width: 316,
+height: 645,
 flaws: [
 "Creating a pet profile requires several selections across multiple screens.",
 "The repeated drill-down pattern makes a simple setup task feel longer than necessary.",
@@ -126,10 +126,10 @@ opportunity: "Use direct options and integrated menus so owners can complete pet
 {
 app: "Vets",
 flow: "Appointment time selection",
-image: "/assets/portfolio/2026/03/competitor-vets-time-picker.png",
+image: "/assets/portfolio/2026/03/competitor-vets-mockup.png",
 alt: "Vets appointment flow showing a 24-hour analogue time picker",
-width: 280,
-height: 564,
+width: 316,
+height: 645,
 flaws: [
 "Filters must be selected before the list of veterinarians becomes available.",
 "Choosing a date and time first prevents users from selecting their preferred veterinarian upfront.",
@@ -1319,6 +1319,15 @@ body.is-mobile video {
 max-width: 100% !important;
 height: auto !important;
 }
+/* PinnedStory fallback already has a fixed media box. height:auto
+   on those imgs blows past it and paints over the contents and copy. */
+body.is-mobile .pinned-story-media img {
+width: auto !important;
+max-width: 100% !important;
+height: 100% !important;
+max-height: 100% !important;
+object-fit: contain !important;
+}
 /* Result videos share the same 9:16 source canvas on every viewport. */
 body.is-mobile .result-video-slot {
 aspect-ratio: 9 / 16 !important;
@@ -1558,8 +1567,8 @@ margin-top: 0;
 /* ── COMPETITOR FLOW REVIEW (screenshot + notes, no colored callout cards) ── */
 .cfl { display:flex; flex-direction:column; gap:48px; width:100%; }
 .cfl-row { display:grid; grid-template-columns:minmax(0,200px) minmax(0,1fr); gap:28px 36px; align-items:start; min-width:0; }
-.cfl-evidence { margin:0; }
-.cfl-evidence img { display:block; width:100%; height:auto; max-height:420px; object-fit:contain; object-position:top; background:var(--ink-100); }
+.cfl-evidence { margin:0; line-height:0; background:transparent; filter:drop-shadow(0 8px 12px rgba(15,14,12,0.10)); }
+.cfl-evidence img { display:block; width:100%; height:auto; max-height:420px; object-fit:contain; object-position:top; background:transparent; border-radius:14.25% / 6.98%; }
 .cfl-copy { min-width:0; padding-top:4px; }
 .cfl-app { margin:0; font-family:var(--font-display); font-size:22px; line-height:1.2; font-weight:600; letter-spacing:-0.015em; color:var(--ink-900); }
 .cfl-flow { margin:6px 0 20px; font-family:var(--font-body); font-size:15px; line-height:1.5; color:var(--ink-600); }

@@ -136,6 +136,15 @@
   --measure-aside: 46ch;
   --radius-chrome: 18px;
   --radius-control: 8px;
+  --glass-surface:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.52) 0%, rgba(255, 255, 255, 0.08) 42%, rgba(250, 250, 249, 0.04) 100%),
+    rgba(250, 250, 249, 0.7);
+  --glass-filter: blur(40px) saturate(1.85);
+  --glass-border: 1px solid rgba(255, 255, 255, 0.55);
+  --glass-shadow:
+    var(--shadow-header),
+    inset 0 1px 0 rgba(255, 255, 255, 0.72),
+    inset 0 -1px 0 rgba(15, 14, 12, 0.04);
 }
 
 html, body {
@@ -249,6 +258,34 @@ body {
   box-shadow: 0 8px 20px rgba(15, 14, 12, 0.10);
 }
 
+.btn--glass {
+  isolation: isolate;
+  background: var(--glass-surface);
+  backdrop-filter: var(--glass-filter);
+  -webkit-backdrop-filter: var(--glass-filter);
+  border: var(--glass-border);
+  color: var(--ink-900);
+  box-shadow: var(--glass-shadow);
+}
+.btn--glass:hover {
+  background: var(--glass-surface);
+  box-shadow: var(--glass-shadow), 0 8px 20px rgba(15, 14, 12, 0.10);
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .btn--glass {
+    background: var(--ink-50);
+  }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .btn--glass {
+    background: var(--ink-50);
+    backdrop-filter: none;
+    -webkit-backdrop-filter: none;
+    border: 1px solid var(--ink-200);
+    box-shadow: var(--shadow-header);
+  }
+}
+
 .btn--ghost {
   background: transparent;
   color: var(--brand-700);
@@ -277,22 +314,29 @@ body {
   width: 100%;
   max-width: 680px;
   padding: 6px 8px 6px 6px;
-  background: rgba(250, 250, 249, 0.78);
-  backdrop-filter: blur(22px) saturate(1.4);
-  -webkit-backdrop-filter: blur(22px) saturate(1.4);
-  border: none;
+  isolation: isolate;
+  background: var(--glass-surface);
+  backdrop-filter: var(--glass-filter);
+  -webkit-backdrop-filter: var(--glass-filter);
+  border: var(--glass-border);
   border-radius: var(--radius-chrome);
-  box-shadow: var(--shadow-header);
+  box-shadow: var(--glass-shadow);
   transition: transform .24s ease, opacity .24s ease, box-shadow .24s ease;
   will-change: transform, opacity;
   visibility: visible;
+}
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .site-header-pill {
+    background: var(--ink-50);
+  }
 }
 @media (prefers-reduced-transparency: reduce) {
   .site-header-pill {
     background: var(--ink-50);
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
-    border: none;
+    border: 1px solid var(--ink-200);
+    box-shadow: var(--shadow-header);
   }
 }
 
@@ -334,7 +378,7 @@ body {
 .site-nav a {
   position: relative;
   padding-bottom: 2px;
-  color: var(--ink-800);
+  color: var(--ink-900);
   text-decoration: none;
   transition: color .16s ease;
 }
@@ -694,7 +738,8 @@ html {
 .pinned-story--static .pinned-story-media {
   width: 100%;
   height: min(38vh, 280px);
-  min-height: 180px;
+  min-height: 0;
+  overflow: hidden;
 }
 .pinned-story--static .pinned-story-media img {
   width: 100%;

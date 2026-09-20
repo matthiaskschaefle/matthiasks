@@ -6,6 +6,10 @@ const HOLD_DELAY = 1500;
 const EMPTY_DELAY = 260;
 const PROGRESS_TICK = 50;
 
+function cycleMsFor(phrase) {
+  return Math.max(1, (phrase?.length ?? 0) * 133 + 1760);
+}
+
 export function useTypewriter(phrases, { enabled, paused }) {
   const [phraseIndex, setPhraseIndex] = useState(0);
   const [displayedLength, setDisplayedLength] = useState(0);
@@ -25,7 +29,7 @@ export function useTypewriter(phrases, { enabled, paused }) {
   const progressInactiveStartedAtRef = useRef(null);
   const progressPhraseIndexRef = useRef(null);
   const pausedRef = useRef(paused);
-  const cycleMsRef = useRef(0);
+  const cycleMsRef = useRef(cycleMsFor(phrases[0]));
 
   const activePhrase = phrases[phraseIndex] ?? phrases[0] ?? "";
 
@@ -81,8 +85,8 @@ export function useTypewriter(phrases, { enabled, paused }) {
 
   useEffect(() => {
     pausedRef.current = paused;
-    cycleMsRef.current = activePhrase.length * 133 + 1760;
-  }, [activePhrase.length, paused]);
+    cycleMsRef.current = cycleMsFor(activePhrase);
+  }, [activePhrase, paused]);
 
   useEffect(() => {
     if (!enabled) {
@@ -95,10 +99,14 @@ export function useTypewriter(phrases, { enabled, paused }) {
       return;
     }
 
-    if (progressPhraseIndexRef.current !== phraseIndex) {
+    if (
+      progressPhraseIndexRef.current !== phraseIndex
+      || progressStartedAtRef.current === null
+    ) {
       progressPhraseIndexRef.current = phraseIndex;
-      progressStartedAtRef.current = performance.now();
-      progressInactiveStartedAtRef.current = paused ? performance.now() : null;
+      const now = performance.now();
+      progressStartedAtRef.current = now;
+      progressInactiveStartedAtRef.current = paused ? now : null;
       return;
     }
 
@@ -119,7 +127,7 @@ export function useTypewriter(phrases, { enabled, paused }) {
       const elapsed = performance.now() - progressStartedAtRef.current;
       setProgressState({
         phraseIndex: progressPhraseIndexRef.current,
-        value: Math.min(1, elapsed / cycleMsRef.current),
+        value: Math.min(1, elapsed / Math.max(cycleMsRef.current, 1)),
       });
     }, PROGRESS_TICK);
 

@@ -8,6 +8,32 @@ import {
 import Frame from "./Frame.jsx";
 import { getImageDims } from "./imageDims.js";
 
+function splitObservationDecision(text) {
+  const match = String(text).match(/^Observation:\s*([\s\S]+?)\s*Decision:\s*([\s\S]+)$/);
+  if (!match) return null;
+  return { observation: match[1].trim(), decision: match[2].trim() };
+}
+
+function Description({ text }) {
+  const parts = splitObservationDecision(text);
+  if (!parts) {
+    return <p className="ms-ba__desc">{text}</p>;
+  }
+
+  return (
+    <div className="ms-ba__desc">
+      <p className="ms-ba__fact">
+        <span className="ms-ba__fact-label">Observation</span>
+        {parts.observation}
+      </p>
+      <p className="ms-ba__fact">
+        <span className="ms-ba__fact-label">Decision</span>
+        {parts.decision}
+      </p>
+    </div>
+  );
+}
+
 function Screen({ shot }) {
   const dims = getImageDims(shot.src, "BeforeAfter");
   return (
@@ -74,7 +100,7 @@ export default function BeforeAfter({
         </div>
         <figcaption className="ms-ba__text">
           <h3 className="ms-ba__title">{title}</h3>
-          <p className="ms-ba__desc">{description}</p>
+          <Description text={description} />
           {caption && <p className="ms-ba__caption">{caption}</p>}
         </figcaption>
       </div>

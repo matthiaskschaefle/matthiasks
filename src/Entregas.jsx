@@ -110,7 +110,7 @@ img { max-width:100%; display:block; }
 
 /* ── HERO ── */
 .case-hero { display:flex; flex-direction:column; gap:24px; margin-bottom:0; position:relative; }
-.case-hero-backdrop { position:absolute; top:-140px; right:-180px; width:560px; height:560px; border-radius:50%; background:radial-gradient(circle at 35% 35%, rgba(var(--accent-rgb),0.10) 0%, rgba(var(--accent-rgb),0.045) 40%, transparent 70%); pointer-events:none; z-index:0; }
+.case-hero-backdrop { position:absolute; top:-140px; right:-180px; width:560px; height:560px; border-radius:50%; background:radial-gradient(circle at 35% 35%, rgba(var(--accent-rgb),0.10) 0%, rgba(var(--accent-rgb),0.045) 40%, transparent 70%); box-shadow:inset 0 24px 64px rgba(15,14,12,0.07), inset 0 -12px 36px rgba(255,255,255,0.16); pointer-events:none; z-index:0; }
 @media(max-width:900px){ .case-hero-backdrop{display:none;} }
 .case-eyebrow { font-family:var(--font-mono); font-size:var(--label-1-size); text-transform:uppercase; letter-spacing:var(--label-1-track); color:var(--ink-600); }
 .case-title-main { font-family:var(--font-display); font-size:40px; font-weight:500; letter-spacing:-0.02em; margin:0; color:var(--ink); line-height:1.1; }
@@ -347,8 +347,7 @@ grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
 
 /* ── ALTERNATIVES (considered and discarded) ── */
 .alt-block { margin-top: 28px; }
-.alt-block-label { display:inline-flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:var(--label-1-size); font-weight:500; text-transform:uppercase; letter-spacing:var(--label-1-track); color:var(--ink-600); }
-.alt-block-label::before { content:""; width:7px; height:7px; border-radius:999px; background:var(--gold-400); }
+.alt-block-label { display:inline-flex; align-items:center; font-family:var(--font-mono); font-size:var(--label-1-size); font-weight:500; text-transform:uppercase; letter-spacing:var(--label-1-track); color:var(--ink-600); }
 .alt-block-intro { font-family:var(--font-body); font-size:15px; line-height:1.7; color:var(--ink-600); margin:10px 0 18px; max-width:var(--measure-body); }
 .alt-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
 .alt-card { padding:18px 18px 20px; border:none; border-radius:14px; background:#fff; box-shadow:var(--shadow-fine); display:flex; flex-direction:column; gap:8px; }
@@ -371,15 +370,7 @@ grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
 
 /* Delivery comparisons keep the exported screens almost square. */
 .delivery-before-after .ms-frame--phone { border-radius:10px; }
-.delivery-before-after.ms-ba--focus-top .ms-ba__cell:first-child .ms-frame--phone {
-  border-top-color: transparent;
-}
-.delivery-before-after.ms-ba--focus-top .ms-ba__cell:first-child .ms-ba__img {
-  width: calc(100% + 2px);
-  max-width: none;
-  left: -1px;
-  top: -2px;
-}
+.delivery-before-after.ms-ba--focus-top .ms-ba__cell:first-child .ms-ba__img { top: -24px; }
 
 `}</style>
 

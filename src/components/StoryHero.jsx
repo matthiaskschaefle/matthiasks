@@ -1,4 +1,4 @@
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { DURATION, EASE } from "@/lib/animations";
 import { useTypewriter } from "@/lib/useTypewriter";
@@ -36,13 +36,16 @@ function commonPrefix(phrases) {
 }
 
 export default function StoryHero({ frames, heading }) {
-  const shouldReduceMotion = useReducedMotion();
+  const reduceMotion = useReducedMotion();
+  const shouldReduceMotion = reduceMotion === true;
   const [hovered, setHovered] = useState(false);
+  const [hoverArmed, setHoverArmed] = useState(false);
   const [focused, setFocused] = useState(false);
   const [manualNavigationActive, setManualNavigationActive] = useState(false);
   const [manualIndex, setManualIndex] = useState(0);
   const [direction, setDirection] = useState(1);
-  const paused = (hovered || focused) && !manualNavigationActive;
+  const [readyIndex, setReadyIndex] = useState(-1);
+  const [pauseIndex, setPauseIndex] = useState(0);
 
   const prefix = useMemo(
     () => commonPrefix(frames.map((frame) => frame.phrase)),
@@ -52,6 +55,12 @@ export default function StoryHero({ frames, heading }) {
     () => frames.map((frame) => frame.phrase.slice(prefix.length)),
     [frames, prefix],
   );
+
+  const userPaused = ((hoverArmed && hovered) || focused) && !manualNavigationActive;
+  const paused = userPaused
+    || reduceMotion === null
+    || readyIndex !== pauseIndex;
+
   const {
     text,
     phraseIndex,
@@ -63,11 +72,40 @@ export default function StoryHero({ frames, heading }) {
   });
 
   const activeIndex = shouldReduceMotion ? manualIndex : phraseIndex;
+  if (pauseIndex !== activeIndex) {
+    setPauseIndex(activeIndex);
+  }
+  const mediaReady = readyIndex === activeIndex;
   const activeFrame = frames[activeIndex];
   const displayedText = shouldReduceMotion
     ? variablePhrases[activeIndex]
     : text;
   const srSentence = `${frames[0].phrase}.`;
+
+  const markReady = (index) => {
+    setReadyIndex((current) => (current === index ? current : index));
+  };
+
+  useEffect(() => {
+    if (readyIndex === activeIndex) return undefined;
+    const fallback = window.setTimeout(() => markReady(activeIndex), 160);
+    return () => window.clearTimeout(fallback);
+  }, [activeIndex, readyIndex]);
+
+  useEffect(() => {
+    const nextSrc = frames[(activeIndex + 1) % frames.length]?.img;
+    if (!nextSrc) return undefined;
+    const prefetch = new Image();
+    prefetch.src = nextSrc;
+    return undefined;
+  }, [activeIndex, frames]);
+
+  const bindPhotoNode = (node, index) => {
+    if (!node) return;
+    if (node.complete && node.naturalWidth > 0) {
+      queueMicrotask(() => markReady(index));
+    }
+  };
 
   const navigate = (step, resumeAfterNavigation = false) => {
     const nextIndex = (activeIndex + step + frames.length) % frames.length;
@@ -92,11 +130,22 @@ export default function StoryHero({ frames, heading }) {
       className="story-hero"
       aria-label="Introduction"
       tabIndex={0}
-      onMouseEnter={() => setHovered(true)}
+      onPointerMove={() => {
+        if (!hoverArmed) setHoverArmed(true);
+        setHovered(true);
+      }}
+      onMouseEnter={() => {
+        if (hoverArmed) setHovered(true);
+      }}
       onMouseLeave={() => {
         setHovered(false);
       }}
-      onFocus={() => setFocused(true)}
+      onFocus={(event) => {
+        const target = event.currentTarget;
+        window.requestAnimationFrame(() => {
+          if (target.matches(":focus-visible")) setFocused(true);
+        });
+      }}
       onBlur={(event) => {
         if (!event.currentTarget.contains(event.relatedTarget)) {
           setFocused(false);
@@ -132,7 +181,7 @@ export default function StoryHero({ frames, heading }) {
             : index < activeIndex
               ? 100
               : index === activeIndex
-                ? progress * 100
+                ? (mediaReady ? progress * 100 : 0)
                 : 0;
 
           return (
@@ -154,9 +203,12 @@ export default function StoryHero({ frames, heading }) {
             alt={activeFrame.alt}
             loading={activeIndex === 0 ? "eager" : "lazy"}
             decoding="async"
+            onLoad={() => markReady(activeIndex)}
+            onError={() => markReady(activeIndex)}
+            ref={(node) => bindPhotoNode(node, activeIndex)}
           />
         ) : (
-          <AnimatePresence mode="popLayout" custom={direction}>
+          <AnimatePresence mode="popLayout" custom={direction} initial={false}>
             <motion.img
               key={activeFrame.phrase}
               src={activeFrame.img}
@@ -172,6 +224,9 @@ export default function StoryHero({ frames, heading }) {
               }}
               loading={activeIndex === 0 ? "eager" : "lazy"}
               decoding="async"
+              onLoad={() => markReady(activeIndex)}
+              onError={() => markReady(activeIndex)}
+              ref={(node) => bindPhotoNode(node, activeIndex)}
             />
           </AnimatePresence>
         )}

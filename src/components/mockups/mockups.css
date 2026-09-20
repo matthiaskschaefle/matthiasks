@@ -423,10 +423,26 @@
 }
 .ms-ba__desc {
   margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
   font-family: var(--font-body);
   font-size: 14px;
   line-height: 1.7;
   color: var(--ink-600);
+}
+.ms-ba__fact {
+  margin: 0;
+}
+.ms-ba__fact-label {
+  display: block;
+  margin-bottom: 4px;
+  font-family: var(--font-mono);
+  font-size: var(--label-1-size);
+  font-weight: 500;
+  letter-spacing: var(--label-1-track);
+  text-transform: uppercase;
+  color: var(--brand-600);
 }
 .ms-ba__caption {
   margin: 12px 0 0;
