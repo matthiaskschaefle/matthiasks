@@ -10,17 +10,19 @@ This is not the Marcelo Gramas project.
 ## Current branch (2026-09-20)
 
 - Working branch: `portfolio-improvements`
-- This snapshot closes the reviewed uncommitted work on top of `49b2eac`. Source push to `origin/portfolio-improvements` is authorized. Deploy, merge to `main`, and force push are not.
-- `origin/main` is still `4fe5307`. Not merged.
+- Source of this round: `2fc6681` (`2fc668148554beaa99c406ef7cc5d0dbc7db073c`). Pushed to `origin/portfolio-improvements`. This HANDOFF commit sits after that SHA.
+- `origin/main` is still `4fe5307`. Not merged. No force push.
 
-## Publication (last verified live, 2026-09-17)
+## Publication (2026-09-20)
 
 | Place | SHA | Notes |
 | --- | --- | --- |
-| `matthiasks` `portfolio-improvements` | this snapshot after `49b2eac` | Source of truth for the reviewed site. Not what Hostinger deploys. |
-| `matthiasks` `deploy` | `a9cc2f9` | Production files mirrored. Hostinger does **not** pull this repo. Sketch file omitted from this tree. |
-| `matthias-portfolio` `deploy` | `5549d05` | This is what Hostinger auto-deploys. Fast-forward from `75a92a2`. No force push. |
-| Live `https://matthiasks.com/` | HTML `last-modified: 2026-09-17 20:18:23 GMT` | Not updated in this round. No deploy. |
+| `matthiasks` `portfolio-improvements` | `2fc6681` (work) | Local round committed and pushed. HANDOFF follows on the same branch. |
+| `matthiasks` `deploy` | `a9cc2f9` | Not updated in this round. Hostinger does **not** pull this repo. |
+| `matthias-portfolio` `deploy` | `ceba710` (`ceba710a07ed0fd18ca4281e734c61c705722521`) | Fast-forward from `fa21668`. Message: `Deploy: local mockup and chrome round (source 2fc6681)`. `.htaccess` unchanged. `delivery-route-sketch.webp` not present in this tree. |
+| Live `https://matthiasks.com/` | still `index-D9ubmCtu.js` | HTML `last-modified: 2026-09-20 17:12:19 GMT`. That matches the previous Hostinger pull of `fa21668` (source `b50746d`). New hashed files `index-D4I6PLU1.js` and `index-D6qXg9l5.css` are not on the origin yet (`index-D4I6PLU1.js` falls back to `text/html`). |
+
+GitHub has the new production tree. Hostinger has not pulled `ceba710` as of 2026-09-20 20:53 GMT. The previous Hostinger pull of `fa21668` landed within seconds of that Git push. This round had no matching pull after about 20 minutes.
 
 ## How to publish next time
 
@@ -29,14 +31,24 @@ This is not the Marcelo Gramas project.
 3. Copy `dist/` onto `matthias-portfolio` `deploy` (Apache tree: `.htaccess`, hashed `assets/`, `index.html`). Keep `delivery-route-sketch.webp` out of the published tree.
 4. Commit on that history (existing message style: `Deploy: ... (source <sha>)`) and `git push` without `--force`.
 5. Wait until `https://matthiasks.com/` HTML references the new hashed JS. Hostinger `last-modified` should move. Then visually check `/`, `/delivery`, `/resume`, and the PDF.
+6. If GitHub `deploy` is ahead of live HTML, pull `matthiaskschaefle/matthias-portfolio` `deploy` in hPanel Git. Credentials are not in this repo.
 
 Optional: also update `matthiasks.git` `deploy` so the two deploy trees do not drift.
 
-Commit, push, and deploy only when Matthias explicitly authorizes each step. This snapshot may be on `origin/portfolio-improvements` and still unpublished.
+Commit, push, and deploy only when Matthias explicitly authorizes each step.
+
+## This round (source `2fc6681`)
+
+Uncommitted local work was reviewed, then committed as-is. No extra product edits.
+
+- DuoPet competitor mockups: Figma Screen PNGs `competitor-vetster-mockup.png` and `competitor-vets-mockup.png` (316x645), clipped silhouette `drop-shadow`. Inner `*-screen.png` files and the older `pet-profile` / `time-picker` copies are in the repo.
+- Case hash restore waits for preceding layout, skips unstarted lazy images, and aborts if the user scrolls.
+- StoryHero first-photo timer, Delivery Before crop `-24px`, hero disc inset shadow, glass header/footer, Observation/Decision labels, Delivery wire mockup in `imageManifest.json`.
+- Resume PDF was not regenerated. Live and local public copies match sha256 `4c205e767499a26a658a2f0a6b9376605e4d9859f62f96277a8066ef5d3509d9`.
 
 ## Delivery sketch
 
-`public/assets/portfolio/delivery-route-sketch.webp` was rejected. It stays in the repo unused. Do not crop it, do not wire it into `/delivery`, and do not plan a later reintroduction. Do not delete the file.
+`public/assets/portfolio/delivery-route-sketch.webp` was rejected. It stays in the source repo unused. Do not crop it, do not wire it into `/delivery`, and do not plan a later reintroduction. Do not delete the file. It is absent from the published `matthias-portfolio` tree.
 
 ## Case hashes (2026-09-20)
 
@@ -45,37 +57,34 @@ Commit, push, and deploy only when Matthias explicitly authorizes each step. Thi
 - Invalid fragments (`#%ZZ`) must not throw. Missing ids leave the page where it is.
 - End-of-page hashes (short last sections) cannot sit under the header if remaining content is shorter than the viewport. That is document length, not double padding.
 - `sectionStagger` parent opacity stays 1 so a hash jump does not land on an invisible section.
+- This round did **not** re-measure live anchors after publish, because the public HTML is still the previous build.
 
 ## Resume PDF
 
 `/resume` is the only layout source. `branding/resume/capture.mjs` prints that route to a temp file, validates HTML facts plus PDF page/image counts, then copies to `branding/resume/CV_Matthias_Schaefle.pdf` and `public/assets/portfolio/2026/07/CV_Matthias_Schaefle_2026-07.pdf`. On generation or validation failure the existing copies stay. The browser closes in `finally`.
 
-Tested 2026-09-20 against `http://localhost:4173/resume`:
+Not regenerated in this round.
 
-1. `RESUME_FORCE_PDF_FAIL=1 node branding/resume/capture.mjs` threw after HTML load and left both PDFs at sha256 `38da13f57730b4e2652760c3c5042b187a2e82f60b642816c4fec66837ef3970`.
-2. `node branding/resume/capture.mjs` then wrote one A4 page (107 KB, 0 images) and both copies match sha256 `4c205e767499a26a658a2f0a6b9376605e4d9859f62f96277a8066ef5d3509d9`.
-3. `node --check branding/resume/capture.mjs` passes on syntax and does not catch undeclared identifiers. ESLint on `branding/resume/**/*.mjs` uses Node globals and `no-undef` (no React rules). A probe `copyFileSync(outputPath, publicPdfPath)` is a no-op for `node --check` and an error for ESLint.
-
-Content checks on `/resume` HTML before print: Licenciatura (not B.Sc.), Late 2014 to early 2016, Deutsch für den Beruf, technical phase has not started, 92% to 98% and 7 to 8 seconds separate from projected 30 to 40% disputes, tel/mail/site links, role UX/UI Designer.
-
-Intro still separates paid UX/UI client work from React/Vite on this portfolio. Doctor remains WordPress.
-
-Preview download: after `npm run build`, `/resume` serves the public filename from `dist/`. Restart preview if it was started before the PDF copy.
-
-## Lint and build (this environment, 2026-09-20)
+## Lint and build (this environment, 2026-09-20, before commit `2fc6681`)
 
 - `npm run lint`: 0 errors
-- `npm run build`: Vite 7.3.6 succeeded
+- `npm run build`: Vite 7.3.6 succeeded (`index-D4I6PLU1.js`, `index-D6qXg9l5.css`, `case-duopet-CGlHwIFL.js`)
 - `git diff --check`: clean
+
+## Live checks actually executed (2026-09-20 20:53 GMT)
+
+- `GET` 200: `/`, `/about`, `/delivery`, `/doctor`, `/duopet`, `/resume` (all `text/html` of the **previous** build, script `index-D9ubmCtu.js`).
+- `GET` 200 PDF, sha256 match with local `CV_Matthias_Schaefle_2026-07.pdf`.
+- New mockup `https://matthiasks.com/assets/portfolio/2026/03/competitor-vetster-mockup.png` is **not** on origin yet.
+- Firefox, Safari/WebKit, and a full live anchor pass were **not** run.
 
 ## Pending
 
-- Deploy this snapshot to `matthias-portfolio` `deploy` only with a separate authorization. Not done in this round. Source commit/push does not update matthiasks.com.
+- Hostinger pull of `matthias-portfolio` `ceba710`. Until `index.html` points at `index-D4I6PLU1.js`, matthiasks.com is not this round.
 - Merge or rebase into `main` if Matthias wants GitHub `main` to match the live source.
 - Decide whether `matthiasks.git` should stay public.
-- Hero VP9 alpha was checked in Chrome. Firefox and Safari/WebKit were not tested here.
+- Hero VP9 alpha was checked in Chrome in an earlier round. Firefox and Safari/WebKit were not tested here.
 - `src/lib/positioning.js` still comments that remaining pages are wired in W6. Do not invent a Biology-to-design story.
-- Hostinger credentials are not in this repo. If auto-deploy stops, publication blocks on hPanel Git for `matthiaskschaefle/matthias-portfolio` `deploy`.
 
 ## Factual constraints (do not invent)
 
