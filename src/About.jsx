@@ -54,7 +54,7 @@ box-sizing: border-box;
 }
 
 html {
-scroll-behavior: smooth;
+scroll-behavior: auto;
 }
 
 body {
@@ -124,6 +124,7 @@ padding-top: 4px;
 margin: 0;
 font-family: var(--font-mono);
 font-size: var(--label-2-size);
+line-height: 1.35;
 text-transform: uppercase;
 letter-spacing: var(--label-2-track);
 color: var(--ink-600);
@@ -139,6 +140,7 @@ text-align: left;
 
 .about-body {
 flex: 1 1 auto;
+font-family: var(--font-body);
 font-size: 16px;
 line-height: 1.7;
 color: var(--ink-700);
@@ -169,66 +171,57 @@ flex-direction: column;
 gap: 18px;
 }
 
-.about-highlight-title {
+.about-highlight-title,
+.about-skill-title {
 font-family: var(--font-display);
 font-size: 16px;
 font-weight: 600;
-margin: 0;
-margin-bottom: 4px;
+line-height: 1.4;
+color: var(--ink-900);
+margin: 0 0 6px;
 }
 
-.about-highlight-text {
-font-size: 15px;
-line-height: 1.7;
-color: var(--ink-600);
-}
-
+.about-highlight-text,
+.about-skill-note,
 .about-skills-subtitle {
-font-size: 15px;
-line-height: 1.6;
-color: var(--ink-600);
+font-family: var(--font-body);
+font-size: 16px;
+line-height: 1.7;
+color: var(--ink-700);
 }
 
 .about-skill-groups {
 display: flex;
 flex-direction: column;
 gap: 20px;
-margin-top: 20px;
-}
-
-.about-skill-title {
-margin: 0 0 9px;
-font-family: var(--font-display);
-font-size: 15px;
-font-weight: 600;
-color: var(--ink-900);
-}
-
-.about-skill-note {
-margin: -2px 0 10px;
-font-size: 13px;
-line-height: 1.6;
-color: var(--ink-600);
+margin-top: 8px;
 }
 
 .about-skill-list {
 list-style: none;
 margin: 0;
 padding: 0;
-display: flex;
-flex-wrap: wrap;
-gap: 8px;
+display: block;
+font-family: var(--font-body);
+font-size: 16px;
+line-height: 1.7;
+color: var(--ink-700);
 }
 
 .about-skill-chip {
-padding: 5px 9px;
-border: var(--hairline);
-border-radius: 999px;
-font-family: var(--font-mono);
-font-size: 11px;
-line-height: 1.45;
-color: var(--ink-700);
-background: var(--ink-100);
+display: inline;
+padding: 0;
+border: none;
+border-radius: 0;
+font-family: inherit;
+font-size: inherit;
+line-height: inherit;
+color: inherit;
+background: none;
+}
+
+.about-skill-chip:not(:last-child)::after {
+content: ", ";
 }
 
 @media (max-width: 768px) {
@@ -239,11 +232,10 @@ gap: 12px;
 
 .about-label {
 flex: 0 0 auto;
-font-size: 12px;
-letter-spacing: var(--label-2-track);
 }
-.about-body {
-font-size: 15px;
+
+.about-label .case-section-label-text {
+white-space: normal;
 }
 }
 
@@ -288,10 +280,10 @@ About
 </TypedSectionLabel>
 <div className="about-body">
 <p>
-Today I work as a freelance UX/UI Designer in Berlin. My work covers user research, interaction design, interface design, and implementation for selected web projects.
+Freelance UX/UI Designer in Berlin. I work across user research, interaction design, interface design, and selected web builds.
 </p>
 <p>
-I am looking for a product team where I can contribute across discovery and delivery, while continuing to deepen my experience in digital products.
+I am looking for a product team in Germany. I live in Berlin and hold German and Brazilian citizenship.
 </p>
 </div>
 </div>
@@ -307,7 +299,7 @@ From Brazil to Berlin
 </TypedSectionLabel>
 <div className="about-body">
 <p>
-I first lived in Germany during a two-year academic exchange in Munich. I now live in Berlin and hold German and Brazilian citizenship. Working across Portuguese, English, and German environments has made me comfortable adapting to different teams and contexts.
+Academic exchange in Munich, late 2014 to early 2016. I now work in Portuguese, English, and German.
 </p>
 </div>
 </div>
@@ -328,16 +320,16 @@ What differentiates me as a designer
 Research grounded in real workflows
 </h3>
 <div className="about-highlight-text">
-For <Link to="/delivery">Delivery</Link>, I observed routes and interviewed couriers handling 80 to 130 stops a day before defining the redesigned flow.
+For <Link to="/delivery">Delivery</Link>, I observed routes and interviewed couriers. Their working days ran to 80 to 130 stops.
 </div>
 </div>
 
 <div>
 <h3 className="about-highlight-title">
-Design clients can maintain
+Visual identity that stayed in use
 </h3>
 <div className="about-highlight-text">
-For <Link to="/doctor">Doctor</Link>, I delivered a website and visual identity that the client has maintained independently since 2024.
+For <Link to="/doctor">Doctor</Link>, I delivered a WordPress site and the visual identity. Others later rebuilt the site. The logo and palette remain in use.
 </div>
 </div>
 
@@ -346,7 +338,7 @@ For <Link to="/doctor">Doctor</Link>, I delivered a website and visual identity 
 Prototypes close to implementation
 </h3>
 <div className="about-highlight-text">
-I use React and Vite to prototype and build responsive interfaces, including <a href="#colophon">this portfolio</a>.
+I prototype in React and Vite, including <a href="#colophon">this portfolio</a>.
 </div>
 </div>
 </div>
@@ -358,10 +350,9 @@ I use React and Vite to prototype and build responsive interfaces, including <a 
 Skills and tools
 </TypedSectionLabel>
 <div className="about-body">
-<p className="about-skills-subtitle">What I use today.</p>
 <div className="about-skill-groups">
 <div>
-<h3 className="about-skill-title">Design</h3>
+<h3 className="about-skill-title">Design practice</h3>
 <ul className="about-skill-list">
 <li className="about-skill-chip">User research</li>
 <li className="about-skill-chip">Interviews</li>
@@ -373,7 +364,7 @@ Skills and tools
 </ul>
 </div>
 <div>
-<h3 className="about-skill-title">Build</h3>
+<h3 className="about-skill-title">Tools</h3>
 <ul className="about-skill-list">
 <li className="about-skill-chip">Figma</li>
 <li className="about-skill-chip">React</li>
@@ -387,15 +378,15 @@ Skills and tools
 <div>
 <h3 className="about-skill-title">Currently studying</h3>
 <p className="about-skill-note">
-I am completing the German B2 phase of a WBS Weiterbildung. The front-end and AI technical curriculum begins afterward.
+Three months of Deutsch für den Beruf at WBS Coding School. AI Software Development has not started yet.
 </p>
 </div>
 <div>
 <h3 className="about-skill-title">Languages</h3>
 <ul className="about-skill-list">
 <li className="about-skill-chip">Portuguese (native)</li>
-<li className="about-skill-chip">English</li>
-<li className="about-skill-chip">German (B1 certified; B2 professional course in progress)</li>
+<li className="about-skill-chip">English (fluent)</li>
+<li className="about-skill-chip">German (B1 certified, Deutsch für den Beruf in progress)</li>
 </ul>
 </div>
 </div>
@@ -426,7 +417,7 @@ custom design tokens, no UI framework
 </li>
 <li>
 <span className="about-colophon-key">Motion:</span>{" "}
-respects prefers-reduced-motion in CSS and in components
+respects prefers-reduced-motion
 </li>
 <li>
 <span className="about-colophon-key">Imagery:</span>{" "}

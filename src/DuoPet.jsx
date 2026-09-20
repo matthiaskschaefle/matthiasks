@@ -6,7 +6,7 @@ import { applySeo } from "@/lib/seo";
 import CountUp from "./components/CountUp.jsx";
 import SiteHeader from "./components/SiteHeader.jsx";
 import SiteFooter from "./components/SiteFooter.jsx";
-import ScrollspyPill from "./components/ScrollspyPill.jsx";
+import CaseContents, { CaseBackToContents } from "./components/CaseContents.jsx";
 import PinnedStory from "./components/PinnedStory.jsx";
 import Figure from "./components/mockups/Figure.jsx";
 import SnapGallery from "./components/mockups/SnapGallery.jsx";
@@ -18,8 +18,6 @@ import TypedSectionLabel from "./components/TypedSectionLabel.jsx";
 * Image URLs are placeholders - replace later.
 */
 
-const CASE_SECTION_IDS = ["overview", "research", "decisions", "design", "results", "reflections"];
-
 const CASE_SECTIONS = [
 { id: "overview", label: "overview" },
 { id: "research", label: "research" },
@@ -29,15 +27,14 @@ const CASE_SECTIONS = [
 { id: "reflections", label: "reflections" },
 ];
 
-const SEO_TITLE = "DuoPet Vet Booking | UX Case Study | Matthias Schaefle";
-const SEO_DESCRIPTION = "UX course project for a veterinary appointment prototype, covering research, information architecture, interaction design, and usability testing.";
-const SEO_OG_TITLE = "DuoPet Vet Booking | UX Case Study";
-const SEO_OG_DESCRIPTION = "A tested mobile concept designed to make veterinary appointment booking faster and less stressful.";
+const SEO_TITLE = "DuoPet Vet Booking | Educational UX Case Study | Matthias Schaefle";
+const SEO_DESCRIPTION = "Educational 2023 UX course project with Leticia Magri: a veterinary booking prototype based on a survey of 164 pet owners, five interviews, and two usability rounds.";
+const SEO_OG_TITLE = "DuoPet: educational veterinary booking prototype";
+const SEO_OG_DESCRIPTION = "A 2023 UX course prototype for booking vet appointments. Not a launched product.";
 
-function NumberCard({ number, title, description }) {
+function NumberCard({ title, description }) {
 return (
 <motion.article className="research-card" variants={fadeUp}>
-<div className="research-number">{number}</div>
 <h4 className="research-title">{title}</h4>
 <p className="research-text">{description}</p>
 </motion.article>
@@ -62,7 +59,7 @@ rows: [
 ],
 };
 
-function CompetitiveMatrix({ prefersReducedMotion }) {
+export function CompetitiveMatrix({ prefersReducedMotion }) {
 const rowV = prefersReducedMotion ? fadeIn : fadeUp;
 const containerV = {
 hidden: { opacity: 0 },
@@ -155,19 +152,9 @@ visible: { opacity: 1, transition: { duration: DURATION.slow, ease: EASE.out, st
 }}
 aria-label="Competitor booking flow review"
 >
-{COMPETITOR_FLOWS.map((competitor, index) => (
-<motion.article className="cfl-card" variants={itemV} key={competitor.app}>
-<header className="cfl-head">
-<span className="cfl-index" aria-hidden="true">0{index + 1}</span>
-<div className="cfl-title-wrap">
-<h4 className="cfl-app">{competitor.app}</h4>
-<p className="cfl-flow">{competitor.flow}</p>
-</div>
-<span className="cfl-chip">Competitor</span>
-</header>
-
+{COMPETITOR_FLOWS.map((competitor) => (
+<motion.article className="cfl-row" variants={itemV} key={competitor.app}>
 <figure className="cfl-evidence">
-<div className="cfl-screen">
 <img
 src={competitor.image}
 alt={competitor.alt}
@@ -176,19 +163,15 @@ decoding="async"
 width={competitor.width}
 height={competitor.height}
 />
-</div>
-<figcaption>Observed product flow</figcaption>
 </figure>
-
-<div className="cfl-panel cfl-panel--flaws">
-<p className="cfl-panel-label"><span aria-hidden="true">!</span> Observed flaws</p>
+<div className="cfl-copy">
+<h4 className="cfl-app">{competitor.app}</h4>
+<p className="cfl-flow">{competitor.flow}</p>
+<p className="cfl-kicker">What we saw</p>
 <ul className="cfl-list">
 {competitor.flaws.map((flaw) => <li key={flaw}>{flaw}</li>)}
 </ul>
-</div>
-
-<div className="cfl-panel cfl-panel--opportunity">
-<p className="cfl-panel-label"><span aria-hidden="true">↗</span> Design opportunity</p>
+<p className="cfl-kicker">What we would change</p>
 <p className="cfl-opportunity">{competitor.opportunity}</p>
 </div>
 </motion.article>
@@ -268,7 +251,7 @@ ideas: [
 },
 ];
 
-function DecisionMatrix() {
+export function DecisionMatrix() {
 return (
 <figure className="dmx" aria-label="Impact and effort prioritization matrix">
 <div className="dmx-board">
@@ -308,7 +291,6 @@ return (
 const SOLUTION_COMPARISONS = [
 {
 id: "proximity",
-number: "01",
 title: "Proximity visible from the Home screen",
 description: "The wireframe established nearby veterinarians as the primary list. The final Home added the upcoming appointment and explicit distances without hiding the core discovery flow.",
 wire: "/assets/portfolio/2026/07/duopet-wireframe-01.png",
@@ -320,7 +302,6 @@ midLabel: "Final",
 },
 {
 id: "emergency",
-number: "02",
 title: "Emergency care available without a typed query",
 description: "The map wireframe introduced an emergency shortcut. The final screen keeps that action beside Nearby and adds a result card with distance, opening hours, and phone number.",
 wire: "/assets/portfolio/2026/07/duopet-wireframe-03.png",
@@ -332,9 +313,8 @@ midLabel: "Final",
 },
 {
 id: "schedule",
-number: "03",
 title: "The calendar moved out of the profile",
-description: "The second usability round tested the resolved screens. Participants struggled with the calendar embedded in the veterinarian profile, so scheduling became its own step, with the month view and the available times for the selected day.",
+description: "In the second usability round, on the resolved screens, 5 pet owners struggled with the calendar inside the veterinarian profile. Scheduling became its own step. That screen was implemented after the finding. This case does not include a later retest of the new step.",
 wire: "/assets/portfolio/2026/07/duopet-mid-fi-02.png",
 wireAlt: "DuoPet veterinarian profile with ratings, location, and the calendar embedded below",
 wireLabel: "Tested version",
@@ -359,7 +339,6 @@ return (
 {SOLUTION_COMPARISONS.map((solution) => (
 <motion.article className="solution-compare" variants={cardV} key={solution.id}>
 <header className="solution-compare-copy">
-<span className="solution-compare-number">{solution.number}</span>
 <div>
 <h4>{solution.title}</h4>
 <p>{solution.description}</p>
@@ -431,7 +410,7 @@ const DUOPET_ICONS = [
 { name: "Star", file: "star.png", group: "Animals & states" },
 ];
 
-function IconCatalog() {
+export function IconCatalog() {
 const groups = [...new Set(DUOPET_ICONS.map((icon) => icon.group))];
 return (
 <div className="icg">
@@ -479,8 +458,8 @@ visible: { opacity: 1, transition: { duration: DURATION.slow, ease: EASE.out, st
 };
 const rowV = prefersReducedMotion ? fadeIn : fadeUp;
 return (
-<motion.div className="effc" variants={containerV} initial="hidden" whileInView="visible" viewport={motionViewport} role="img" aria-label="Average scheduling time: DuoPet 45 seconds, MeuPet 50 seconds, Vets 53 seconds">
-<p className="effc-kicker">Average time to schedule an appointment</p>
+<motion.div className="effc" variants={containerV} initial="hidden" whileInView="visible" viewport={motionViewport} role="img" aria-label="Average time to schedule in the second course test with 5 pet owners: DuoPet 45 seconds, MeuPet 50 seconds, Vets 53 seconds">
+<p className="effc-kicker">Average time to schedule, second course test, 5 pet owners</p>
 {EFFICIENCY.map((row) => (
 <motion.div className="effc-row" variants={rowV} key={row.app} aria-hidden="true">
 <span className={row.self ? "effc-app effc-app--self" : "effc-app"}>{row.app}</span>
@@ -557,7 +536,7 @@ const DUOPET_TYPE = [
 { face: "Switzer", role: "Body", spec: "Line height and paragraph spacing: 1.4 x font size" },
 ];
 
-function TypeSpec({ prefersReducedMotion }) {
+export function TypeSpec({ prefersReducedMotion }) {
 const rowV = prefersReducedMotion ? fadeIn : fadeUp;
 const containerV = {
 hidden: { opacity: 0 },
@@ -594,7 +573,7 @@ columns: [
 source: "Persona synthesized from a survey with 164 pet owners and 5 in-person interviews",
 };
 
-function PersonaCard({ prefersReducedMotion }) {
+export function PersonaCard({ prefersReducedMotion }) {
 const childUp = prefersReducedMotion ? fadeIn : fadeUp;
 const containerV = {
 hidden: { opacity: 0 },
@@ -608,9 +587,7 @@ return (
 <h4 className="persona-name">{PERSONA.name}</h4>
 <div className="persona-tag">{PERSONA.tag}</div>
 </div>
-<div className="persona-meta">
-{PERSONA.meta.map((m) => <span key={m}>{m}</span>)}
-</div>
+<div className="persona-meta">{PERSONA.meta.join(", ")}</div>
 </motion.div>
 <motion.blockquote className="persona-quote" variants={childUp}>&ldquo;{PERSONA.quote}&rdquo;</motion.blockquote>
 <motion.p className="persona-bio" variants={childUp}>{PERSONA.bio}</motion.p>
@@ -671,7 +648,7 @@ points: [[100, 42], [300, 60], [500, 84], [700, 20]],
 path: "M100,42 C170,45 235,55 300,60 C365,65 435,82 500,84 C560,86 645,28 700,20",
 };
 
-function JourneyMap({ prefersReducedMotion }) {
+export function JourneyMap({ prefersReducedMotion }) {
 const [isMobile, setIsMobile] = useState(false);
 useEffect(() => {
 const check = () => setIsMobile(window.innerWidth < 900);
@@ -712,9 +689,8 @@ return (
 <motion.div aria-label="Journey map: Bella Rios" variants={boardV} initial="hidden" whileInView="visible" viewport={motionViewport}>
 {intro}
 <div className="journey-steps-stacked">
-{JOURNEY.steps.map((s, i) => (
+{JOURNEY.steps.map((s) => (
 <motion.div className="journey-step-card" key={s.goal} variants={childUp}>
-<span className="journey-step-chip">Step {i + 1}</span>
 <h4 className="journey-goal">{s.goal}</h4>
 <div className="journey-emotion-chip">{s.emotion}</div>
 <p className="journey-row-label">Actions</p>
@@ -737,9 +713,8 @@ return (
 <motion.div className="journey-board" aria-label="Journey map: Bella Rios" variants={boardV} initial="hidden" whileInView="visible" viewport={motionViewport}>
 {intro}
 <div className="journey-grid">
-{JOURNEY.steps.map((s, i) => (
+{JOURNEY.steps.map((s) => (
 <motion.div key={s.goal} variants={childUp}>
-<span className="journey-step-chip">Step {i + 1}</span>
 <h4 className="journey-goal">{s.goal}</h4>
 </motion.div>
 ))}
@@ -794,7 +769,7 @@ variants={prefersReducedMotion ? undefined : dotV}
 );
 }
 
-function DesignProcessDiagram({ prefersReducedMotion }) {
+export function DesignProcessDiagram({ prefersReducedMotion }) {
 const steps = [
 { id: 'empathize', label: 'Empathize', detail: '164 responses + 5 interviews', icon: (
 <svg viewBox="0 0 40 41" fill="none"><path d="M19.6895 12.7974V14.7104H10.2861V12.7974H19.6895ZM24.6855 7.79541V9.7085H10.2861V7.79541H24.6855ZM24.6855 2.79443V4.70752H10.2861V2.79443H24.6855Z" fill="currentColor" stroke="currentColor" strokeWidth="0.587729"/><path d="M5.14453 2.354V30.9263L10.5947 21.2261C10.7867 20.8792 11.0541 20.5799 11.377 20.3501C11.7003 20.12 12.0719 19.9653 12.4629 19.8979C12.8536 19.8307 13.2544 19.852 13.6357 19.9604C14.0169 20.069 14.3692 20.2621 14.666 20.5249L23.8262 28.5298L32.5635 15.4761L32.6445 15.354L32.7676 15.436L34.8418 16.8286L34.9639 16.9106L34.8818 17.0327L26.1768 30.0405C25.9863 30.3847 25.7221 30.6826 25.4023 30.9116C25.0788 31.1433 24.7064 31.2987 24.3145 31.3667C23.9226 31.4346 23.5201 31.4134 23.1377 31.3042C22.7557 31.1951 22.4033 31.001 22.1064 30.7368L12.958 22.7397L6.13672 34.8628H37.6172V37.6577H4.99805C4.29681 37.657 3.62373 37.3777 3.12793 36.8813C2.63229 36.3851 2.3543 35.712 2.35352 35.0103V2.354H5.14453Z" fill="currentColor" stroke="currentColor" strokeWidth="0.293864"/></svg>
@@ -937,7 +912,10 @@ document.body.classList.remove('is-mobile');
 }
 updateMobile();
 window.addEventListener('resize', updateMobile);
-return () => window.removeEventListener('resize', updateMobile);
+return () => {
+window.removeEventListener('resize', updateMobile);
+document.body.classList.remove('is-mobile');
+};
 }, []);
 
 // TOC - secao ativa tracking
@@ -950,7 +928,7 @@ box-sizing: border-box;
 }
 
 html {
-scroll-behavior: smooth;
+scroll-behavior: auto;
 }
 
 body {
@@ -1116,9 +1094,9 @@ color: var(--ink-800);
 display: grid;
 grid-template-columns: repeat(3, minmax(0, 1fr));
 gap: 36px;
-margin-top: 28px;
-padding-top: 24px;
-border-top: var(--hairline);
+margin-top: 32px;
+padding-top: 8px;
+border-top: none;
 position: relative;
 z-index: 3;
 }
@@ -1208,7 +1186,6 @@ display: grid;
 grid-template-columns: minmax(120px, 190px) minmax(0, 1fr);
 gap: 20px 40px;
 padding-block: 32px;
-scroll-margin-top: 140px;
 }
 
 body.is-mobile .case-section {
@@ -1539,7 +1516,7 @@ margin-top: 0;
 .pal-hex { font-family:var(--font-mono); font-size:10.5px; letter-spacing:0.04em; color:var(--ink-600); }
 .typs { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:18px; max-width:560px; }
 @media (max-width:600px){ .typs { grid-template-columns:1fr; } }
-.typs-card { display:flex; align-items:center; gap:16px; padding:18px; border:1px solid var(--ink-200); border-radius:14px; background:#FFF; }
+.typs-card { display:flex; align-items:center; gap:16px; padding:18px; border:none; border-radius:14px; background:#FFF; box-shadow:var(--shadow-fine); }
 .typs-aa { font-size:44px; font-weight:600; line-height:1; color:var(--ink-300); }
 .typs-meta { display:flex; flex-direction:column; gap:2px; }
 .typs-face { font-family:var(--font-display); font-size:16px; font-weight:600; color:var(--ink-900); }
@@ -1575,46 +1552,30 @@ margin-top: 0;
 .cmx-no { display:inline-block; width:10px; height:1.5px; background:var(--ink-300); vertical-align:middle; }
 .cmx-row--gap th, .cmx-row--gap td { background:var(--gold-50); }
 .cmx-row--gap .cmx-feature { color:var(--ink-900); }
-.cmx-gap-tag { display:inline-block; margin-left:10px; padding:2px 8px; border-radius:999px; border:1px solid var(--gold-400); font-family:var(--font-mono); font-size:9.5px; text-transform:uppercase; letter-spacing:0.14em; color:var(--gold-700); vertical-align:middle; }
+.cmx-gap-tag { display:inline; margin-left:8px; padding:0; border:none; border-radius:0; font-family:var(--font-body); font-size:12px; font-style:italic; text-transform:none; letter-spacing:0; color:var(--gold-700); vertical-align:baseline; }
 @media (max-width:900px) { .cmx-feature { white-space:normal; } }
 
-/* ── COMPETITOR FLOW REVIEW (native, supplied screenshots only) ── */
-.cfl { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:20px; width:100%; }
-.cfl-card { display:grid; grid-template-rows:auto auto 1fr auto; gap:16px; min-width:0; padding:20px; border:var(--hairline); border-radius:24px; background:#FFFFFF; }
-.cfl-head { display:flex; align-items:center; gap:12px; min-width:0; }
-.cfl-index { display:inline-flex; align-items:center; justify-content:center; width:36px; height:36px; flex:0 0 auto; border-radius:999px; background:var(--brand-50); color:var(--brand-700); font-family:var(--font-mono); font-size:11px; font-weight:600; letter-spacing:0.08em; }
-.cfl-title-wrap { min-width:0; }
-.cfl-app { margin:0; font-family:var(--font-display); font-size:20px; line-height:1.15; font-weight:600; letter-spacing:-0.01em; color:var(--ink-900); }
-.cfl-flow { margin:3px 0 0; font-family:var(--font-body); font-size:12px; line-height:1.4; color:var(--ink-600); }
-.cfl-chip { margin-left:auto; padding:5px 9px; flex:0 0 auto; border:1px solid var(--ink-200); border-radius:999px; color:var(--ink-600); font-family:var(--font-mono); font-size:9.5px; text-transform:uppercase; letter-spacing:0.13em; }
-.cfl-evidence { margin:0; padding:22px 20px 13px; border-radius:18px; background:var(--ink-100); }
-.cfl-screen { height:372px; display:flex; align-items:center; justify-content:center; }
-.cfl-screen img { display:block; width:auto; max-width:100%; max-height:100%; border:1px solid rgba(26,24,21,0.12); border-radius:10px; box-shadow:var(--elev-1); }
-.cfl-evidence figcaption { margin-top:12px; text-align:center; color:var(--ink-600); font-family:var(--font-mono); font-size:10px; text-transform:uppercase; letter-spacing:0.14em; }
-.cfl-panel { padding:16px; border-radius:16px; }
-.cfl-panel--flaws { border:1px solid rgba(201,169,110,0.48); background:var(--gold-50); }
-.cfl-panel--opportunity { border:1px solid rgba(95,142,82,0.34); background:var(--brand-50); }
-.cfl-panel-label { display:flex; align-items:center; gap:8px; margin:0 0 10px; color:var(--ink-700); font-family:var(--font-mono); font-size:10px; font-weight:600; text-transform:uppercase; letter-spacing:0.15em; }
-.cfl-panel-label span { display:inline-flex; align-items:center; justify-content:center; width:20px; height:20px; border-radius:999px; background:#FFFFFF; color:var(--brand-700); font-size:11px; letter-spacing:0; }
-.cfl-panel--flaws .cfl-panel-label span { color:var(--gold-700); }
-.cfl-list { display:flex; flex-direction:column; gap:8px; margin:0; padding:0; list-style:none; }
-.cfl-list li { position:relative; padding-left:15px; color:var(--ink-700); font-family:var(--font-body); font-size:13px; line-height:1.55; }
-.cfl-list li::before { content:""; position:absolute; top:8px; left:0; width:6px; height:6px; border-radius:999px; background:var(--gold-400); }
-.cfl-opportunity { margin:0; color:var(--ink-700); font-family:var(--font-body); font-size:13px; line-height:1.6; }
+/* ── COMPETITOR FLOW REVIEW (screenshot + notes, no colored callout cards) ── */
+.cfl { display:flex; flex-direction:column; gap:48px; width:100%; }
+.cfl-row { display:grid; grid-template-columns:minmax(0,200px) minmax(0,1fr); gap:28px 36px; align-items:start; min-width:0; }
+.cfl-evidence { margin:0; }
+.cfl-evidence img { display:block; width:100%; height:auto; max-height:420px; object-fit:contain; object-position:top; background:var(--ink-100); }
+.cfl-copy { min-width:0; padding-top:4px; }
+.cfl-app { margin:0; font-family:var(--font-display); font-size:22px; line-height:1.2; font-weight:600; letter-spacing:-0.015em; color:var(--ink-900); }
+.cfl-flow { margin:6px 0 20px; font-family:var(--font-body); font-size:15px; line-height:1.5; color:var(--ink-600); }
+.cfl-kicker { margin:0 0 8px; font-family:var(--font-mono); font-size:var(--label-1-size); letter-spacing:var(--label-1-track); text-transform:uppercase; color:var(--ink-600); }
+.cfl-list { display:flex; flex-direction:column; gap:8px; margin:0 0 18px; padding:0; list-style:none; }
+.cfl-list li { position:relative; padding-left:0; color:var(--ink-700); font-family:var(--font-body); font-size:15px; line-height:1.6; }
+.cfl-opportunity { margin:0; color:var(--ink-700); font-family:var(--font-body); font-size:15px; line-height:1.6; max-width:58ch; }
 @media (max-width:720px) {
-.cfl { grid-template-columns:1fr; }
-.cfl-card { padding:16px; }
-.cfl-screen { height:360px; }
-}
-@media (max-width:420px) {
-.cfl-chip { display:none; }
-.cfl-evidence { padding-inline:14px; }
-.cfl-screen { height:330px; }
+.cfl { gap:36px; }
+.cfl-row { grid-template-columns:1fr; gap:16px; }
+.cfl-evidence img { max-height:360px; }
 }
 
 /* ── DECISION MATRIX (native impact / effort board) ── */
 .dmx { width:100%; margin:0; }
-.dmx-board { position:relative; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; padding:28px 28px 34px 38px; border:var(--hairline); border-radius:18px; background:var(--ink-50); }
+.dmx-board { position:relative; display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:10px; padding:28px 28px 34px 38px; border:none; box-shadow:var(--shadow-fine); border-radius:18px; background:var(--ink-50); }
 .dmx-quadrant { min-width:0; padding:16px; border:1px solid var(--ink-200); border-radius:12px; background:#FFFFFF; }
 .dmx-quadrant--quick-wins { background:var(--brand-50); border-color:rgba(95,142,82,0.34); }
 .dmx-quadrant--major-projects { background:rgba(46,73,52,0.035); border-color:rgba(46,73,52,0.22); }
@@ -1640,23 +1601,21 @@ margin-top: 0;
 
 /* ── SOLUTION COMPARISONS (wireframe → mid-fidelity) ── */
 .solution-comparisons { width:100%; display:flex; flex-direction:column; gap:18px; }
-.solution-compare { min-width:0; padding:24px; border:var(--hairline); border-radius:14px; background:#FFFFFF; box-shadow:0 12px 34px rgba(15,14,12,0.045); }
-.solution-compare-copy { display:grid; grid-template-columns:42px minmax(0,1fr); gap:14px; align-items:start; margin-bottom:20px; }
-.solution-compare-number { color:var(--brand-600); font-family:var(--font-mono); font-size:11px; font-weight:700; letter-spacing:0.12em; }
+.solution-compare { min-width:0; padding:24px; border:none; border-radius:14px; background:#FFFFFF; box-shadow:var(--shadow-fine); }
+.solution-compare-copy { display:block; margin-bottom:20px; }
 .solution-compare-copy h4 { margin:0 0 6px; color:var(--ink-900); font-family:var(--font-display); font-size:19px; line-height:1.25; font-weight:600; letter-spacing:-0.015em; }
 .solution-compare-copy p { max-width:68ch; margin:0; color:var(--ink-600); font-family:var(--font-body); font-size:13px; line-height:1.65; }
 .solution-compare-visuals { display:grid; grid-template-columns:minmax(0,1fr) 36px minmax(0,1fr); gap:12px; align-items:center; }
 .solution-compare-visuals figure { min-width:0; margin:0; }
 .solution-compare-visuals figcaption { margin:0 0 8px; color:var(--ink-600); font-family:var(--font-mono); font-size:9px; font-weight:700; text-transform:uppercase; letter-spacing:0.14em; }
-.solution-compare-stage { height:520px; display:flex; align-items:center; justify-content:center; padding:18px; overflow:visible; border:1px solid var(--ink-200); border-radius:10px; }
+.solution-compare-stage { height:520px; display:flex; align-items:center; justify-content:center; padding:18px; overflow:visible; border:none; box-shadow:var(--shadow-fine); border-radius:10px; }
 .solution-compare-stage--wire { background:linear-gradient(145deg,#F2F3F2,#E6E8E6); }
 .solution-compare-stage--mid { background:linear-gradient(145deg,var(--brand-50),#FFFFFF); }
 .solution-compare-stage img { display:block; max-width:100%; max-height:100%; width:auto; height:auto; object-fit:contain; filter:drop-shadow(0 8px 12px rgba(15,14,12,0.10)); }
-.solution-compare-arrow { display:flex; align-items:center; justify-content:center; width:36px; height:36px; margin-top:20px; border:1px solid var(--brand-200); border-radius:999px; background:var(--brand-50); }
+.solution-compare-arrow { display:flex; align-items:center; justify-content:center; width:36px; height:36px; margin-top:20px; border:none; box-shadow:var(--shadow-fine); border-radius:10px; background:var(--brand-50); }
 .solution-compare-arrow img { display:block; width:16px; height:16px; object-fit:contain; transform:rotate(180deg); }
 @media (max-width:720px) {
 .solution-compare { padding:18px; }
-.solution-compare-copy { grid-template-columns:34px minmax(0,1fr); }
 .solution-compare-visuals { grid-template-columns:1fr; gap:10px; }
 .solution-compare-arrow { margin:0 auto; }
 .solution-compare-arrow img { transform:rotate(270deg); }
@@ -1665,7 +1624,7 @@ margin-top: 0;
 
 /* ── ICON CATALOG (exact Figma SVG assets, native layout) ── */
 .icg { width:100%; display:flex; flex-direction:column; gap:24px; }
-.icg-rules { display:grid; grid-template-columns:128px minmax(0,1fr); gap:24px; align-items:center; padding:20px; border:var(--hairline); border-radius:14px; background:var(--ink-50); }
+.icg-rules { display:grid; grid-template-columns:128px minmax(0,1fr); gap:24px; align-items:center; padding:20px; border:none; box-shadow:var(--shadow-fine); border-radius:14px; background:var(--ink-50); }
 .icg-rule-demo { display:flex; align-items:center; justify-content:center; }
 .icg-full { width:72px; height:72px; padding:3px; display:flex; border:1px solid var(--ink-300); background:#FFFFFF; box-shadow:var(--elev-1); }
 .icg-live { width:66px; height:66px; padding:9px; display:flex; align-items:center; justify-content:center; background:var(--ink-100); }
@@ -1688,14 +1647,13 @@ margin-top: 0;
 }
 
 /* ── PERSONA (native, replaces the exported PNG) ── */
-.persona-card { border-radius:24px; border:var(--hairline); background:#FFFFFF; padding:36px 40px 30px; }
+.persona-card { border-radius:24px; border:none; box-shadow:var(--shadow-fine); background:#FFFFFF; padding:36px 40px 30px; }
 .persona-head { display:flex; align-items:center; gap:18px; flex-wrap:wrap; }
 .persona-avatar { width:64px; height:64px; border-radius:50%; background:var(--brand-600); color:#FFFFFF; display:flex; align-items:center; justify-content:center; font-family:var(--font-display); font-size:22px; font-weight:600; letter-spacing:0.02em; flex-shrink:0; }
 .persona-id { min-width:0; }
 .persona-name { font-family:var(--font-display); font-size:24px; font-weight:600; color:var(--ink-900); margin:0; letter-spacing:-0.01em; }
 .persona-tag { font-family:var(--font-mono); font-size:var(--label-1-size); text-transform:uppercase; letter-spacing:var(--label-2-track); color:var(--brand-600); margin-top:4px; }
-.persona-meta { margin-left:auto; display:flex; flex-wrap:wrap; gap:8px; }
-.persona-meta span { font-family:var(--font-mono); font-size:var(--label-1-size); letter-spacing:0.04em; color:var(--ink-600); border:1px solid var(--ink-200); border-radius:999px; padding:5px 12px; background:#FFF; }
+.persona-meta { margin-left:auto; max-width:28ch; font-family:var(--font-body); font-size:13px; line-height:1.5; color:var(--ink-600); }
 .persona-quote { margin:26px 0 22px; padding:4px 0 4px 20px; border-left:3px solid var(--gold-400); font-family:var(--font-display); font-size:19px; line-height:1.55; font-weight:500; letter-spacing:-0.01em; color:var(--ink-800); }
 .persona-bio { font-size:15px; line-height:1.75; color:var(--ink-600); margin:0 0 26px; max-width:64ch; }
 .persona-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:24px; padding-top:22px; border-top:var(--hairline); }
@@ -1714,14 +1672,13 @@ margin-top: 0;
 
 /* ── JOURNEY MAP (native, replaces the exported PNG) ── */
 .journey-intro { display:grid; grid-template-columns:1.4fr 1fr; gap:16px; margin-bottom:18px; }
-.journey-intro-card { border-radius:18px; border:var(--hairline); background:#FFF; padding:18px 20px; }
+.journey-intro-card { border-radius:18px; border:none; box-shadow:var(--shadow-fine); background:#FFF; padding:18px 20px; }
 .journey-intro-label { font-family:var(--font-mono); font-size:var(--label-1-size); text-transform:uppercase; letter-spacing:var(--label-2-track); color:var(--brand-600); margin:0 0 8px; }
 .journey-intro-text { font-size:13px; line-height:1.6; color:var(--ink-700); margin:0; }
 .journey-intro-text + .journey-intro-text { margin-top:6px; }
-.journey-board { border-radius:24px; border:var(--hairline); background:#FFFFFF; padding:28px; overflow:hidden; }
+.journey-board { border-radius:24px; border:none; box-shadow:var(--shadow-fine); background:#FFFFFF; padding:28px; overflow:hidden; }
 .journey-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:0 18px; }
-.journey-step-chip { font-family:var(--font-mono); font-size:var(--label-1-size); text-transform:uppercase; letter-spacing:var(--label-1-track); color:var(--ink-600); border:1px solid var(--ink-200); background:#FFF; border-radius:999px; padding:4px 12px; display:inline-block; }
-.journey-goal { font-family:var(--font-display); font-size:17px; font-weight:600; line-height:1.3; letter-spacing:-0.01em; color:var(--ink-900); margin:12px 0 16px; }
+.journey-goal { font-family:var(--font-display); font-size:17px; font-weight:600; line-height:1.3; letter-spacing:-0.01em; color:var(--ink-900); margin:0 0 16px; }
 .journey-row-label { font-family:var(--font-mono); font-size:var(--label-1-size); text-transform:uppercase; letter-spacing:var(--label-1-track); color:var(--ink-600); margin:0 0 8px; }
 .journey-list { list-style:none; margin:0 0 18px; padding:0; display:flex; flex-direction:column; gap:6px; }
 .journey-list li { position:relative; padding-left:14px; font-size:12px; line-height:1.5; color:var(--ink-700); }
@@ -1736,10 +1693,9 @@ margin-top: 0;
 .journey-opp .journey-list { margin-bottom:0; }
 .journey-note { margin:18px 0 0; font-family:var(--font-mono); font-size:var(--label-1-size); letter-spacing:0.06em; color:var(--ink-600); }
 .journey-steps-stacked { display:flex; flex-direction:column; gap:16px; }
-.journey-step-card { border-radius:18px; border:var(--hairline); background:#FFF; padding:18px; }
+.journey-step-card { border-radius:18px; border:none; box-shadow:var(--shadow-fine); background:#FFF; padding:18px; }
 .journey-step-card .journey-opp { margin-top:4px; }
-.journey-emotion-chip { display:inline-flex; align-items:center; gap:8px; font-family:var(--font-mono); font-size:var(--label-1-size); letter-spacing:0.12em; text-transform:uppercase; color:var(--ink-700); border:1px solid var(--ink-200); border-radius:999px; padding:5px 12px; margin-bottom:16px; }
-.journey-emotion-chip::before { content:""; width:7px; height:7px; border-radius:50%; background:var(--brand-500); }
+.journey-emotion-chip { display:block; font-family:var(--font-mono); font-size:var(--label-1-size); letter-spacing:0.12em; text-transform:uppercase; color:var(--ink-700); border:none; padding:0; margin-bottom:16px; }
 @media (max-width:900px) { .journey-intro { grid-template-columns:1fr; } .journey-board { padding:18px; } }
 
 @media (max-width: 900px) {
@@ -1782,28 +1738,20 @@ width: 100%;
 
 .research-grid {
 display: grid;
-grid-template-columns: repeat(3, minmax(0, 1fr));
-gap: 16px;
-margin-top: 18px;
+grid-template-columns: repeat(2, minmax(0, 1fr));
+gap: 28px 40px;
+margin-top: 22px;
 }
 
 .research-card {
 position: relative;
-padding: 20px 0 0;
-border-top: var(--hairline);
+padding: 0;
+border: none;
+border-radius: 0;
+background: transparent;
+box-shadow: none;
 display: flex;
 flex-direction: column;
-}
-
-.research-number {
-font-family: var(--font-display);
-font-size: 30px;
-font-weight: 600;
-line-height: 1.1;
-letter-spacing: -0.02em;
-color: var(--ink-900);
-margin-bottom: 10px;
-flex-shrink: 0;
 }
 
 .research-title {
@@ -2057,9 +2005,10 @@ display: inline-flex;
 align-items: center;
 gap: 10px;
 padding: 12px 16px;
-border-radius: 16px;
-background: transparent;
-border: var(--hairline);
+border-radius: 12px;
+background: #fff;
+border: none;
+box-shadow: var(--shadow-fine);
 color: var(--ink-900);
 text-decoration: none;
 font-family: var(--font-display);
@@ -2067,11 +2016,12 @@ font-size: 13px;
 font-weight: 600;
 letter-spacing: -0.01em;
 white-space: nowrap;
-transition: border-color 0.18s ease, color 0.18s ease;
+transition: box-shadow 0.18s ease, transform 0.18s ease;
 }
 
 .case-btn:hover {
-border-color: var(--ink-800);
+box-shadow: var(--shadow-header);
+transform: translateY(-2px);
 }
 
 .case-btn:focus-visible {
@@ -2406,7 +2356,8 @@ transform: rotate(45deg);
 }
 
 .hmwBox{
-border: var(--hairline);
+border: none;
+box-shadow: var(--shadow-fine);
 border-radius: 14px;
 padding: 14px 16px;
 }
@@ -2425,70 +2376,21 @@ margin-top: 24px;
 `}</style>
 
 <SiteHeader />
-<ScrollspyPill sections={CASE_SECTIONS} />
 
 <main id="main" className="page">
 <div className="page-inner">
 {/* HERO CASE */}
 <section className="case-hero">
 <motion.div className="case-hero-backdrop" aria-hidden="true" style={heroBackdropStyle} />
-<motion.p className="case-label" style={heroTextStyle}>COURSE PROJECT / PET CARE</motion.p>
+<motion.p className="case-label" style={heroTextStyle}>EDUCATIONAL COURSE PROJECT, 2023</motion.p>
 <motion.h1 className="case-title-main" style={heroTextStyle}>
 DuoPet - Veterinary Appointment Prototype
 </motion.h1>
 <motion.p className="case-subtitle" style={heroTextStyle}>
-A UX course project exploring how pet owners could find vets and
-book appointments with less waiting and guesswork.
+A UX course prototype for booking vet visits, not a launched product.
 </motion.p>
 
-<div className="case-meta-grid">
-<motion.div className="case-meta-motion" {...fadeUpImmediate(0, prefersReducedMotion)}>
-<div className="case-meta-item">
-<div className="case-meta-label">Team</div>
-<div className="case-meta-value">
-Matthias Karl Schaefle / Leticia Magri
-</div>
-</div>
-</motion.div>
-<motion.div className="case-meta-motion" {...fadeUpImmediate(1, prefersReducedMotion)}>
-<div className="case-meta-item">
-<div className="case-meta-label">Scope of work</div>
-<div className="case-meta-value">
-User research; Wireframes; UI design; Prototyping; Usability testing; Design iteration.
-</div>
-</div>
-</motion.div>
-<motion.div className="case-meta-motion" {...fadeUpImmediate(2, prefersReducedMotion)}>
-<div className="case-meta-item">
-<div className="case-meta-label">Role</div>
-<div className="case-meta-value">UX/UI Designer</div>
-</div>
-</motion.div>
-<motion.div className="case-meta-motion" {...fadeUpImmediate(3, prefersReducedMotion)}>
-<div className="case-meta-item">
-<div className="case-meta-label">Year</div>
-<div className="case-meta-value">2023</div>
-</div>
-</motion.div>
-</div>
-
-{/* [REVISÃO MATTHIAS] In short: new summary block, copy pending owner review */}
-<div className="in-short">
-<div className="in-short-item">
-<div className="in-short-label">Problem</div>
-<p className="in-short-text">Booking a vet visit meant waiting on WhatsApp replies; owners wanted to book in minutes.</p>
-</div>
-<div className="in-short-item">
-<div className="in-short-label">My role</div>
-<p className="in-short-text">Course project, end to end: research with 164 survey responses and 5 interviews, IA, UI and usability testing.</p>
-</div>
-<div className="in-short-item">
-<div className="in-short-label">Result</div>
-<p className="in-short-text">Scheduling 15.9% faster than the competitor apps in the final usability test.</p>
-</div>
-</div>
-
-<div className="case-hero-mockup-wrap" aria-hidden="true" ref={heroMockupRef}>
+<figure className="case-hero-mockup-wrap" ref={heroMockupRef}>
 <motion.div style={heroMockupStyle}>
 <motion.div
 className="case-hero-mockup"
@@ -2500,7 +2402,28 @@ src="/assets/portfolio/2024/05/Iphone-1024x591.png"
 alt="DuoPet prototype overview mockup" loading="eager" decoding="async" width="1024" height="591" />
 </motion.div>
 </motion.div>
+</figure>
+
+<motion.p className="case-hero-byline" {...fadeUpImmediate(0, prefersReducedMotion)}>
+Pair work with Leticia Magri. Research, wireframes, UI, and two usability rounds, 2023.
+</motion.p>
+
+<div className="in-short">
+<div className="in-short-item">
+<div className="in-short-label">Problem</div>
+<p className="in-short-text">Booking by WhatsApp meant waiting for replies and repeating the same details.</p>
 </div>
+<div className="in-short-item">
+<div className="in-short-label">Collaboration</div>
+<p className="in-short-text">Pair project: survey of 164 owners, 5 interviews, IA, UI, and two usability rounds.</p>
+</div>
+<div className="in-short-item">
+<div className="in-short-label">What we made</div>
+<p className="in-short-text">A mobile prototype, tested twice in the course.</p>
+</div>
+</div>
+
+<CaseContents sections={CASE_SECTIONS} />
 </section>
 
 {/* [REVISÃO MATTHIAS] DuoPet PinnedStory context copy, compressed from the existing Overview. */}
@@ -2508,36 +2431,33 @@ alt="DuoPet prototype overview mockup" loading="eager" decoding="async" width="1
 steps={[
 {
 id: "context",
-label: "Context",
-title: "Booking by chat meant waiting and repeating information",
-body: "Pet owners had to wait for replies, repeat the same details, and guess which appointment times were available.",
+label: "The brief",
+title: "A course prototype for a wait that happens on WhatsApp",
+body: "Pet owners booked vet visits by chat. They waited for replies, repeated details, and could not see open times.",
 img: "/assets/portfolio/2026/03/Wire-03-Pure.png",
 alt: "Early DuoPet home wireframe",
 },
-// [REVISÃO MATTHIAS] DuoPet PinnedStory research copy, compressed from the existing Research section.
 {
 id: "research",
-label: "Research",
-title: "164 survey responses and 5 interviews",
-body: "The research mapped how pet owners choose clinics, schedule appointments, and handle urgent situations.",
+label: "Evidence",
+title: "164 survey responses, then 5 interviews",
+body: "The survey and the interviews were separate samples. Together they named WhatsApp booking, nearby clinics, and stress in urgent visits.",
 img: "/assets/portfolio/2026/03/Wire-01-Pure.png",
 alt: "Early DuoPet veterinary profile wireframe",
 },
-// [REVISÃO MATTHIAS] DuoPet PinnedStory insight copy, compressed from the existing Opportunities section.
 {
 id: "insight",
-label: "Insight",
-title: "Proximity, emergency access, and scheduling shaped the direction",
-body: "The strongest patterns pointed to nearby veterinarians, faster emergency access, and a clearer scheduling flow.",
+label: "Decisions",
+title: "Nearby lists, emergency access, and a calendar of its own",
+body: "Those patterns shaped the Home list, an emergency shortcut, and, after the second test, a scheduling step outside the profile.",
 img: "/assets/portfolio/2026/03/Screen-02-Pill-Final.png",
 alt: "DuoPet calendar screen",
 },
-// [REVISÃO MATTHIAS] DuoPet PinnedStory solution copy, compressed from the existing Solutions section.
 {
 id: "solution",
-label: "Solution",
-title: "A dedicated flow for faster appointment booking",
-body: "The final direction combined a simpler calendar, nearby veterinarian discovery, emergency access, and visible appointment details.",
+label: "Prototype",
+title: "A clickable concept, tested in class, never launched",
+body: "Home, booking, and pet profiles as tested in the second course round.",
 img: "/assets/portfolio/2026/03/Screen-03-Pill.png",
 alt: "DuoPet home screen with the next appointment",
 },
@@ -2550,28 +2470,8 @@ alt: "DuoPet home screen with the next appointment",
 <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>Overview</TypedSectionLabel>
 <div className="case-section-body">
 <p>
-DuoPet was a UX course project based on a common pet-care friction: booking veterinary appointments through WhatsApp often means waiting for replies, repeating information, and having little visibility over available times. In a small usability test, the prototype completed the scheduling task faster than the competitor apps we analyzed.
+Educational UX course project from 2023.
 </p>
-<h3 className="case-subsection-title">The Problem</h3>
-<p>
-Pet owners need veterinary care regularly, but booking through chat messages means waiting for replies, repeating the same information, and guessing at available times.
-</p>
-
-<div className="hmwBox">
-<p className="hmwPhrase">
-"How might we make scheduling veterinary appointments stress-free and time-efficient for pet owners?"
-</p>
-</div>
-
-<h3 className="case-subsection-title" style={{ marginTop: 22 }}>Design Process</h3>
-<p>
-We followed a simple research-to-prototype process: understand how people book today, identify the moments that slow them down, and test whether a dedicated flow could reduce that friction.
-</p>
-<DesignProcessDiagram prefersReducedMotion={prefersReducedMotion} />
-</div>
-
-<div className="research-full mobile-gallery-shell">
-<SnapGallery className="ms-snap--exported ms-snap--large ms-snap--depth" label="Mobile screens" items={MOBILE_SCREENS} />
 </div>
 </motion.section>
 
@@ -2580,10 +2480,11 @@ We followed a simple research-to-prototype process: understand how people book t
 {/* [REVISÃO MATTHIAS] Research: empathize + define merged into one section; subheads and bridge copy rewritten in reader language, pending owner review */}
 <div className="case-section-body">
 {/* [REVISÃO MATTHIAS] new subhead + compressed intro (was "Following in the footsteps of pet owners" + 2 paragraphs) */}
-<h3 className="case-subsection-title">How pet owners book today</h3>
+<h3 className="case-subsection-title">Three kinds of evidence</h3>
 
 <p>
-We started by mapping how pet owners choose clinics, book appointments, and handle urgent situations, then grouped the findings in an affinity diagram.
+The survey, the interviews, and the usability rounds used different
+samples. Findings from each method are labeled below.
 </p>
 
 <div style={{ marginTop: 16 }}>
@@ -2599,7 +2500,6 @@ We started by mapping how pet owners choose clinics, book appointments, and hand
 <div className="research-full" style={{ marginTop: 18 }}>
 <div className="research-grid">
 <article className="research-card">
-<div className="research-number">01</div>
 <h4 className="research-title">Demographic data of pet owners</h4>
 <p className="research-text">
 Millennials are 33% of pet owners in Brazil, mostly married women with a dog.
@@ -2612,7 +2512,6 @@ Source (PDF, PT-BR) →
 </article>
 
 <article className="research-card">
-<div className="research-number">02</div>
 <h4 className="research-title">Frequency of vet visits</h4>
 <p className="research-text">
 28% of dogs and 20% of cats visit the vet at least once a month.
@@ -2641,7 +2540,8 @@ Source (PDF, PT-BR) →
 {/* [REVISÃO MATTHIAS] new subhead (was "Data that guides") + compressed intro sentence */}
 <h3 className="case-subsection-title">Survey: 164 pet owners</h3>
 <p>
-We ran a survey with <strong>164 pet owners</strong> about how they schedule veterinary appointments.
+<strong>164 pet owners</strong> on how they schedule veterinary
+appointments. These percentages are from that questionnaire.
 </p>
 
 <div className="mobile-only" style={{ marginTop: 16 }}>
@@ -2730,7 +2630,8 @@ Duration: 15 to 25 minutes each
 {/* [REVISÃO MATTHIAS] new subhead (was "Connecting data and stories to impactful solutions") + compressed intro sentence */}
 <h3 className="case-subsection-title">What 5 interviews added</h3>
 <p>
-Interviews with 5 pet owners explained the numbers behind the survey and connected the patterns to real booking stories.
+Five in-person interviews in Brazil, 20 to 40 years old, 15 to 25
+minutes each. A different sample from the questionnaire.
 </p>
 
 <div className="mobile-only" style={{ marginTop: 16 }}>
@@ -2751,9 +2652,9 @@ Duration: 15 to 25 minutes each
 
 <div className="research-full">
 <div className="research-grid">
-<NumberCard number="01" title="Slow replies" description="Scheduling through WhatsApp can take too long, with some users waiting up to an hour for confirmation." />
-<NumberCard number="02" title="Emergency search is stressful" description="Pet owners struggle to quickly find clinics and veterinarians that can handle urgent situations." />
-<NumberCard number="03" title="Appointments are easy to miss" description="Busy routines make it hard to remember appointments, vaccines, and follow-up dates without reminders." />
+<NumberCard title="Slow replies" description="Scheduling through WhatsApp can take too long, with some users waiting up to an hour for confirmation." />
+<NumberCard title="Emergency search is stressful" description="Pet owners struggle to quickly find clinics and veterinarians that can handle urgent situations." />
+<NumberCard title="Appointments are easy to miss" description="Busy routines make it hard to remember appointments, vaccines, and follow-up dates without reminders." />
 {/* [REVISÃO MATTHIAS] Card "Distance matters" removido a pedido: redundante
     com o insight de proximidade do survey (63% escolhem o vet mais próximo),
     exibido logo acima na mesma seção. */}
@@ -2761,48 +2662,17 @@ Duration: 15 to 25 minutes each
 </div>
 </div>
 <div className="case-section-body case-section-body-secondary">
-<h3 className="case-subsection-title">Bella's Journey</h3>
+<h3 className="case-subsection-title">What that pointed to</h3>
 <p>
-We mapped Bella's journey to see where uncertainty, waiting time, and missing information made the experience harder than necessary.
-</p>
-</div>
-
-<div className="research-full" style={{ marginTop: 18 }}>
-<JourneyMap prefersReducedMotion={prefersReducedMotion} />
-</div>
-
-<div className="case-section-body case-section-body-secondary">
-{/* [REVISÃO MATTHIAS] intro paragraph cut: it repeated the persona card's own source line ("synthesized from a survey with 164 pet owners and 5 in-person interviews") */}
-<h3 className="case-subsection-title">Meet Bella Rios</h3>
-</div>
-
-<div className="research-full" style={{ marginTop: 24 }}>
-<PersonaCard prefersReducedMotion={prefersReducedMotion} />
-</div>
-
-<div className="case-section-body case-section-body-secondary">
-{/* [REVISÃO MATTHIAS] new subhead (was "Enhancing UX through competitive analysis" + "Feature analysis" h4) + compressed sentence */}
-<h3 className="case-subsection-title">Competitive analysis</h3>
-<p>
-I compared veterinary apps to see where existing services help and where the booking flow still creates friction.
-</p>
-</div>
-
-<div className="research-full" style={{ marginTop: 24 }}>
-<CompetitiveMatrix prefersReducedMotion={prefersReducedMotion} />
-</div>
-
-<div className="case-section-body case-section-body-secondary">
-<h3 className="case-subsection-title">Opportunities</h3>
-<p>
-The benchmark pointed to opportunities that matched what users had already told us: proximity, emergency access, and a clearer scheduling flow.
+Survey proximity, interview emergencies, and the booking-flow review
+pointed to nearby lists, emergency access, and a shorter path to a
+time slot.
 </p>
 </div>
 
 <div className="research-full">
 <div className="research-grid">
 <article className="research-card">
-<div className="research-number">01</div>
 <h4 className="research-title">Location-based search</h4>
 <p className="research-text">
 Many pet owners prefer nearby veterinarians, but competing apps did not make location the center of the experience.
@@ -2810,7 +2680,6 @@ Many pet owners prefer nearby veterinarians, but competing apps did not make loc
 </article>
 
 <article className="research-card">
-<div className="research-number">02</div>
 <h4 className="research-title">Emergency access</h4>
 <p className="research-text">
 A quick way to find emergency veterinarians could reduce stress in moments when users have little time to compare options.
@@ -2821,9 +2690,10 @@ A quick way to find emergency veterinarians could reduce stress in moments when 
 
 <div className="case-section-body case-section-body-secondary">
 {/* [REVISÃO MATTHIAS] new subhead (was "Looking at usability") + compressed sentence naming the flows from the artifact */}
-<h3 className="case-subsection-title">Usability review of competitor flows</h3>
+<h3 className="case-subsection-title">Booking flows we reviewed</h3>
 <p>
-A closer review of the Vetster and Vets booking flows showed where users lose time during booking.
+We looked at specific screens in Vetster and Vets. Those two flows
+showed extra steps before a time slot.
 </p>
 </div>
 
@@ -2837,45 +2707,18 @@ A closer review of the Vetster and Vets booking flows showed where users lose ti
 {/* [REVISÃO MATTHIAS] empty course headline "Transforming ideas into impact" cut; intro paragraph kept as the section lead */}
 <div className="case-section-body">
 <p>
-We translated the strongest research patterns into concept ideas, then prioritized the ones that could make booking faster without making the prototype feel heavy.
-</p>
-</div>
-
-<div className="research-full">
-<DecisionMatrix />
-</div>
-
-<div className="case-section-body case-section-body-secondary" style={{ marginTop: 8 }}>
-<h3 className="case-subsection-title">Solutions</h3>
-<p>
-The three solution directions are shown from the tested wireframe to the mid-fidelity screen that followed it.
+Each direction below maps a finding to a screen change. Round 1 used
+wireframes with 5 users. Round 2 used the resolved screens with 5 pet
+owners.
 </p>
 </div>
 
 <div className="case-section-body case-section-body-secondary" style={{ marginTop: 24 }}>
-{/* [REVISÃO MATTHIAS] new subhead with the evidence in it (was "Small UI changes, big UX impact") */}
-<h3 className="case-subsection-title">Wireframe tests with 5 users</h3>
-<p>
-We tested the core flows with 5 users, then used the findings to clarify the calendar, surface proximity and keep emergency access visible.
-</p>
+<h3 className="case-subsection-title">From finding to screen</h3>
 </div>
 
 <div className="research-full" style={{ marginTop: 32 }}>
 <SolutionComparisons prefersReducedMotion={prefersReducedMotion} />
-</div>
-
-<div className="case-section-body case-section-body-secondary" style={{ marginTop: 32 }}>
-<h3 className="case-subsection-title">Measuring scheduling efficiency</h3>
-{/* [REVISÃO MATTHIAS] caveat folded into the main paragraph (was a separate muted paragraph) */}
-<p>
-In the second high-fidelity test, we compared the prototype's efficiency against competitors Vets and MeuPet, the most downloaded options, with <strong>5 pet owners</strong>, focusing on the time to schedule an appointment. The sample was small due to the course timeline, but the results indicated a promising improvement in efficiency.
-</p>
-<div style={{ marginTop: 20 }}>
-<EfficiencyChart prefersReducedMotion={prefersReducedMotion} />
-</div>
-<p style={{ marginTop: 14, fontSize: 13, color: '#64748B', fontStyle: 'italic' }}>
-Our goal was for the prototype to be 10% faster at scheduling compared to competitors. In this limited course test, the prototype reached an average scheduling time of 45 seconds.
-</p>
 </div>
 </motion.section>
 
@@ -2884,57 +2727,44 @@ Our goal was for the prototype to be 10% faster at scheduling compared to compet
 {/* [REVISÃO MATTHIAS] packaging headline "A lightweight system for consistency" cut; one factual intro sentence kept */}
 <div className="case-section-body">
 <p>
-A lightweight style guide kept screens consistent and made the interface easier to extend, without slowing down iteration.
+The screens and videos below are the course prototype. Blue for
+primary actions, a short type pair, and a small icon set kept the
+UI consistent while we iterated.
 </p>
 </div>
-
-<div className="case-section-body case-section-body-secondary" style={{ marginTop: 32 }}>
-{/* [REVISÃO MATTHIAS] subhead renamed to match the Color / Icons / Typography pattern (was "A friendly visual system") */}
-<h3 className="case-subsection-title">Color</h3>
-<p>We chose blue as the primary color to balance trust, clarity, and a calm feeling around pet care.</p>
-<div style={{ marginTop: 16 }}>
+<div className="research-full mobile-gallery-shell">
+<SnapGallery className="ms-snap--exported ms-snap--large ms-snap--depth" label="Prototype screens" items={MOBILE_SCREENS} />
+</div>
+<div className="case-section-body case-section-body-secondary" style={{ marginTop: 24 }}>
 <PaletteSpec prefersReducedMotion={prefersReducedMotion} />
-</div>
-</div>
-
-<div className="case-section-body case-section-body-secondary" style={{ marginTop: 24 }}>
-<h3 className="case-subsection-title">Icons</h3>
-<p>Solid navigation icons made the main actions easier to scan, while softer illustrative icons kept the prototype approachable.</p>
-<div style={{ marginTop: 16 }}>
-<IconCatalog />
-</div>
-</div>
-
-<div className="case-section-body case-section-body-secondary" style={{ marginTop: 24 }}>
-<h3 className="case-subsection-title">Typography</h3>
-<div style={{ marginTop: 16 }}>
-<TypeSpec prefersReducedMotion={prefersReducedMotion} />
-</div>
 </div>
 </motion.section>
 
+<CaseBackToContents />
 <motion.section id="results" className="case-section" variants={sectionStagger} initial="hidden" whileInView="visible" viewport={motionViewport}>
 <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>Results</TypedSectionLabel>
 <div className="case-section-body">
-<h3 className="case-subsection-title">Design that speeds up and simplifies scheduling</h3>
+<h3 className="case-subsection-title">The prototype, and what the tests showed</h3>
 <p>
-The concept focuses on three moments: finding nearby veterinarians, booking quickly through a clear calendar, and registering pets from the start.
+Second usability round: 5 pet owners, average time to schedule.
+DuoPet 45 seconds, MeuPet 50 seconds, Vets 53 seconds. That comparison
+is this course test against those two apps, not market performance.
 </p>
-<p style={{ marginTop: 12, fontWeight: 600, fontSize: 15 }}>
-15.9% faster in the course usability test.
-</p>
+<div style={{ marginTop: 20 }}>
+<EfficiencyChart prefersReducedMotion={prefersReducedMotion} />
+</div>
 </div>
 
 <div className="research-full">
 <div className="result-paired-grid">
 {[
-{ n: "01", t: "Finding nearby care", d: "Nearby clinics and vets are surfaced by location, making it easy to compare options and choose inside the prototype.", src: '/assets/portfolio/2026/07/duopet-result-01.mp4', poster: '/assets/portfolio/2026/07/duopet-result-01-poster.webp', label: "Prototype flow: finding nearby veterinarians" },
-{ n: "02", t: "Scheduling made simple", d: "An updated calendar and streamlined booking flow let owners confirm appointments in fewer steps, with less back and forth.", src: '/assets/portfolio/2026/07/duopet-result-02.mp4', poster: '/assets/portfolio/2026/07/duopet-result-02-poster.webp', label: "Prototype flow: booking an appointment with the calendar" },
-{ n: "03", t: "Pet profiles from the start", d: "Owners register their pets during onboarding and can add more anytime, keeping all health and scheduling info in one place.", src: '/assets/portfolio/2026/07/duopet-result-03.mp4', poster: '/assets/portfolio/2026/07/duopet-result-03-poster.webp', label: "Prototype flow: registering a pet during onboarding" },
-].map(({ n, t, d, src, poster, label }, i) => (
-<React.Fragment key={n}>
+{ t: "Finding nearby care", d: "The Home list shows nearby veterinarians with distances, matching the survey finding that many owners pick the closest clinic.", src: '/assets/portfolio/2026/07/duopet-result-01.mp4', poster: '/assets/portfolio/2026/07/duopet-result-01-poster.webp', label: "Prototype flow: finding nearby veterinarians" },
+{ t: "Scheduling as its own step", d: "After round 2, date and time sit on a dedicated screen instead of inside the profile.", src: '/assets/portfolio/2026/07/duopet-result-02.mp4', poster: '/assets/portfolio/2026/07/duopet-result-02-poster.webp', label: "Prototype flow: booking an appointment with the calendar" },
+{ t: "Pet profiles from the start", d: "Owners register pets during onboarding so later booking steps can reuse that information.", src: '/assets/portfolio/2026/07/duopet-result-03.mp4', poster: '/assets/portfolio/2026/07/duopet-result-03-poster.webp', label: "Prototype flow: registering a pet during onboarding" },
+].map(({ t, d, src, poster, label }, i) => (
+<React.Fragment key={t}>
 <div className="result-card-slot" style={{ gridColumn: i + 1, gridRow: 1 }}>
-<NumberCard number={n} title={t} description={d} />
+<NumberCard title={t} description={d} />
 </div>
 <div className="result-video-slot" style={{
 gridColumn: i + 1, gridRow: 2,
@@ -2960,46 +2790,19 @@ style={{ width: '100%', height: '100%', display: 'block', objectFit: 'cover', ob
 <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>Reflections</TypedSectionLabel>
 {/* [REVISÃO MATTHIAS] Lessons Learned + Next Steps merged into one Reflections section with two subheads; all cards kept */}
 <div className="case-section-body">
-<h3 className="case-subsection-title">Lessons learned</h3>
+<h3 className="case-subsection-title">What we take from the course</h3>
 <p>
-This project helped me understand how much speed and confidence matter in service booking, especially when the user is worried about a pet.
+The interviews turned survey percentages into screen bets, especially
+emergency access and reminders. Round 2 showed the embedded calendar
+was hard to use, so scheduling left the profile.
 </p>
-</div>
-<div className="research-full">
-<div className="research-grid">
-<NumberCard
-number="01"
-title="Prioritization matters"
-description="We kept the focus on scheduling instead of expanding every pet-profile feature, because booking was the clearest pain point."
-/>
-<NumberCard
-number="02"
-title="Interviews changed the direction"
-description="The interviews helped turn survey numbers into concrete design decisions, especially around emergency access and reminders."
-/>
-</div>
-</div>
-<div className="case-section-body case-section-body-secondary">
-<h3 className="case-subsection-title">Next steps</h3>
 <p>
-With a promising concept and clear efficiency gains from a small test, the next phase would deepen the prototype and test assumptions we could not address during the initial course sprint.
+Limits: educational project, small test samples, no evidence of use
+in production.
 </p>
-</div>
-<div className="research-full">
-<div className="research-grid">
-<NumberCard
-number="01"
-title="Analyze search filters"
-description="Evaluate the inclusion of filters on the home page, beyond nearby veterinarians, to offer a more personalised experience."
-/>
-<NumberCard
-number="02"
-title="Test the emergency vet feature"
-description="This would allow us to evaluate its usefulness and clarity in urgent situations."
-/>
-</div>
 </div>
 </motion.section>
+<CaseBackToContents />
 {/* ── Paginação ── */}
 <section className="case-pagination" aria-label="Next and previous case">
 <div className="case-pagination-inner">

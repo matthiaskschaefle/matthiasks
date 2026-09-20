@@ -20,6 +20,7 @@ function Screen({ shot }) {
       loading="lazy"
       decoding="async"
       draggable={false}
+      style={dims ? { aspectRatio: `${dims.width} / ${dims.height}` } : undefined}
     />
   );
 }
@@ -40,7 +41,6 @@ function Screen({ shot }) {
 export default function BeforeAfter({
   before,
   after,
-  number,
   title,
   description,
   caption,
@@ -73,7 +73,6 @@ export default function BeforeAfter({
           </div>
         </div>
         <figcaption className="ms-ba__text">
-          {number && <span className="ms-ba__number">{number}</span>}
           <h3 className="ms-ba__title">{title}</h3>
           <p className="ms-ba__desc">{description}</p>
           {caption && <p className="ms-ba__caption">{caption}</p>}

@@ -107,6 +107,7 @@ export default function TypedSectionLabel({
                 {[...line].map((character, index) => (
                   <motion.span
                     className="case-section-label-character"
+                    style={{ display: "inline-block" }}
                     variants={typedMultilineCharacterV}
                     custom={characterOffset + index}
                     key={`${label}-${characterOffset + index}`}
@@ -141,6 +142,7 @@ export default function TypedSectionLabel({
         {[...label].map((character, index) => (
           <motion.span
             className="case-section-label-character"
+            style={{ display: "inline-block" }}
             variants={typedCharacterV}
             key={`${label}-${index}`}
           >

@@ -1,5 +1,5 @@
 // Fonte unica do curriculo. Consumido pela pagina /resume (src/Resume.jsx) e
-// pelo gerador do PDF (branding/resume/build-pdf.mjs). Editar SO aqui: se o
+// pelo gerador do PDF (branding/resume/capture.mjs). Editar SO aqui: se o
 // texto for duplicado num dos dois, a pagina e o PDF divergem sem aviso.
 //
 // Regras que valem para este arquivo (ver CLAUDE.md):
@@ -23,17 +23,17 @@ export const resume = {
   site: { value: "www.matthiasks.com", href: "https://matthiasks.com" },
 
   intro:
-    "UX/UI Designer based in Berlin with paid client experience in operational product flows and service websites. I work across research, interaction design, high-fidelity UI, validation, and responsive implementation in React and Vite.",
+    "UX/UI Designer in Berlin. Paid client work on operational flows and service websites, from research to delivered interface design. This portfolio is built in React and Vite.",
 
   experience: [
     {
       title: "UX/UI Designer: Delivery workflow",
-      kind: "Paid freelance client project · Vulpes Studio",
+      kind: "Paid freelance client project, Vulpes Studio",
       period: "2025",
       summary: "Redesign of a delivery confirmation flow for a small freight company in Barbacena, Brazil.",
       bullets: [
-        "Conducted field research with 5 couriers and piloted the redesigned confirmation flow with 12 drivers over three weeks.",
-        "Reduced task time by approximately 7 to 8 seconds per stop and increased record compliance from 92% to 98%. Pilot data supported a projected 30 to 40% reduction in proof-of-delivery disputes.",
+        "Field research with 5 couriers. Pilot with 12 drivers over three weeks.",
+        "About 7 to 8 seconds faster per stop. Record compliance from 92% to 98%. Pilot data supported a projected 30 to 40% reduction in proof-of-delivery disputes.",
       ],
     },
     {
@@ -75,16 +75,16 @@ export const resume = {
     },
     {
       title: "Languages",
-      body: "Portuguese (native), English (fluent), German (B1 certified; B2 professional course in progress).",
+      body: "Portuguese (native), English (fluent), German (B1 certified, Deutsch für den Beruf in progress).",
     },
   ],
 
   education: [
     {
-      name: "Front-end Development and AI Weiterbildung",
+      name: "AI Software Development",
       where: "WBS Coding School, Berlin",
       when: "2026 to present",
-      note: "Current phase: three-month professional German B2 course. The front-end and AI technical curriculum begins afterward and has not started yet.",
+      note: "Current phase: three months of Deutsch für den Beruf. AI Software Development comes next and has not started yet.",
     },
     {
       name: "Google UX Design Certificate",
@@ -92,14 +92,14 @@ export const resume = {
       when: "2025",
     },
     {
-      name: "B.Sc. Biological Sciences",
+      name: "Licenciatura in Biological Sciences",
       where: "Federal Institute of Southeast Minas Gerais",
       when: "2019",
     },
     {
       name: "Technical University of Munich",
       where: "Academic exchange",
-      when: "2014 to 2016",
+      when: "Late 2014 to early 2016",
     },
   ],
 };

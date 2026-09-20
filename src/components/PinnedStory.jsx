@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence, useScroll, useMotionValueEvent } from "framer-motion";
 import { DURATION, EASE } from "@/lib/animations";
+import { getImageDims } from "./mockups/imageDims.js";
 
 /**
  * Pinned scroll-linked narrative (addy.md pattern).
@@ -17,7 +18,10 @@ import { DURATION, EASE } from "@/lib/animations";
 export default function PinnedStory({ steps }) {
   const trackRef = useRef(null);
   const [index, setIndex] = useState(0);
-  const [isStatic, setIsStatic] = useState(false);
+  const [isStatic, setIsStatic] = useState(() => {
+    if (typeof window === "undefined") return true;
+    return window.matchMedia("(max-width: 899.98px), (prefers-reduced-motion: reduce)").matches;
+  });
   // One viewport establishes the sticky scene; each extra chapter adds a
   // short beat. A four-step story takes 160vh, roughly two mouse-wheel beats
   // in the current desktop preview instead of the previous five.
@@ -25,9 +29,8 @@ export default function PinnedStory({ steps }) {
 
   useEffect(() => {
     const check = () => {
-      const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
-      const small = window.innerWidth < 900;
-      setIsStatic(reduce || small);
+      const stacked = window.matchMedia("(max-width: 899.98px), (prefers-reduced-motion: reduce)").matches;
+      setIsStatic(stacked);
     };
     check();
     window.addEventListener("resize", check);
@@ -50,7 +53,14 @@ export default function PinnedStory({ steps }) {
         {steps.map((step) => (
           <div className="pinned-story-step" key={step.id}>
             <div className="pinned-story-media">
-              <img src={step.img} alt={step.alt} loading="lazy" decoding="async" />
+              <img
+                src={step.img}
+                alt={step.alt}
+                loading="lazy"
+                decoding="async"
+                width={getImageDims(step.img, "PinnedStory")?.width}
+                height={getImageDims(step.img, "PinnedStory")?.height}
+              />
             </div>
             <div>
               <span className="pinned-story-step-label">{step.label}</span>
@@ -106,6 +116,8 @@ export default function PinnedStory({ steps }) {
                   transition={{ duration: DURATION.fast, ease: EASE.out }}
                   loading="eager"
                   decoding="async"
+                  width={getImageDims(step.img, "PinnedStory")?.width}
+                  height={getImageDims(step.img, "PinnedStory")?.height}
                 />
               </AnimatePresence>
             </div>

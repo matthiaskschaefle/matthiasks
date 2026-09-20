@@ -111,14 +111,15 @@ export default function StoryHero({ frames, heading }) {
 .story-hero-bars { display:flex; gap:6px; width:100%; max-width:420px; margin-bottom:14px; }
 .story-hero-bar { flex:1; height:3px; overflow:hidden; border-radius:999px; background:var(--ink-200); }
 .story-hero-bar-fill { display:block; width:0; height:100%; border-radius:inherit; background:var(--brand-600); }
-.story-hero-media { position:relative; width:100%; max-width:420px; aspect-ratio:4/5; border-radius:12px; border:1px solid var(--ink-200); box-shadow:0 12px 32px rgba(15,14,12,0.10); overflow:hidden; background:var(--ink-100); }
+.story-hero-media { position:relative; width:100%; max-width:420px; aspect-ratio:4/5; border-radius:12px; border:none; box-shadow:var(--shadow-fine); overflow:hidden; background:var(--ink-100); }
 .story-hero-media img { position:absolute; inset:0; width:100%; height:100%; object-fit:cover; object-position:50% 30%; pointer-events:none; user-select:none; }
 .story-hero-nav { position:absolute; inset-block:0; z-index:2; width:30%; padding:0; border:0; border-radius:0; background:transparent; cursor:pointer; touch-action:manipulation; }
 .story-hero-nav--previous { left:0; }
 .story-hero-nav--next { right:0; }
 .story-hero-nav:focus-visible { outline:3px solid var(--ink-900); outline-offset:-3px; box-shadow:inset 0 0 0 6px var(--bg); }
 .story-hero-line { margin:22px 0 0; font-family:var(--font-mono); font-size:clamp(18px, 2.6vw, 24px); line-height:1.45; min-height:2.9em; text-align:center; max-width:640px; color:var(--ink-900); font-weight:500; }
-.story-hero-line--static { min-height:0; }
+.story-hero-line--static { min-height:0; font-family:var(--font-display); font-size:32px; font-weight:500; letter-spacing:-0.03em; line-height:1.15; color:var(--ink-900); }
+@media (max-width:768px) { .story-hero-line--static { font-size:28px; } }
 .story-hero-variable { color:var(--brand-600); }
 .story-hero-caret { display:inline-block; width:0.55ch; height:1.05em; margin-left:2px; vertical-align:text-bottom; background:var(--brand-600); }
 @media (max-width:768px) { .story-hero { margin-bottom:56px; } .story-hero-line { margin-top:18px; } }

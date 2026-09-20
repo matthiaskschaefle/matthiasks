@@ -5,7 +5,7 @@ import { fadeIn, fadeScale, fadeUp, fadeUpImmediate, gridStagger, sectionStagger
 import { applySeo } from "@/lib/seo";
 import SiteHeader from "./components/SiteHeader.jsx";
 import SiteFooter from "./components/SiteFooter.jsx";
-import ScrollspyPill from "./components/ScrollspyPill.jsx";
+import CaseContents, { CaseBackToContents } from "./components/CaseContents.jsx";
 import PinnedStory from "./components/PinnedStory.jsx";
 import Figure from "./components/mockups/Figure.jsx";
 import BeforeAfter from "./components/mockups/BeforeAfter.jsx";
@@ -29,10 +29,10 @@ const SEO_OG_DESCRIPTION = "A faster delivery confirmation flow, designed from f
 /* ── Asset URLs ── */
 const HERO_IMG = "/assets/portfolio/2026/03/Mockup-Hero-scaled.png";
 
-function NumberCard({ number, title, description }) {
+function NumberCard({ icon, title, description }) {
 return (
 <motion.article className="research-card" variants={fadeUp}>
-<div className="research-number">{number}</div>
+{icon ? <div className="research-icon">{icon}</div> : null}
 <h4 className="research-title">{title}</h4>
 <p className="research-text">{description}</p>
 </motion.article>
@@ -88,22 +88,25 @@ else document.body.classList.remove('is-mobile');
 }
 updateMobile();
 window.addEventListener('resize', updateMobile);
-return () => window.removeEventListener('resize', updateMobile);
+return () => {
+window.removeEventListener('resize', updateMobile);
+document.body.classList.remove('is-mobile');
+};
 }, []);
 
 return (
 <>
 <style>{`
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; }
+html { scroll-behavior: auto; }
 body { margin:0; padding:0; font-family:var(--font-body); color:var(--ink); background:var(--bg); min-height:100vh; overflow-x:hidden; max-width:100vw; }
 a { color:inherit; text-decoration:none; }
 img { max-width:100%; display:block; }
 
 /* ── PAGE ── */
-.page { min-height:100vh; width:100%; padding:152px 16px 40px; display:flex; flex-direction:column; align-items:center; }
+.page { min-height:100vh; width:100%; padding:152px 16px 96px; display:flex; flex-direction:column; align-items:center; }
 .page-inner { width:100%; max-width:872px; }
-@media(max-width:900px){ .page{min-height:auto;padding-top:120px;padding-inline:12px;padding-bottom:60px;overflow-x:hidden;} .page-inner{overflow-x:hidden;width:100%;max-width:100%!important;} .case-layout{overflow-x:hidden;} }
+@media(max-width:900px){ .page{min-height:auto;padding-top:120px;padding-inline:12px;padding-bottom:96px;overflow-x:hidden;} .page-inner{overflow-x:hidden;width:100%;max-width:100%!important;} .case-layout{overflow-x:hidden;} }
 
 /* ── HERO ── */
 .case-hero { display:flex; flex-direction:column; gap:24px; margin-bottom:0; position:relative; }
@@ -112,6 +115,7 @@ img { max-width:100%; display:block; }
 .case-eyebrow { font-family:var(--font-mono); font-size:var(--label-1-size); text-transform:uppercase; letter-spacing:var(--label-1-track); color:var(--ink-600); }
 .case-title-main { font-family:var(--font-display); font-size:40px; font-weight:500; letter-spacing:-0.02em; margin:0; color:var(--ink); line-height:1.1; }
 .case-subtitle { font-family:var(--font-body); font-size:16px; line-height:1.7; font-weight:400; max-width:520px; color:var(--ink-600); margin:0; }
+.case-engagement { font-family:var(--font-body); font-size:14px; line-height:1.6; color:var(--ink-700); margin:0; max-width:640px; position:relative; z-index:3; }
 .case-meta-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; margin-top:8px; position:relative; z-index:3; }
 .case-meta-motion { min-width:0; display:flex; }
 .case-meta-motion .case-meta-item { width:100%; }
@@ -121,7 +125,7 @@ img { max-width:100%; display:block; }
 @media(max-width:900px){ .case-meta-grid{grid-template-columns:repeat(2,1fr);gap:12px;} .case-title-main{font-size:32px;} }
 
 /* ── IN SHORT (hero summary) ── */
-.in-short { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:36px; margin-top:28px; padding-top:24px; border-top:var(--hairline); position:relative; z-index:3; }
+.in-short { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:36px; margin-top:32px; padding-top:8px; border-top:none; position:relative; z-index:3; }
 .in-short-label { font-family:var(--font-mono); font-size:var(--label-1-size); text-transform:uppercase; letter-spacing:var(--label-1-track); color:var(--ink-600); margin-bottom:8px; }
 .in-short-text { font-family:var(--font-body); font-size:15px; line-height:1.6; color:var(--ink-700); margin:0; }
 @media(max-width:900px){ .in-short{grid-template-columns:1fr;} }
@@ -133,7 +137,8 @@ img { max-width:100%; display:block; }
 @media(max-width:768px){ .case-layout{margin-top:12px;overflow-x:hidden;} }
 
 /* ── SECTIONS ── */
-.case-section { display:grid; grid-template-columns:minmax(120px,190px) minmax(0,1fr); gap:20px 40px; padding-block:32px; scroll-margin-top:140px; }
+.case-section { display:grid; grid-template-columns:minmax(120px,190px) minmax(0,1fr); gap:20px 40px; padding-block:32px; }
+#kpis { padding-bottom: 140px; }
 .case-section-label { min-height:1.3em; display:flex; align-items:baseline; align-self:start; font-family:var(--font-mono); font-size:var(--label-2-size); text-transform:uppercase; letter-spacing:var(--label-2-track); color:var(--ink-600); opacity:0.75; padding-top:4px; margin:0; }
 .case-section-label-text { display:inline-flex; white-space:nowrap; }
 .case-section-label-character { display:inline-block; }
@@ -153,13 +158,13 @@ body.is-mobile,body.is-mobile .page,body.is-mobile .case-layout,body.is-mobile .
 
 /* ── RESEARCH FULL ── */
 .research-full { grid-column:1/-1; max-width:872px; margin:0 auto; width:100%; }
-.research-grid { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:16px; margin-top:18px; }
+.research-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:28px 40px; margin-top:22px; }
 body.is-mobile .research-grid>* { grid-column:1!important; }
 @media(max-width:768px){ .research-grid{grid-template-columns:1fr;} }
 
 /* ── RESEARCH CARD (hairline row, no card chrome) ── */
-.research-card { position:relative; padding:18px 0 0; border-top:var(--hairline); display:flex; flex-direction:column; }
-.research-number { display:inline-flex; align-items:center; font-family:var(--font-mono); font-size:17px; font-weight:700; letter-spacing:0.03em; color:var(--brand-700); margin-bottom:14px; flex-shrink:0; }
+.research-card { position:relative; padding:0; border:none; border-radius:0; background:transparent; box-shadow:none; display:flex; flex-direction:column; }
+.research-icon { display:inline-flex; align-items:center; color:var(--brand-700); margin-bottom:12px; }
 .research-title { font-family:var(--font-display); font-size:17px; font-weight:700; margin:0 0 10px; color:var(--ink-900); letter-spacing:-0.01em; line-height:1.35; }
 .research-text { font-size:14px; line-height:1.7; color:var(--ink-600); margin:0; flex:1; }
 
@@ -197,7 +202,7 @@ body.is-mobile .research-grid>* { grid-column:1!important; }
 
 /* ── KPI (display number + label over a hairline, no card chrome) ── */
 .kpi-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:16px; margin-top:24px; }
-.kpi-card { padding:16px 0 0; border-top:var(--hairline); display:flex; flex-direction:column; gap:8px; }
+.kpi-card { padding:16px 0 0; border:none; display:flex; flex-direction:column; gap:8px; }
 .kpi-card-value { font-family:var(--font-display); font-size:40px; font-weight:600; line-height:1; color:var(--brand-700); letter-spacing:-0.02em; }
 .kpi-card-value--range { font-size:30px; }
 /* So a unidade, nunca o numero. O seletor antigo pegava qualquer span dentro
@@ -206,11 +211,21 @@ body.is-mobile .research-grid>* { grid-column:1!important; }
 .kpi-card-unit { font-size:17px; font-weight:400; color:var(--ink-600); letter-spacing:0; }
 .kpi-card-label { font-family:var(--font-mono); font-size:13px; font-weight:600; color:var(--ink-900); letter-spacing:0.01em; }
 .kpi-card-desc { font-family:var(--font-body); font-size:13px; line-height:1.6; color:var(--ink-600); margin-top:4px; }
-@media(max-width:900px){ .kpi-grid{grid-template-columns:1fr;} }
+.kpi-grid--measured { grid-template-columns:repeat(3,minmax(0,1fr)); }
+.projection-block { margin-top:28px; padding-top:24px; padding-bottom:8px; border-top:var(--hairline); }
+.projection-block-label { font-family:var(--font-mono); font-size:var(--label-1-size); font-weight:500; text-transform:uppercase; letter-spacing:var(--label-1-track); color:var(--ink-600); margin-bottom:8px; }
+.projection-block-value { font-family:var(--font-display); font-size:28px; font-weight:600; letter-spacing:-0.02em; color:var(--ink-900); margin:0 0 8px; }
+.projection-block-text { font-family:var(--font-body); font-size:15px; line-height:1.7; color:var(--ink-600); margin:0; max-width:var(--measure-body); }
+.limitations-block { margin-top:28px; }
+.limitations-block h3 { margin-top:0; }
+.limitations-list { margin:0; padding-left:18px; font-family:var(--font-body); font-size:15px; line-height:1.7; color:var(--ink-700); }
+.limitations-list li { margin:0 0 8px; }
+.limitations-list li:last-child { margin-bottom:0; }
+@media(max-width:900px){ .kpi-grid,.kpi-grid--measured{grid-template-columns:1fr;} }
 
 /* ── CASE FILM ── */
 /* Sits in the hero flex column, so it needs to clear the radial backdrop. */
-.case-film { margin: 8px 0 0; position: relative; z-index: 3; }
+.case-film { margin: 12px 0 8px; position: relative; z-index: 3; }
 .case-film-frame {
 position: relative;
 width: 100%;
@@ -218,7 +233,8 @@ aspect-ratio: 16 / 9;
 border-radius: 16px;
 overflow: hidden;
 background: var(--ink-950);
-border: 1px solid rgba(168,163,153,0.28);
+border: none;
+box-shadow: var(--shadow-fine);
 }
 .case-film-frame .play-once-media {
 width: 100%;
@@ -240,9 +256,9 @@ grid-column: 1 / -1;
 margin-top: 16px;
 padding: 36px 40px 32px;
 border-radius: 24px;
-border: 1px solid rgba(168,163,153,0.28);
+border: none;
 background: linear-gradient(145deg, rgba(255,255,255,0.98) 0%, rgba(248,250,252,0.96) 48%, rgba(236,253,245,0.86) 100%);
-box-shadow: 0 12px 32px rgba(15,14,12,0.07);
+box-shadow: var(--shadow-fine);
 }
 .context-card-label {
 font-family: var(--font-mono);
@@ -257,11 +273,11 @@ display: block;
 .context-card-grid {
 display: grid;
 grid-template-columns: repeat(3, minmax(0, 1fr));
-gap: 0;
+gap: 28px;
 }
 .context-card-item {
-padding: 0 32px;
-border-right: 1px solid rgba(168,163,153,0.2);
+padding: 0;
+border-right: none;
 display: flex;
 flex-direction: column;
 gap: 6px;
@@ -293,7 +309,7 @@ line-height: 1.5;
 @media (max-width: 900px) {
 .context-card { padding: 24px 20px 20px; }
 .context-card-grid { grid-template-columns: 1fr; gap: 24px; }
-.context-card-item { padding: 0; border-right: none; border-bottom: 1px solid rgba(168,163,153,0.2); padding-bottom: 24px; }
+.context-card-item { padding: 0; border-right: none; padding-bottom: 24px; }
 .context-card-item:last-child { border-bottom: none; padding-bottom: 0; }
 .context-card-number { font-size: 40px; }
 }
@@ -335,7 +351,7 @@ grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
 .alt-block-label::before { content:""; width:7px; height:7px; border-radius:999px; background:var(--gold-400); }
 .alt-block-intro { font-family:var(--font-body); font-size:15px; line-height:1.7; color:var(--ink-600); margin:10px 0 18px; max-width:var(--measure-body); }
 .alt-grid { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:16px; }
-.alt-card { padding:18px 0 0; border-top:var(--hairline); display:flex; flex-direction:column; gap:8px; }
+.alt-card { padding:18px 18px 20px; border:none; border-radius:14px; background:#fff; box-shadow:var(--shadow-fine); display:flex; flex-direction:column; gap:8px; }
 .alt-card-tag { font-family:var(--font-mono); font-size:var(--label-1-size); font-weight:500; text-transform:uppercase; letter-spacing:var(--label-1-track); color:var(--ink-600); }
 .alt-card-title { font-family:var(--font-display); font-size:16px; font-weight:600; color:var(--ink-900); margin:0; }
 .alt-card-text { font-family:var(--font-body); font-size:14px; line-height:1.7; color:var(--ink-600); margin:0; }
@@ -344,22 +360,30 @@ grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
 
 /* ── CASE BTN ── */
 .case-cta-row { display:flex; gap:12px; align-items:center; margin-top:10px; }
-.case-btn { display:inline-flex; align-items:center; gap:10px; padding:12px 16px; border-radius:16px; background:transparent; border:var(--hairline); color:var(--ink-900); text-decoration:none; font-family:var(--font-display); font-size:13px; font-weight:600; letter-spacing:-0.01em; white-space:nowrap; transition:border-color 0.18s ease,color 0.18s ease,transform 0.18s ease; }
-.case-btn:hover { border-color:var(--ink-800); transform:translateY(-2px); }
+.case-btn { display:inline-flex; align-items:center; gap:10px; padding:12px 16px; border-radius:12px; background:#fff; border:none; box-shadow:var(--shadow-fine); color:var(--ink-900); text-decoration:none; font-family:var(--font-display); font-size:13px; font-weight:600; letter-spacing:-0.01em; white-space:nowrap; transition:box-shadow 0.18s ease,transform 0.18s ease; }
+.case-btn:hover { box-shadow:var(--shadow-header); transform:translateY(-2px); }
 .case-btn:active { transform:translateY(0); }
 .case-btn:focus-visible { outline:2px solid var(--brand-400); outline-offset:2px; }
-.case-btn-icon { display:inline-flex; align-items:center; justify-content:center; flex-shrink:0; }
-.case-btn-icon img { width:16px; height:16px; display:block; object-fit:contain; }
-.case-btn-icon svg { display:block; width:16px; height:16px; }
+.case-btn-icon { display:inline-flex; align-items:center; justify-content:center; flex-shrink:0; overflow:visible; width:12px; height:18px; }
+.case-btn-icon img { width:12px; height:18px; display:block; object-fit:contain; overflow:visible; }
+.case-btn-icon svg { display:block; width:12px; height:18px; overflow:visible; }
 .case-btn-label { display:inline-flex; align-items:center; }
 
 /* Delivery comparisons keep the exported screens almost square. */
 .delivery-before-after .ms-frame--phone { border-radius:10px; }
+.delivery-before-after.ms-ba--focus-top .ms-ba__cell:first-child .ms-frame--phone {
+  border-top-color: transparent;
+}
+.delivery-before-after.ms-ba--focus-top .ms-ba__cell:first-child .ms-ba__img {
+  width: calc(100% + 2px);
+  max-width: none;
+  left: -1px;
+  top: -2px;
+}
 
 `}</style>
 
 <SiteHeader />
-<ScrollspyPill sections={CASE_SECTION_IDS.map(id => ({ id, label: id === "my-role" ? "my role" : id === "kpis" ? "results" : id }))} />
 
 {/* ── MAIN ── */}
 <main id="main" className="page">
@@ -370,52 +394,10 @@ grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
 <div className="case-hero-backdrop" aria-hidden="true" />
 <p className="case-eyebrow">CASE STUDY / DELIVERY</p>
 <h1 className="case-title-main">The New Delivery Experience</h1>
+<p className="case-engagement">Paid freelance client project via Vulpes Studio, 2025. A small freight company in Barbacena, Brazil.</p>
 <p className="case-subtitle">
-Customers were disputing deliveries they had paid for, and the records could not settle it. We redesigned the confirmation flow without touching how the app works.
+We redesigned the confirmation flow inside the screens drivers already used.
 </p>
-
-<div className="case-meta-grid">
-<motion.div className="case-meta-motion" {...fadeUpImmediate(0, prefersReducedMotion)}>
-<div className="case-meta-item">
-<div className="case-meta-label">Team</div>
-<div className="case-meta-value">Two designers with the client&apos;s operations lead</div>
-</div>
-</motion.div>
-<motion.div className="case-meta-motion" {...fadeUpImmediate(1, prefersReducedMotion)}>
-<div className="case-meta-item">
-<div className="case-meta-label">Scope of work</div>
-<div className="case-meta-value">User research; UI design.</div>
-</div>
-</motion.div>
-<motion.div className="case-meta-motion" {...fadeUpImmediate(2, prefersReducedMotion)}>
-<div className="case-meta-item">
-<div className="case-meta-label">Role</div>
-<div className="case-meta-value">UX/UI Designer</div>
-</div>
-</motion.div>
-<motion.div className="case-meta-motion" {...fadeUpImmediate(3, prefersReducedMotion)}>
-<div className="case-meta-item">
-<div className="case-meta-label">Year</div>
-<div className="case-meta-value">2025</div>
-</div>
-</motion.div>
-</div>
-
-{/* [REVISÃO MATTHIAS] In short: new summary block, copy pending owner review */}
-<div className="in-short">
-<div className="in-short-item">
-<div className="in-short-label">Problem</div>
-<p className="in-short-text">Customers were disputing deliveries they had paid for, and the records the app captured were too thin to settle the claim either way.</p>
-</div>
-<div className="in-short-item">
-<div className="in-short-label">My role</div>
-<p className="in-short-text">I led the field sessions and the receiver flow design.</p>
-</div>
-<div className="in-short-item">
-<div className="in-short-label">Result</div>
-<p className="in-short-text">-2 taps and -7 to -8 seconds per stop; record compliance from 92% to 98% in the pilot.</p>
-</div>
-</div>
 
 <figure className="case-film">
 <PlayOnceVideo
@@ -433,6 +415,27 @@ tracks={[{ src: "/media/delivery-full-web.en.vtt", srcLang: "en", label: "Englis
 The case in 49 seconds, from the disputes to the pilot numbers. Silent, all text on screen.
 </figcaption>
 </figure>
+
+<motion.p className="case-hero-byline" {...fadeUpImmediate(0, prefersReducedMotion)}>
+Two designers with the client&apos;s operations lead. Research and UI, 2025.
+</motion.p>
+
+<div className="in-short">
+<div className="in-short-item">
+<div className="in-short-label">Problem</div>
+<p className="in-short-text">Paid deliveries were disputed, and the records were too thin to settle the claim.</p>
+</div>
+<div className="in-short-item">
+<div className="in-short-label">My role</div>
+<p className="in-short-text">I led the field sessions and designed the receiver confirmation flow.</p>
+</div>
+<div className="in-short-item">
+<div className="in-short-label">Pilot results</div>
+<p className="in-short-text">12 drivers, 3 weeks: 7 to 8 seconds faster per stop, 2 fewer taps, record compliance from 92% to 98%.</p>
+</div>
+</div>
+
+<CaseContents sections={CASE_SECTION_IDS.map(id => ({ id, label: id === "my-role" ? "my role" : id === "kpis" ? "results" : id }))} />
 </section>
 
 {/* ── PINNED STORY: the case in four scroll steps ── */}
@@ -440,33 +443,33 @@ The case in 49 seconds, from the disputes to the pilot numbers. Silent, all text
 steps={[
 {
 id: "context",
-label: "The route",
-title: "80 to 130 stops, every single day",
-body: "The app is a last-mile delivery platform used by partner drivers. At every stop they confirm the delivery, register who received the package, and submit photo proof. The flow worked, but small frictions repeated at every door.",
+label: "The product",
+title: "A last-mile app at 80 to 130 stops a day",
+body: "Partner drivers finish each stop in it: confirm delivery, register who received the package, and submit photo proof. The records it produced were not strong enough.",
 img: HERO_IMG,
 alt: "Delivery app mockups",
 },
 {
 id: "field",
 label: "Field research",
-title: "Two days riding along with drivers",
-body: "We rode along with 5 drivers on active routes, watching how they used the app at each stop. By the third driver, we were seeing the same hesitation at the same screens. Not a broken flow. The same small friction, every time.",
+title: "I led two days on active routes",
+body: "Five drivers. We watched the app at the door without interrupting, then debriefed after each route.",
 img: "/assets/portfolio/2026/04/IMG-20260328-WA0013.jpg",
 alt: "Field observation during a driver route in Barbacena",
 },
 {
 id: "insight",
-label: "The insight",
-title: "The app was asking drivers to do its job",
-body: "Document numbers and recipient names were already in the system, yet drivers retyped them at every stop. Receiver types like coworkers or doormen had no option at all. The principle became: confirmation should replace entry, not sit alongside it.",
+label: "The principle",
+title: "Confirmation should replace entry",
+body: "Names and document numbers were already in the system. Drivers were still typing them. The interface was asking people to do work the app could do.",
 img: "/assets/portfolio/2026/03/Mockup-02-Receiver-Modal.png",
 alt: "Wireframe of the receiver modal",
 },
 {
 id: "solution",
-label: "The solution",
-title: "Same screens, doing more of the work",
-body: "Auto-filled confirmation, structured receiver options for how deliveries actually happen, and photo validation at capture. No new screens, no retraining. Drivers picked it up without being told.",
+label: "The three changes",
+title: "Same screens, less work at the door",
+body: "Auto-filled confirmation data, structured receiver options, and photo feedback at capture. No new screens and no retraining.",
 img: "/assets/portfolio/2026/04/Mockup-02-Modal.png",
 alt: "Final receiver modal UI",
 },
@@ -482,13 +485,8 @@ alt: "Final receiver modal UI",
 <motion.section id="overview" className="case-section" variants={sectionStagger} initial="hidden" whileInView="visible" viewport={motionViewport}>
 <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>Overview</TypedSectionLabel>
 <div className="case-section-body">
-<p>The app is a last-mile delivery platform used by partner drivers to complete their daily routes. Drivers perform between 80 and 130 stops per day, and at each stop they need to confirm the delivery, register who received the package, and submit photo proof.</p>
 <p className="case-disclaimer">App name and visual identity have been altered to comply with a non-disclosure agreement.</p>
-<p>The app worked. But the confirmation flow had gaps that were costing time and creating disputes. We were brought in to close those gaps without changing how drivers already used the app.</p>
-<h3 className="case-subsection-title">The Problem</h3>
-<p>When a customer claimed a paid delivery never arrived, the company had no way to settle it. The records the app captured were too thin to answer either way, and that turned into a growing number of Proof Not Received (PNR) disputes. The causes were spread across the flow: each stop required drivers to type information the system already had, receiver types like coworkers or doormen had no dedicated option so drivers wrote free-form notes, and photos were accepted regardless of quality. None of this was dramatic on its own, but together it left records that could not hold up.</p>
-<h3 className="case-subsection-title">Goal</h3>
-<p>Reduce friction in the delivery confirmation flow without retraining drivers or introducing new screens. The app had to feel familiar while working better.</p>
+<p>The confirmation flow cost time and left records that could not settle Proof Not Received (PNR) disputes. The brief: close those gaps without new screens or retraining.</p>
 </div>
 <div className="context-card">
 <span className="context-card-label">Context</span>
@@ -517,32 +515,29 @@ alt: "Final receiver modal UI",
 <motion.section id="my-role" className="case-section" variants={sectionStagger} initial="hidden" whileInView="visible" viewport={motionViewport}>
 <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>My Role</TypedSectionLabel>
 <div className="case-section-body">
-<h3 className="case-subsection-title">Two designers, working directly with operations</h3>
-<p>I worked with one other designer throughout research and design. We had direct access to drivers in the field and collaborated closely with the operations team. There was no dedicated research role on this project, so we ran the field work ourselves alongside the UI design.</p>
-<h3 className="case-subsection-title">Constraints</h3>
-<p>No new screens. No retraining. The redesign had to fit inside the existing architecture and feel natural to drivers who were already comfortable with the current flow. We had about three weeks from the first field session to final handoff.</p>
+<p>I led the field sessions and the receiver confirmation flow, with one other designer and the client&apos;s operations lead. No dedicated researcher. Constraints: no new screens, no retraining, about three weeks from first field session to handoff.</p>
 </div>
 <div className="research-full">
 <div className="research-grid research-grid--two">
 <NumberCard
-number={
+icon={
 <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
 <path d="M12 20h9" />
 <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z" />
 </svg>
 }
 title="What I owned"
-description="Field observations, driver interviews, wireframing the confirmation and photo capture screens, and delivering the high-fidelity UI for those flows."
+description="Field observations, driver interviews, wireframes for confirmation and photo capture, and high-fidelity UI for those flows."
 />
 <NumberCard
-number={
+icon={
 <svg width="28" height="20" viewBox="0 0 28 20" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
 <circle cx="10" cy="10" r="7" />
 <circle cx="18" cy="10" r="7" />
 </svg>
 }
 title="What was shared"
-description="Research planning, deciding which problems to prioritize, and the final design direction were all worked through together with the other designer and the operations lead."
+description="Research planning, which problems to prioritize, and the final design direction, with the other designer and the operations lead."
 />
 </div>
 </div>
@@ -552,9 +547,8 @@ description="Research planning, deciding which problems to prioritize, and the f
 <motion.section id="research" className="case-section" variants={sectionStagger} initial="hidden" whileInView="visible" viewport={motionViewport}>
 <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>Research</TypedSectionLabel>
 <div className="case-section-body">
-<h3 className="case-subsection-title">Two days on the road with drivers</h3>
-<p>We spent two days riding along with 5 drivers on active routes, watching how they used the app at each stop without directing or interrupting them. After each route, we sat down and went through what had happened.</p>
-<p>By the third driver, we were seeing the same hesitation at the same screens. Not a broken flow. The same small friction, every time.</p>
+<h3 className="case-subsection-title">Two days on the road</h3>
+<p>Two days with five drivers, separate from the later 12-driver pilot. I led the ride-alongs. We watched the app at each stop without directing them, then debriefed after each route.</p>
 <Figure
 className="research-field-figure"
 src="/assets/portfolio/2026/04/IMG-20260328-WA0013.jpg"
@@ -573,17 +567,13 @@ author: "Driver, 3 years of experience",
 },
 ]}
 />
-<h3 className="case-subsection-title">What we observed</h3>
-<p>These were not opinions gathered after the fact. They were patterns we watched play out in real time, on real routes.</p>
 </div>
 <div className="research-full">
-<div className="research-grid">
-<NumberCard number="01" title="Retyping what the system already knew" description="Document numbers, recipient names, recurring notes. The system had all of it, but drivers still had to type it manually at every stop. In the field that came to about 8 seconds a stop, on routes of 80 to 130 stops a day." />
-<NumberCard number="02" title="No option for how deliveries actually happen" description="In commercial buildings, packages almost always go to a coworker or security guard. The app had no field for that, so drivers improvised with free text." />
-<NumberCard number="03" title="Photos accepted regardless of quality" description="Dark images, blurry shots, wrong angles. The app accepted everything, which meant proof of delivery was only as reliable as the driver's attention at that moment." />
-</div>
-<div className="research-grid" style={{ marginTop: 16 }}>
-<NumberCard number="04" title="PNR disputes with no clear answer" description="When a customer disputed a delivery, the records were often too thin to settle it. Not because the driver had done anything wrong, but because the app had not captured enough." />
+<div className="research-grid research-grid--two">
+<NumberCard title="Retyping what the system already knew" description="Document numbers, recipient names, recurring notes. In the field that came to about 8 seconds a stop." />
+<NumberCard title="No option for how deliveries actually happen" description="In commercial buildings, packages almost always go to a coworker or security guard. The app had no field for that, so drivers used free text." />
+<NumberCard title="Photos accepted regardless of quality" description="Dark, blurry, or off-angle shots were accepted. Proof of delivery depended on the driver's attention at that moment." />
+<NumberCard title="PNR disputes with no clear answer" description="When a customer disputed a delivery, the records were often too thin to settle it. The app had not captured enough." />
 </div>
 </div>
 </motion.section>
@@ -592,15 +582,7 @@ author: "Driver, 3 years of experience",
 <motion.section id="insights" className="case-section" variants={sectionStagger} initial="hidden" whileInView="visible" viewport={motionViewport}>
 <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>Insights</TypedSectionLabel>
 <div className="case-section-body">
-<h3 className="case-subsection-title">The app was asking drivers to do its job</h3>
-<p>Going through the field notes, one pattern kept coming up: the app had the information but was not using it. Drivers were filling gaps the system could have filled itself. That became the principle we designed around.</p>
-</div>
-<div className="research-full">
-<div className="research-grid">
-<NumberCard number="01" title="The app knows more than it shows" description="Document numbers and recipient names are already in the system. Confirmation should replace entry, not sit alongside it." />
-<NumberCard number="02" title="Free text creates inconsistency" description="Every driver described coworkers and doormen differently. Giving those scenarios a dedicated option would make records consistent and disputes easier to resolve." />
-<NumberCard number="03" title="Quality needs a gate, not a reminder" description="A warning after a bad photo does not help. The right moment to catch it is at capture, while the driver is still at the door." />
-</div>
+<p>One principle: confirmation should replace entry. Names and IDs were already in the system. Free text made coworker and doorman records inconsistent. Photo quality had to be caught at capture, while the driver was still at the door.</p>
 </div>
 </motion.section>
 
@@ -608,17 +590,16 @@ author: "Driver, 3 years of experience",
 <motion.section id="process" className="case-section" variants={sectionStagger} initial="hidden" whileInView="visible" viewport={motionViewport}>
 <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>Process</TypedSectionLabel>
 <div className="case-section-body">
-<h3 className="case-subsection-title">Same screens, different content</h3>
-<p>We moved into wireframes with one constraint: no new screens. Drivers had built muscle memory around the existing sequence after hundreds of routes. Adding a step or changing the order would mean retraining. So we focused on what each screen was asking for and whether the app could handle part of that itself.</p>
-<h3 className="case-subsection-title">One thing we had not accounted for</h3>
-<p>We went back to drivers with the wireframes to check the direction. Most of it held. One gap came up: sometimes nobody is home. Packages go to the mailbox, the door, building security. The receiver modal only covered attended deliveries. We added a second group of options for unattended scenarios, visible in the final design.</p>
+<h3 className="case-subsection-title">Informal wireframe check, not a usability test</h3>
+<p>We took the wireframes back to drivers. Informal feedback, not a structured usability test. No formal test before rollout.</p>
+<p>Most of the direction held. One gap: sometimes nobody is home, and packages go to the mailbox, the door, or building security. The receiver modal only covered attended deliveries, so we added a second group for unattended scenarios.</p>
 </div>
 <div className="research-full" style={{ marginTop: 24 }}>
 <span className="wireframe-grid-label">Wireframes</span>
 <div className="wireframe-grid">
-<Figure className="wireframe-glass-item" src="/assets/portfolio/2026/03/Mockup-01-Route-List.png" alt="Wireframe mockup: Route List" caption={{ text: "01: Route List" }} />
-<Figure className="wireframe-glass-item" src="/assets/portfolio/2026/03/Mockup-02-Receiver-Modal.png" alt="Wireframe mockup: Order Details" caption={{ text: "02: Order Details" }} />
-<Figure className="wireframe-glass-item" src="/assets/portfolio/2026/03/Mockup-03-Confirmation-Form.png" alt="Wireframe mockup: Confirmation Form" caption={{ text: "03: Confirmation" }} />
+<Figure className="wireframe-glass-item" src="/assets/portfolio/2026/03/Mockup-01-Route-List.png" alt="Wireframe mockup: Route List" caption={{ text: "Route List" }} />
+<Figure className="wireframe-glass-item" src="/assets/portfolio/2026/03/Mockup-02-Receiver-Modal.png" alt="Wireframe mockup: Order Details" caption={{ text: "Order Details" }} />
+<Figure className="wireframe-glass-item" src="/assets/portfolio/2026/03/Mockup-03-Confirmation-Form.png" alt="Wireframe mockup: Confirmation Form" caption={{ text: "Confirmation" }} />
 </div>
 </div>
 </motion.section>
@@ -627,24 +608,22 @@ author: "Driver, 3 years of experience",
 <motion.section id="solutions" className="case-section" variants={sectionStagger} initial="hidden" whileInView="visible" viewport={motionViewport}>
 <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>Solutions</TypedSectionLabel>
 <div className="case-section-body">
-<h3 className="case-subsection-title">What we changed and why it worked</h3>
-<p>Each change maps to one of the problems we found in the field. None required new screens or retraining. Drivers picked it up without being told.</p>
+<h3 className="case-subsection-title">From field observation to interface</h3>
+<p>Each change maps to a problem we watched on routes. No new screens and no retraining.</p>
 </div>
 
 {/* ── Considered and discarded ── */}
 <div className="research-full alt-block">
 <span className="alt-block-label">Considered and discarded</span>
-<p className="alt-block-intro">The receiver modal below was not the first idea. Two directions were on the table and dropped before it:</p>
+<p className="alt-block-intro">Two directions were dropped before the receiver modal below:</p>
 <div className="alt-grid">
 <article className="alt-card">
-<div className="alt-card-tag">Rejected direction 01</div>
 <h4 className="alt-card-title">A longer list of receiver-type buttons</h4>
-<p className="alt-card-text">One button per situation sounded thorough. Against the reality of 80 to 130 stops a day it fell apart: every extra option is one more thing to scan while standing at a door. We kept the set short and grouped it around what we observed on routes, attended and unattended deliveries.</p>
+<p className="alt-card-text">One button per situation sounded thorough. On 80 to 130 stops a day, every extra option is one more thing to scan at the door. We kept the set short and grouped it around attended and unattended deliveries.</p>
 </article>
 <article className="alt-card">
-<div className="alt-card-tag">Rejected direction 02</div>
 <h4 className="alt-card-title">Separate UI and journey per receiver group</h4>
-<p className="alt-card-text">Giving attended and unattended deliveries their own flows would make each one simpler in isolation. It also would break the sequence drivers already knew and collide with the constraint of no new screens and no retraining. One modal with two labeled groups kept the muscle memory intact.</p>
+<p className="alt-card-text">Separate flows would simplify each case in isolation. They would also break the sequence drivers already knew and collide with no new screens and no retraining. One modal with two labeled groups kept that muscle memory.</p>
 </article>
 </div>
 <p className="alt-block-close">Both calls came back to the same test: does it hold up at the door, on stop 90 of a 120-stop route?</p>
@@ -655,9 +634,8 @@ author: "Driver, 3 years of experience",
 <BeforeAfter
 className="delivery-before-after"
 focus="top"
-number="01"
 title="Data that shows itself"
-description="The recipient name and document number now appear automatically from route data. The driver reads, confirms with one tap, and moves on. No typing required."
+description="Observation: drivers retyped names and IDs the system already had, about 8 seconds a stop. Decision: those fields appear from route data, one tap to confirm. The 7 to 8 second gain showed up on the whole stop. Later observation placed it in this flow."
 before={{ src: "/assets/portfolio/2026/04/Mockup-01-Delivery-Proof-Wire.png", alt: "Before: Manual data entry at every stop" }}
 after={{ src: "/assets/portfolio/2026/04/Mockup-01-Delivery-Proof.png", alt: "After: Auto-populated fields, one-tap confirmation" }}
 />
@@ -667,9 +645,8 @@ after={{ src: "/assets/portfolio/2026/04/Mockup-01-Delivery-Proof.png", alt: "Af
 <div className="research-full" style={{ marginTop: 56 }}>
 <BeforeAfter
 className="delivery-before-after"
-number="02"
 title="A button for every real situation"
-description="The receiver modal now covers attended and unattended deliveries with labeled options. Drivers tap the right one instead of writing something that might not match next time."
+description="Observation: commercial stops often go to a coworker or security, so drivers wrote free text. Decision: labeled options for attended and unattended deliveries, including the unattended group from the informal wireframe check. This case does not measure how often each option was used."
 before={{ src: "/assets/portfolio/2026/04/Mockup-02-Modal-Wire.png", alt: "Before: Free-text input for receiver identity" }}
 after={{ src: "/assets/portfolio/2026/04/Mockup-02-Modal.png", alt: "After: Structured receiver options for attended and unattended deliveries" }}
 />
@@ -680,9 +657,8 @@ after={{ src: "/assets/portfolio/2026/04/Mockup-02-Modal.png", alt: "After: Stru
 <BeforeAfter
 className="delivery-before-after"
 focus="bottom"
-number="03"
 title="Photo feedback before the moment passes"
-description="If a photo is too dark, blurry, or not showing the right thing, the app says so immediately. The driver retakes it while still at the door."
+description="Observation: dark, blurry, or off-angle photos were accepted. Decision: the app flags the issue at capture. Package photo, residence photo, and metadata were among the criteria in the aggregate score, which moved from 92% to 98%. This case does not report a result for each criterion."
 before={{ src: "/assets/portfolio/2026/04/Mockup-03-Proof-of-Delivery-Wire.png", alt: "Before: Photo accepted without any quality check" }}
 after={{ src: "/assets/portfolio/2026/04/Mockup-03-Proof-of-Delivery.png", alt: "After: Real-time validation catches issues at the door" }}
 />
@@ -698,13 +674,7 @@ rel="noopener noreferrer"
 style={{ width: "fit-content" }}
 >
 <span className="case-btn-icon" aria-hidden="true">
-<svg width="16" height="16" viewBox="0 0 38 57" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M19 28.5A9.5 9.5 0 1 1 28.5 19 9.5 9.5 0 0 1 19 28.5z" fill="#1ABCFE"/>
-<path d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 0 1-19 0z" fill="#0ACF83"/>
-<path d="M19 0v19h9.5A9.5 9.5 0 0 0 0 19H19z" fill="#FF7262"/>
-<path d="M0 9.5a9.5 9.5 0 0 0 9.5 9.5H19V0H9.5A9.5 9.5 0 0 0 0 9.5z" fill="#F24E1E"/>
-<path d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z" fill="#A259FF"/>
-</svg>
+<img src="/assets/icons/figma.svg" alt="" width="12" height="18" />
 </span>
 <span className="case-btn-label">View prototype</span>
 </a>
@@ -712,34 +682,44 @@ style={{ width: "fit-content" }}
 </motion.section>
 
 {/* ══ KPIs ══ */}
+<CaseBackToContents />
 <motion.section id="kpis" className="case-section" variants={sectionStagger} initial="hidden" whileInView="visible" viewport={motionViewport}>
-<TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>KPIs</TypedSectionLabel>
+<TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>Results</TypedSectionLabel>
 <div className="case-section-body">
-<h3 className="case-subsection-title">The impact in numbers</h3>
-<p>Measured across a pilot group of 12 drivers over 3 weeks following the rollout. Time savings were calculated by comparing stop duration logs before and after the update.</p>
+<h3 className="case-subsection-title">Measured in the pilot</h3>
+<p>12 drivers, three weeks. The 7 to 8 seconds first showed up in the duration of the whole stop. Direct observation then showed that this saving came from the confirmation flow.</p>
 </div>
 <div className="research-full">
-<div className="kpi-grid">
+<div className="kpi-grid kpi-grid--measured">
 <motion.div className="kpi-card" variants={childUpV}>
-<div className="kpi-card-value kpi-card-value--range">-7 to -8<span className="kpi-card-unit">s</span></div>
-<div className="kpi-card-label">per delivery stop</div>
-<p className="kpi-card-desc">On a route of 100 packages, that adds up to about 13 minutes. For drivers working back-to-back shifts, that margin matters.</p>
+<div className="kpi-card-value kpi-card-value--range">7 to 8<span className="kpi-card-unit">s</span></div>
+<div className="kpi-card-label">faster per stop</div>
+<p className="kpi-card-desc">That is an estimate of about 12 to 13 minutes across 100 stops, not a measurement of a full route.</p>
 </motion.div>
 <motion.div className="kpi-card" variants={childUpV}>
 <div className="kpi-card-value"><CountUp value={2} /><span className="kpi-card-unit"> taps</span></div>
-<div className="kpi-card-label">eliminated per stop</div>
-<p className="kpi-card-desc">Two taps that used to be required at every stop are no longer needed. Over a full route the effect is noticeable.</p>
+<div className="kpi-card-label">removed per stop</div>
+<p className="kpi-card-desc">Two taps that used to be required at every stop.</p>
 </motion.div>
 <motion.div className="kpi-card" variants={childUpV}>
 <div className="kpi-card-value"><CountUp value={98} /><span className="kpi-card-unit">%</span></div>
 <div className="kpi-card-label">record compliance</div>
-<p className="kpi-card-desc">Up from 92%. Records are now complete enough to hold up when a customer disputes a delivery.</p>
+<p className="kpi-card-desc">Up from 92%. Completed fields, photos of the package and the residence, and correct photo metadata. A higher score meant a more complete record, not faster work at the stop.</p>
 </motion.div>
-<motion.div className="kpi-card" variants={childUpV}>
-<div className="kpi-card-value kpi-card-value--range">Projected 30 to 40<span className="kpi-card-unit">%</span></div>
-<div className="kpi-card-label">reduction in PNR disputes</div>
-<p className="kpi-card-desc">From pilot data. Stronger receiver records and validated photos remove the ambiguity that turns a completed delivery into an open dispute. This was not a measured production result.</p>
-</motion.div>
+</div>
+<div className="projection-block">
+<div className="projection-block-label">Projection</div>
+<p className="projection-block-value">30 to 40% fewer PNR disputes</p>
+<p className="projection-block-text">A projection based on the pilot, not a measured drop in disputes.</p>
+</div>
+<div className="limitations-block">
+<h3 className="case-subsection-title">Limits of this evidence</h3>
+<ul className="limitations-list">
+<li>The pilot was 12 drivers for three weeks, not a full production period.</li>
+<li>There was no formal usability test before rollout.</li>
+<li>The compliance criteria are described here, but the scoring formula and number of records reviewed are not documented in this case.</li>
+<li>The pilot does not establish a measured reduction in delivery disputes.</li>
+</ul>
 </div>
 </div>
 </motion.section>
@@ -748,16 +728,14 @@ style={{ width: "fit-content" }}
 <motion.section id="reflections" className="case-section" variants={sectionStagger} initial="hidden" whileInView="visible" viewport={motionViewport}>
 <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>Reflections</TypedSectionLabel>
 <div className="case-section-body">
-<h3 className="case-subsection-title">Going into the field first was the right call</h3>
-<p>The friction points we found were not obvious from the outside. Reading the PNR reports would have told us there was a problem with records. Riding along with drivers told us exactly where it came from and why. That specificity shaped everything that came after and made it easier to explain our decisions to the operations team.</p>
+<h3 className="case-subsection-title">Field work first</h3>
+<p>PNR reports showed a records problem. Riding along showed where it came from.</p>
 <h3 className="case-subsection-title">What I would do differently</h3>
-<p>We did not run a formal usability test before rollout. The informal sessions with drivers during the wireframe phase were useful, but they were not structured enough to catch edge cases we might have missed. Next time I would protect time for at least one proper session before moving to high fidelity.</p>
-<h3 className="case-subsection-title">What this project taught me</h3>
-<p>Small interface decisions compound across hundreds of interactions per day. A field that saves two seconds per stop does not sound significant until you do the math. That perspective changed how I think about what counts as a meaningful design change.</p>
-<h3 className="case-subsection-title">Where this took me</h3>
-<p>This project pushed me to think beyond screens. Understanding the operational context, the pressure drivers are under, and how a single tap translates into real time on a real route made me a more grounded designer. It also made clearer what I want to keep doing: working close to the problem, with people who actually use what we build.</p>
+<p>I would protect time for at least one structured usability session before high fidelity. The informal wireframe check caught the unattended-delivery gap, but it was not designed to catch every edge case.</p>
 </div>
 </motion.section>
+
+<CaseBackToContents />
 
 {/* ══ PAGINATION ══ */}
 <section className="case-pagination" aria-label="Next and previous case">

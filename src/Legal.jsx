@@ -121,7 +121,8 @@ export default function Legal() {
 
 /* ── CARTAO DO ENDERECO ── */
 .legal-card {
-  border: 1px solid rgba(168,163,153,0.28); border-radius: 20px;
+  border: none; border-radius: 20px;
+  box-shadow: var(--shadow-fine);
   padding: 28px 32px; background: linear-gradient(140deg, var(--ink-50) 0%, rgba(var(--accent-rgb),0.035) 100%);
 }
 .legal-address { font-style: normal; margin: 0; }

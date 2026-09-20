@@ -71,7 +71,7 @@ export const floatLoop = {
 // Plain children just ride the section fade; motion children only need
 // a `variants` prop, visibility propagates from the parent.
 export const sectionStagger = {
-  hidden: { opacity: 0 },
+  hidden: { opacity: 1 },
   visible: {
     opacity: 1,
     transition: { duration: DURATION.slow, ease: EASE.out, staggerChildren: 0.12, delayChildren: 0.05 },

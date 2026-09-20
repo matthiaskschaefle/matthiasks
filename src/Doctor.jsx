@@ -5,12 +5,13 @@ import { fadeUpImmediate, floatLoop, gridStagger, sectionStagger, tiltIn, useRed
 import { applySeo } from "@/lib/seo";
 import SiteHeader from "./components/SiteHeader.jsx";
 import SiteFooter from "./components/SiteFooter.jsx";
-import ScrollspyPill from "./components/ScrollspyPill.jsx";
+import CaseContents, { CaseBackToContents } from "./components/CaseContents.jsx";
 import PinnedStory from "./components/PinnedStory.jsx";
 import Figure from "./components/mockups/Figure.jsx";
 import Frame from "./components/mockups/Frame.jsx";
 import SnapGallery from "./components/mockups/SnapGallery.jsx";
 import { HotspotMap, HotspotList } from "./components/mockups/Hotspot.jsx";
+import { useLightbox } from "./components/mockups/lightbox-context.js";
 import TypedSectionLabel from "./components/TypedSectionLabel.jsx";
 
 /* ---------------------------
@@ -26,7 +27,7 @@ x: "59.60%",
 y: "2.89%",
 title: "Blog section",
 description:
-"Maintaining the blog section is advisable, as our interviews indicate that patients often rely on this resource for information.",
+"Interviews showed patients use the blog. It stayed on the site.",
 },
 {
 id: 2,
@@ -41,7 +42,7 @@ x: "83.00%",
 y: "2.11%",
 title: "FAQ section",
 description:
-"Including an FAQ section can be valuable for addressing common questions from prospective patients.",
+"An FAQ can answer the questions patients asked before booking.",
 },
 {
 id: 4,
@@ -57,7 +58,7 @@ x: "87.20%",
 y: "31.71%",
 title: "Specialization & technique",
 description:
-"There is little emphasis on the doctor's specialization and technique, which limits differentiation and trust.",
+"The doctor's technique and specialization had little presence, so they were easy to miss.",
 },
 {
 id: 6,
@@ -65,7 +66,7 @@ x: "65.70%",
 y: "38.59%",
 title: "Doctor's page link",
 description:
-"There is no direct link to the page about the doctor. Adding this link builds trust and provides key information about his credentials.",
+"There was no direct link to the doctor page. That page carries credentials patients look for.",
 },
 {
 id: 7,
@@ -73,7 +74,7 @@ x: "13.60%",
 y: "80.60%",
 title: "Typography & blog cards",
 description:
-"Low contrast in fonts and inconsistencies in blog boxes can be improved to make content easier to read and scan.",
+"Low contrast type and uneven blog cards made the content harder to scan.",
 },
 {
 id: 8,
@@ -82,7 +83,7 @@ y: "98.80%",
 placement: "top",
 title: "Clinic address",
 description:
-"The clinic address is missing. Including it can help users find the clinic and enhance site credibility.",
+"The clinic address was missing. Adding it helps people find the place and check that the site is real.",
 },
 ];
 
@@ -95,7 +96,7 @@ x: "70.40%",
 y: "49.79%",
 title: "Learn more button",
 description:
-'I added the "learn more" button to allow users to discover more about the doctor and his innovative technique.',
+'The "learn more" button opens the doctor page and his technique.',
 },
 {
 id: 2,
@@ -103,7 +104,7 @@ x: "11.33%",
 y: "66.18%",
 title: "Popular procedures",
 description:
-"I chose to feature the most popular procedures on the homepage with photos to capture users' attention and make them easier to find.",
+"Popular procedures sit on the homepage with photos, so they are easier to find.",
 },
 {
 id: 3,
@@ -111,7 +112,7 @@ x: "56.48%",
 y: "88.55%",
 title: "Consultation information",
 description:
-"I added a dedicated homepage section, guiding users to detailed information about the initial consultation process, based on our interviews highlighting its importance to patients.",
+"A homepage block points to the first consultation, a step patients asked about in interviews.",
 },
 ];
 const bulletPointsSubpages = [
@@ -120,7 +121,7 @@ id: 1,
 x: "7.50%",
 y: "7.82%",
 title: "Breadcrumbs navigation",
-description: "Implemented breadcrumbs for enhanced navigation.",
+description: "Breadcrumbs keep the path visible on inner pages.",
 },
 {
 id: 2,
@@ -128,7 +129,7 @@ x: "50.50%",
 y: "65.61%",
 title: "Step-by-step timeline",
 description:
-"I created a simple and easy-to-understand step-by-step guide, designed as a timeline, to streamline the first consultation process.",
+"A short timeline walks through the first consultation.",
 },
 // [REVISÃO MATTHIAS] Bullet "Technique explanation" removido deste mapa: na
 // colagem antiga ele apontava para a SEGUNDA página (Conheça o Doutor), que
@@ -150,7 +151,7 @@ id: 1,
 x: "50.00%",
 y: "38.00%",
 title: "FAQ based on research",
-description: "FAQ content shaped by insights from user research.",
+description: "FAQ copy grouped from the research themes, not from a generic template.",
 },
 ];
 const bulletPointsSubpages3 = [
@@ -160,7 +161,7 @@ x: "50.00%",
 y: "35.00%",
 title: "Categorized surgeries with visuals",
 description:
-"I organized the surgeries into categories with images to make them easier to identify, and future usability tests will validate this approach.",
+"Surgeries grouped by category, with images, so they are easier to identify.",
 },
 ];
 
@@ -171,7 +172,7 @@ x: "50.00%",
 y: "60.00%",
 title: "New clinic timeline",
 description:
-"At the doctor’s request, I highlighted the construction of the new clinic in a clear and easy-to-understand timeline.",
+"At the doctor's request, the new clinic appears as a short timeline.",
 },
 ];
 const MOBILE_SCREENS = [
@@ -231,7 +232,7 @@ return (
 <div
 className="doctor-system-preview"
 role="img"
-aria-label="Live preview of the Doctor website header, typography, buttons, form field, and consultation timeline"
+aria-label="Reconstructed portfolio preview of the Doctor header, typography, buttons, form field, and consultation timeline. Not a capture of the live site."
 >
 <div className="doctor-system-topbar" aria-hidden="true">
 <img
@@ -277,7 +278,7 @@ height="125"
 );
 }
 
-function DoctorTypography() {
+export function DoctorTypography() {
 return (
 <div className="doctor-type-grid">
 <article className="doctor-type-card doctor-type-card--barlow">
@@ -314,7 +315,7 @@ return (
 );
 }
 
-function DoctorPalette() {
+export function DoctorPalette() {
 return (
 <div className="doctor-palette">
 {DOCTOR_PALETTE.map((group) => (
@@ -363,21 +364,47 @@ const MARK_PALETTE = [
 // HotspotMap stays a direct child so the dots keep their legacy percentage
 // geometry. The parity HotspotList lives outside the relative container (in
 // flow inside the Frame) so it never shifts the dots' containing block.
-function AnnotatedMockup({ src, alt, width, height, bullets, mapId }) {
+function AnnotatedMockup({ src, alt, width, height, bullets, mapId, crop, scrollable = false, observe }) {
+const { open } = useLightbox();
+const start = crop?.start ?? 0;
+const span = crop?.span ?? 1;
+const isCropped = Boolean(crop) && span < 0.99;
+const windowRatio = `${width} / ${Number(height) * span}`;
+const caption = observe || "Full page as designed in this project";
+
 return (
 <div className="w-full flex justify-center">
 {/* A lista de anotacoes fica FORA do browser frame: dentro dele lia como
     parte da pagina mockada. Fora, vira legenda editorial do artefato. */}
 <div className="ms-annotated">
 <Frame variant="browser">
-<div className="relative w-full max-w-[872px]">
+<div
+className={`w-full max-w-[872px]${scrollable ? " annotated-scroll" : ""}${isCropped ? " annotated-crop-window" : ""}`}
+style={isCropped ? { aspectRatio: windowRatio } : undefined}
+>
+<div
+className={`relative w-full${isCropped ? " annotated-crop-inner" : ""}`}
+style={isCropped ? { transform: `translateY(-${start * 100}%)` } : undefined}
+>
 <img
 src={src}
 alt={alt}
 className="w-full h-auto object-contain" loading="lazy" decoding="async" width={width} height={height} />
 <HotspotMap bullets={bullets} mapId={mapId} />
 </div>
+</div>
 </Frame>
+<p className="annotated-full-access">
+{observe ? <span className="annotated-observe">{observe} </span> : null}
+<button
+type="button"
+className="annotated-full-btn"
+onClick={() => open({ src, alt, caption })}
+>
+View full page
+</button>
+{scrollable ? " Scroll the capture, or open the full page." : isCropped ? " Cropped to the decision. Full page remains available." : ""}
+</p>
 <HotspotList bullets={bullets} mapId={mapId} />
 </div>
 </div>
@@ -393,6 +420,8 @@ width="1256"
 height="4071"
 bullets={bulletPoints}
 mapId="evaluation"
+scrollable
+observe="Eight gaps on the previous homepage. Scroll to read every note, or open the full page."
 />
 );
 }
@@ -406,6 +435,8 @@ width="912"
 height="1940"
 bullets={bulletPointsSecondary}
 mapId="redesign-home"
+crop={{ start: 0.278, span: 0.702 }}
+observe="Delivered homepage: the doctor entry with Learn more, popular procedures, and the first-consultation block."
 />
 );
 }
@@ -419,6 +450,8 @@ width="1366"
 height="1712"
 bullets={bulletPointsSubpages}
 mapId="consultation"
+crop={{ start: 0, span: 0.87 }}
+observe="Delivered first-consultation page: breadcrumbs at the top and the visit timeline further down."
 />
 );
 }
@@ -432,6 +465,8 @@ width="1366"
 height="2524"
 bullets={bulletPointsSubpages2}
 mapId="faq"
+crop={{ start: 0.178, span: 0.49 }}
+observe="Delivered FAQ page: questions grouped from the research themes, not a generic template."
 />
 );
 }
@@ -445,6 +480,8 @@ width="1366"
 height="5165"
 bullets={bulletPointsSubpages3}
 mapId="surgeries"
+crop={{ start: 0.288, span: 0.175 }}
+observe="Delivered surgeries page: procedures grouped by category, with images."
 />
 );
 }
@@ -458,6 +495,8 @@ width="1366"
 height="5042"
 bullets={bulletPointsSubpages4}
 mapId="new-clinic"
+crop={{ start: 0.32, span: 0.34 }}
+observe="Delivered new-clinic page: the short timeline added at the doctor's request."
 />
 );
 }
@@ -507,10 +546,10 @@ window.removeEventListener("resize", updateMotionSettings);
 useEffect(() => {
 applySeo({
 title: "Healthcare Website UX Case Study | Matthias Schaefle",
-description: "UX case study of a plastic surgeon's website rebuilt around the questions patients ask before booking: research, information architecture, UI design and the brand identity behind it.",
+description: "Paid 2024 client project for plastic surgeon Dr. Helio Alves: patient research, information architecture, UI, WordPress delivery, and a visual identity still in use.",
 path: "/doctor",
 ogTitle: "The questions patients asked before booking",
-ogDescription: "A plastic surgeon's site rebuilt around what patients actually wanted to know. Research, IA, UI, and the brand it runs on.",
+ogDescription: "A paid 2024 website project for a Sao Paulo plastic surgeon, built around the questions patients asked before booking.",
 });
 }, []);
 
@@ -524,7 +563,7 @@ box-sizing: border-box;
 }
 
 html {
-scroll-behavior: smooth;
+scroll-behavior: auto;
 }
 
 body {
@@ -653,9 +692,9 @@ color: var(--ink-800);
 display: grid;
 grid-template-columns: repeat(3, minmax(0, 1fr));
 gap: 36px;
-margin-top: 28px;
-padding-top: 24px;
-border-top: var(--hairline);
+margin-top: 32px;
+padding-top: 8px;
+border-top: none;
 position: relative;
 z-index: 3;
 }
@@ -748,7 +787,6 @@ display: grid;
 grid-template-columns: minmax(120px, 190px) minmax(0, 1fr);
 gap: 20px 40px;
 padding-block: 32px;
-scroll-margin-top: 140px;
 }
 
 .case-section:not(:first-child) {
@@ -870,18 +908,11 @@ margin-top: 18px;
 
 .research-card {
 position: relative;
-padding: 20px 0 0;
-border-top: var(--hairline);
-}
-
-.research-number {
-font-family: var(--font-display);
-font-size: 30px;
-font-weight: 600;
-line-height: 1.1;
-letter-spacing: -0.02em;
-color: var(--ink-900);
-margin-bottom: 10px;
+padding: 0;
+border: none;
+border-radius: 0;
+background: transparent;
+box-shadow: none;
 }
 
 .research-title {
@@ -977,7 +1008,8 @@ margin-top: 10px;
 
 .style-guide-image-inner {
 background: #FFFFFF;
-border: var(--hairline);
+border: none;
+box-shadow: var(--shadow-fine);
 border-radius: 16px;
 overflow: hidden;
 }
@@ -988,34 +1020,32 @@ height: auto;
 display: block;
 }
 
-/* The vertical lockup is the primary mark: it is the one applied to the
-physical items, so it gets the full column. The horizontal variant sits
-under it at a smaller scale. */
+/* Three lockups stacked at the same width so none reads as a leftover. */
 .style-guide-logo-hero {
 margin-top: 20px;
 background: #FFFFFF;
-border: var(--hairline);
+border: none;
+box-shadow: var(--shadow-fine);
 border-radius: 16px;
-padding: 64px 32px;
+padding: 40px 32px;
 display: flex;
 align-items: center;
 justify-content: center;
 }
 
-/* The logo is vector, so this is a composition choice, not a resolution
-ceiling. The primary lockup gets the full column; the variants sit under it
-at the scale they are actually used. */
 .style-guide-logo-hero img {
-width: min(420px, 100%);
+width: auto;
+max-width: min(280px, 100%);
+max-height: 120px;
 height: auto;
 display: block;
 }
 
 .style-guide-logo-row {
-margin-top: 16px;
-display: grid;
-grid-template-columns: 2fr 1fr;
-gap: 16px;
+margin-top: 12px;
+display: flex;
+flex-direction: column;
+gap: 12px;
 }
 
 /* Faixa de amostras da secao The mark. Cada chip carrega o hex embaixo, e o
@@ -1037,7 +1067,8 @@ gap: 6px;
 .mark-swatch-chip {
 display: block;
 height: 64px;
-border: 1px solid rgba(9,44,76,0.12);
+border: none;
+box-shadow: var(--shadow-fine);
 border-radius: 10px;
 }
 
@@ -1050,7 +1081,8 @@ color: var(--ink-600);
 
 .style-guide-logo-variant {
 background: #FFFFFF;
-border: var(--hairline);
+border: none;
+box-shadow: var(--shadow-fine);
 border-radius: 16px;
 padding: 40px 24px;
 display: flex;
@@ -1059,11 +1091,14 @@ justify-content: center;
 }
 
 .style-guide-logo-row .style-guide-logo-variant:first-child img {
-width: min(300px, 100%);
+width: auto;
+max-width: min(360px, 100%);
+max-height: 140px;
 }
 
 .style-guide-logo-row .style-guide-logo-variant:last-child img {
-width: min(84px, 100%);
+width: min(520px, 100%);
+max-height: 88px;
 }
 
 .style-guide-logo-variant img {
@@ -1074,8 +1109,10 @@ display: block;
 /* Native Doctor style guide. These are real interface elements rather than
    screenshots of the handoff board, so they stay crisp and responsive. */
 .doctor-system-preview {
+min-width: 0;
 margin-top: 22px;
-border: 1px solid #D9DDE1;
+border: none;
+box-shadow: var(--shadow-fine);
 border-radius: 18px;
 overflow: hidden;
 background: #F9F9F9;
@@ -1267,7 +1304,8 @@ margin-top: 16px;
 .doctor-type-card {
 min-width: 0;
 padding: 20px;
-border: var(--hairline);
+border: none;
+box-shadow: var(--shadow-fine);
 border-radius: 16px;
 background: #FFFFFF;
 color: #092C4C;
@@ -1364,7 +1402,8 @@ gap: 3px;
 display: block;
 height: 54px;
 margin-bottom: 3px;
-border: 1px solid rgba(9,44,76,0.12);
+border: none;
+box-shadow: var(--shadow-fine);
 border-radius: 10px;
 }
 
@@ -1389,10 +1428,43 @@ color: var(--ink-600);
 
 .doctor-swatch-hex { color: #995F00; }
 
+.annotated-scroll {
+max-height: min(70vh, 820px);
+overflow-x: hidden;
+overflow-y: auto;
+overscroll-behavior: contain;
+-webkit-overflow-scrolling: touch;
+}
+.annotated-crop-window {
+overflow: hidden;
+}
+.annotated-full-access {
+margin: 12px 0 16px;
+font-size: 13px;
+line-height: 1.5;
+color: var(--ink-600);
+}
+.annotated-full-btn {
+appearance: none;
+background: none;
+border: 0;
+padding: 0;
+font: inherit;
+color: var(--ink-900);
+text-decoration: underline;
+text-underline-offset: 2px;
+cursor: pointer;
+min-height: 44px;
+}
+.annotated-full-btn:focus-visible {
+outline: 2px solid var(--brand-600);
+outline-offset: 3px;
+}
+
 @media (max-width: 768px){
-.style-guide-logo-hero { padding: 48px 20px; }
+.style-guide-logo-hero { padding: 32px 20px; }
 .style-guide-logo-variant { padding: 28px 20px; }
-.style-guide-logo-row { grid-template-columns: 1fr; }
+.style-guide-logo-row { flex-direction: column; }
 .mark-swatches { grid-template-columns: repeat(3, minmax(0, 1fr)); }
 
 /* O preview do sistema e uma reducao de um site de 1000px dentro de 350px, e
@@ -1407,7 +1479,7 @@ color: var(--ink-600);
 .doctor-ui-field span { font-size: 11px; }
 
 .doctor-system-nav { display: none; }
-.doctor-system-topbar { gap: 12px; }
+.doctor-system-topbar { gap: 12px; flex-wrap: wrap; }
 .doctor-system-topbar .doctor-ui-button { margin-left: auto; }
 .doctor-system-canvas { grid-template-columns: 1fr; padding: 20px; }
 .doctor-type-grid { grid-template-columns: 1fr; }
@@ -1495,7 +1567,6 @@ grid-template-columns: 1fr !important;
 `}</style>
 
 <SiteHeader />
-<ScrollspyPill sections={CASE_SECTIONS} />
 
 <main id="main" className="page">
 <div className="page-inner">
@@ -1503,64 +1574,16 @@ grid-template-columns: 1fr !important;
 <section className="case-hero">
 <motion.div className="case-hero-backdrop" aria-hidden="true" style={heroBackdropStyle} />
 <motion.div style={heroTextStyle}>
-<p className="case-label">CLIENT PROJECT, RESEARCH, UI DESIGN, 2024</p>
+<p className="case-label">PAID CLIENT PROJECT, 2024</p>
 <h1 className="case-title-main">
 The questions patients asked before booking
 </h1>
 <p className="case-subtitle">
-A plastic surgeon&apos;s site rebuilt around what patients actually
-wanted to know. Research, IA, UI, and the brand it runs on.
+Paid work for Dr. H&eacute;lio Alves, a plastic surgeon in Sao Paulo.
 </p>
 </motion.div>
 
-<div className="case-meta-grid">
-<motion.div className="case-meta-motion" {...fadeUpImmediate(0, prefersReducedMotion)}>
-<div className="case-meta-item">
-<div className="case-meta-label">Team</div>
-<div className="case-meta-value">
-Matthias Karl Schaefle / Leticia Magri (palette)
-</div>
-</div>
-</motion.div>
-<motion.div className="case-meta-motion" {...fadeUpImmediate(1, prefersReducedMotion)}>
-<div className="case-meta-item">
-<div className="case-meta-label">Scope of work</div>
-<div className="case-meta-value">
-User research, brand identity, IA, UI design, style guide, WordPress build
-</div>
-</div>
-</motion.div>
-<motion.div className="case-meta-motion" {...fadeUpImmediate(2, prefersReducedMotion)}>
-<div className="case-meta-item">
-<div className="case-meta-label">Role</div>
-<div className="case-meta-value">UX/UI Designer</div>
-</div>
-</motion.div>
-<motion.div className="case-meta-motion" {...fadeUpImmediate(3, prefersReducedMotion)}>
-<div className="case-meta-item">
-<div className="case-meta-label">Year</div>
-<div className="case-meta-value">2024</div>
-</div>
-</motion.div>
-</div>
-
-{/* [REVISÃO MATTHIAS] In short: new summary block, copy pending owner review */}
-<div className="in-short">
-<div className="in-short-item">
-<div className="in-short-label">Problem</div>
-<p className="in-short-text">Patients arrived with the same questions before booking: procedures, prices, insurance. The site did not answer them.</p>
-</div>
-<div className="in-short-item">
-<div className="in-short-label">My role</div>
-<p className="in-short-text">I ran the patient research, drew the logo and the identity system, designed the information architecture and the pages, and built the site.</p>
-</div>
-<div className="in-short-item">
-<div className="in-short-label">Result</div>
-<p className="in-short-text">A site organized around patient questions, and an identity still in use two years later.</p>
-</div>
-</div>
-
-<div className="case-hero-mockup-wrap" aria-hidden="true" ref={heroMockupRef}>
+<figure className="case-hero-mockup-wrap" ref={heroMockupRef}>
 <motion.div style={heroMockupStyle}>
 <motion.div
 className="case-hero-mockup"
@@ -1572,7 +1595,28 @@ src="/assets/portfolio/2025/11/mockup-helio.png"
 alt="Website redesign mockup for Dr. Hélio" loading="eager" decoding="async" width="540" height="311" />
 </motion.div>
 </motion.div>
+</figure>
+
+<motion.p className="case-hero-byline" {...fadeUpImmediate(0, prefersReducedMotion)}>
+Research, identity, IA, UI, and WordPress, 2024.
+</motion.p>
+
+<div className="in-short">
+<div className="in-short-item">
+<div className="in-short-label">Problem</div>
+<p className="in-short-text">Patients asked about procedures, prices, and insurance. The site did not answer.</p>
 </div>
+<div className="in-short-item">
+<div className="in-short-label">My role</div>
+<p className="in-short-text">I led the project from patient research through the WordPress build. Leticia Magri collaborated on the palette.</p>
+</div>
+<div className="in-short-item">
+<div className="in-short-label">What remains</div>
+<p className="in-short-text">The WordPress site was later rebuilt. The logo and palette are still used on the clinic, prescription pad, and Instagram.</p>
+</div>
+</div>
+
+<CaseContents sections={CASE_SECTIONS} />
 </section>
 
 {/* [REVISÃO MATTHIAS] Doctor PinnedStory context copy, compressed from the existing Overview. */}
@@ -1580,38 +1624,35 @@ alt="Website redesign mockup for Dr. Hélio" loading="eager" decoding="async" wi
 steps={[
 {
 id: "context",
-label: "Context",
-title: "The website was not supporting patient decisions",
-body: "The existing site had unclear navigation, inconsistent hierarchy, and gaps in the information patients expected before booking.",
+label: "The brief",
+title: "A site that did not answer questions before booking",
+body: "Navigation was unclear. Pages skipped procedures, prices, insurance, and how a first visit worked.",
 img: "/assets/portfolio/2025/08/doctor-evaluation.webp",
 alt: "Previous Doctor homepage evaluated against patient needs",
 },
-// [REVISÃO MATTHIAS] Doctor PinnedStory research copy, compressed from the existing Research section.
 {
 id: "research",
-label: "Research",
-title: "Five patient interviews mapped the questions before booking",
-body: "Interviews and Instagram question stickers revealed recurring doubts about insurance, pricing, payment, procedures, and recovery.",
-img: "/assets/portfolio/2025/09/doctor-consultation.webp",
-alt: "First-consultation page shaped by patient research",
+label: "Evidence",
+title: "Five interviews and Instagram questions named the same doubts",
+body: "Insurance, pricing, payment, procedures, and recovery came up again and again. Those themes became the content map.",
+img: "/assets/portfolio/2025/08/Feedback-Insurance-1.png",
+alt: "Patient feedback about insurance information",
 },
-// [REVISÃO MATTHIAS] Doctor PinnedStory insight copy, compressed from the existing Research findings.
 {
 id: "insight",
-label: "Insight",
-title: "The same doubts kept returning",
-body: "Patients needed clearer answers, stronger trust signals, and content structured around the questions they ask before contacting a clinic.",
+label: "Decisions",
+title: "Navigation was organized around the questions patients asked",
+body: "FAQ, first consultation, and procedure pages moved patients from a doubt to a next step.",
 img: "/assets/portfolio/2025/09/doctor-faq.webp",
 alt: "FAQ page organized around recurring patient questions",
 },
-// [REVISÃO MATTHIAS] Doctor PinnedStory solution copy, compressed from the existing Overview highlights.
 {
 id: "solution",
-label: "Solution",
-title: "A calmer page system built around patient questions",
-body: "We reorganized the information architecture and designed responsive pages that made services, consultation details, and credentials easier to understand.",
+label: "Delivery",
+title: "WordPress pages, a style guide, and a mark still in use",
+body: "I shipped the site for the clinic to maintain. Others later rebuilt it. The logo and palette stayed.",
 img: "/assets/portfolio/2025/09/doctor-redesign-home.webp",
-alt: "Redesigned Doctor homepage",
+alt: "Redesigned Doctor homepage as delivered",
 },
 ]}
 />
@@ -1624,42 +1665,9 @@ alt: "Redesigned Doctor homepage",
 <motion.section id="overview" className="case-section" variants={sectionStagger} initial="hidden" whileInView="visible" viewport={motionViewport}>
 <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>Overview</TypedSectionLabel>
 <div className="case-section-body">
-<h3 className="case-subsection-title">Background</h3>
 <p>
-The doctor is a plastic surgeon in Sao Paulo,
-Brazil, with 16 years of experience. Specializing in
-corrective body surgeries, his website showcases his
-expertise, attracts new patients, and provides detailed
-service information.
-</p>
-
-<h3 className="case-subsection-title">Problem</h3>
-<p>
-The existing website had unclear navigation, inconsistent
-visual hierarchy, and gaps in the information patients
-expected to find before booking. The result was a digital
-experience that did not fully reflect the doctor's expertise
-or support the trust-building process patients need in a
-healthcare context.
-</p>
-
-<h3 className="case-subsection-title">My role</h3>
-{/* [REVISÃO MATTHIAS] rewritten with ownership verbs */}
-<p>
-I designed the information architecture and the page
-system, synthesized the patient research into content
-priorities, and created the visual identity, including
-the logo. I also prepared the style guide, then built the
-site in WordPress.
-</p>
-
-<p>
-<strong>Highlights</strong>
-<br />
-We reorganized information around patient questions, created
-a calmer visual system, and designed responsive pages that
-made services, consultation details, and the doctor's
-credentials easier to understand.
+Dr. H&eacute;lio Alves is a plastic surgeon in Sao Paulo, with 16 years
+of experience in corrective body surgery.
 </p>
 </div>
 
@@ -1671,66 +1679,51 @@ credentials easier to understand.
 
 <div className="case-section-body">
 <h3 className="case-subsection-title">
-Exploring needs and perspectives
+What patients asked, and what the clinic needed
 </h3>
 <p>
-The stakeholder interview helped us understand the business
-goals, the doctor's differentiators, and which parts of the
-old website were no longer supporting the clinic's growth.
+A stakeholder interview set the clinic&apos;s priorities: show the
+doctor&apos;s technique, attract new patients, and keep using the blue
+he already wore on coats and instruments. I then interviewed five
+patients and, with the social media team, collected Instagram
+question stickers. The same themes appeared in both: insurance,
+pricing, payment, procedures, recovery, and what a first visit
+involves.
 </p>
 </div>
 
 <div className="research-full">
 <div className="research-grid">
 <article className="research-card">
-<div className="research-number">01</div>
-<h4 className="research-title">Primary objectives</h4>
+<h4 className="research-title">Insurance, price, payment</h4>
 <p className="research-text">
-Present the doctor's expertise clearly, attract new
-patients, keep existing clients informed, and strengthen
-the clinic's online presence.
+These were the first questions. They needed a visible place on the
+site, not a buried paragraph.
 </p>
 </article>
 
 <article className="research-card">
-<div className="research-number">02</div>
 <h4 className="research-title">
-Highlighting medical innovations
+Technique and credentials
 </h4>
 <p className="research-text">
-The doctor wanted his technique and specialization to be
-easier to understand and more visible in the experience.
+The doctor wanted his specialization easier to find. Patients wanted
+proof they were looking at the right surgeon, including a direct
+path to his page.
 </p>
 </article>
 
 <article className="research-card">
-<div className="research-number">03</div>
 <h4 className="research-title">
-Blue as part of the brand
+How a first visit works
 </h4>
 <p className="research-text">
-Blue was already part of how the doctor presented himself,
-so we kept it and built the palette around it, calmer and
-more consistent.
+Patients studied blogs and posts before booking. They needed
+indications, risks, recovery, and a simple account of the first
+consultation.
 </p>
 </article>
 </div>
-</div>
-
-<div className="case-section-body case-section-body-secondary">
-<h3 className="case-subsection-title">
-Understanding patient needs
-</h3>
-<p>
-To understand what patients look for before contacting a
-clinic, I interviewed five patients and mapped their most
-frequent questions.
-</p>
-<p>
-Together with the social media and marketing team, we used
-Instagram question stickers to collect common doubts quickly
-and then grouped them into themes.
-</p>
 </div>
 
 <div className="research-full">
@@ -1770,50 +1763,13 @@ Click any screen to see it in detail.
 
 <div className="case-section-body case-section-body-secondary">
 <p>
-These methods revealed recurring patterns in patient
-doubts and expectations. Those patterns shaped the new
-website structure, content hierarchy, and visual priorities.
+Those themes drove the next decisions: a clearer surgery list,
+an FAQ, a first-consultation timeline, and a homepage that
+points to the doctor and to popular procedures. The interviews
+and stickers were qualitative, not a formal test.
 </p>
 </div>
 
-<div className="research-full">
-<div className="research-grid">
-<article className="research-card">
-<div className="research-number">01</div>
-<h4 className="research-title">Common inquiries</h4>
-<p className="research-text">
-Patients often have recurring questions about insurance,
-pricing and payment. Making this information easy to
-find became a priority.
-</p>
-</article>
-
-<article className="research-card">
-<div className="research-number">02</div>
-<h4 className="research-title">
-Transparency and feedback
-</h4>
-<p className="research-text">
-Testimonials and visual proof are strong decision
-drivers. At the same time, the content must respect
-local regulations on before-and-after photos.
-</p>
-</article>
-
-<article className="research-card">
-<div className="research-number">03</div>
-<h4 className="research-title">
-Pre-procedure research
-</h4>
-<p className="research-text">
-Many patients study blogs and posts before booking,
-looking for indications, risks, recovery and realistic
-results. The website needed to support this journey with
-clearer, structured content.
-</p>
-</article>
-</div>
-</div>
 </motion.section>
 
 {/* EVALUATION */}
@@ -1821,12 +1777,11 @@ clearer, structured content.
 <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>Evaluation</TypedSectionLabel>
 <div className="case-section-body">
 <h3 className="case-subsection-title">
-Analyzing the current interface
+Gaps on the live homepage
 </h3>
 <p>
-I reviewed the current homepage against the research
-findings, looking for places where navigation, trust signals,
-and content hierarchy could better support patient decisions.
+I mapped the existing homepage against those findings. The notes
+below are the gaps that later became pages or components.
 </p>
 </div>
 
@@ -1840,11 +1795,10 @@ and content hierarchy could better support patient decisions.
 <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>Wireframes</TypedSectionLabel>
 <div className="case-section-body">
 <h3 className="case-subsection-title">
-Turning research into page structure
+Pages before polish
 </h3>
 <p className="case-wireframes-text">
-The wireframes helped translate patient questions into clear
-page flows before visual design decisions took over.
+Booking, procedure detail, and the landing structure, before color and type.
 </p>
 </div>
 
@@ -1881,12 +1835,11 @@ variants={tiltIn(1.2, prefersReducedMotion)}
 
 <div className="case-section-body">
 <h3 className="case-subsection-title">
-Restructuring navigation
+From a question to a page
 </h3>
 <p>
-We redesigned the website structure so patients could move
-from general interest to specific procedures, consultation
-details, and contact information with fewer detours.
+The tree moved patients from a general interest to a procedure,
+then to how a first visit works, then to contact.
 </p>
 </div>
 
@@ -1907,13 +1860,10 @@ zoom
 <div className="case-section-body">
 <h3 className="case-subsection-title">A color he already had</h3>
 <p>
-Dr. H&eacute;lio Alves had been using the same blue since medical
-school, on his instruments and on his coats. He did not ask for a new
-color. He asked to keep that one. So the palette was not invented, it
-was identified. #092C4C became the primary, and the rest of the system
-was built to serve it: a lighter blue for interactive states, a single
-amber reserved for calls to action, four neutrals and white for
-hierarchy. Leticia Magri worked with me on the palette.
+He had used the same blue since medical school, on instruments and
+coats, and asked to keep it. #092C4C became the primary, with a
+lighter blue for interactive states, amber for calls to action, and
+neutrals for hierarchy.
 </p>
 
 <div className="mark-swatches">
@@ -1926,10 +1876,8 @@ hierarchy. Leticia Magri worked with me on the palette.
 </div>
 
 <p>
-I drew the monogram: his initials, HA, in one continuous stroke, the H
-and the A crossing through each other. A doctor&apos;s handwriting is
-the mark patients see most often, on every prescription, and almost
-never read. The lettering keeps the gesture and drops the illegibility.
+I drew the HA monogram in one stroke, the letters crossing. It keeps
+the gesture of a signature patients see on every prescription.
 </p>
 
 <div className="style-guide-logo-hero">
@@ -1939,9 +1887,9 @@ alt="the HA monogram on its own" loading="lazy" decoding="async" width="119" hei
 </div>
 
 <p>
-Three lockups cover the real uses: the monogram alone, the vertical
-version for print and for the site header, and the horizontal one for
-narrow spaces.
+Three lockups: monogram, vertical for print and the header, horizontal
+for narrow spaces. Barlow for headings, Montserrat for body, both open
+license.
 </p>
 
 <div className="style-guide-logo-row">
@@ -1957,20 +1905,13 @@ alt="the monogram beside the doctor's full name" loading="lazy" decoding="async"
 </div>
 </div>
 
-<p>
-Barlow for headings, Montserrat for body. Both open license, so the
-practice can produce its own material without paying for a font every
-time.
-</p>
-
 <h3 className="case-subsection-title">Still in use</h3>
 <p>
-Two years on, the logo is on the clinic, on the prescription pad, on the
-bags patients take home and on every post. When the practice widened its
-scope, the descriptor grew
-from &ldquo;Cirurgia Pl&aacute;stica&rdquo; to &ldquo;Cirurgia
-Pl&aacute;stica &amp; Est&eacute;tica&rdquo; and I extended the lockups
-without redrawing anything. The structure took it.
+The logo and palette remain on the clinic, the prescription pad, the
+bags patients take home, and Instagram. When the practice added
+Est&eacute;tica to the descriptor, I extended the lockups without
+redrawing the mark. Continuity of the identity is adoption, not a
+measured UX or conversion result.
 </p>
 
 <figure className="style-guide-image">
@@ -1988,34 +1929,15 @@ alt="the mark on bags given to patients" loading="lazy" decoding="async" width="
 <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>Style guide</TypedSectionLabel>
 <div className="case-section-body">
 <h3 className="case-subsection-title">
-One reference for the whole team
+A file the clinic could keep using
 </h3>
 <p>
-I put together a structured style guide so future pages
-could follow the same visual logic. It gave the team a
-shared reference for spacing, typography, colors, and core
-components.
+The style guide recorded spacing, type, color, and core components so
+new pages could be added after handoff. The block below is a reconstructed
+preview for this portfolio, not a screenshot of the live site.
 </p>
 
 <DoctorSystemPreview />
-
-<h3 className="case-subsection-title">Typography</h3>
-<p>
-We chose Barlow for the header for its modern aesthetic and
-clean lines, and Montserrat for the body text for its
-legibility on various devices.
-</p>
-
-<DoctorTypography />
-
-<h3 className="case-subsection-title">Colors</h3>
-<p>
-The blue is the doctor&apos;s own, carried over from the mark.
-The neutrals give it an elegant backdrop, and a single amber is
-held back for calls to action.
-</p>
-
-<DoctorPalette />
 </div>
 </motion.section>
 
@@ -2025,16 +1947,12 @@ held back for calls to action.
 
 <div className="case-section-body">
 <h3 className="case-subsection-title">
-Crafting a Cohesive Experience
+Pages as delivered
 </h3>
 <p>
-The redesign makes the site feel calmer, easier to scan, and
-more aligned with the level of trust patients need before
-booking a consultation.
-</p>
-<p className="case-disclaimer">
-Please note that the current live version of the website is
-no longer under my control.
+The screens below show the design delivered in this project, not the
+clinic&apos;s current site. The site was implemented in WordPress and
+later rebuilt by others.
 </p>
 </div>
 
@@ -2080,21 +1998,20 @@ style={{ marginTop: "32px" }}
 
 {/* OUTCOME */}
 
+<CaseBackToContents />
 <motion.section id="outcome" className="case-section" variants={sectionStagger} initial="hidden" whileInView="visible" viewport={motionViewport}>
 <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>Outcome</TypedSectionLabel>
 
 <div className="case-section-body">
-{/* [REVISÃO MATTHIAS] new Outcome section; absorbs the old "next steps" block and the delivery status note */}
 <p>
-The redesign was delivered as a complete system: a new
-information architecture, a page system covering the
-homepage and the key subpages, a mobile version, and a
-style guide documenting the visual system. I built the site
-in WordPress. The screens shown here reflect the design as
-delivered.
+I delivered information architecture, wireframes, UI, the logo, a
+style guide, and a WordPress site. This case does not present
+post-launch metrics.
 </p>
 </div>
 </motion.section>
+
+<CaseBackToContents />
 
 {/* ── Paginação ── */}
 <section className="case-pagination" aria-label="Next and previous case">

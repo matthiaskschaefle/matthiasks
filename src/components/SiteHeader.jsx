@@ -8,7 +8,8 @@ import logoMks from "../assets/logo-mks.svg";
 
 /**
  * Floating pill navigation.
- * - Fixed with margin from the edges, 1px border, soft shadow, fully rounded.
+ * Glass bar: 18px corners, no stroke, shadow for lift. Logo is the circular
+ * mark, a step larger than the nav type. Resume uses the shared 8px button.
  * - Hides on scroll down, reappears on scroll up (js-hide-on-scroll behavior).
  * - Logo left / mono links center / "resume" CTA right (opens the CV PDF).
  *   The nav CTA is intentionally "resume", not a contact pitch: recruiters

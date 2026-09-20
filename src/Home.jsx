@@ -19,10 +19,9 @@ const MotionLink = motion.create(Link);
 const WORK = [
   {
     href: "/delivery",
-    index: "01",
-    context: "Paid client work · Product redesign · Field research · 2025",
+    context: "Paid client work, product redesign, field research, 2025",
     title: "The New Delivery Experience",
-    description: "Customers were disputing deliveries they had paid for, and the records could not settle it. Two days in the field found what no survey would.",
+    description: "Drivers retyped data the system already had, and the app had no option for how packages actually changed hands.",
     result: "7 to 8s faster per stop, 92%→98% record compliance",
     imageSrc: "/assets/portfolio/2026/03/Mockup-Hero-scaled.png",
     imageAlt: "Clip from the Delivery case film: the confirmation form arriving already filled from route data",
@@ -38,21 +37,19 @@ const WORK = [
   },
   {
     href: "/doctor",
-    index: "02",
-    context: "Paid client work · Research · UI design · 2024",
+    context: "Paid client work, research, UI design, 2024",
     title: "The questions patients asked before booking",
-    description: "A plastic surgeon's site rebuilt around what patients actually wanted to know. Research, IA, UI, and the brand it runs on.",
-    result: "Logo and palette still in use, two years on.",
+    description: "Patients could not find procedures, prices, or insurance before booking.",
+    result: "Logo and palette still in use",
     imageSrc: "/assets/portfolio/2025/11/mockup-helio.png",
     imageAlt: "The redesigned Dr. Hélio homepage on desktop and mobile",
   },
   {
     href: "/duopet",
-    index: "03",
-    context: "Educational project · UX/UI · 2023",
+    context: "Educational project, UX/UI, 2023",
     title: "DuoPet",
-    description: "A faster, clearer way to book veterinary appointments without WhatsApp back-and-forth.",
-    result: "164 survey responses · 2 usability-testing rounds",
+    description: "Course prototype for booking vet visits without waiting on WhatsApp.",
+    result: "164 survey responses, 2 usability-testing rounds",
     imageSrc: "/assets/portfolio/2024/05/iPhone-12-Pro.png",
     imageAlt: "DuoPet prototype mockup",
   },
@@ -145,20 +142,10 @@ function WorkTitle({ title }) {
 }
 
 function WorkContext({ context }) {
-  const segments = context.split(" · ");
-  return (
-    <span className="work-context">
-      {segments.map((segment, index) => (
-        <span className="work-context-seg" key={`${segment}-${index}`}>
-          {segment}
-          {index < segments.length - 1 ? " · " : ""}
-        </span>
-      ))}
-    </span>
-  );
+  return <span className="work-context">{context}</span>;
 }
 
-function WorkItem({ href, index, context, title, description, result, imageSrc, imageAlt, video, featured, order = 0 }) {
+function WorkItem({ href, context, title, description, result, imageSrc, imageAlt, video, featured, order = 0 }) {
   const shouldReduceMotion = useReducedMotion();
   const itemInitial = shouldReduceMotion ? { opacity: 0 } : { opacity: 0, y: 20 };
   const itemVisible = shouldReduceMotion ? { opacity: 1 } : { opacity: 1, y: 0 };
@@ -193,7 +180,6 @@ function WorkItem({ href, index, context, title, description, result, imageSrc, 
       </div>
       <div className="work-row">
         <div className="work-info">
-          <span className="work-index">{index}</span>
           <WorkContext context={context} />
         </div>
         <div className="work-main">
@@ -224,7 +210,7 @@ export default function Document() {
         {`
 * { box-sizing: border-box; }
 
-html { scroll-behavior: smooth; }
+html { scroll-behavior: auto; }
 
 body {
   margin: 0;
@@ -531,7 +517,7 @@ img { max-width: 100%; display: block; }
   align-items: center;
   gap: 5px;
   padding: 4px 8px;
-  border-radius: 999px;
+  border-radius: 6px;
   background: rgba(15, 14, 12, 0.62);
   color: var(--ink-50);
   font-family: var(--font-mono);
@@ -673,46 +659,89 @@ img { max-width: 100%; display: block; }
   .work-desc { font-size: 15px; }
 }
 
-/* TOOLS STRIP (quiet, below the work index) */
+/* BUILD (Home: same tools as About, with icons, after the work index) */
 .tools-strip {
-  margin-top: 96px;
+  margin-top: 112px;
   display: flex;
   flex-direction: column;
-  gap: 22px;
+  gap: 16px;
+}
+
+.tools-intro {
+  margin: 0;
+  max-width: 52ch;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--ink-700);
 }
 
 .tools-row {
   display: flex;
   flex-wrap: wrap;
-  align-items: center;
-  justify-content: flex-start;
-  gap: 24px 32px;
+  align-items: flex-end;
+  gap: 18px 22px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
 }
-.tool-item {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 10px;
-  opacity: 0.8;
-}
-.tool-icon {
-  width: 18px;
-  height: 18px;
-}
-.tool-label {
+.tools-group-label {
+  margin: 8px 0 0;
   font-family: var(--font-mono);
-  font-size: 11px;
-  font-weight: 500;
-  letter-spacing: 0.1em;
+  font-size: var(--label-2-size);
+  letter-spacing: var(--label-2-track);
   text-transform: uppercase;
   color: var(--ink-600);
 }
+.tool-item {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  width: auto;
+  min-width: 44px;
+  min-height: 44px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+}
+.tool-item.tool-pair {
+  width: auto;
+}
+.tool-icon {
+  width: 28px;
+  height: 28px;
+  display: block;
+  object-fit: contain;
+}
+.tool-icon--figma {
+  width: 18px;
+  height: 28px;
+}
+.tool-pair {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.tool-pair .tool-icon {
+  width: 24px;
+  height: 24px;
+}
+.tool-name {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  color: var(--ink-600);
+  text-align: center;
+  white-space: nowrap;
+}
 
 @media (max-width: 768px) {
-  .tools-strip { margin-top: 72px; }
-  .tools-row { gap: 14px 18px; }
-  .tool-icon { width: 22px; height: 22px; }
-  .tool-label { font-size: 12px; }
+  .tools-strip { margin-top: 80px; }
+  .tools-row { gap: 12px 16px; }
 }
 `}
       </style>
@@ -774,51 +803,69 @@ img { max-width: 100%; display: block; }
           </section>
 
           {/* TOOLS */}
-          <section className="tools-strip" aria-label="Tools I use">
+          <section className="tools-strip" aria-labelledby="build-heading">
             <div className="section-header">
               <TypedSectionLabel
+                id="build-heading"
                 className="section-label"
                 prefersReducedMotion={shouldReduceMotion}
                 standalone
               >
-                Tools I use
+                Build
               </TypedSectionLabel>
               <span className="section-line" />
             </div>
-            <div className="tools-row" aria-label="Tools">
-              {/* Figma */}
-              <div className="tool-item">
-                <svg className="tool-icon" viewBox="0 0 38 57" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <path d="M19 28.5a9.5 9.5 0 1 1 19 0 9.5 9.5 0 0 1-19 0z" fill="#1ABCFE"/>
-                  <path d="M0 47.5A9.5 9.5 0 0 1 9.5 38H19v9.5a9.5 9.5 0 0 1-19 0z" fill="#0ACF83"/>
-                  <path d="M19 0v19h9.5a9.5 9.5 0 0 0 0-19H19z" fill="#FF7262"/>
-                  <path d="M0 9.5A9.5 9.5 0 0 0 9.5 19H19V0H9.5A9.5 9.5 0 0 0 0 9.5z" fill="#F24E1E"/>
-                  <path d="M0 28.5A9.5 9.5 0 0 0 9.5 38H19V19H9.5A9.5 9.5 0 0 0 0 28.5z" fill="#A259FF"/>
-                </svg>
-                <span className="tool-label">Figma</span>
-              </div>
-
-              {/* React */}
-              <div className="tool-item">
-                <svg className="tool-icon" viewBox="-11.5 -10.232 23 20.463" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle r="2.05" fill="#61DAFB"/>
-                  <ellipse rx="11" ry="4.2" stroke="#61DAFB" strokeWidth="1" fill="none"/>
-                  <ellipse rx="11" ry="4.2" stroke="#61DAFB" strokeWidth="1" fill="none" transform="rotate(60)"/>
-                  <ellipse rx="11" ry="4.2" stroke="#61DAFB" strokeWidth="1" fill="none" transform="rotate(120)"/>
-                </svg>
-                <span className="tool-label">React</span>
-              </div>
-
-              {/* Cursor */}
-              <div className="tool-item">
-                <svg className="tool-icon" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <rect width="24" height="24" rx="6" fill="#1A1815"/>
-                  <path d="M7 8l5 4-5 4" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
-                  <path d="M13 16h4" stroke="#FFFFFF" strokeWidth="2" strokeLinecap="round"/>
-                </svg>
-                <span className="tool-label">Cursor</span>
-              </div>
-            </div>
+            <p className="tools-intro">Software I use to design and prototype.</p>
+            <p className="tools-group-label" id="build-process-label">Design and code</p>
+            <ul className="tools-row" aria-labelledby="build-process-label">
+              <li className="tool-item">
+                <img className="tool-icon tool-icon--figma" src="/assets/icons/figma.svg" alt="" />
+                <span className="tool-name">Figma</span>
+              </li>
+              <li className="tool-item">
+                <img className="tool-icon" src="/assets/icons/react.svg" alt="" />
+                <span className="tool-name">React</span>
+              </li>
+              <li className="tool-item">
+                <img className="tool-icon" src="/assets/icons/vite.svg" alt="" />
+                <span className="tool-name">Vite</span>
+              </li>
+              <li className="tool-item">
+                <img className="tool-icon" src="/assets/icons/framer.svg" alt="" />
+                <span className="tool-name">Framer Motion</span>
+              </li>
+              <li className="tool-item">
+                <img className="tool-icon" src="/assets/icons/html5.svg" alt="" />
+                <span className="tool-name">HTML</span>
+              </li>
+              <li className="tool-item">
+                <img className="tool-icon" src="/assets/icons/css3.svg" alt="" />
+                <span className="tool-name">CSS</span>
+              </li>
+              <li className="tool-item">
+                <img className="tool-icon" src="/assets/icons/javascript.svg" alt="" />
+                <span className="tool-name">JavaScript</span>
+              </li>
+              <li className="tool-item">
+                <img className="tool-icon" src="/assets/icons/git.svg" alt="" />
+                <span className="tool-name">Git</span>
+              </li>
+            </ul>
+            <p className="tools-group-label" id="build-ai-label">AI assistants in the workflow</p>
+            <ul className="tools-row" aria-labelledby="build-ai-label">
+              <li className="tool-item">
+                <img className="tool-icon" src="/assets/icons/cursor.svg" alt="" />
+                <span className="tool-name">Cursor</span>
+              </li>
+              <li className="tool-item">
+                <img className="tool-icon" src="/assets/icons/openai.svg" alt="" />
+                <span className="tool-name">Codex</span>
+              </li>
+              <li className="tool-item">
+                <img className="tool-icon" src="/assets/icons/claude.svg" alt="" />
+                <span className="tool-name">Claude</span>
+              </li>
+            </ul>
           </section>
 
         </div>
