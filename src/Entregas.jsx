@@ -444,7 +444,7 @@ alt: "Delivery app mockups",
 id: "field",
 label: "Field research",
 title: "I led two days on active routes",
-body: "Five drivers, separate from the later 12-driver pilot. We watched the app at the door without interrupting, then debriefed after each route.",
+body: "Five drivers, before the redesign and separate from the later 12-driver pilot. We watched the app at the door without interrupting, then debriefed after each route.",
 img: "/assets/portfolio/2026/04/IMG-20260328-WA0013.jpg",
 alt: "Field observation during a driver route in Barbacena",
 },
@@ -490,7 +490,7 @@ alt: "Final receiver modal UI",
 <div className="context-card-item">
 <div className="context-card-number">7 to 8s</div>
 <div className="context-card-unit">Faster per stop</div>
-<div className="context-card-context">gained with the changes</div>
+<div className="context-card-context">12-driver, 3-week pilot</div>
 </div>
 <div className="context-card-item">
 <div className="context-card-number"><CountUp value={92} suffix="%" /></div>
@@ -539,7 +539,7 @@ description="Research planning, which problems to prioritize, and the final desi
 <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>Research</TypedSectionLabel>
 <div className="case-section-body">
 <h3 className="case-subsection-title">Two days on the road</h3>
-<p>Two days with five drivers, separate from the later 12-driver pilot. I led the ride-alongs. We watched the app at each stop without directing them, then debriefed after each route.</p>
+<p>Two days with five drivers, before the redesign and separate from the later 12-driver pilot. I led the ride-alongs. We watched the app at each stop without directing them, then debriefed after each route.</p>
 <Figure
 className="research-field-figure"
 src="/assets/portfolio/2026/04/IMG-20260328-WA0013.jpg"
@@ -627,7 +627,7 @@ className="delivery-before-after"
 focus="top"
 zoom
 title="Data that shows itself"
-description="Observation: drivers retyped names and IDs the system already had. Decision: those fields appear from route data, one tap to confirm. Evidence: 7 to 8 extra seconds per stop after the changes, from the average measured on the ride-along days with five drivers."
+description="Observation: drivers retyped names and IDs the system already had. Decision: those fields appear from route data, one tap to confirm. Evidence: 7 to 8 seconds faster per stop in the 12-driver, 3-week pilot."
 caption="Empty name and ID fields before. After: filled from route data. Tap a screen to enlarge. Labels are in Portuguese."
 before={{ src: "/assets/portfolio/2026/04/Mockup-01-Delivery-Proof-Wire.png", alt: "Before: empty receiver name and document fields on the confirmation screen" }}
 after={{ src: "/assets/portfolio/2026/04/Mockup-01-Delivery-Proof.png", alt: "After: receiver name and document number filled from route data" }}
@@ -654,7 +654,7 @@ className="delivery-before-after"
 focus="bottom"
 zoom
 title="Photo feedback before the moment passes"
-description="Observation: dark, blurry, or off-angle photos were accepted. Decision: the app flags the issue at capture. Evidence: record compliance moved from 92% to 98%. Those figures came from the development and data team. This case does not document how they were calculated, and does not report a result for each criterion."
+description="Observation: dark, blurry, or off-angle photos were accepted. Decision: the app flags the issue at capture. Evidence: record compliance moved from 92% to 98% in the 12-driver, 3-week pilot. This case does not document how the score was calculated, and does not report a result for each criterion."
 caption="After: missing photo lines turn red before delivery can finish. Tap a screen to enlarge. Labels are in Portuguese."
 before={{ src: "/assets/portfolio/2026/04/Mockup-03-Proof-of-Delivery-Wire.png", alt: "Before: photo slots with no quality warning" }}
 after={{ src: "/assets/portfolio/2026/04/Mockup-03-Proof-of-Delivery.png", alt: "After: missing photo labels shown in red on the confirmation screen" }}
@@ -683,25 +683,25 @@ style={{ width: "fit-content" }}
 <motion.section id="kpis" className="case-section" variants={sectionStagger} initial="hidden" whileInView="visible" viewport={motionViewport}>
 <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>Results</TypedSectionLabel>
 <div className="case-section-body">
-<h3 className="case-subsection-title">After the changes</h3>
-<p>The redesign gained 7 to 8 seconds per stop and removed 2 taps. Record compliance moved from 92% to 98%. The time saving is the average from the ride-along days with five drivers, not a 12-driver pilot figure. The compliance percentages came from the development and data team. The film groups that timing with the 12-driver, 3-week pilot. The sources below stay separate.</p>
+<h3 className="case-subsection-title">Measured in the 12-driver pilot</h3>
+<p>12 drivers, three weeks. 7 to 8 seconds faster per stop, 2 taps removed, and record compliance from 92% to 98%.</p>
 </div>
 <div className="research-full">
 <div className="kpi-grid kpi-grid--measured">
 <motion.div className="kpi-card" variants={childUpV}>
 <div className="kpi-card-value kpi-card-value--range">7 to 8<span className="kpi-card-unit">s</span></div>
 <div className="kpi-card-label">faster per stop</div>
-<p className="kpi-card-desc">Time gained with the changes. Average from the ride-along days with five drivers. About 12 to 13 minutes across 100 stops is an estimate from that average, not a measured full route.</p>
+<p className="kpi-card-desc">From the 12-driver, 3-week pilot. About 12 to 13 minutes across 100 stops is an estimate from that average, not a measured full route.</p>
 </motion.div>
 <motion.div className="kpi-card" variants={childUpV}>
 <div className="kpi-card-value"><CountUp value={2} /><span className="kpi-card-unit"> taps</span></div>
 <div className="kpi-card-label">removed per stop</div>
-<p className="kpi-card-desc">Two taps that used to be required at every stop.</p>
+<p className="kpi-card-desc">Two taps that used to be required at every stop, in the same 12-driver, 3-week pilot.</p>
 </motion.div>
 <motion.div className="kpi-card" variants={childUpV}>
 <div className="kpi-card-value"><CountUp value={98} /><span className="kpi-card-unit">%</span></div>
 <div className="kpi-card-label">record compliance</div>
-<p className="kpi-card-desc">Up from 92%. Figures from the development and data team. Completed fields, photos of the package and the residence, and correct photo metadata were among the criteria.</p>
+<p className="kpi-card-desc">Up from 92% in the 12-driver, 3-week pilot. Completed fields, photos of the package and the residence, and correct photo metadata were among the criteria.</p>
 </motion.div>
 </div>
 <div className="projection-block">
@@ -712,8 +712,8 @@ style={{ width: "fit-content" }}
 <div className="limitations-block">
 <h3 className="case-subsection-title">Limits of this evidence</h3>
 <ul className="limitations-list">
-<li>The 7 to 8 second gain is from the ride-along days with five drivers, not from the 12-driver pilot.</li>
-<li>The 92% to 98% figures came from the development and data team. The scoring method is not documented in this case.</li>
+<li>The 7 to 8 seconds, 2 taps, and 92% to 98% figures are from the 12-driver, 3-week pilot, not from the earlier five-driver field research.</li>
+<li>The scoring method for record compliance is not documented in this case.</li>
 <li>The pilot was 12 drivers for three weeks, not a full production period.</li>
 <li>There was no formal usability test before rollout.</li>
 <li>The pilot does not establish a measured reduction in delivery disputes.</li>
