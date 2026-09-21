@@ -22,7 +22,7 @@ const WORK = [
     context: "Paid client work, product redesign, field research, 2025",
     title: "The New Delivery Experience",
     description: "Drivers retyped data the system already had, and the app had no option for how packages actually changed hands.",
-    result: "7 to 8s faster per stop, 92%→98% record compliance",
+    result: "7 to 8s faster per stop, 2 fewer taps, 92% to 98% record compliance",
     imageSrc: "/assets/portfolio/2026/03/Mockup-Hero-scaled.png",
     imageAlt: "Clip from the Delivery case film: the confirmation form arriving already filled from route data",
     video: {
@@ -815,7 +815,7 @@ img { max-width: 100%; display: block; }
               </TypedSectionLabel>
               <span className="section-line" />
             </div>
-            <p className="tools-intro">Software I use to design and prototype.</p>
+    <p className="tools-intro">Software I use to design and prototype, including AI assistants in that workflow.</p>
             <p className="tools-group-label" id="build-process-label">Design and code</p>
             <ul className="tools-row" aria-labelledby="build-process-label">
               <li className="tool-item">

@@ -38,7 +38,7 @@ export default function Resume() {
     applySeo({
       title: "Resume | Matthias Schaefle | UX/UI Designer in Berlin",
       description:
-        "Resume of Matthias Schaefle, UX/UI Designer based in Berlin. Research-led product design, prototyping in React/Vite, and design systems.",
+        "Resume of Matthias Schaefle, UX/UI Designer based in Berlin. Research-led product design and prototyping in React and Vite.",
       path: "/resume",
       ogTitle: "Resume | Matthias Schaefle",
       ogDescription: "UX/UI Designer in Berlin. Research-led product design and technical prototyping.",

@@ -546,7 +546,7 @@ window.removeEventListener("resize", updateMotionSettings);
 useEffect(() => {
 applySeo({
 title: "Healthcare Website UX Case Study | Matthias Schaefle",
-description: "Paid 2024 client project for plastic surgeon Dr. Helio Alves: patient research, information architecture, UI, WordPress delivery, and a visual identity still in use.",
+description: "Paid 2024 client project for plastic surgeon Dr. Hélio Alves: patient research, information architecture, UI, WordPress delivery, and a visual identity still in use.",
 path: "/doctor",
 ogTitle: "The questions patients asked before booking",
 ogDescription: "A paid 2024 website project for a Sao Paulo plastic surgeon, built around the questions patients asked before booking.",
@@ -1798,7 +1798,8 @@ below are the gaps that later became pages or components.
 Pages before polish
 </h3>
 <p className="case-wireframes-text">
-Booking, procedure detail, and the landing structure, before color and type.
+Booking, procedure detail, and the landing structure from that map,
+before color and type.
 </p>
 </div>
 
@@ -1838,8 +1839,10 @@ variants={tiltIn(1.2, prefersReducedMotion)}
 From a question to a page
 </h3>
 <p>
-The tree moved patients from a general interest to a procedure,
-then to how a first visit works, then to contact.
+Insurance, pricing, procedures, recovery, and the first visit from
+the interviews sit on this tree. Patients move from a general
+interest to a procedure, then to how a first visit works, then to
+contact.
 </p>
 </div>
 
@@ -2005,8 +2008,10 @@ style={{ marginTop: "32px" }}
 <div className="case-section-body">
 <p>
 I delivered information architecture, wireframes, UI, the logo, a
-style guide, and a WordPress site. This case does not present
-post-launch metrics.
+style guide, and a WordPress site. The logo and palette remain on
+the clinic, the prescription pad, the bags, and Instagram. The
+WordPress site was later rebuilt by others. This case does not
+present post-launch UX or sales metrics.
 </p>
 </div>
 </motion.section>

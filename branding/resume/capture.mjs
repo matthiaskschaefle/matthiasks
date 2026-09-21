@@ -93,8 +93,9 @@ try {
       faces: Array.from(document.fonts).map((f) => ({ family: f.family.replaceAll('"', ""), status: f.status })),
       nameFont: getComputedStyle(document.querySelector(".resume-name")).fontFamily,
       role: document.querySelector(".resume-role").textContent.trim(),
-      projecaoMarcada: /projected 30 to 40%/.test(text),
-      medidoSeparado: /92% to 98%/.test(text) && /7 to 8 seconds/.test(text),
+      projecaoAusente: !/30 to 40%/.test(text) && !/projected/.test(text),
+      medidoSeparado: /92% to 98%/.test(text) && /7 to 8 seconds/.test(text) && /2 fewer taps/.test(text),
+      contribuicaoConfirmacao: /led the field sessions/.test(text) && /receiver confirmation flow/.test(text),
       dataPresente: /2026 to present/.test(text),
       semProductDesigner: !/Product Designer/.test(text),
       educacaoUnica: document.querySelectorAll(".resume-edu").length === 4,
@@ -120,8 +121,9 @@ try {
     throw new Error(`Fontes nao carregaram: ${JSON.stringify(validation.faces)}`);
   }
   const htmlKeys = [
-    "projecaoMarcada",
+    "projecaoAusente",
     "medidoSeparado",
+    "contribuicaoConfirmacao",
     "dataPresente",
     "semProductDesigner",
     "educacaoUnica",

@@ -458,8 +458,8 @@ visible: { opacity: 1, transition: { duration: DURATION.slow, ease: EASE.out, st
 };
 const rowV = prefersReducedMotion ? fadeIn : fadeUp;
 return (
-<motion.div className="effc" variants={containerV} initial="hidden" whileInView="visible" viewport={motionViewport} role="img" aria-label="Average time to schedule in the second course test with 5 pet owners: DuoPet 45 seconds, MeuPet 50 seconds, Vets 53 seconds">
-<p className="effc-kicker">Average time to schedule, second course test, 5 pet owners</p>
+<motion.div className="effc" variants={containerV} initial="hidden" whileInView="visible" viewport={motionViewport} role="img" aria-label="Average time to schedule in the second course test, on the screens tested then, with 5 pet owners: DuoPet 45 seconds, MeuPet 50 seconds, Vets 53 seconds">
+<p className="effc-kicker">Average time to schedule, round 2 screens, 5 pet owners</p>
 {EFFICIENCY.map((row) => (
 <motion.div className="effc-row" variants={rowV} key={row.app} aria-hidden="true">
 <span className={row.self ? "effc-app effc-app--self" : "effc-app"}>{row.app}</span>
@@ -2414,7 +2414,7 @@ alt="DuoPet prototype overview mockup" loading="eager" decoding="async" width="1
 </figure>
 
 <motion.p className="case-hero-byline" {...fadeUpImmediate(0, prefersReducedMotion)}>
-Pair work with Leticia Magri. Research, wireframes, UI, and two usability rounds, 2023.
+Pair work with Leticia Magri. We both took part in research, wireframes, UI, and the two usability rounds. This case does not split those tasks by person.
 </motion.p>
 
 <div className="in-short">
@@ -2424,7 +2424,7 @@ Pair work with Leticia Magri. Research, wireframes, UI, and two usability rounds
 </div>
 <div className="in-short-item">
 <div className="in-short-label">Collaboration</div>
-<p className="in-short-text">Pair project: survey of 164 owners, 5 interviews, IA, UI, and two usability rounds.</p>
+<p className="in-short-text">Both of us worked across the survey of 164 owners, 5 interviews, IA, UI, and two usability rounds.</p>
 </div>
 <div className="in-short-item">
 <div className="in-short-label">What we made</div>
@@ -2755,9 +2755,11 @@ UI consistent while we iterated.
 <div className="case-section-body">
 <h3 className="case-subsection-title">The prototype, and what the tests showed</h3>
 <p>
-Second usability round: 5 pet owners, average time to schedule.
-DuoPet 45 seconds, MeuPet 50 seconds, Vets 53 seconds. That comparison
-is this course test against those two apps, not market performance.
+Second usability round, on the screens tested then: 5 pet owners,
+average time to schedule. DuoPet 45 seconds, MeuPet 50 seconds, Vets
+53 seconds. That comparison is this course test against those two
+apps, not market performance. The dedicated Date and Time screen was
+added after that round and was not retested.
 </p>
 <div style={{ marginTop: 20 }}>
 <EfficiencyChart prefersReducedMotion={prefersReducedMotion} />
@@ -2768,7 +2770,7 @@ is this course test against those two apps, not market performance.
 <div className="result-paired-grid">
 {[
 { t: "Finding nearby care", d: "The Home list shows nearby veterinarians with distances, matching the survey finding that many owners pick the closest clinic.", src: '/assets/portfolio/2026/07/duopet-result-01.mp4', poster: '/assets/portfolio/2026/07/duopet-result-01-poster.webp', label: "Prototype flow: finding nearby veterinarians" },
-{ t: "Scheduling as its own step", d: "After round 2, date and time sit on a dedicated screen instead of inside the profile.", src: '/assets/portfolio/2026/07/duopet-result-02.mp4', poster: '/assets/portfolio/2026/07/duopet-result-02-poster.webp', label: "Prototype flow: booking an appointment with the calendar" },
+{ t: "Scheduling as its own step", d: "After round 2, date and time sit on a dedicated screen instead of inside the profile. That later screen was not part of the 45-second measurement and was not retested.", src: '/assets/portfolio/2026/07/duopet-result-02.mp4', poster: '/assets/portfolio/2026/07/duopet-result-02-poster.webp', label: "Prototype flow: booking an appointment with the calendar" },
 { t: "Pet profiles from the start", d: "Owners register pets during onboarding so later booking steps can reuse that information.", src: '/assets/portfolio/2026/07/duopet-result-03.mp4', poster: '/assets/portfolio/2026/07/duopet-result-03-poster.webp', label: "Prototype flow: registering a pet during onboarding" },
 ].map(({ t, d, src, poster, label }, i) => (
 <React.Fragment key={t}>
@@ -2819,10 +2821,10 @@ in production.
 <div className="case-pagination-label">Previous case</div>
 <div className="case-pagination-title">
 <span className="case-pagination-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M15 18l-6-6 6-6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg></span>
-The Doctor&apos;s New Digital Presence
+The questions patients asked before booking
 </div>
 <div className="case-pagination-desc">
-Building a trustworthy digital presence for a plastic surgeon.
+Patients could not find procedures, prices, or insurance before booking.
 </div>
 </Link>
 <Link to="/delivery" className="case-pagination-card case-pagination-next">

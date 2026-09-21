@@ -2,9 +2,9 @@
 // pelo gerador do PDF (branding/resume/capture.mjs). Editar SO aqui: se o
 // texto for duplicado num dos dois, a pagina e o PDF divergem sem aviso.
 //
-// Regras que valem para este arquivo (ver CLAUDE.md):
-// - NDA do case Delivery: nao inventar metrica. O 30-40% de disputas e
-//   PROJECAO, nao resultado medido, e o texto tem que dizer isso.
+// Regras que valem para este arquivo:
+// - NDA do case Delivery: nao inventar metrica. A projecao de 30-40% de
+//   disputas fica no case, nao neste curriculo.
 // - Posicionamento e "UX/UI Designer". Nao usar "Design Engineer".
 // - Sem em-dash em texto corrido.
 // - DuoPet e projeto educacional. Nao misturar com experiencia profissional.
@@ -32,8 +32,9 @@ export const resume = {
       period: "2025",
       summary: "Redesign of a delivery confirmation flow for a small freight company in Barbacena, Brazil.",
       bullets: [
+        "I led the field sessions and designed the receiver confirmation flow.",
         "Field research with 5 couriers. Pilot with 12 drivers over three weeks.",
-        "About 7 to 8 seconds faster per stop. Record compliance from 92% to 98%. Pilot data supported a projected 30 to 40% reduction in proof-of-delivery disputes.",
+        "7 to 8 seconds faster per stop and 2 fewer taps. Record compliance from 92% to 98%, figures from the development and data team.",
       ],
     },
     {
@@ -53,9 +54,9 @@ export const resume = {
       title: "DuoPet",
       kind: "Course project",
       period: "2023",
-      summary: "Concept for veterinary appointment booking developed during UX training.",
+      summary: "Educational UX course prototype for veterinary appointment booking, pair work with Leticia Magri.",
       bullets: [
-        "Surveyed 164 pet owners, conducted 5 follow-up interviews, and completed two small-sample usability-testing rounds.",
+        "Both of us worked across a survey of 164 pet owners, 5 interviews, and two small-sample usability rounds.",
       ],
     },
   ],
@@ -63,15 +64,15 @@ export const resume = {
   skills: [
     {
       title: "UX Design",
-      body: "Product discovery, qualitative and quantitative research, usability testing, interaction design, prototyping, mobile UX, design systems.",
+      body: "Field observation and interviews, interaction design, prototyping, and a client style guide. Usability rounds on the DuoPet course project.",
     },
     {
       title: "Tools",
-      body: "Figma, FigJam, React/Vite, HTML/CSS, Tailwind, Cursor, Notion, Linear.",
+      body: "Figma, FigJam, React/Vite, HTML/CSS, Tailwind, Cursor, Codex, Claude, Notion, Linear.",
     },
     {
       title: "Technical prototyping",
-      body: "From Figma to responsive React prototypes used to explore and validate faster.",
+      body: "Figma to responsive React prototypes, including this portfolio.",
     },
     {
       title: "Languages",

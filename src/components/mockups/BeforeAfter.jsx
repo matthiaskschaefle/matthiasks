@@ -7,11 +7,18 @@ import {
 } from "@/lib/animations";
 import Frame from "./Frame.jsx";
 import { getImageDims } from "./imageDims.js";
+import { useLightbox } from "./lightbox-context.js";
 
 function splitObservationDecision(text) {
-  const match = String(text).match(/^Observation:\s*([\s\S]+?)\s*Decision:\s*([\s\S]+)$/);
+  const match = String(text).match(
+    /^Observation:\s*([\s\S]+?)\s*Decision:\s*([\s\S]+?)(?:\s*Evidence:\s*([\s\S]+))?$/,
+  );
   if (!match) return null;
-  return { observation: match[1].trim(), decision: match[2].trim() };
+  return {
+    observation: match[1].trim(),
+    decision: match[2].trim(),
+    evidence: match[3]?.trim() || null,
+  };
 }
 
 function Description({ text }) {
@@ -30,13 +37,20 @@ function Description({ text }) {
         <span className="ms-ba__fact-label">Decision</span>
         {parts.decision}
       </p>
+      {parts.evidence && (
+        <p className="ms-ba__fact">
+          <span className="ms-ba__fact-label">Evidence</span>
+          {parts.evidence}
+        </p>
+      )}
     </div>
   );
 }
 
-function Screen({ shot }) {
+function Screen({ shot, zoom }) {
   const dims = getImageDims(shot.src, "BeforeAfter");
-  return (
+  const { open } = useLightbox();
+  const img = (
     <img
       className="ms-ba__img"
       src={shot.src}
@@ -48,6 +62,19 @@ function Screen({ shot }) {
       draggable={false}
       style={dims ? { aspectRatio: `${dims.width} / ${dims.height}` } : undefined}
     />
+  );
+
+  if (!zoom) return img;
+
+  return (
+    <button
+      type="button"
+      className="ms-figure__zoom"
+      aria-label={`Enlarge: ${shot.alt}`}
+      onClick={() => open({ src: shot.src, alt: shot.alt })}
+    >
+      {img}
+    </button>
   );
 }
 
@@ -71,6 +98,7 @@ export default function BeforeAfter({
   description,
   caption,
   focus,
+  zoom = false,
   className = "",
 }) {
   const prefersReducedMotion = getReducedMotion();
@@ -88,13 +116,13 @@ export default function BeforeAfter({
           <div className="ms-ba__cell">
             <p className="ms-ba__label">Before</p>
             <Frame variant="phone" reveal={false}>
-              <Screen shot={before} />
+              <Screen shot={before} zoom={zoom} />
             </Frame>
           </div>
           <div className="ms-ba__cell">
             <p className="ms-ba__label ms-ba__label--after">After</p>
             <Frame variant="phone" reveal={false}>
-              <Screen shot={after} />
+              <Screen shot={after} zoom={zoom} />
             </Frame>
           </div>
         </div>

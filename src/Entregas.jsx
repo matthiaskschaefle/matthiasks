@@ -22,7 +22,7 @@ import PlayOnceVideo from "./components/PlayOnceVideo.jsx";
 const CASE_SECTION_IDS = ["overview", "my-role", "research", "insights", "process", "solutions", "kpis", "reflections"];
 
 const SEO_TITLE = "Delivery App Redesign | UX Case Study | Matthias Schaefle";
-const SEO_DESCRIPTION = "UX case study of a delivery confirmation redesign for last-mile drivers, reducing the flow by 2 taps and saving 7 to 8 seconds per stop.";
+const SEO_DESCRIPTION = "UX case study of a delivery confirmation redesign for last-mile drivers: 7 to 8 seconds faster per stop, two fewer taps, and record compliance from 92% to 98%.";
 const SEO_OG_TITLE = "Delivery App Redesign | UX Case Study";
 const SEO_OG_DESCRIPTION = "A faster delivery confirmation flow, designed from field research with last-mile drivers.";
 
@@ -421,8 +421,8 @@ Two designers with the client&apos;s operations lead. Research and UI, 2025.
 <p className="in-short-text">I led the field sessions and designed the receiver confirmation flow.</p>
 </div>
 <div className="in-short-item">
-<div className="in-short-label">Pilot results</div>
-<p className="in-short-text">12 drivers, 3 weeks: 7 to 8 seconds faster per stop, 2 fewer taps, record compliance from 92% to 98%.</p>
+<div className="in-short-label">Results</div>
+<p className="in-short-text">7 to 8 seconds faster per stop, 2 fewer taps, and record compliance from 92% to 98%. 12-driver, 3-week pilot.</p>
 </div>
 </div>
 
@@ -444,7 +444,7 @@ alt: "Delivery app mockups",
 id: "field",
 label: "Field research",
 title: "I led two days on active routes",
-body: "Five drivers. We watched the app at the door without interrupting, then debriefed after each route.",
+body: "Five drivers, separate from the later 12-driver pilot. We watched the app at the door without interrupting, then debriefed after each route.",
 img: "/assets/portfolio/2026/04/IMG-20260328-WA0013.jpg",
 alt: "Field observation during a driver route in Barbacena",
 },
@@ -488,9 +488,9 @@ alt: "Final receiver modal UI",
 <div className="context-card-context">per driver, per route</div>
 </div>
 <div className="context-card-item">
-<div className="context-card-number"><CountUp prefix="~" value={8} suffix="s" /></div>
-<div className="context-card-unit">Lost per stop</div>
-<div className="context-card-context">due to manual data entry</div>
+<div className="context-card-number">7 to 8s</div>
+<div className="context-card-unit">Faster per stop</div>
+<div className="context-card-context">gained with the changes</div>
 </div>
 <div className="context-card-item">
 <div className="context-card-number"><CountUp value={92} suffix="%" /></div>
@@ -561,7 +561,7 @@ author: "Driver, 3 years of experience",
 </div>
 <div className="research-full">
 <div className="research-grid research-grid--two">
-<NumberCard title="Retyping what the system already knew" description="Document numbers, recipient names, recurring notes. In the field that came to about 8 seconds a stop." />
+<NumberCard title="Retyping what the system already knew" description="Document numbers, recipient names, recurring notes. Drivers entered data the system already had." />
 <NumberCard title="No option for how deliveries actually happen" description="In commercial buildings, packages almost always go to a coworker or security guard. The app had no field for that, so drivers used free text." />
 <NumberCard title="Photos accepted regardless of quality" description="Dark, blurry, or off-angle shots were accepted. Proof of delivery depended on the driver's attention at that moment." />
 <NumberCard title="PNR disputes with no clear answer" description="When a customer disputed a delivery, the records were often too thin to settle it. The app had not captured enough." />
@@ -600,7 +600,7 @@ author: "Driver, 3 years of experience",
 <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>Solutions</TypedSectionLabel>
 <div className="case-section-body">
 <h3 className="case-subsection-title">From field observation to interface</h3>
-<p>Each change maps to a problem we watched on routes. No new screens and no retraining.</p>
+<p>Each change maps to a problem we watched on routes.</p>
 </div>
 
 {/* ── Considered and discarded ── */}
@@ -625,10 +625,12 @@ author: "Driver, 3 years of experience",
 <BeforeAfter
 className="delivery-before-after"
 focus="top"
+zoom
 title="Data that shows itself"
-description="Observation: drivers retyped names and IDs the system already had, about 8 seconds a stop. Decision: those fields appear from route data, one tap to confirm. The 7 to 8 second gain showed up on the whole stop. Later observation placed it in this flow."
-before={{ src: "/assets/portfolio/2026/04/Mockup-01-Delivery-Proof-Wire.png", alt: "Before: Manual data entry at every stop" }}
-after={{ src: "/assets/portfolio/2026/04/Mockup-01-Delivery-Proof.png", alt: "After: Auto-populated fields, one-tap confirmation" }}
+description="Observation: drivers retyped names and IDs the system already had. Decision: those fields appear from route data, one tap to confirm. Evidence: 7 to 8 extra seconds per stop after the changes, from the average measured on the ride-along days with five drivers."
+caption="Empty name and ID fields before. After: filled from route data. Tap a screen to enlarge. Labels are in Portuguese."
+before={{ src: "/assets/portfolio/2026/04/Mockup-01-Delivery-Proof-Wire.png", alt: "Before: empty receiver name and document fields on the confirmation screen" }}
+after={{ src: "/assets/portfolio/2026/04/Mockup-01-Delivery-Proof.png", alt: "After: receiver name and document number filled from route data" }}
 />
 </div>
 
@@ -636,10 +638,12 @@ after={{ src: "/assets/portfolio/2026/04/Mockup-01-Delivery-Proof.png", alt: "Af
 <div className="research-full" style={{ marginTop: 56 }}>
 <BeforeAfter
 className="delivery-before-after"
-title="A button for every real situation"
-description="Observation: commercial stops often go to a coworker or security, so drivers wrote free text. Decision: labeled options for attended and unattended deliveries, including the unattended group from the informal wireframe check. This case does not measure how often each option was used."
-before={{ src: "/assets/portfolio/2026/04/Mockup-02-Modal-Wire.png", alt: "Before: Free-text input for receiver identity" }}
-after={{ src: "/assets/portfolio/2026/04/Mockup-02-Modal.png", alt: "After: Structured receiver options for attended and unattended deliveries" }}
+zoom
+title="Receiver options that match delivery situations"
+description="Observation: commercial stops often go to a coworker or security, so drivers wrote free text. Decision: a short labeled set, grouped into attended and unattended deliveries, instead of one button per situation. The unattended group came from the informal wireframe check. Evidence: field quotes and that wireframe check. This case does not measure how often each option was used."
+caption="Wireframe: attended options only. After: two groups, attended and unattended. Tap a screen to enlarge. Labels are in Portuguese."
+before={{ src: "/assets/portfolio/2026/04/Mockup-02-Modal-Wire.png", alt: "Before: wireframe of attended receiver options without an unattended group" }}
+after={{ src: "/assets/portfolio/2026/04/Mockup-02-Modal.png", alt: "After: receiver options grouped into attended and unattended deliveries" }}
 />
 </div>
 
@@ -648,10 +652,12 @@ after={{ src: "/assets/portfolio/2026/04/Mockup-02-Modal.png", alt: "After: Stru
 <BeforeAfter
 className="delivery-before-after"
 focus="bottom"
+zoom
 title="Photo feedback before the moment passes"
-description="Observation: dark, blurry, or off-angle photos were accepted. Decision: the app flags the issue at capture. Package photo, residence photo, and metadata were among the criteria in the aggregate score, which moved from 92% to 98%. This case does not report a result for each criterion."
-before={{ src: "/assets/portfolio/2026/04/Mockup-03-Proof-of-Delivery-Wire.png", alt: "Before: Photo accepted without any quality check" }}
-after={{ src: "/assets/portfolio/2026/04/Mockup-03-Proof-of-Delivery.png", alt: "After: Real-time validation catches issues at the door" }}
+description="Observation: dark, blurry, or off-angle photos were accepted. Decision: the app flags the issue at capture. Evidence: record compliance moved from 92% to 98%. Those figures came from the development and data team. This case does not document how they were calculated, and does not report a result for each criterion."
+caption="After: missing photo lines turn red before delivery can finish. Tap a screen to enlarge. Labels are in Portuguese."
+before={{ src: "/assets/portfolio/2026/04/Mockup-03-Proof-of-Delivery-Wire.png", alt: "Before: photo slots with no quality warning" }}
+after={{ src: "/assets/portfolio/2026/04/Mockup-03-Proof-of-Delivery.png", alt: "After: missing photo labels shown in red on the confirmation screen" }}
 />
 </div>
 
@@ -677,15 +683,15 @@ style={{ width: "fit-content" }}
 <motion.section id="kpis" className="case-section" variants={sectionStagger} initial="hidden" whileInView="visible" viewport={motionViewport}>
 <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>Results</TypedSectionLabel>
 <div className="case-section-body">
-<h3 className="case-subsection-title">Measured in the pilot</h3>
-<p>12 drivers, three weeks. The 7 to 8 seconds first showed up in the duration of the whole stop. Direct observation then showed that this saving came from the confirmation flow.</p>
+<h3 className="case-subsection-title">After the changes</h3>
+<p>The redesign gained 7 to 8 seconds per stop and removed 2 taps. Record compliance moved from 92% to 98%. The time saving is the average from the ride-along days with five drivers, not a 12-driver pilot figure. The compliance percentages came from the development and data team. The film groups that timing with the 12-driver, 3-week pilot. The sources below stay separate.</p>
 </div>
 <div className="research-full">
 <div className="kpi-grid kpi-grid--measured">
 <motion.div className="kpi-card" variants={childUpV}>
 <div className="kpi-card-value kpi-card-value--range">7 to 8<span className="kpi-card-unit">s</span></div>
 <div className="kpi-card-label">faster per stop</div>
-<p className="kpi-card-desc">That is an estimate of about 12 to 13 minutes across 100 stops, not a measurement of a full route.</p>
+<p className="kpi-card-desc">Time gained with the changes. Average from the ride-along days with five drivers. About 12 to 13 minutes across 100 stops is an estimate from that average, not a measured full route.</p>
 </motion.div>
 <motion.div className="kpi-card" variants={childUpV}>
 <div className="kpi-card-value"><CountUp value={2} /><span className="kpi-card-unit"> taps</span></div>
@@ -695,7 +701,7 @@ style={{ width: "fit-content" }}
 <motion.div className="kpi-card" variants={childUpV}>
 <div className="kpi-card-value"><CountUp value={98} /><span className="kpi-card-unit">%</span></div>
 <div className="kpi-card-label">record compliance</div>
-<p className="kpi-card-desc">Up from 92%. Completed fields, photos of the package and the residence, and correct photo metadata. A higher score meant a more complete record, not faster work at the stop.</p>
+<p className="kpi-card-desc">Up from 92%. Figures from the development and data team. Completed fields, photos of the package and the residence, and correct photo metadata were among the criteria.</p>
 </motion.div>
 </div>
 <div className="projection-block">
@@ -706,9 +712,10 @@ style={{ width: "fit-content" }}
 <div className="limitations-block">
 <h3 className="case-subsection-title">Limits of this evidence</h3>
 <ul className="limitations-list">
+<li>The 7 to 8 second gain is from the ride-along days with five drivers, not from the 12-driver pilot.</li>
+<li>The 92% to 98% figures came from the development and data team. The scoring method is not documented in this case.</li>
 <li>The pilot was 12 drivers for three weeks, not a full production period.</li>
 <li>There was no formal usability test before rollout.</li>
-<li>The compliance criteria are described here, but the scoring formula and number of records reviewed are not documented in this case.</li>
 <li>The pilot does not establish a measured reduction in delivery disputes.</li>
 </ul>
 </div>
@@ -742,10 +749,10 @@ DuoPet
 <Link to="/doctor" className="case-pagination-card case-pagination-next">
 <div className="case-pagination-label">Next case</div>
 <div className="case-pagination-title">
-The Doctor&apos;s New Digital Presence
+The questions patients asked before booking
 <span className="case-pagination-arrow"><svg width="14" height="14" viewBox="0 0 24 24" fill="none"><path d="M9 18l6-6-6-6" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"/></svg></span>
 </div>
-<div className="case-pagination-desc">Building a trustworthy digital presence for a plastic surgeon.</div>
+<div className="case-pagination-desc">Patients could not find procedures, prices, or insurance before booking.</div>
 </Link>
 </div>
 </section>

@@ -38,7 +38,7 @@ const shouldReduceMotion = useReducedMotion();
 useEffect(() => {
 applySeo({
 title: "About Matthias Schaefle | UX/UI Designer in Berlin",
-description: "About Matthias Schaefle, a Brazilian-German UX/UI Designer in Berlin focused on user research, interface design, prototyping, and design systems.",
+description: "About Matthias Schaefle, a Brazilian-German UX/UI Designer in Berlin focused on user research, interface design, and prototyping.",
 path: "/about",
 ogTitle: "About Matthias Schaefle | UX/UI Designer in Berlin",
 ogDescription: "A research-driven UX/UI Designer in Berlin with a Brazilian-German background.",
@@ -299,7 +299,10 @@ From Brazil to Berlin
 </TypedSectionLabel>
 <div className="about-body">
 <p>
-Academic exchange in Munich, late 2014 to early 2016. I now work in Portuguese, English, and German.
+I completed a Licenciatura in Biological Sciences in 2019. That is a previous career. I now work as a UX/UI Designer.
+</p>
+<p>
+Academic exchange in Munich, late 2014 to early 2016. I work in Portuguese and English. German is B1 certified, with Deutsch für den Beruf in progress.
 </p>
 </div>
 </div>
@@ -358,21 +361,24 @@ Skills and tools
 <li className="about-skill-chip">Interviews</li>
 <li className="about-skill-chip">Field observation</li>
 <li className="about-skill-chip">Wireframing</li>
+<li className="about-skill-chip">Style guides</li>
 <li className="about-skill-chip">Prototyping</li>
-<li className="about-skill-chip">Design systems</li>
-<li className="about-skill-chip">Accessibility fundamentals</li>
 </ul>
 </div>
 <div>
 <h3 className="about-skill-title">Tools</h3>
 <ul className="about-skill-list">
 <li className="about-skill-chip">Figma</li>
+<li className="about-skill-chip">Tailwind</li>
 <li className="about-skill-chip">React</li>
 <li className="about-skill-chip">Vite</li>
 <li className="about-skill-chip">framer-motion</li>
 <li className="about-skill-chip">HTML/CSS</li>
 <li className="about-skill-chip">JavaScript</li>
 <li className="about-skill-chip">Git</li>
+<li className="about-skill-chip">Cursor</li>
+<li className="about-skill-chip">Codex</li>
+<li className="about-skill-chip">Claude</li>
 </ul>
 </div>
 <div>
@@ -413,7 +419,7 @@ React 19, Vite 7, framer-motion 12
 </li>
 <li>
 <span className="about-colophon-key">Styling:</span>{" "}
-custom design tokens, no UI framework
+Tailwind and custom design tokens
 </li>
 <li>
 <span className="about-colophon-key">Motion:</span>{" "}
@@ -426,6 +432,10 @@ custom mockup components, no stock screenshots
 <li>
 <span className="about-colophon-key">Loading:</span>{" "}
 code-splitting per route
+</li>
+<li>
+<span className="about-colophon-key">AI assistants used on this site:</span>{" "}
+Cursor, Codex, Claude
 </li>
 <li>
 <span className="about-colophon-key">Deploy:</span>{" "}
