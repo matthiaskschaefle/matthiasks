@@ -1,0 +1,647 @@
+* {
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: auto;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: var(--font-body);
+  color: var(--ink-900);
+  background: var(--bg);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+.page {
+  min-height: 100vh;
+  width: 100%;
+  padding: 140px 16px 104px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.page-inner {
+  width: 100%;
+  max-width: 872px;
+}
+
+/* Warm editorial backdrop used only on the work index. The quiet grid fades
+   before the project list so the mockups remain the visual focus. */
+.home-page {
+  position: relative;
+  isolation: isolate;
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(circle at 12% 4%, rgba(201, 169, 110, 0.14), transparent 31rem),
+    radial-gradient(circle at 88% 10%, rgba(95, 142, 82, 0.12), transparent 34rem),
+    linear-gradient(180deg, rgba(250, 250, 249, 0) 0%, var(--bg) 64%);
+}
+
+.home-page::before {
+  content: "";
+  position: absolute;
+  inset: 0 0 auto;
+  height: 760px;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.34;
+  background-image:
+    linear-gradient(rgba(26, 24, 21, 0.055) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(26, 24, 21, 0.055) 1px, transparent 1px);
+  background-size: 48px 48px;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 88%);
+  mask-image: linear-gradient(to bottom, #000 0%, transparent 88%);
+}
+
+@media (max-width: 768px) {
+  .page {
+    min-height: auto;
+    padding-top: 112px;
+    padding-inline: 12px;
+    padding-bottom: 120px;
+  }
+  .hero-title {
+    word-break: break-word;
+  }
+}
+
+/* HERO */
+.hero {
+  display: flex;
+  gap: 48px;
+  margin-bottom: 96px;
+  align-items: center;
+}
+
+.hero-visual {
+  flex: 0 0 auto;
+  position: relative;
+  width: 260px;
+  height: 260px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-badge-ring {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* static typographic seal; stays in front of the video */
+  z-index: 2;
+  pointer-events: none;
+}
+
+.hero-badge-ring svg {
+  width: 238px;
+  height: 238px;
+  transform-origin: center;
+  animation: spin-slow 18s linear infinite;
+}
+
+@keyframes spin-slow {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-badge-ring svg {
+    animation-play-state: paused;
+  }
+}
+
+/* Circular viewport centers the square video inside the typographic seal. */
+.hero-peeps {
+  position: absolute;
+  inset: 17%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  border-radius: 50%;
+  background: transparent;
+  z-index: 1;
+}
+
+.hero-peeps .hero-video {
+  position: static;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center;
+  transform: translateX(6px) scale(1.02);
+}
+
+.hero-video {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 4px 6px rgba(26, 24, 21, 0.12));
+}
+
+.hero-content {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.hero-title {
+  font-family: var(--font-display);
+  font-size: 64px;
+  font-weight: 700;
+  color: var(--ink-900);
+  margin: 0;
+  line-height: 1.02;
+  letter-spacing: -0.025em;
+}
+
+.hero-role {
+  margin: 0;
+  font-family: var(--font-mono);
+  font-weight: 500;
+  font-size: 15px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--brand-600);
+}
+
+.hero-copy {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  max-width: 460px;
+}
+
+.hero-subtitle {
+  font-family: var(--font-body);
+  font-size: 17px;
+  line-height: 1.65;
+  font-weight: 400;
+  margin: 0;
+  color: var(--ink-600);
+  overflow-wrap: break-word;
+  text-wrap: wrap;
+  text-wrap: pretty;
+}
+
+.hero-nowrap {
+  white-space: nowrap;
+}
+
+@media (max-width: 1024px) {
+  .hero-title {
+    font-size: 52px;
+  }
+}
+
+@media (max-width: 768px) {
+  .hero {
+    flex-direction: column;
+    align-items: center;
+    gap: 32px;
+    margin-bottom: 72px;
+  }
+  .hero-visual {
+    width: 220px;
+    height: 220px;
+  }
+  .hero-badge-ring svg {
+    width: 210px;
+    height: 210px;
+  }
+  .hero-peeps {
+    inset: 16%;
+  }
+  .hero-peeps .hero-video {
+    width: 100%;
+    height: 100%;
+  }
+  .hero-content {
+    width: 100%;
+    min-width: 0;
+  }
+  .hero-copy {
+    max-width: none;
+  }
+  .hero-title {
+    font-size: 40px;
+    line-height: 1.08;
+    overflow-wrap: break-word;
+    word-break: break-word;
+    hyphens: none;
+  }
+  .hero-role {
+    font-size: 14px;
+  }
+  .hero-subtitle {
+    font-size: 15px;
+  }
+}
+
+@media (max-width: 400px) {
+  .hero-title {
+    font-size: 34px;
+  }
+}
+
+/* SECTION HEADER (shared by work + tools) */
+.section-header {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.section-label {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--ink-600);
+  white-space: nowrap;
+  margin: 0;
+}
+
+.section-line {
+  flex: 1;
+  height: 1px;
+  background: linear-gradient(90deg, var(--ink-300), rgba(210, 207, 200, 0.08));
+}
+
+/* WORK INDEX (editorial, no cards) */
+.work {
+  display: flex;
+  flex-direction: column;
+  gap: 72px;
+  padding-bottom: 24px;
+}
+
+.work-pair {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 40px;
+}
+
+.work-item {
+  display: block;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+/* Media stage: tinted panel, no border; flat by default, subtle 3D tilt on hover */
+.work-media {
+  position: relative;
+  overflow: hidden;
+  border-radius: 16px;
+  background: linear-gradient(140deg, var(--ink-100) 0%, var(--brand-50) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 36px;
+}
+
+.work-item--featured .work-media {
+  min-height: 380px;
+}
+
+.work-media-motion {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.work-media img {
+  width: 100%;
+  max-width: 560px;
+  height: auto;
+  max-height: 340px;
+  object-fit: contain;
+  filter: drop-shadow(0 22px 36px rgba(15, 14, 12, 0.2));
+}
+
+.work-pair .work-media {
+  padding: 28px 24px;
+  min-height: 260px;
+}
+.work-pair .work-media img {
+  max-height: 220px;
+}
+
+/* The film is 16:9 and letterboxes badly inside the contain box the mockups
+   use, so it gets its own frame with the aspect ratio reserved up front. */
+.work-media-video {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  aspect-ratio: 16 / 9;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--ink-950);
+  box-shadow: 0 22px 36px rgba(15, 14, 12, 0.2);
+}
+
+.work-media-video .play-once-media {
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  max-height: none;
+  object-fit: cover;
+  display: block;
+  filter: none;
+}
+
+.play-once-hint {
+  position: absolute;
+  right: 10px;
+  bottom: 10px;
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  padding: 4px 8px;
+  border-radius: 6px;
+  background: rgba(15, 14, 12, 0.62);
+  color: var(--ink-50);
+  font-family: var(--font-mono);
+  font-size: 10px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+
+/* Typographic row under the media */
+.work-row {
+  display: grid;
+  grid-template-columns: minmax(150px, 220px) minmax(0, 1fr);
+  gap: 12px 40px;
+  margin-top: 22px;
+  min-width: 0;
+}
+
+.work-pair .work-row {
+  grid-template-columns: 1fr;
+  gap: 8px;
+  margin-top: 18px;
+}
+
+.work-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.work-pair .work-info {
+  flex-direction: row;
+  align-items: baseline;
+  gap: 12px;
+}
+
+.work-index {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--gold-600);
+}
+
+.work-context {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  line-height: 1.7;
+  color: var(--ink-600);
+  display: flex;
+  flex-wrap: wrap;
+  min-width: 0;
+}
+
+.work-context-seg {
+  white-space: nowrap;
+}
+
+.work-title {
+  font-family: var(--font-display);
+  font-size: 30px;
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  margin: 0;
+  color: var(--ink-900);
+  transition: color 0.18s ease;
+  overflow-wrap: break-word;
+  text-wrap: wrap;
+  text-wrap: pretty;
+}
+
+.work-title-end {
+  white-space: nowrap;
+}
+
+.work-pair .work-title {
+  font-size: 22px;
+}
+
+.work-item:hover .work-title,
+.work-item:focus-visible .work-title {
+  color: var(--brand-700);
+}
+
+/* The color shift alone is not a focus indicator: same ring as .btn. */
+.work-item:focus-visible {
+  outline: 2px solid var(--brand-400);
+  outline-offset: 6px;
+  border-radius: 20px;
+}
+
+.work-arrow {
+  display: inline-flex;
+  align-items: center;
+  margin-left: 0.35em;
+  vertical-align: -0.12em;
+  transition: transform 0.2s ease;
+}
+
+.work-arrow svg {
+  width: 20px;
+  height: 20px;
+  stroke: currentColor;
+  fill: none;
+}
+
+.work-pair .work-arrow svg {
+  width: 16px;
+  height: 16px;
+}
+
+.work-item:hover .work-arrow,
+.work-item:focus-visible .work-arrow {
+  transform: translateX(6px);
+}
+
+.work-desc {
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.7;
+  color: var(--ink-600);
+  margin: 10px 0 0;
+  max-width: 56ch;
+}
+
+.work-result {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  color: var(--brand-700);
+  margin: 14px 0 0;
+}
+
+@media (max-width: 768px) {
+  .work {
+    gap: 56px;
+  }
+  .work-pair {
+    grid-template-columns: 1fr;
+    gap: 56px;
+  }
+  .work-item--featured .work-media {
+    min-height: 0;
+  }
+  .work-media {
+    padding: 24px 18px;
+  }
+  .work-row {
+    grid-template-columns: 1fr;
+    gap: 8px;
+    margin-top: 16px;
+  }
+  .work-info {
+    flex-direction: row;
+    align-items: baseline;
+    gap: 12px;
+  }
+  .work-context {
+    flex: 1 1 0;
+  }
+  .work-title {
+    font-size: 24px;
+  }
+  .work-pair .work-title {
+    font-size: 22px;
+  }
+  .work-desc {
+    font-size: 15px;
+  }
+}
+
+/* BUILD (Home: same tools as About, with icons, after the work index) */
+.tools-strip {
+  margin-top: 112px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.tools-intro {
+  margin: 0;
+  max-width: 52ch;
+  font-family: var(--font-body);
+  font-size: 16px;
+  line-height: 1.65;
+  color: var(--ink-700);
+}
+
+.tools-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 18px 22px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+.tools-group-label {
+  margin: 8px 0 0;
+  font-family: var(--font-mono);
+  font-size: var(--label-2-size);
+  letter-spacing: var(--label-2-track);
+  text-transform: uppercase;
+  color: var(--ink-600);
+}
+.tool-item {
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-end;
+  gap: 6px;
+  width: auto;
+  min-width: 44px;
+  min-height: 44px;
+  margin: 0;
+  padding: 0;
+  border: 0;
+  background: none;
+}
+.tool-item.tool-pair {
+  width: auto;
+}
+.tool-icon {
+  width: 28px;
+  height: 28px;
+  display: block;
+  object-fit: contain;
+}
+.tool-icon--figma {
+  width: 18px;
+  height: 28px;
+}
+.tool-pair {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+.tool-pair .tool-icon {
+  width: 24px;
+  height: 24px;
+}
+.tool-name {
+  font-family: var(--font-mono);
+  font-size: 11px;
+  line-height: 1.2;
+  letter-spacing: 0.02em;
+  color: var(--ink-600);
+  text-align: center;
+  white-space: nowrap;
+}
+
+@media (max-width: 768px) {
+  .tools-strip {
+    margin-top: 80px;
+  }
+  .tools-row {
+    gap: 12px 16px;
+  }
+}

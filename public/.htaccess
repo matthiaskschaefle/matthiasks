@@ -1,0 +1,82 @@
+# Apache configuration for matthiasks.com (static build in this folder).
+
+# ── Errors: unknown paths get a real 404 status ──
+# 404.html is the app shell with noindex tags; the router renders "Page not found".
+ErrorDocument 404 /404.html
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # One host: www redirects to the apex domain the canonical tags point at.
+  RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+  RewriteRule ^ https://%1%{REQUEST_URI} [R=301,L]
+
+  # Dotfiles stay private (.git, .htaccess), except the ACME challenge path.
+  RewriteCond %{REQUEST_URI} !^/\.well-known/
+  RewriteRule (^|/)\. - [F,L]
+
+  # Old CV and Open Graph image paths already circulate in applications and
+  # link previews: redirect them instead of answering 404.
+  RewriteRule ^assets/portfolio/2025/08/CV_Matthias_Schaefle\.pdf$ /assets/portfolio/2026/07/CV_Matthias_Schaefle_2026-07.pdf [R=301,L]
+  RewriteRule ^assets/portfolio/og-cover\.png$ /assets/portfolio/og-cover-2026-07.png [R=301,L]
+
+  # Clean URLs only: /about.html redirects to /about.
+  RewriteCond %{THE_REQUEST} \s/([a-z0-9-]+)\.html[\s?] [NC]
+  RewriteCond %1 !^(index|404)$ [NC]
+  RewriteRule ^ /%1 [R=301,L]
+
+  # A trailing slash on a page URL redirects to the URL without it.
+  RewriteCond %{REQUEST_FILENAME} !-d
+  RewriteRule ^(.+)/$ /$1 [R=301,L]
+
+  # /about serves about.html, which the build writes per route with that
+  # page's title and preview tags. Anything else that is not a real file
+  # falls through to the 404 above.
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME}.html -f
+  RewriteRule ^([a-z0-9-]+)$ $1.html [L]
+</IfModule>
+
+# ── Security headers ──
+# Keep in sync with scripts/security-headers.js (tests/htaccess.test.js checks).
+<IfModule mod_headers.c>
+  Header always set Content-Security-Policy "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; font-src 'self'; media-src 'self'; connect-src 'self'; object-src 'none'; base-uri 'self'; form-action 'self'; frame-ancestors 'self'; upgrade-insecure-requests"
+  Header always set Cross-Origin-Opener-Policy "same-origin"
+  Header always set X-Content-Type-Options "nosniff"
+  Header always set X-Frame-Options "SAMEORIGIN"
+  Header always set Referrer-Policy "strict-origin-when-cross-origin"
+  Header always set Permissions-Policy "camera=(), microphone=(), geolocation=(), interest-cohort=()"
+  # HTTPS for a year. Without includeSubDomains (webmail and other subdomains
+  # are not verified for HTTPS) and without preload (hard to undo).
+  Header always set Strict-Transport-Security "max-age=31536000"
+
+  # HTML must always revalidate: it names the current hashed JS and CSS files.
+  <FilesMatch "\.html$">
+    Header set Cache-Control "no-cache, must-revalidate"
+  </FilesMatch>
+</IfModule>
+
+# ── Caching: hashed JS and CSS never change; media is long lived ──
+<IfModule mod_expires.c>
+  ExpiresActive On
+  ExpiresByType text/css "access plus 1 year"
+  ExpiresByType application/javascript "access plus 1 year"
+  ExpiresByType text/javascript "access plus 1 year"
+  ExpiresByType font/woff2 "access plus 1 year"
+  ExpiresByType image/webp "access plus 6 months"
+  ExpiresByType image/png "access plus 6 months"
+  ExpiresByType image/jpeg "access plus 6 months"
+  ExpiresByType image/svg+xml "access plus 6 months"
+  ExpiresByType video/mp4 "access plus 6 months"
+  ExpiresByType video/webm "access plus 6 months"
+  ExpiresByType text/vtt "access plus 1 month"
+  ExpiresByType application/pdf "access plus 1 month"
+</IfModule>
+
+# ── Compression ──
+<IfModule mod_deflate.c>
+  AddOutputFilterByType DEFLATE text/html text/css text/plain text/xml text/vtt
+  AddOutputFilterByType DEFLATE application/javascript text/javascript application/json
+  AddOutputFilterByType DEFLATE image/svg+xml
+</IfModule>

@@ -1,0 +1,32 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <!-- Title, description, Open Graph and canonical come from src/lib/routes.js.
+         The build writes one HTML file per route with its own tags (see
+         scripts/vite-plugin-route-html.js); in the browser, applySeo() updates
+         them on every navigation. -->
+    <!-- route-head -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@type": "Person",
+        "name": "Matthias Schaefle",
+        "url": "https://matthiasks.com/",
+        "jobTitle": "UX/UI Designer",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "Berlin",
+          "addressCountry": "DE"
+        },
+        "sameAs": ["https://www.linkedin.com/in/matthiasks/"]
+      }
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>

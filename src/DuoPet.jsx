@@ -1,0 +1,2026 @@
+import React, { useEffect, useRef, useState } from "react";
+import { motion, useInView, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { Link } from "react-router-dom";
+import {
+  barGrow,
+  DURATION,
+  EASE,
+  fadeIn,
+  fadeUp,
+  fadeUpImmediate,
+  floatLoop,
+  sectionStagger,
+  viewport as motionViewport,
+} from "@/lib/animations";
+import CountUp from "./components/CountUp.jsx";
+import CaseContents, { CaseBackToContents } from "./components/CaseContents.jsx";
+import PinnedStory from "./components/PinnedStory.jsx";
+import Figure from "./components/mockups/Figure.jsx";
+import SnapGallery from "./components/mockups/SnapGallery.jsx";
+import TypedSectionLabel from "./components/TypedSectionLabel.jsx";
+import duopetCss from "./styles/duopet.css?inline";
+
+/**
+ * DuoPet - v1.0.5
+ * Structure matches the /doctor canonical layout (header/footer/toc/grid).
+ * Image URLs are placeholders - replace later.
+ */
+
+const CASE_SECTIONS = [
+  { id: "overview", label: "overview" },
+  { id: "research", label: "research" },
+  { id: "decisions", label: "decisions" },
+  { id: "design", label: "design" },
+  { id: "results", label: "results" },
+  { id: "reflections", label: "reflections" },
+];
+
+function NumberCard({ title, description }) {
+  return (
+    <motion.article className="research-card" variants={fadeUp}>
+      <h4 className="research-title">{title}</h4>
+      <p className="research-text">{description}</p>
+    </motion.article>
+  );
+}
+
+// ─── Competitive matrix (native, replaces the exported PNG) ──────────────────
+// Data transcribed from the original analysis artifact. The two highlighted
+// rows are the market gaps DuoPet attacks (they map 1:1 to the Opportunities
+// cards below: location-based search and emergency access).
+const COMPETITIVE = {
+  competitors: ["11pets", "Vetster", "Vets", "MeuPet"],
+  rows: [
+    { label: "Schedule appointment", have: [1, 1, 1, 1] },
+    { label: "Reminders", have: [1, 0, 1, 1] },
+    { label: "Pet medical record", have: [1, 0, 1, 1] },
+    { label: "Veterinarians information", have: [0, 1, 1, 0] },
+    { label: "Nearby veterinarian", have: [0, 0, 0, 1], gap: true },
+    { label: "Emergency veterinarian", have: [1, 0, 0, 0], gap: true },
+    { label: "Reviews", have: [0, 1, 1, 1] },
+    { label: "Pet profile", have: [1, 1, 1, 1] },
+  ],
+};
+
+export function CompetitiveMatrix({ prefersReducedMotion }) {
+  const rowV = prefersReducedMotion ? fadeIn : fadeUp;
+  const containerV = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { duration: DURATION.slow, ease: EASE.out, staggerChildren: 0.05 },
+    },
+  };
+  return (
+    <motion.div
+      className="cmx"
+      variants={containerV}
+      initial="hidden"
+      whileInView="visible"
+      viewport={motionViewport}
+    >
+      <table className="cmx-table">
+        <caption className="cmx-caption">
+          Feature coverage across the four veterinary apps reviewed. Highlighted rows are the gaps
+          DuoPet was designed around.
+        </caption>
+        <thead>
+          <motion.tr variants={rowV}>
+            <th scope="col" className="cmx-feature-head">
+              Feature
+            </th>
+            {COMPETITIVE.competitors.map((c) => (
+              <th scope="col" className="cmx-comp" key={c}>
+                {c}
+              </th>
+            ))}
+          </motion.tr>
+        </thead>
+        <tbody>
+          {COMPETITIVE.rows.map((row) => (
+            <motion.tr
+              key={row.label}
+              variants={rowV}
+              className={row.gap ? "cmx-row cmx-row--gap" : "cmx-row"}
+            >
+              <th scope="row" className="cmx-feature">
+                {row.label}
+                {row.gap ? <span className="cmx-gap-tag">gap</span> : null}
+              </th>
+              {row.have.map((has, i) => (
+                <td className="cmx-cell" key={COMPETITIVE.competitors[i]}>
+                  {has ? (
+                    <span className="cmx-yes" aria-hidden="true">
+                      <svg viewBox="0 0 12 12" fill="none">
+                        <path
+                          d="M2.5 6.5l2.4 2.4L9.6 3.6"
+                          stroke="currentColor"
+                          strokeWidth="1.8"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                        />
+                      </svg>
+                    </span>
+                  ) : (
+                    <span className="cmx-no" aria-hidden="true" />
+                  )}
+                  <span className="ms-visually-hidden">
+                    {has ? "has feature" : "does not have feature"}
+                  </span>
+                </td>
+              ))}
+            </motion.tr>
+          ))}
+        </tbody>
+      </table>
+    </motion.div>
+  );
+}
+
+// ─── Efficiency chart (native, replaces the exported PNG) ────────────────────
+// Average time to schedule an appointment in the second usability test
+// (5 pet owners), values from the original chart.
+// Competitor flow review: the screenshots remain evidence while the
+// comparison, hierarchy and callouts are native portfolio UI.
+const COMPETITOR_FLOWS = [
+  {
+    app: "Vetster",
+    flow: "Pet profile setup",
+    image: "/assets/portfolio/2026/03/competitor-vetster-mockup.png",
+    alt: "Vetster pet profile form with species, breed, sex and birth date fields",
+    width: 316,
+    height: 645,
+    flaws: [
+      "Creating a pet profile requires several selections across multiple screens.",
+      "The repeated drill-down pattern makes a simple setup task feel longer than necessary.",
+    ],
+    opportunity:
+      "Use direct options and integrated menus so owners can complete pet details with fewer transitions.",
+  },
+  {
+    app: "Vets",
+    flow: "Appointment time selection",
+    image: "/assets/portfolio/2026/03/competitor-vets-mockup.png",
+    alt: "Vets appointment flow showing a 24-hour analogue time picker",
+    width: 316,
+    height: 645,
+    flaws: [
+      "Filters must be selected before the list of veterinarians becomes available.",
+      "Choosing a date and time first prevents users from selecting their preferred veterinarian upfront.",
+    ],
+    opportunity:
+      "Show an availability calendar after the veterinarian is chosen, keeping provider and time selection in one clear sequence.",
+  },
+];
+
+function CompetitorFlaws({ prefersReducedMotion }) {
+  const itemV = prefersReducedMotion ? fadeIn : fadeUp;
+  return (
+    <motion.div
+      className="cfl"
+      initial="hidden"
+      whileInView="visible"
+      viewport={motionViewport}
+      variants={{
+        hidden: { opacity: 0 },
+        visible: {
+          opacity: 1,
+          transition: { duration: DURATION.slow, ease: EASE.out, staggerChildren: 0.09 },
+        },
+      }}
+      aria-label="Competitor booking flow review"
+    >
+      {COMPETITOR_FLOWS.map((competitor) => (
+        <motion.article className="cfl-row" variants={itemV} key={competitor.app}>
+          <figure className="cfl-evidence">
+            <img
+              src={competitor.image}
+              alt={competitor.alt}
+              loading="lazy"
+              decoding="async"
+              width={competitor.width}
+              height={competitor.height}
+            />
+          </figure>
+          <div className="cfl-copy">
+            <h4 className="cfl-app">{competitor.app}</h4>
+            <p className="cfl-flow">{competitor.flow}</p>
+            <p className="cfl-kicker">What we saw</p>
+            <ul className="cfl-list">
+              {competitor.flaws.map((flaw) => (
+                <li key={flaw}>{flaw}</li>
+              ))}
+            </ul>
+            <p className="cfl-kicker">What we would change</p>
+            <p className="cfl-opportunity">{competitor.opportunity}</p>
+          </div>
+        </motion.article>
+      ))}
+    </motion.div>
+  );
+}
+
+const DECISION_QUADRANTS = [
+  {
+    id: "quick-wins",
+    label: "Quick wins",
+    impact: "High impact",
+    effort: "Low effort",
+    ideas: [
+      "Create a pet profile",
+      "Show nearby veterinarians on the home screen",
+      "Show distance from the user's location",
+      "Show specialization and price on veterinarian profiles",
+      "Add a notification entry point to the home screen",
+      "Add search to the navigation",
+      "Show an emergency filter without requiring a search term",
+      "Ask for a preview before saving a new pet",
+      "Use push notifications for important updates",
+      "Create a personalised caregiver dashboard",
+    ],
+  },
+  {
+    id: "major-projects",
+    label: "Major projects",
+    impact: "High impact",
+    effort: "High effort",
+    ideas: [
+      "Only show appointment times that are free in the veterinarian's schedule",
+      "Integrate a map with nearby veterinarian locations",
+      "Add ratings and written reviews",
+      "Create an emergency clinic finder",
+      "Send reminders for upcoming vaccines",
+      "Only show available days and times in the picker",
+      "Let owners share their pet's medical history with veterinarians",
+      "Record consultations, vaccines, exams and treatments",
+      "Surface customer feedback on veterinarian profiles",
+    ],
+  },
+  {
+    id: "fill-ins",
+    label: "Fill-ins",
+    impact: "Low impact",
+    effort: "Low effort",
+    ideas: [
+      "Add a share action to veterinarian profiles",
+      "Make the appointment date picker easier to use",
+      "Add clear error and success messages",
+      "Send an automatic booking confirmation",
+      "Support two-click booking from a veterinarian profile",
+      "Add filters for veterinarian search",
+      "Send important alerts by SMS",
+      "Offer email notifications",
+    ],
+  },
+  {
+    id: "later-bets",
+    label: "Later bets",
+    impact: "Low impact",
+    effort: "High effort",
+    ideas: [
+      "Streamline appointment rescheduling",
+      "Let veterinarians add information to pet profiles",
+      "Link caregiver social accounts",
+      "Scan and upload physical vaccination cards and test results",
+      "Connect vaccination schedules with appointment booking",
+      "Add a chatbot for caregiver questions",
+      "Attach photos and videos to show health progress",
+      "Add a scheduling assistant chatbot",
+      "Offer real-time support for finding suitable veterinarians",
+    ],
+  },
+];
+
+export function DecisionMatrix() {
+  return (
+    <figure className="dmx" aria-label="Impact and effort prioritization matrix">
+      <div className="dmx-board">
+        {DECISION_QUADRANTS.map((quadrant) => (
+          <section className={`dmx-quadrant dmx-quadrant--${quadrant.id}`} key={quadrant.id}>
+            <header className="dmx-head">
+              <div>
+                <p className="dmx-kicker">
+                  {quadrant.impact}, {quadrant.effort}
+                </p>
+                <h4 className="dmx-title">{quadrant.label}</h4>
+              </div>
+              <span className="dmx-count">{String(quadrant.ideas.length).padStart(2, "0")}</span>
+            </header>
+            <ul className="dmx-ideas">
+              {quadrant.ideas.map((idea) => (
+                <li className="dmx-idea" tabIndex="0" key={idea} title={idea}>
+                  <span>{idea}</span>
+                </li>
+              ))}
+            </ul>
+          </section>
+        ))}
+        <span className="dmx-axis dmx-axis--impact" aria-hidden="true">
+          Impact ↑
+        </span>
+        <span className="dmx-axis dmx-axis--effort" aria-hidden="true">
+          Effort →
+        </span>
+      </div>
+      <figcaption>
+        Compact view of the original prioritization board. Hover or focus a card to expand it.
+      </figcaption>
+    </figure>
+  );
+}
+
+// Os quadros cobrem DOIS momentos diferentes, por isso os rotulos sao dados e
+// nao texto fixo no componente:
+// - 01 e 02 saem da primeira rodada de testes, feita no wireframe, que levou a
+//   versao final.
+// - 03 sai da segunda rodada, feita na versao ja resolvida: os participantes
+//   tiveram dificuldade com o calendario dentro do perfil e ele virou tela.
+// Nenhuma das telas da direita e "mid-fidelity"; esse estagio nunca existiu.
+const SOLUTION_COMPARISONS = [
+  {
+    id: "proximity",
+    title: "Proximity visible from the Home screen",
+    description:
+      "The wireframe established nearby veterinarians as the primary list. The final Home added the upcoming appointment and explicit distances without hiding the core discovery flow.",
+    wire: "/assets/portfolio/2026/07/duopet-wireframe-01.png",
+    wireAlt: "DuoPet Home wireframe with pet profiles and nearby veterinarians",
+    wireLabel: "Wireframe",
+    mid: "/assets/portfolio/2026/07/duopet-mobile-02.png",
+    midAlt:
+      "DuoPet Home screen showing the next appointment, saved pets, and nearby veterinarians with distances",
+    midLabel: "Final",
+  },
+  {
+    id: "emergency",
+    title: "Emergency care available without a typed query",
+    description:
+      "The map wireframe introduced an emergency shortcut. The final screen keeps that action beside Nearby and adds a result card with distance, opening hours, and phone number.",
+    wire: "/assets/portfolio/2026/07/duopet-wireframe-03.png",
+    wireAlt: "DuoPet map wireframe with Emergency, Nearby, and Price filters",
+    wireLabel: "Wireframe",
+    mid: "/assets/portfolio/2026/07/duopet-mid-fi-03.png",
+    midAlt:
+      "DuoPet map screen with Emergency and Nearby filters and a result card for the closest veterinarian",
+    midLabel: "Final",
+  },
+  {
+    id: "schedule",
+    title: "The calendar moved out of the profile",
+    description:
+      "In the second usability round, on the resolved screens, 5 pet owners struggled with the calendar inside the veterinarian profile. Scheduling became its own step. That screen was implemented after the finding. This case does not include a later retest of the new step.",
+    wire: "/assets/portfolio/2026/07/duopet-mid-fi-02.png",
+    wireAlt: "DuoPet veterinarian profile with ratings, location, and the calendar embedded below",
+    wireLabel: "Tested version",
+    // Mesma tela que a seccao de telas finais ja usava (duopet_final_05 no
+    // Design System). Nao criar arquivo novo: o asset ja existia, so estava com
+    // a versao antiga do subtitulo.
+    mid: "/assets/portfolio/2026/07/duopet-mobile-05.png",
+    midAlt:
+      "DuoPet Date and Time screen with a month calendar and the appointment slots available for the selected day",
+    midLabel: "After the second round",
+  },
+];
+
+function SolutionComparisons({ prefersReducedMotion }) {
+  const containerV = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { duration: DURATION.slow, ease: EASE.out, staggerChildren: 0.14 },
+    },
+  };
+  const cardV = prefersReducedMotion ? fadeIn : fadeUp;
+
+  return (
+    <motion.div
+      className="solution-comparisons"
+      variants={containerV}
+      initial="hidden"
+      whileInView="visible"
+      viewport={motionViewport}
+    >
+      {SOLUTION_COMPARISONS.map((solution) => (
+        <motion.article className="solution-compare" variants={cardV} key={solution.id}>
+          <header className="solution-compare-copy">
+            <div>
+              <h4>{solution.title}</h4>
+              <p>{solution.description}</p>
+            </div>
+          </header>
+          <div className="solution-compare-visuals">
+            <figure>
+              <figcaption>{solution.wireLabel}</figcaption>
+              <div className="solution-compare-stage solution-compare-stage--wire">
+                <img src={solution.wire} alt={solution.wireAlt} loading="lazy" decoding="async" />
+              </div>
+            </figure>
+            <motion.span
+              className="solution-compare-arrow"
+              aria-hidden="true"
+              animate={
+                prefersReducedMotion ? undefined : { opacity: [0.68, 1, 0.68], scale: [1, 0.96, 1] }
+              }
+              transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
+            >
+              <img
+                src="/assets/portfolio/2026/03/duopet-icons/back.png"
+                alt=""
+                width="48"
+                height="48"
+              />
+            </motion.span>
+            <figure>
+              <figcaption>{solution.midLabel}</figcaption>
+              <div className="solution-compare-stage solution-compare-stage--mid">
+                <img src={solution.mid} alt={solution.midAlt} loading="lazy" decoding="async" />
+              </div>
+            </figure>
+          </div>
+        </motion.article>
+      ))}
+    </motion.div>
+  );
+}
+
+const DUOPET_ICONS = [
+  { name: "Search solid", file: "search-solid.png", group: "Navigation" },
+  { name: "Profile solid", file: "profile-solid.png", group: "Navigation" },
+  { name: "Home solid", file: "home-solid.png", group: "Navigation" },
+  { name: "Notification solid", file: "notification-solid.png", group: "Navigation" },
+  { name: "Back", file: "back.png", group: "Navigation" },
+  { name: "Menu", file: "menu.png", group: "Navigation" },
+  { name: "Chat", file: "chat.png", group: "Navigation" },
+  { name: "Search", file: "search.png", group: "Navigation" },
+  { name: "Home", file: "home.png", group: "Care" },
+  { name: "Profile", file: "profile.png", group: "Care" },
+  { name: "Gender", file: "gender.png", group: "Care" },
+  { name: "Weight", file: "weight.png", group: "Care" },
+  { name: "Birthday", file: "birthday.png", group: "Care" },
+  { name: "Location", file: "location.png", group: "Care" },
+  { name: "Clock", file: "clock.png", group: "Care" },
+  { name: "Medical", file: "medical.png", group: "Care" },
+  { name: "Calendar", file: "calendar.png", group: "Care" },
+  { name: "Vaccine", file: "vaccine.png", group: "Care" },
+  { name: "Record", file: "record.png", group: "Care" },
+  { name: "Paw", file: "paw.png", group: "Care" },
+  { name: "Eye", file: "eye.png", group: "Care" },
+  { name: "Notification", file: "notification.png", group: "Care" },
+  { name: "Help", file: "help.png", group: "Care" },
+  { name: "Rabbit", file: "rabbit.png", group: "Animals & states" },
+  { name: "Reptile", file: "reptile.png", group: "Animals & states" },
+  { name: "Fish", file: "fish.png", group: "Animals & states" },
+  { name: "Cat", file: "cat.png", group: "Animals & states" },
+  { name: "Dog", file: "dog.png", group: "Animals & states" },
+  { name: "Bird", file: "bird.png", group: "Animals & states" },
+  { name: "Money", file: "money.png", group: "Animals & states" },
+  { name: "Close", file: "close.png", group: "Animals & states" },
+  { name: "Female", file: "female.png", group: "Animals & states" },
+  { name: "Check", file: "check.png", group: "Animals & states" },
+  { name: "Male", file: "male.png", group: "Animals & states" },
+  { name: "Star", file: "star.png", group: "Animals & states" },
+];
+
+export function IconCatalog() {
+  const groups = [...new Set(DUOPET_ICONS.map((icon) => icon.group))];
+  return (
+    <div className="icg">
+      <div className="icg-rules">
+        <div className="icg-rule-demo" aria-hidden="true">
+          <span className="icg-full">
+            <span className="icg-live">
+              <img src="/assets/portfolio/2026/03/duopet-icons/clock.png" alt="" />
+            </span>
+          </span>
+        </div>
+        <div className="icg-rule-copy">
+          <p className="icg-rule-title">48 px construction</p>
+          <dl>
+            <div>
+              <dt>Live area</dt>
+              <dd>46 px</dd>
+            </div>
+            <div>
+              <dt>Safe area</dt>
+              <dd>2 px</dd>
+            </div>
+            <div>
+              <dt>Full size</dt>
+              <dd>48 px</dd>
+            </div>
+          </dl>
+        </div>
+      </div>
+      {groups.map((group) => (
+        <section className="icg-group" key={group}>
+          <h4>{group}</h4>
+          <ul className="icg-grid">
+            {DUOPET_ICONS.filter((icon) => icon.group === group).map((icon) => (
+              <li className="icg-item" key={icon.file}>
+                <span className="icg-icon">
+                  <img
+                    src={`/assets/portfolio/2026/03/duopet-icons/${icon.file}`}
+                    alt=""
+                    loading="lazy"
+                    width="48"
+                    height="48"
+                  />
+                </span>
+                <span>{icon.name}</span>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))}
+    </div>
+  );
+}
+
+const EFFICIENCY = [
+  { app: "DuoPet", seconds: 45, self: true },
+  { app: "MeuPet", seconds: 50 },
+  { app: "Vets", seconds: 53 },
+];
+const EFFICIENCY_MAX = 60;
+
+function EfficiencyChart({ prefersReducedMotion }) {
+  const containerV = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { duration: DURATION.slow, ease: EASE.out, staggerChildren: 0.1 },
+    },
+  };
+  const rowV = prefersReducedMotion ? fadeIn : fadeUp;
+  return (
+    <motion.div
+      className="effc"
+      variants={containerV}
+      initial="hidden"
+      whileInView="visible"
+      viewport={motionViewport}
+      role="img"
+      aria-label="Average time to schedule in the second course test, on the screens tested then, with 5 pet owners: DuoPet 45 seconds, MeuPet 50 seconds, Vets 53 seconds"
+    >
+      <p className="effc-kicker">Average time to schedule, round 2 screens, 5 pet owners</p>
+      {EFFICIENCY.map((row) => (
+        <motion.div className="effc-row" variants={rowV} key={row.app} aria-hidden="true">
+          <span className={row.self ? "effc-app effc-app--self" : "effc-app"}>{row.app}</span>
+          <span className="effc-track">
+            <motion.span
+              className={row.self ? "effc-bar effc-bar--self" : "effc-bar"}
+              style={{ width: `${(row.seconds / EFFICIENCY_MAX) * 100}%`, transformOrigin: "left" }}
+              variants={barGrow(prefersReducedMotion)}
+            />
+          </span>
+          <span className={row.self ? "effc-val effc-val--self" : "effc-val"}>{row.seconds}s</span>
+        </motion.div>
+      ))}
+      <div className="effc-axis" aria-hidden="true">
+        <span>0s</span>
+        <span>15s</span>
+        <span>30s</span>
+        <span>45s</span>
+        <span>60s</span>
+      </div>
+    </motion.div>
+  );
+}
+
+// ─── Design tokens specs (native, replace the exported PNGs) ─────────────────
+// Values transcribed from the original palette and typography artifacts.
+const DUOPET_PALETTE = [
+  {
+    group: "Brand",
+    swatches: [
+      { name: "Primary", hex: "#4284B0" },
+      { name: "Dark shades", hex: "#2A4B74" },
+      { name: "Dark accent", hex: "#7480A5" },
+      { name: "Light accent", hex: "#678DD8" },
+      { name: "Background", hex: "#F3F1ED" },
+    ],
+  },
+  {
+    group: "State",
+    swatches: [
+      { name: "Success", hex: "#49A26D" },
+      { name: "Warning", hex: "#C69135" },
+      { name: "Error", hex: "#EB5757" },
+    ],
+  },
+  {
+    group: "Neutrals",
+    swatches: [
+      { name: "Black 1", hex: "#1D1D1D" },
+      { name: "Black 2", hex: "#282828" },
+      { name: "Gray 1", hex: "#333333" },
+      { name: "Gray 3", hex: "#828282" },
+      { name: "Gray 5", hex: "#E0E0E0" },
+      { name: "White", hex: "#F9F9F9" },
+    ],
+  },
+];
+
+function PaletteSpec({ prefersReducedMotion }) {
+  const rowV = prefersReducedMotion ? fadeIn : fadeUp;
+  const containerV = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { duration: DURATION.slow, ease: EASE.out, staggerChildren: 0.08 },
+    },
+  };
+  return (
+    <motion.div
+      className="pal"
+      variants={containerV}
+      initial="hidden"
+      whileInView="visible"
+      viewport={motionViewport}
+    >
+      {DUOPET_PALETTE.map((g) => (
+        <motion.div className="pal-group" variants={rowV} key={g.group}>
+          <p className="pal-group-label">{g.group}</p>
+          <div className="pal-row">
+            {g.swatches.map((s) => (
+              <div className="pal-swatch" key={s.name}>
+                <span className="pal-chip" style={{ background: s.hex }} aria-hidden="true" />
+                <span className="pal-name">{s.name}</span>
+                <span className="pal-hex">{s.hex.toLowerCase()}</span>
+              </div>
+            ))}
+          </div>
+        </motion.div>
+      ))}
+    </motion.div>
+  );
+}
+
+const DUOPET_TYPE = [
+  { face: "Plein", role: "Headings", spec: "Line height and paragraph spacing: 1.1 x font size" },
+  { face: "Switzer", role: "Body", spec: "Line height and paragraph spacing: 1.4 x font size" },
+];
+
+export function TypeSpec({ prefersReducedMotion }) {
+  const rowV = prefersReducedMotion ? fadeIn : fadeUp;
+  const containerV = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { duration: DURATION.slow, ease: EASE.out, staggerChildren: 0.1 },
+    },
+  };
+  return (
+    <motion.div
+      className="typs"
+      variants={containerV}
+      initial="hidden"
+      whileInView="visible"
+      viewport={motionViewport}
+    >
+      {DUOPET_TYPE.map((t) => (
+        <motion.div className="typs-card" variants={rowV} key={t.face}>
+          <span
+            className="typs-aa"
+            style={{ fontFamily: `"${t.face}", var(--font-body)` }}
+            aria-hidden="true"
+          >
+            Aa
+          </span>
+          <div className="typs-meta">
+            <span className="typs-face">{t.face}</span>
+            <span className="typs-role">{t.role}</span>
+            <span className="typs-spec">{t.spec}</span>
+          </div>
+        </motion.div>
+      ))}
+    </motion.div>
+  );
+}
+
+// ─── Persona (native section, replaces the 6MB PNG export) ──────────────────
+const PERSONA = {
+  name: "Bella Rios",
+  tag: "The Busy Pet Owner",
+  meta: ["33, female", "Brazil", "Personal trainer", "Married, no kids"],
+  quote:
+    "I always prioritize the happiness and well-being of my dog, Nicolas. However, the process of veterinarian care can be overly frustrating and time-consuming.",
+  bio: "Bella loves caring for her pet while juggling her job as a personal trainer. Her busy lifestyle makes scheduling vet appointments via WhatsApp challenging due to response delays. She seeks a nearby veterinarian and a scheduling flow that fits her hectic routine.",
+  columns: [
+    {
+      title: "Frustrations",
+      items: [
+        "Difficulty in scheduling appointments",
+        "Trouble finding emergency vets",
+        "Inconvenient location",
+        "Forgets appointments and vaccine dates",
+        "Difficulty in accessing medical history",
+      ],
+    },
+    {
+      title: "Goals",
+      items: [
+        "Quick and efficient scheduling",
+        "Find nearby emergency vets easily",
+        "Location proximity",
+        "Reminders",
+        "Digital medical history of the pet",
+      ],
+    },
+    {
+      title: "Influences",
+      items: ["Friend recommendations", "Social media", "Pet parent communities", "Credibility"],
+    },
+  ],
+  source: "Persona synthesized from a survey with 164 pet owners and 5 in-person interviews",
+};
+
+export function PersonaCard({ prefersReducedMotion }) {
+  const childUp = prefersReducedMotion ? fadeIn : fadeUp;
+  const containerV = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { duration: DURATION.slow, ease: EASE.out, staggerChildren: 0.08 },
+    },
+  };
+  return (
+    <motion.section
+      className="persona-card"
+      aria-label="Persona: Bella Rios"
+      variants={containerV}
+      initial="hidden"
+      whileInView="visible"
+      viewport={motionViewport}
+    >
+      <motion.div className="persona-head" variants={childUp}>
+        <div className="persona-avatar" aria-hidden="true">
+          BR
+        </div>
+        <div className="persona-id">
+          <h4 className="persona-name">{PERSONA.name}</h4>
+          <div className="persona-tag">{PERSONA.tag}</div>
+        </div>
+        <div className="persona-meta">{PERSONA.meta.join(", ")}</div>
+      </motion.div>
+      <motion.blockquote className="persona-quote" variants={childUp}>
+        &ldquo;{PERSONA.quote}&rdquo;
+      </motion.blockquote>
+      <motion.p className="persona-bio" variants={childUp}>
+        {PERSONA.bio}
+      </motion.p>
+      <motion.div className="persona-grid" variants={childUp}>
+        {PERSONA.columns.map((col) => (
+          <div key={col.title}>
+            <p className="persona-col-title">{col.title}</p>
+            <ul className="persona-list">
+              {col.items.map((item) => (
+                <li key={item}>{item}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </motion.div>
+      <motion.p className="persona-source" variants={childUp}>
+        {PERSONA.source}
+      </motion.p>
+    </motion.section>
+  );
+}
+
+// ─── Journey map (native section, replaces the 16MB PNG export) ──────────────
+const JOURNEY = {
+  scenario:
+    "Bella is a busy dog owner seeking an easy way to care for her pet by scheduling appointments with a nearby veterinarian.",
+  expectations: [
+    "Receive a reliable veterinarian recommendation nearby",
+    "Quick appointment scheduling",
+  ],
+  steps: [
+    {
+      goal: "Search a veterinarian",
+      actions: [
+        "Seek a recommendation from a friend or nearby veterinary",
+        "Obtain the veterinarian contact channel",
+      ],
+      pains: ["She is busy", "She hopes for a good veterinarian", "Worried about her pet"],
+      emotion: "Worried",
+      opportunities: [
+        "List nearby veterinarians sorted by proximity",
+        "Show reviews from other pet owners",
+      ],
+    },
+    {
+      goal: "Message a veterinarian",
+      actions: ["Send a message", "Wait for a response"],
+      pains: ["She has to wait", "Has no time to waste", "Still worried about her pet"],
+      emotion: "Annoyed",
+      opportunities: ["Create a simple way to book appointments"],
+    },
+    {
+      goal: "Choose a date and time",
+      actions: [
+        "Inform preferred date and time",
+        "Negotiate date and time",
+        "Write down the appointment",
+      ],
+      pains: ["She does not know available dates", "Worried that she may forget the appointment"],
+      emotion: "Frustrated",
+      opportunities: [
+        "Provide a list of available dates",
+        "Remind users of the upcoming appointment",
+      ],
+    },
+    {
+      goal: "Go to the appointment",
+      actions: ["Go to the appointment with her pet", "Buy the prescribed medications"],
+      pains: ["She does not remember the entire medical record", "She answers many questions"],
+      emotion: "Relieved",
+      opportunities: [
+        "Provide a pet medical timeline",
+        "Profile with date of birth, weight, and gender",
+        "Reminders and preventive care",
+      ],
+    },
+  ],
+};
+
+// Emotion curve: x at each step column center, y encodes mood (low = worse).
+const JOURNEY_CURVE = {
+  points: [
+    [100, 42],
+    [300, 60],
+    [500, 84],
+    [700, 20],
+  ],
+  path: "M100,42 C170,45 235,55 300,60 C365,65 435,82 500,84 C560,86 645,28 700,20",
+};
+
+export function JourneyMap({ prefersReducedMotion }) {
+  const [isMobile, setIsMobile] = useState(false);
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 900);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
+  const childUp = prefersReducedMotion ? fadeIn : fadeUp;
+  const boardV = {
+    hidden: { opacity: 0 },
+    visible: {
+      opacity: 1,
+      transition: { duration: DURATION.slow, ease: EASE.out, staggerChildren: 0.06 },
+    },
+  };
+  const curveV = {
+    hidden: { pathLength: 0, opacity: 0 },
+    visible: { pathLength: 1, opacity: 1, transition: { duration: 1.6, ease: EASE.inOut } },
+  };
+  const dotV = {
+    hidden: { scale: 0, opacity: 0 },
+    visible: {
+      scale: 1,
+      opacity: 1,
+      transition: { duration: DURATION.base, ease: EASE.out, delay: 1.2 },
+    },
+  };
+
+  const intro = (
+    <div className="journey-intro">
+      <motion.div className="journey-intro-card" variants={childUp}>
+        <p className="journey-intro-label">Scenario</p>
+        <p className="journey-intro-text">{JOURNEY.scenario}</p>
+      </motion.div>
+      <motion.div className="journey-intro-card" variants={childUp}>
+        <p className="journey-intro-label">Expectations</p>
+        {JOURNEY.expectations.map((e) => (
+          <p className="journey-intro-text" key={e}>
+            {e}
+          </p>
+        ))}
+      </motion.div>
+    </div>
+  );
+
+  if (isMobile) {
+    return (
+      <motion.div
+        aria-label="Journey map: Bella Rios"
+        variants={boardV}
+        initial="hidden"
+        whileInView="visible"
+        viewport={motionViewport}
+      >
+        {intro}
+        <div className="journey-steps-stacked">
+          {JOURNEY.steps.map((s) => (
+            <motion.div className="journey-step-card" key={s.goal} variants={childUp}>
+              <h4 className="journey-goal">{s.goal}</h4>
+              <div className="journey-emotion-chip">{s.emotion}</div>
+              <p className="journey-row-label">Actions</p>
+              <ul className="journey-list">
+                {s.actions.map((a) => (
+                  <li key={a}>{a}</li>
+                ))}
+              </ul>
+              <p className="journey-row-label">Pain points</p>
+              <ul className="journey-list journey-list--pain">
+                {s.pains.map((p) => (
+                  <li key={p}>{p}</li>
+                ))}
+              </ul>
+              <div className="journey-opp">
+                <p className="journey-row-label">Opportunities</p>
+                <ul className="journey-list">
+                  {s.opportunities.map((o) => (
+                    <li key={o}>{o}</li>
+                  ))}
+                </ul>
+              </div>
+            </motion.div>
+          ))}
+        </div>
+        <p className="journey-note">
+          These opportunities shaped the three concepts shown in Results.
+        </p>
+      </motion.div>
+    );
+  }
+
+  return (
+    <motion.div
+      className="journey-board"
+      aria-label="Journey map: Bella Rios"
+      variants={boardV}
+      initial="hidden"
+      whileInView="visible"
+      viewport={motionViewport}
+    >
+      {intro}
+      <div className="journey-grid">
+        {JOURNEY.steps.map((s) => (
+          <motion.div key={s.goal} variants={childUp}>
+            <h4 className="journey-goal">{s.goal}</h4>
+          </motion.div>
+        ))}
+        {JOURNEY.steps.map((s) => (
+          <motion.div key={s.goal} variants={childUp}>
+            <p className="journey-row-label">Actions</p>
+            <ul className="journey-list">
+              {s.actions.map((a) => (
+                <li key={a}>{a}</li>
+              ))}
+            </ul>
+          </motion.div>
+        ))}
+        {JOURNEY.steps.map((s) => (
+          <motion.div key={s.goal} variants={childUp}>
+            <p className="journey-row-label">Pain points</p>
+            <ul className="journey-list journey-list--pain">
+              {s.pains.map((p) => (
+                <li key={p}>{p}</li>
+              ))}
+            </ul>
+          </motion.div>
+        ))}
+        <div className="journey-emotions">
+          <svg className="journey-curve" viewBox="0 0 800 110" aria-hidden="true">
+            <motion.path
+              d={JOURNEY_CURVE.path}
+              fill="none"
+              stroke="var(--brand-500)"
+              strokeWidth="2.5"
+              strokeLinecap="round"
+              variants={prefersReducedMotion ? undefined : curveV}
+            />
+            {JOURNEY_CURVE.points.map(([x, y], i) => (
+              <motion.circle
+                key={i}
+                cx={x}
+                cy={y}
+                r="6"
+                fill="var(--brand-600)"
+                stroke="#FFFFFF"
+                strokeWidth="2.5"
+                variants={prefersReducedMotion ? undefined : dotV}
+              />
+            ))}
+          </svg>
+          <div className="journey-emotion-labels">
+            {JOURNEY.steps.map((s) => (
+              <div className="journey-emotion-label" key={s.goal}>
+                {s.emotion}
+              </div>
+            ))}
+          </div>
+        </div>
+        {JOURNEY.steps.map((s) => (
+          <motion.div className="journey-opp" key={s.goal} variants={childUp}>
+            <p className="journey-row-label">Opportunities</p>
+            <ul className="journey-list">
+              {s.opportunities.map((o) => (
+                <li key={o}>{o}</li>
+              ))}
+            </ul>
+          </motion.div>
+        ))}
+      </div>
+      <p className="journey-note">
+        These opportunities shaped the three concepts shown in Results.
+      </p>
+    </motion.div>
+  );
+}
+
+export function DesignProcessDiagram({ prefersReducedMotion }) {
+  const steps = [
+    {
+      id: "empathize",
+      label: "Empathize",
+      detail: "164 responses + 5 interviews",
+      icon: (
+        <svg viewBox="0 0 40 41" fill="none">
+          <path
+            d="M19.6895 12.7974V14.7104H10.2861V12.7974H19.6895ZM24.6855 7.79541V9.7085H10.2861V7.79541H24.6855ZM24.6855 2.79443V4.70752H10.2861V2.79443H24.6855Z"
+            fill="currentColor"
+            stroke="currentColor"
+            strokeWidth="0.587729"
+          />
+          <path
+            d="M5.14453 2.354V30.9263L10.5947 21.2261C10.7867 20.8792 11.0541 20.5799 11.377 20.3501C11.7003 20.12 12.0719 19.9653 12.4629 19.8979C12.8536 19.8307 13.2544 19.852 13.6357 19.9604C14.0169 20.069 14.3692 20.2621 14.666 20.5249L23.8262 28.5298L32.5635 15.4761L32.6445 15.354L32.7676 15.436L34.8418 16.8286L34.9639 16.9106L34.8818 17.0327L26.1768 30.0405C25.9863 30.3847 25.7221 30.6826 25.4023 30.9116C25.0788 31.1433 24.7064 31.2987 24.3145 31.3667C23.9226 31.4346 23.5201 31.4134 23.1377 31.3042C22.7557 31.1951 22.4033 31.001 22.1064 30.7368L12.958 22.7397L6.13672 34.8628H37.6172V37.6577H4.99805C4.29681 37.657 3.62373 37.3777 3.12793 36.8813C2.63229 36.3851 2.3543 35.712 2.35352 35.0103V2.354H5.14453Z"
+            fill="currentColor"
+            stroke="currentColor"
+            strokeWidth="0.293864"
+          />
+        </svg>
+      ),
+    },
+    {
+      id: "define",
+      label: "Define",
+      detail: "Patterns into priorities",
+      icon: (
+        <svg viewBox="0 0 52 52" fill="none">
+          <path
+            d="M45.255 14.5631C45.255 12.4173 44.4036 10.3595 42.8881 8.8422C41.3726 7.32493 39.317 6.47253 37.1738 6.47253H14.5462C12.4029 6.47253 10.3474 7.32493 8.83188 8.8422C7.31635 10.3595 6.46493 12.4173 6.46493 14.5631V18.6342C8.85545 17.031 11.6688 16.177 14.5462 16.1812C18.0115 16.1812 21.1922 17.3948 23.691 19.4174H42.0225V37.2166C42.0225 38.5041 41.5117 39.7388 40.6024 40.6491C39.693 41.5595 38.4597 42.0709 37.1738 42.0709H32.7161L34.1384 43.4949C34.6653 44.0224 35.0468 44.6437 35.2827 45.3072H37.1738C39.317 45.3072 41.3726 44.4548 42.8881 42.9375C44.4036 41.4202 45.255 39.3624 45.255 37.2166V14.5631ZM14.5462 16.1812H9.69744V14.5631C9.69744 13.2756 10.2083 12.0409 11.1176 11.1306C12.0269 10.2202 13.2602 9.70875 14.5462 9.70875H37.1738C38.4597 9.70875 39.693 10.2202 40.6024 11.1306C41.5117 12.0409 42.0225 13.2756 42.0225 14.5631V16.1812H14.5462ZM21.3215 39.8153C19.0308 41.5302 16.1762 42.3128 13.3324 42.0056C10.4885 41.6983 7.86645 40.3241 5.99388 38.1594C4.1213 35.9947 3.13722 33.2002 3.23969 30.3384C3.34216 27.4766 4.52357 24.7599 6.54616 22.735C8.56875 20.71 11.2824 19.5273 14.1409 19.4247C16.9994 19.3221 19.7907 20.3073 21.9529 22.182C24.1151 24.0568 25.4878 26.6818 25.7947 29.529C26.1016 32.3761 25.3199 35.2339 23.6069 37.5273L31.8498 45.7797C32.1533 46.0831 32.324 46.4947 32.3243 46.9241C32.3246 47.3535 32.1545 47.7654 31.8514 48.0693C31.5484 48.3731 31.1372 48.544 30.7083 48.5443C30.2794 48.5446 29.8679 48.3743 29.5644 48.0709L21.3215 39.8185V39.8153ZM22.6275 30.7442C22.6275 28.5984 21.7761 26.5406 20.2605 25.0233C18.745 23.506 16.6895 22.6536 14.5462 22.6536C12.4029 22.6536 10.3474 23.506 8.83188 25.0233C7.31635 26.5406 6.46493 28.5984 6.46493 30.7442C6.46493 32.8899 7.31635 34.9478 8.83188 36.4651C10.3474 37.9823 12.4029 38.8347 14.5462 38.8347C16.6895 38.8347 18.745 37.9823 20.2605 36.4651C21.7761 34.9478 22.6275 32.8899 22.6275 30.7442Z"
+            fill="currentColor"
+          />
+        </svg>
+      ),
+    },
+    {
+      id: "ideate",
+      label: "Ideate",
+      detail: "Ideas into testable options",
+      icon: (
+        <svg viewBox="0 0 49 49" fill="none">
+          <path
+            d="M10.2623 3.62744L8.14179 5.74739L11.297 8.90469L13.4145 6.78474L10.2608 3.62744H10.2623ZM37.9361 3.62744L34.7809 6.78474L36.8999 8.90469L40.0536 5.74889L37.9346 3.62744H37.9361ZM24.0984 4.5683C23.6015 4.57433 23.0984 4.60298 22.5924 4.6648C22.5773 4.6648 22.5623 4.66178 22.5472 4.6648C16.4387 5.36592 11.5771 10.3069 10.7322 16.3954C10.0575 21.2957 12.0756 25.7391 15.4386 28.6009C16.8143 29.7762 17.7448 31.3892 18.0742 33.1695V42.2162H21.508C22.0321 43.1163 22.9885 43.7239 24.0984 43.7239C25.2084 43.7239 26.1648 43.1163 26.6889 42.2162H30.1227V36.185H30.2642V34.3938C30.2642 32.1834 31.4119 29.9549 33.2764 28.2224C35.7704 25.7225 37.653 22.1717 37.653 18.0931C37.653 10.6447 31.5293 4.49894 24.0984 4.5683ZM24.0984 7.58387C29.9194 7.50245 34.6408 12.2731 34.6408 18.0931C34.6408 21.2504 33.18 24.0308 31.1573 26.0542L31.2055 26.1025C29.1955 27.9581 27.8958 30.4582 27.5308 33.171H20.9433C20.6119 30.5866 19.505 28.0852 17.4131 26.2909C14.7519 24.0293 13.166 20.6217 13.6961 16.7738C14.3543 12.0243 18.2037 8.20507 22.9207 7.68187C23.3102 7.62751 23.7024 7.5953 24.0954 7.58537L24.0984 7.58387ZM3.01367 18.0931V21.1087H7.53184V18.0931H3.01367ZM40.6651 18.0931V21.1087H45.1832V18.0931H40.6651ZM11.297 30.2971L8.1433 33.4529L10.2623 35.5744L13.413 32.4171L11.297 30.2971ZM36.8999 30.2971L34.7824 32.4171L37.9346 35.5744L40.0536 33.4529L36.8999 30.2971ZM21.0863 36.1865H27.1106V39.2021H21.0863V36.1865Z"
+            fill="currentColor"
+          />
+        </svg>
+      ),
+    },
+    {
+      id: "design",
+      label: "Design",
+      detail: "Wireframes into flows",
+      icon: (
+        <svg viewBox="0 0 45 45" fill="none">
+          <path
+            d="M19.5432 30.6687C18.5754 30.5612 17.6235 30.3408 16.7069 30.0119C16.7348 29.3523 16.7515 28.6647 16.7515 27.9493V27.0074C17.617 27.421 18.5578 27.7089 19.5432 27.8514V20.962C19.5432 19.8501 19.9844 18.7837 20.7698 17.9975C21.5551 17.2113 22.6202 16.7696 23.7308 16.7696H30.6124C30.3898 15.2209 29.7993 13.7482 28.8906 12.4753C27.9819 11.2023 26.7814 10.1661 25.3899 9.45369C23.9984 8.74128 22.4566 8.37342 20.8937 8.38099C19.3309 8.38857 17.7927 8.77135 16.4082 9.49722C16.1873 8.58309 15.8236 7.70963 15.3306 6.90912C17.1403 6.00476 19.1415 5.55127 21.1639 5.58719C23.1862 5.62311 25.17 6.1474 26.9466 7.11547C28.7232 8.08354 30.2401 9.46677 31.3682 11.1476C32.4964 12.8284 33.2024 14.757 33.4264 16.7696H37.6894C38.8 16.7696 39.8651 17.2113 40.6504 17.9975C41.4358 18.7837 41.8769 19.8501 41.8769 20.962V34.9365C41.8769 36.0484 41.4358 37.1148 40.6504 37.901C39.8651 38.6872 38.8 39.1289 37.6894 39.1289H23.7308C22.6202 39.1289 21.5551 38.6872 20.7698 37.901C19.9844 37.1148 19.5432 36.0484 19.5432 34.9365V30.6687ZM33.4264 19.5645C33.1092 22.4002 31.8387 25.0438 29.8233 27.0615C27.808 29.0792 25.1674 30.3511 22.335 30.6687V34.9365C22.335 35.3072 22.482 35.6626 22.7438 35.9247C23.0056 36.1868 23.3606 36.334 23.7308 36.334H37.6894C38.0596 36.334 38.4146 36.1868 38.6764 35.9247C38.9382 35.6626 39.0852 35.3072 39.0852 34.9365V20.962C39.0852 20.5913 38.9382 20.2359 38.6764 19.9738C38.4146 19.7117 38.0596 19.5645 37.6894 19.5645H33.4264ZM30.6124 19.5645H23.7308C23.3606 19.5645 23.0056 19.7117 22.7438 19.9738C22.482 20.2359 22.335 20.5913 22.335 20.962V27.8514C24.4231 27.5493 26.3576 26.5789 27.8494 25.0853C29.3413 23.5917 30.3106 21.655 30.6124 19.5645ZM13.3875 21.1325C13.0944 20.0536 12.6198 18.972 11.8046 18.1419C13.1223 16.8926 13.9598 14.9026 13.9598 12.5772C13.9598 10.6292 13.5662 9.29039 12.8543 8.21994C12.5384 7.75954 12.1733 7.335 11.7655 6.95384C11.6092 6.80277 11.451 6.6537 11.2909 6.50666C11.1206 6.34735 10.9643 6.20201 10.7605 5.99798C10.3418 5.57874 10.2943 5.24335 10.2943 5.06727C10.2948 4.9694 10.3108 4.87223 10.3418 4.7794C10.4694 4.50305 10.5034 4.19254 10.4386 3.89507C10.3738 3.5976 10.2137 3.32947 9.98273 3.13143C9.75175 2.93339 9.46248 2.8163 9.15892 2.79795C8.85536 2.7796 8.55413 2.86101 8.30102 3.02978L8.29543 3.03258L8.28706 3.03817L8.26193 3.05493L8.17818 3.11083C7.75942 3.40986 7.35598 3.72982 6.96937 4.06949C6.27144 4.68717 5.36134 5.6011 4.71646 6.69112C4.15351 7.5948 3.7017 8.56327 3.37085 9.57547C3.03585 10.5788 2.79297 11.6661 2.79297 12.5772C2.79297 14.9026 3.63048 16.8898 4.94817 18.1447C4.13299 18.972 3.6584 20.0536 3.36527 21.1352C2.79297 23.237 2.79297 25.8363 2.79297 27.8458V27.9493C2.79297 33.7012 3.86778 37.1166 5.08496 39.1485C5.69635 40.1658 6.33286 40.8226 6.86608 41.2363C7.1502 41.4581 7.45941 41.6458 7.78734 41.7953C7.97699 41.8646 8.17514 41.9078 8.37639 41.9238C8.6109 41.9238 8.96545 41.7953 8.96545 41.7953C9.29337 41.6458 9.60259 41.4581 9.88671 41.2363C10.4171 40.8226 11.0592 40.1658 11.6678 39.1485C12.885 37.1194 13.9598 33.7012 13.9598 27.9493V27.8486C13.9598 25.8363 13.9598 23.2398 13.3875 21.1325ZM6.94425 20.0983C7.25971 19.7797 7.68126 19.5645 8.37639 19.5645C9.07432 19.5645 9.49308 19.7825 9.80854 20.0955C10.1603 20.4505 10.4646 21.0262 10.6935 21.8675C11.1569 23.5752 11.1681 25.8167 11.1681 27.9493C11.1681 33.377 10.1491 36.2502 9.27253 37.7119C8.93753 38.2709 8.62206 38.6314 8.37639 38.8578C8.02538 38.5199 7.7237 38.1341 7.48025 37.7119C6.60366 36.2474 5.58468 33.377 5.58468 27.9493C5.58468 25.8167 5.59585 23.5752 6.05927 21.8675C6.28819 21.029 6.59249 20.4505 6.94425 20.0955V20.0983ZM8.37639 16.7696C7.30158 16.7696 5.58468 15.5734 5.58468 12.5772C5.58468 12.0937 5.72985 11.3279 6.02019 10.4615C6.28477 9.64349 6.64954 8.86148 7.10616 8.1333C7.34904 7.72244 7.66451 7.32277 8.0051 6.95664C8.19772 7.29762 8.45177 7.64139 8.78678 7.97678C8.99057 8.18081 9.25578 8.42676 9.48191 8.63918L9.82808 8.96339C10.1212 9.24847 10.3473 9.49722 10.5288 9.77391C10.8638 10.2742 11.1681 11.0316 11.1681 12.5772C11.1681 15.5734 9.4512 16.7696 8.37639 16.7696Z"
+            fill="currentColor"
+          />
+        </svg>
+      ),
+    },
+    {
+      id: "test",
+      label: "Test",
+      detail: "2 usability rounds",
+      icon: (
+        <svg viewBox="0 0 46 46" fill="none">
+          <path
+            d="M28.4581 28.0634L26.8762 29.6363H33.1984L39.5206 35.1491H6.3222L12.6498 29.6363H17.3901L15.8083 28.0635H11.0679L0 37.5111H45.8429L34.7803 28.0634H28.4581ZM42.7594 12.3191L38.8072 8.38428L22.2055 24.9179L15.8831 18.6157L11.9311 22.5506L22.2054 32.7874L42.7595 12.3191H42.7594Z"
+            fill="currentColor"
+          />
+        </svg>
+      ),
+    },
+  ];
+
+  const processV = {
+    hidden: { opacity: 0 },
+    visible: { opacity: 1, transition: { duration: DURATION.fast, staggerChildren: 0.14 } },
+  };
+  const stepV = prefersReducedMotion
+    ? fadeIn
+    : {
+        hidden: { opacity: 0, y: 18, scale: 0.94 },
+        visible: {
+          opacity: 1,
+          y: 0,
+          scale: 1,
+          transition: { duration: DURATION.slow, ease: EASE.out },
+        },
+      };
+
+  return (
+    <motion.div
+      className="design-process-diagram"
+      variants={processV}
+      initial="hidden"
+      whileInView="visible"
+      viewport={motionViewport}
+    >
+      <span className="design-process-track" aria-hidden="true">
+        <motion.span
+          className="design-process-track-fill"
+          variants={
+            prefersReducedMotion
+              ? undefined
+              : {
+                  hidden: { scaleX: 0 },
+                  visible: {
+                    scaleX: 1,
+                    transition: { duration: 1.15, ease: EASE.out, delay: 0.12 },
+                  },
+                }
+          }
+        />
+      </span>
+      {steps.map((step, index) => (
+        <motion.div className="design-process-step" variants={stepV} key={step.id}>
+          <div className="design-process-circle">
+            <motion.span
+              className="design-process-orbit"
+              aria-hidden="true"
+              animate={
+                prefersReducedMotion
+                  ? undefined
+                  : { scale: [1, 1.1, 1], opacity: [0.22, 0.52, 0.22] }
+              }
+              transition={{
+                duration: 2.8,
+                repeat: Infinity,
+                ease: "easeInOut",
+                delay: index * 0.18,
+              }}
+            />
+            <span className="design-process-index">{String(index + 1).padStart(2, "0")}</span>
+            <div className="design-process-icon">{step.icon}</div>
+          </div>
+          <div className="design-process-copy">
+            <div className="design-process-label">{step.label}</div>
+            <p>{step.detail}</p>
+          </div>
+        </motion.div>
+      ))}
+    </motion.div>
+  );
+}
+
+const MOBILE_SCREENS = [
+  {
+    src: "/assets/portfolio/2026/07/duopet-mobile-01.png",
+    alt: "DuoPet mobile mockup: veterinarian profile and appointment calendar",
+  },
+  {
+    src: "/assets/portfolio/2026/07/duopet-mobile-02.png",
+    alt: "DuoPet mobile mockup: home, next appointment, pets, and nearby veterinarians",
+  },
+  {
+    src: "/assets/portfolio/2026/07/duopet-mobile-03.png",
+    alt: "DuoPet mobile mockup: veterinarian search map",
+  },
+  {
+    src: "/assets/portfolio/2026/07/duopet-mobile-04.png",
+    alt: "DuoPet mobile mockup: pet profile and health shortcuts",
+  },
+  {
+    src: "/assets/portfolio/2026/07/duopet-mobile-05.png",
+    alt: "DuoPet mobile mockup: appointment date and time selection",
+  },
+];
+
+// ─────────────────────────────────────────────────────────────────────────────
+export default function DuoPetCase() {
+  const prefersReducedMotion = useReducedMotion();
+  const [isHeroMobile, setIsHeroMobile] = useState(() =>
+    typeof window !== "undefined" ? window.innerWidth < 768 : false,
+  );
+  const { scrollY } = useScroll();
+  // Hero: the text block drifts down at a single speed and fades out to 0
+  // while the mockup rises in the opposite direction (parallax preserved).
+  const rawMockupY = useTransform(scrollY, [0, 500], [0, -60]);
+  const rawTextY = useTransform(scrollY, [0, 500], [0, 40]);
+  const rawBackdropY = useTransform(scrollY, [0, 600], [0, 120]);
+  const heroTextFade = useTransform(scrollY, [0, 420], [1, 0]);
+  const parallaxDisabled = isHeroMobile || prefersReducedMotion;
+  const heroMockupStyle = parallaxDisabled ? undefined : { y: rawMockupY };
+  const heroTextStyle = parallaxDisabled ? undefined : { y: rawTextY, opacity: heroTextFade };
+  const heroBackdropStyle = parallaxDisabled ? undefined : { y: rawBackdropY };
+  // Reduced-motion variant: translate-based reveals collapse to plain fades.
+  // Float loop only runs while the hero mockup is on screen.
+  const heroMockupRef = useRef(null);
+  const heroMockupInView = useInView(heroMockupRef);
+  useEffect(() => {
+    const updateHeroLayout = () => setIsHeroMobile(window.innerWidth < 768);
+    updateHeroLayout();
+    window.addEventListener("resize", updateHeroLayout);
+    return () => window.removeEventListener("resize", updateHeroLayout);
+  }, []);
+
+  // Mobile class on body
+  useEffect(() => {
+    function updateMobile() {
+      if (window.innerWidth < 900) {
+        document.body.classList.add("is-mobile");
+      } else {
+        document.body.classList.remove("is-mobile");
+      }
+    }
+    updateMobile();
+    window.addEventListener("resize", updateMobile);
+    return () => {
+      window.removeEventListener("resize", updateMobile);
+      document.body.classList.remove("is-mobile");
+    };
+  }, []);
+
+  // TOC - secao ativa tracking
+  // Active section observer - identical behavior
+  return (
+    <>
+      <style>{duopetCss}</style>
+
+      <main id="main" className="page">
+        <div className="page-inner">
+          {/* HERO CASE */}
+          <section className="case-hero">
+            <motion.div
+              className="case-hero-backdrop"
+              aria-hidden="true"
+              style={heroBackdropStyle}
+            />
+            <motion.p className="case-label" style={heroTextStyle}>
+              EDUCATIONAL COURSE PROJECT, 2023
+            </motion.p>
+            <motion.h1 className="case-title-main" style={heroTextStyle}>
+              DuoPet - Veterinary Appointment Prototype
+            </motion.h1>
+            <motion.p className="case-subtitle" style={heroTextStyle}>
+              A UX course prototype for booking vet visits, not a launched product.
+            </motion.p>
+
+            <figure className="case-hero-mockup-wrap" ref={heroMockupRef}>
+              <motion.div style={heroMockupStyle}>
+                <motion.div
+                  className="case-hero-mockup"
+                  variants={floatLoop}
+                  animate={!prefersReducedMotion && heroMockupInView ? "animate" : undefined}
+                >
+                  <img
+                    src="/assets/portfolio/2024/05/Iphone-1024x591.png"
+                    alt="DuoPet prototype overview mockup"
+                    loading="eager"
+                    decoding="async"
+                    width="1024"
+                    height="591"
+                  />
+                </motion.div>
+              </motion.div>
+            </figure>
+
+            <motion.p className="case-hero-byline" {...fadeUpImmediate(0, prefersReducedMotion)}>
+              Pair work with Leticia Magri. We both took part in research, wireframes, UI, and the
+              two usability rounds. This case does not split those tasks by person.
+            </motion.p>
+
+            <div className="in-short">
+              <div className="in-short-item">
+                <div className="in-short-label">Problem</div>
+                <p className="in-short-text">
+                  Booking by WhatsApp meant waiting for replies and repeating the same details.
+                </p>
+              </div>
+              <div className="in-short-item">
+                <div className="in-short-label">Collaboration</div>
+                <p className="in-short-text">
+                  Both of us worked across the survey of 164 owners, 5 interviews, IA, UI, and two
+                  usability rounds.
+                </p>
+              </div>
+              <div className="in-short-item">
+                <div className="in-short-label">What we made</div>
+                <p className="in-short-text">A mobile prototype, tested twice in the course.</p>
+              </div>
+            </div>
+
+            <CaseContents sections={CASE_SECTIONS} />
+          </section>
+
+          {/* [REVISÃO MATTHIAS] DuoPet PinnedStory context copy, compressed from the existing Overview. */}
+          <PinnedStory
+            steps={[
+              {
+                id: "context",
+                label: "The brief",
+                title: "A course prototype for a wait that happens on WhatsApp",
+                body: "Pet owners booked vet visits by chat. They waited for replies, repeated details, and could not see open times.",
+                img: "/assets/portfolio/2026/03/Wire-03-Pure.png",
+                alt: "Early DuoPet home wireframe",
+              },
+              {
+                id: "research",
+                label: "Evidence",
+                title: "164 survey responses, then 5 interviews",
+                body: "The survey and the interviews were separate samples. Together they named WhatsApp booking, nearby clinics, and stress in urgent visits.",
+                img: "/assets/portfolio/2026/03/Wire-01-Pure.png",
+                alt: "Early DuoPet veterinary profile wireframe",
+              },
+              {
+                id: "insight",
+                label: "Decisions",
+                title: "Nearby lists, emergency access, and a calendar of its own",
+                body: "Those patterns shaped the Home list, an emergency shortcut, and, after the second test, a scheduling step outside the profile.",
+                img: "/assets/portfolio/2026/03/Screen-02-Pill-Final.png",
+                alt: "DuoPet calendar screen",
+              },
+              {
+                id: "solution",
+                label: "Prototype",
+                title: "A clickable concept, tested in class, never launched",
+                body: "Home, booking, and pet profiles as tested in the second course round.",
+                img: "/assets/portfolio/2026/03/Screen-03-Pill.png",
+                alt: "DuoPet home screen with the next appointment",
+              },
+            ]}
+          />
+
+          <div className="case-layout">
+            <div className="case-content-column">
+              <motion.section
+                id="overview"
+                className="case-section"
+                variants={sectionStagger}
+                initial="hidden"
+                whileInView="visible"
+                viewport={motionViewport}
+              >
+                <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>
+                  Overview
+                </TypedSectionLabel>
+                <div className="case-section-body">
+                  <p>Educational UX course project from 2023.</p>
+                </div>
+              </motion.section>
+
+              <motion.section
+                id="research"
+                className="case-section"
+                variants={sectionStagger}
+                initial="hidden"
+                whileInView="visible"
+                viewport={motionViewport}
+              >
+                <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>
+                  Research
+                </TypedSectionLabel>
+                {/* [REVISÃO MATTHIAS] Research: empathize + define merged into one section; subheads and bridge copy rewritten in reader language, pending owner review */}
+                <div className="case-section-body">
+                  {/* [REVISÃO MATTHIAS] new subhead + compressed intro (was "Following in the footsteps of pet owners" + 2 paragraphs) */}
+                  <h3 className="case-subsection-title">Three kinds of evidence</h3>
+
+                  <p>
+                    The survey, the interviews, and the usability rounds used different samples.
+                    Findings from each method are labeled below.
+                  </p>
+
+                  <div style={{ marginTop: 16 }}>
+                    <a
+                      className="case-btn"
+                      href="https://www.figma.com/file/7k3qxR4TPjZkSt9zi5Byac/Affinity-Diagram?type=whiteboard&node-id=0%3A1&t=DeHD2TwEURvvyCPw-1"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ width: "fit-content" }}
+                    >
+                      <span className="case-btn-icon" aria-hidden="true">
+                        <img
+                          src="/assets/portfolio/2026/01/twemoji_writing-hand.png"
+                          alt=""
+                          loading="lazy"
+                          decoding="async"
+                          width="24"
+                          height="24"
+                        />
+                      </span>
+                      <span className="case-btn-label">Affinity Diagram</span>
+                    </a>
+                  </div>
+                </div>
+
+                <div className="research-full" style={{ marginTop: 18 }}>
+                  <div className="research-grid">
+                    <article className="research-card">
+                      <h4 className="research-title">Demographic data of pet owners</h4>
+                      <p className="research-text">
+                        Millennials are 33% of pet owners in Brazil, mostly married women with a
+                        dog.
+                      </p>
+                      <p className="research-text" style={{ marginTop: 10 }}>
+                        <a
+                          className="case-inline-link"
+                          href="https://publicacoes.apamvet.com.br/PDFs/Artigos/58.pdf"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Source (PDF, PT-BR) →
+                        </a>
+                      </p>
+                    </article>
+
+                    <article className="research-card">
+                      <h4 className="research-title">Frequency of vet visits</h4>
+                      <p className="research-text">
+                        28% of dogs and 20% of cats visit the vet at least once a month.
+                      </p>
+                      <p className="research-text" style={{ marginTop: 10 }}>
+                        <a
+                          className="case-inline-link"
+                          href="https://www.institutoqualibest.com/wp-content/uploads/2020/02/Infografico-O-perfil-do-dono-de-pet-no-Brasil-v4.pdf"
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        >
+                          Source (PDF, PT-BR) →
+                        </a>
+                      </p>
+                    </article>
+                  </div>
+                </div>
+
+                <div className="desktop-only" style={{ gridColumn: "1", marginTop: "62px" }}>
+                  <div>
+                    <a
+                      className="case-btn"
+                      href="https://drive.google.com/file/d/1gSYHBJogy_9tdDgBm7EMDbxamL4FVspx/view"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ width: "fit-content" }}
+                    >
+                      <span className="case-btn-icon" aria-hidden="true">
+                        <img
+                          src="/assets/portfolio/2026/01/twemoji_writing-hand.png"
+                          alt=""
+                          loading="lazy"
+                          decoding="async"
+                          width="24"
+                          height="24"
+                        />
+                      </span>
+                      <span className="case-btn-label" style={{ textTransform: "uppercase" }}>
+                        Full Report
+                      </span>
+                    </a>
+                  </div>
+                </div>
+
+                <div className="case-section-body case-section-body-secondary">
+                  {/* [REVISÃO MATTHIAS] new subhead (was "Data that guides") + compressed intro sentence */}
+                  <h3 className="case-subsection-title">Survey: 164 pet owners</h3>
+                  <p>
+                    <strong>164 pet owners</strong> on how they schedule veterinary appointments.
+                    These percentages are from that questionnaire.
+                  </p>
+
+                  <div className="mobile-only" style={{ marginTop: 16 }}>
+                    <a
+                      className="case-btn"
+                      href="https://drive.google.com/file/d/1gSYHBJogy_9tdDgBm7EMDbxamL4FVspx/view"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ width: "fit-content" }}
+                    >
+                      <span className="case-btn-icon" aria-hidden="true">
+                        <img
+                          src="/assets/portfolio/2026/01/twemoji_writing-hand.png"
+                          alt=""
+                          loading="lazy"
+                          decoding="async"
+                          width="24"
+                          height="24"
+                        />
+                      </span>
+                      <span className="case-btn-label" style={{ textTransform: "uppercase" }}>
+                        Full Report
+                      </span>
+                    </a>
+                  </div>
+
+                  <p className="hover-hint">
+                    Some findings raised follow-up questions. Hover over the icon
+                    <img
+                      className="hover-hint__emoji"
+                      src="/assets/portfolio/2026/07/lightbulb.svg"
+                      alt=""
+                      aria-hidden="true"
+                      loading="lazy"
+                      decoding="async"
+                      width="24"
+                      height="24"
+                    />
+                    .
+                  </p>
+
+                  <div className="insight-list" aria-label="Survey insights">
+                    <div className="insight-row">
+                      <div className="insight-left">
+                        <div className="insight-number">
+                          <CountUp value={56} suffix="%" />
+                        </div>
+                        <div className="insight-text">
+                          <div className="insight-title">WhatsApp scheduling</div>
+                          <div className="insight-desc">
+                            Share of pet owners who schedule appointments through WhatsApp.
+                          </div>
+                        </div>
+                      </div>
+                      <button
+                        className="tip tip--outside"
+                        type="button"
+                        aria-label="Insight about WhatsApp scheduling"
+                      >
+                        <img
+                          src="/assets/portfolio/2026/07/lightbulb.svg"
+                          alt=""
+                          aria-hidden="true"
+                          loading="lazy"
+                          decoding="async"
+                          width="24"
+                          height="24"
+                        />
+                        <span className="bubble bubble--from-icon">
+                          This number stands out. It made me wonder: how satisfied are people when
+                          booking appointments through WhatsApp?
+                        </span>
+                      </button>
+                    </div>
+
+                    <div className="insight-row">
+                      <div className="insight-left">
+                        <div className="insight-number">
+                          <CountUp value={52} suffix="%" />
+                        </div>
+                        <div className="insight-text">
+                          <div className="insight-title">Only go when symptoms appear</div>
+                          <div className="insight-desc">
+                            Some pet owners book routine checkups, while others only go when
+                            symptoms show up.
+                          </div>
+                        </div>
+                      </div>
+                      <button
+                        className="tip tip--outside"
+                        type="button"
+                        aria-label="Insight about routine vs symptoms"
+                      >
+                        <img
+                          src="/assets/portfolio/2026/07/lightbulb.svg"
+                          alt=""
+                          aria-hidden="true"
+                          loading="lazy"
+                          decoding="async"
+                          width="24"
+                          height="24"
+                        />
+                        <span className="bubble bubble--from-icon">
+                          What is the experience like when taking a pet to the vet in an emergency?
+                        </span>
+                      </button>
+                    </div>
+
+                    <div className="insight-row">
+                      <div className="insight-left">
+                        <div className="insight-number">
+                          <CountUp value={63} suffix="%" />
+                        </div>
+                        <div className="insight-text">
+                          <div className="insight-title">Nearby veterinarians</div>
+                          <div className="insight-desc">
+                            Share of pet owners who take their pets to the closest veterinarian.
+                          </div>
+                        </div>
+                      </div>
+                      <button
+                        className="tip tip--outside"
+                        type="button"
+                        aria-label="Insight about proximity"
+                      >
+                        <img
+                          src="/assets/portfolio/2026/07/lightbulb.svg"
+                          alt=""
+                          aria-hidden="true"
+                          loading="lazy"
+                          decoding="async"
+                          width="24"
+                          height="24"
+                        />
+                        <span className="bubble bubble--from-icon">
+                          It&apos;s a big number and shows that proximity matters to a lot of
+                          people. This points to a need to explore. It is not yet time to think
+                          about solutions.
+                        </span>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="desktop-only" style={{ gridColumn: "1", marginTop: "62px" }}>
+                  <div>
+                    <a
+                      className="case-btn"
+                      href="https://docs.google.com/document/d/1Tpd8qc_dXaRJYhOZgxXumjD4bCVwoP7SFUEfpFkOMNc/edit?tab=t.0"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ width: "fit-content" }}
+                    >
+                      <span className="case-btn-icon" aria-hidden="true">
+                        <img
+                          src="/assets/portfolio/2026/01/twemoji_writing-hand.png"
+                          alt=""
+                          loading="lazy"
+                          decoding="async"
+                          width="24"
+                          height="24"
+                        />
+                      </span>
+                      <span className="case-btn-label" style={{ textTransform: "uppercase" }}>
+                        Interview guide
+                      </span>
+                    </a>
+                    <p
+                      style={{
+                        marginTop: "12px",
+                        fontSize: "13px",
+                        lineHeight: "1.6",
+                        color: "#64748B",
+                      }}
+                    >
+                      Type: In-Person
+                      <br />
+                      Location: Brazil
+                      <br />
+                      Participants: 5 (20-40 years old)
+                      <br />
+                      Duration: 15 to 25 minutes each
+                    </p>
+                  </div>
+                </div>
+
+                <div className="case-section-body case-section-body-secondary">
+                  {/* [REVISÃO MATTHIAS] new subhead (was "Connecting data and stories to impactful solutions") + compressed intro sentence */}
+                  <h3 className="case-subsection-title">What 5 interviews added</h3>
+                  <p>
+                    Five in-person interviews in Brazil, 20 to 40 years old, 15 to 25 minutes each.
+                    A different sample from the questionnaire.
+                  </p>
+
+                  <div className="mobile-only" style={{ marginTop: 16 }}>
+                    <a
+                      className="case-btn"
+                      href="https://docs.google.com/document/d/1Tpd8qc_dXaRJYhOZgxXumjD4bCVwoP7SFUEfpFkOMNc/edit?tab=t.0"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ width: "fit-content" }}
+                    >
+                      <span className="case-btn-icon" aria-hidden="true">
+                        <img
+                          src="/assets/portfolio/2026/01/twemoji_writing-hand.png"
+                          alt=""
+                          loading="lazy"
+                          decoding="async"
+                          width="24"
+                          height="24"
+                        />
+                      </span>
+                      <span className="case-btn-label" style={{ textTransform: "uppercase" }}>
+                        Interview guide
+                      </span>
+                    </a>
+                    <p
+                      style={{
+                        marginTop: "12px",
+                        fontSize: "13px",
+                        lineHeight: "1.6",
+                        color: "#64748B",
+                      }}
+                    >
+                      Type: In-Person
+                      <br />
+                      Location: Brazil
+                      <br />
+                      Participants: 5 (20-40 years old)
+                      <br />
+                      Duration: 15 to 25 minutes each
+                    </p>
+                  </div>
+                </div>
+
+                <div className="research-full">
+                  <div className="research-grid">
+                    <NumberCard
+                      title="Slow replies"
+                      description="Scheduling through WhatsApp can take too long, with some users waiting up to an hour for confirmation."
+                    />
+                    <NumberCard
+                      title="Emergency search is stressful"
+                      description="Pet owners struggle to quickly find clinics and veterinarians that can handle urgent situations."
+                    />
+                    <NumberCard
+                      title="Appointments are easy to miss"
+                      description="Busy routines make it hard to remember appointments, vaccines, and follow-up dates without reminders."
+                    />
+                    {/* [REVISÃO MATTHIAS] Card "Distance matters" removido a pedido: redundante
+    com o insight de proximidade do survey (63% escolhem o vet mais próximo),
+    exibido logo acima na mesma seção. */}
+                    {/* [REVISÃO MATTHIAS] side note cut: persona sourcing is stated with numbers on the persona card itself */}
+                  </div>
+                </div>
+                <div className="case-section-body case-section-body-secondary">
+                  <h3 className="case-subsection-title">What that pointed to</h3>
+                  <p>
+                    Survey proximity, interview emergencies, and the booking-flow review pointed to
+                    nearby lists, emergency access, and a shorter path to a time slot.
+                  </p>
+                </div>
+
+                <div className="research-full">
+                  <div className="research-grid">
+                    <article className="research-card">
+                      <h4 className="research-title">Location-based search</h4>
+                      <p className="research-text">
+                        Many pet owners prefer nearby veterinarians, but competing apps did not make
+                        location the center of the experience.
+                      </p>
+                    </article>
+
+                    <article className="research-card">
+                      <h4 className="research-title">Emergency access</h4>
+                      <p className="research-text">
+                        A quick way to find emergency veterinarians could reduce stress in moments
+                        when users have little time to compare options.
+                      </p>
+                    </article>
+                  </div>
+                </div>
+
+                <div className="case-section-body case-section-body-secondary">
+                  {/* [REVISÃO MATTHIAS] new subhead (was "Looking at usability") + compressed sentence naming the flows from the artifact */}
+                  <h3 className="case-subsection-title">Booking flows we reviewed</h3>
+                  <p>
+                    We looked at specific screens in Vetster and Vets. Those two flows showed extra
+                    steps before a time slot.
+                  </p>
+                </div>
+
+                <div className="research-full define-usability-block">
+                  <CompetitorFlaws prefersReducedMotion={prefersReducedMotion} />
+                </div>
+              </motion.section>
+
+              <motion.section
+                id="decisions"
+                className="case-section"
+                variants={sectionStagger}
+                initial="hidden"
+                whileInView="visible"
+                viewport={motionViewport}
+              >
+                <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>
+                  Decisions
+                </TypedSectionLabel>
+                {/* [REVISÃO MATTHIAS] empty course headline "Transforming ideas into impact" cut; intro paragraph kept as the section lead */}
+                <div className="case-section-body">
+                  <p>
+                    Each direction below maps a finding to a screen change. Round 1 used wireframes
+                    with 5 users. Round 2 used the resolved screens with 5 pet owners.
+                  </p>
+                </div>
+
+                <div
+                  className="case-section-body case-section-body-secondary"
+                  style={{ marginTop: 24 }}
+                >
+                  <h3 className="case-subsection-title">From finding to screen</h3>
+                </div>
+
+                <div className="research-full" style={{ marginTop: 32 }}>
+                  <SolutionComparisons prefersReducedMotion={prefersReducedMotion} />
+                </div>
+              </motion.section>
+
+              <motion.section
+                id="design"
+                className="case-section"
+                variants={sectionStagger}
+                initial="hidden"
+                whileInView="visible"
+                viewport={motionViewport}
+              >
+                <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>
+                  Design
+                </TypedSectionLabel>
+                {/* [REVISÃO MATTHIAS] packaging headline "A lightweight system for consistency" cut; one factual intro sentence kept */}
+                <div className="case-section-body">
+                  <p>
+                    The screens and videos below are the course prototype. Blue for primary actions,
+                    a short type pair, and a small icon set kept the UI consistent while we
+                    iterated.
+                  </p>
+                </div>
+                <div className="research-full mobile-gallery-shell">
+                  <SnapGallery
+                    className="ms-snap--exported ms-snap--large ms-snap--depth"
+                    label="Prototype screens"
+                    items={MOBILE_SCREENS}
+                  />
+                </div>
+                <div
+                  className="case-section-body case-section-body-secondary"
+                  style={{ marginTop: 24 }}
+                >
+                  <PaletteSpec prefersReducedMotion={prefersReducedMotion} />
+                </div>
+              </motion.section>
+
+              <CaseBackToContents />
+              <motion.section
+                id="results"
+                className="case-section"
+                variants={sectionStagger}
+                initial="hidden"
+                whileInView="visible"
+                viewport={motionViewport}
+              >
+                <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>
+                  Results
+                </TypedSectionLabel>
+                <div className="case-section-body">
+                  <h3 className="case-subsection-title">
+                    The prototype, and what the tests showed
+                  </h3>
+                  <p>
+                    Second usability round, on the screens tested then: 5 pet owners, average time
+                    to schedule. DuoPet 45 seconds, MeuPet 50 seconds, Vets 53 seconds. That
+                    comparison is this course test against those two apps, not market performance.
+                    The dedicated Date and Time screen was added after that round and was not
+                    retested.
+                  </p>
+                  <div style={{ marginTop: 20 }}>
+                    <EfficiencyChart prefersReducedMotion={prefersReducedMotion} />
+                  </div>
+                </div>
+
+                <div className="research-full">
+                  <div className="result-paired-grid">
+                    {[
+                      {
+                        t: "Finding nearby care",
+                        d: "The Home list shows nearby veterinarians with distances, matching the survey finding that many owners pick the closest clinic.",
+                        src: "/assets/portfolio/2026/07/duopet-result-01.mp4",
+                        poster: "/assets/portfolio/2026/07/duopet-result-01-poster.webp",
+                        label: "Prototype flow: finding nearby veterinarians",
+                      },
+                      {
+                        t: "Scheduling as its own step",
+                        d: "After round 2, date and time sit on a dedicated screen instead of inside the profile. That later screen was not part of the 45-second measurement and was not retested.",
+                        src: "/assets/portfolio/2026/07/duopet-result-02.mp4",
+                        poster: "/assets/portfolio/2026/07/duopet-result-02-poster.webp",
+                        label: "Prototype flow: booking an appointment with the calendar",
+                      },
+                      {
+                        t: "Pet profiles from the start",
+                        d: "Owners register pets during onboarding so later booking steps can reuse that information.",
+                        src: "/assets/portfolio/2026/07/duopet-result-03.mp4",
+                        poster: "/assets/portfolio/2026/07/duopet-result-03-poster.webp",
+                        label: "Prototype flow: registering a pet during onboarding",
+                      },
+                    ].map(({ t, d, src, poster, label }, i) => (
+                      <React.Fragment key={t}>
+                        <div className="result-card-slot" style={{ gridColumn: i + 1, gridRow: 1 }}>
+                          <NumberCard title={t} description={d} />
+                        </div>
+                        <div
+                          className="result-video-slot"
+                          style={{
+                            gridColumn: i + 1,
+                            gridRow: 2,
+                            borderRadius: 28,
+                            overflow: "hidden",
+                            boxShadow:
+                              "0 20px 48px rgba(15,14,12,0.14), 0 6px 14px rgba(15,14,12,0.06)",
+                            aspectRatio: "9 / 16",
+                            background: "#ffffff",
+                          }}
+                        >
+                          <video
+                            src={src}
+                            poster={poster}
+                            controls
+                            preload="metadata"
+                            muted
+                            playsInline
+                            aria-label={label}
+                            style={{
+                              width: "100%",
+                              height: "100%",
+                              display: "block",
+                              objectFit: "cover",
+                              objectPosition: "center",
+                            }}
+                          />
+                        </div>
+                      </React.Fragment>
+                    ))}
+                  </div>
+                </div>
+              </motion.section>
+
+              <motion.section
+                id="reflections"
+                className="case-section"
+                variants={sectionStagger}
+                initial="hidden"
+                whileInView="visible"
+                viewport={motionViewport}
+              >
+                <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>
+                  Reflections
+                </TypedSectionLabel>
+                {/* [REVISÃO MATTHIAS] Lessons Learned + Next Steps merged into one Reflections section with two subheads; all cards kept */}
+                <div className="case-section-body">
+                  <h3 className="case-subsection-title">What we take from the course</h3>
+                  <p>
+                    The interviews turned survey percentages into screen bets, especially emergency
+                    access and reminders. Round 2 showed the embedded calendar was hard to use, so
+                    scheduling left the profile.
+                  </p>
+                  <p>
+                    Limits: educational project, small test samples, no evidence of use in
+                    production.
+                  </p>
+                </div>
+              </motion.section>
+              <CaseBackToContents />
+              {/* ── Paginação ── */}
+              <section className="case-pagination" aria-label="Next and previous case">
+                <div className="case-pagination-inner">
+                  <Link to="/doctor" className="case-pagination-card case-pagination-prev">
+                    <div className="case-pagination-label">Previous case</div>
+                    <div className="case-pagination-title">
+                      <span className="case-pagination-arrow">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                          <path
+                            d="M15 18l-6-6 6-6"
+                            stroke="currentColor"
+                            strokeWidth="2.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </span>
+                      The questions patients asked before booking
+                    </div>
+                    <div className="case-pagination-desc">
+                      Patients could not find procedures, prices, or insurance before booking.
+                    </div>
+                  </Link>
+                  <Link to="/delivery" className="case-pagination-card case-pagination-next">
+                    <div className="case-pagination-label">Next case</div>
+                    <div className="case-pagination-title">
+                      The New Delivery Experience
+                      <span className="case-pagination-arrow">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                          <path
+                            d="M9 18l6-6-6-6"
+                            stroke="currentColor"
+                            strokeWidth="2.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </span>
+                    </div>
+                    <div className="case-pagination-desc">
+                      Redesigning the delivery confirmation flow for drivers.
+                    </div>
+                  </Link>
+                </div>
+              </section>
+            </div>
+          </div>
+        </div>
+      </main>
+    </>
+  );
+}

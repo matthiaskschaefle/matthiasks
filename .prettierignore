@@ -1,0 +1,6 @@
+dist
+node_modules
+public
+package-lock.json
+branding/**/package-lock.json
+*.md

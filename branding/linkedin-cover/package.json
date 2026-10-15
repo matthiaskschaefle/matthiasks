@@ -1,0 +1,11 @@
+{
+  "name": "matthias-linkedin-cover",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "capture": "node capture.mjs"
+  },
+  "devDependencies": {
+    "playwright-core": "^1.58.2"
+  }
+}
