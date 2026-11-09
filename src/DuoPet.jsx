@@ -1995,10 +1995,10 @@ export default function DuoPetCase() {
                       Patients could not find procedures, prices, or insurance before booking.
                     </div>
                   </Link>
-                  <Link to="/delivery" className="case-pagination-card case-pagination-next">
+                  <Link to="/marcelo-gramas" className="case-pagination-card case-pagination-next">
                     <div className="case-pagination-label">Next case</div>
                     <div className="case-pagination-title">
-                      The New Delivery Experience
+                      What clients needed to see before asking for a quote
                       <span className="case-pagination-arrow">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
                           <path
@@ -2012,7 +2012,7 @@ export default function DuoPetCase() {
                       </span>
                     </div>
                     <div className="case-pagination-desc">
-                      Redesigning the delivery confirmation flow for drivers.
+                      A landscaping website built around the proof clients asked for.
                     </div>
                   </Link>
                 </div>

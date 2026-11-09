@@ -690,7 +690,7 @@ export default function DeliveryCase() {
               {/* ══ PAGINATION ══ */}
               <section className="case-pagination" aria-label="Next and previous case">
                 <div className="case-pagination-inner">
-                  <Link to="/duopet" className="case-pagination-card case-pagination-prev">
+                  <Link to="/marcelo-gramas" className="case-pagination-card case-pagination-prev">
                     <div className="case-pagination-label">Previous case</div>
                     <div className="case-pagination-title">
                       <span className="case-pagination-arrow">
@@ -704,10 +704,10 @@ export default function DeliveryCase() {
                           />
                         </svg>
                       </span>
-                      DuoPet
+                      What clients needed to see before asking for a quote
                     </div>
                     <div className="case-pagination-desc">
-                      Making veterinary appointment scheduling stress-free.
+                      A landscaping website built around the proof clients asked for.
                     </div>
                   </Link>
                   <Link to="/doctor" className="case-pagination-card case-pagination-next">

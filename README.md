@@ -22,9 +22,9 @@ src/
   lib/seo.js           head tags for a route (shared by the browser and the build)
   App.jsx              router built from routes.js; root layout with header, footer, scroll restoration
   Home.jsx, About.jsx, Resume.jsx, Legal.jsx
-  Delivery.jsx, Doctor.jsx, DuoPet.jsx   case studies
+  Delivery.jsx, MarceloGramas.jsx, Doctor.jsx, DuoPet.jsx   case studies
   components/          header, footer, case contents, video, parallax, typewriter
-  components/mockups/  device frames, before/after, hotspots, gallery, lightbox
+  components/mockups/  device frames, before/after, annotated pages, hotspots, gallery, lightbox
   styles/              one stylesheet per page, plus the CSS reset
 scripts/
   vite-plugin-route-html.js   writes one HTML file per route, 404.html and sitemap.xml

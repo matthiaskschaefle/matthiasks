@@ -25,6 +25,7 @@ const PAGES = {
   about: () => import("./About.jsx"),
   resume: () => import("./Resume.jsx"),
   delivery: () => import("./Delivery.jsx"),
+  marcelo: () => import("./MarceloGramas.jsx"),
   doctor: () => import("./Doctor.jsx"),
   duopet: () => import("./DuoPet.jsx"),
   legal: () => import("./Legal.jsx"),

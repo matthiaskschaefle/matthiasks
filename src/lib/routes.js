@@ -77,6 +77,17 @@ export const ROUTES = [
     footerTagline: "Thanks for visiting. Research, interface design, and prototyping.",
   },
   {
+    path: "/marcelo-gramas",
+    page: "marcelo",
+    title: "Landscaping Website UX Case Study | Matthias Schaefle",
+    description:
+      "Paid 2026 client project for Marcelo Gramas, a landscaping company in Brazil: four client interviews, a structure built around three kinds of buyer, and a design system shared by code and Figma.",
+    ogTitle: "What clients needed to see before asking for a quote",
+    ogDescription:
+      "A paid 2026 website for a landscaping company in Brazil, built around the proof clients asked for.",
+    footerTagline: "Thanks for visiting. Research, interface design, and prototyping.",
+  },
+  {
     path: "/doctor",
     page: "doctor",
     title: "Healthcare Website UX Case Study | Matthias Schaefle",

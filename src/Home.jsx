@@ -5,16 +5,28 @@ import { DURATION, EASE, STAGGER } from "@/lib/animations";
 import TypedSectionLabel from "./components/TypedSectionLabel.jsx";
 import { POSITIONING } from "./lib/positioning.js";
 import PlayOnceVideo from "./components/PlayOnceVideo.jsx";
+import { getImageDims } from "./components/mockups/imageDims.js";
 import homeCss from "./styles/home.css?inline";
 
 const MotionLink = motion.create(Link);
 
 /*
  * Editorial work index: no cards, no borders. Each project is a media
- * stage plus a typographic row. The featured project takes the full
- * column; the other two share a two-up grid.
+ * stage plus a typographic row. The two paid, shipped projects with
+ * measured results take the full column, the newest first; the other two share a two-up grid.
  */
 const WORK = [
+  {
+    href: "/marcelo-gramas",
+    context: "Paid client work, research, design system, shipped site, 2026",
+    title: "What clients needed to see before asking for a quote",
+    description:
+      "A landscaping company with 30 years of work and no website. A homeowner, a city buyer, and the professionals on high-end builds each decided on different proof.",
+    result: "8 contacts and 5 new jobs in its first month, 4 client interviews",
+    imageSrc: "/assets/portfolio/2026/10/marcelo-gramas/mockup.webp",
+    imageAlt: "The Marcelo Gramas homepage on desktop and on a phone",
+    featured: true,
+  },
   {
     href: "/delivery",
     context: "Paid client work, product redesign, field research, 2025",
@@ -194,10 +206,14 @@ function WorkItem({
               alt={imageAlt}
             />
           ) : (
+            // Real dimensions reserve the space, so Back restores the scroll
+            // position before the lazy image has loaded.
             <img
               src={imageSrc}
               alt={imageAlt}
-              loading={featured ? "eager" : "lazy"}
+              width={getImageDims(imageSrc, "Home")?.width}
+              height={getImageDims(imageSrc, "Home")?.height}
+              loading="lazy"
               decoding="async"
             />
           )}
@@ -286,10 +302,11 @@ export default function HomePage() {
             </div>
 
             <WorkItem {...WORK[0]} order={0} />
+            <WorkItem {...WORK[1]} order={0} />
 
             <div className="work-pair">
-              <WorkItem {...WORK[1]} order={0} />
-              <WorkItem {...WORK[2]} order={1} />
+              <WorkItem {...WORK[2]} order={0} />
+              <WorkItem {...WORK[3]} order={1} />
             </div>
           </section>
 

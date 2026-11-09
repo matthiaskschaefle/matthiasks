@@ -86,9 +86,18 @@ try {
   await page.goto(base + "/", { waitUntil: "load" });
   const link = page.locator('main a[href="/delivery"]').first();
   await link.scrollIntoViewIfNeeded();
-  const homeY = await page.evaluate(() => window.scrollY);
+  // Read the position at the moment of the click: when the fixed header covers
+  // the link, Playwright scrolls again before clicking, so the position after
+  // scrollIntoViewIfNeeded is not where the reader left the page.
+  await page.evaluate(() =>
+    document.addEventListener("click", () => (window.__clickY = window.scrollY), {
+      capture: true,
+      once: true,
+    }),
+  );
   await link.click();
   await page.waitForURL("**/delivery");
+  const homeY = await page.evaluate(() => window.__clickY);
   await page.waitForTimeout(500);
   check(
     (await page.evaluate(() => window.scrollY)) === 0,
