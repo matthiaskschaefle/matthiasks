@@ -31,6 +31,17 @@ export const resume = {
 
   experience: [
     {
+      title: "UX/UI Designer: Marcelo Gramas website",
+      kind: "Paid freelance client project",
+      period: "2026",
+      summary:
+        "First website for a landscaping company in Brazil, from client research to a live site.",
+      bullets: [
+        "Interviewed 4 clients, which corrected 2 of my starting hypotheses. Designed the site structure for three kinds of buyer, the visual identity and logo, and a design system shared by code and Figma.",
+        "8 contacts through the site and 5 new jobs in the first month, by the client's count.",
+      ],
+    },
+    {
       title: "UX/UI Designer: Delivery workflow",
       kind: "Paid freelance client project, Vulpes Studio",
       period: "2025",
