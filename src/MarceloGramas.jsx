@@ -1,13 +1,9 @@
-import { useEffect, useRef, useState } from "react";
-import { motion, useInView, useReducedMotion, useScroll, useTransform } from "framer-motion";
+import { useEffect, useState } from "react";
+import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion";
 import { Link } from "react-router-dom";
-import {
-  fadeUpImmediate,
-  floatLoop,
-  sectionStagger,
-  viewport as motionViewport,
-} from "@/lib/animations";
+import { fadeUpImmediate, sectionStagger, viewport as motionViewport } from "@/lib/animations";
 import CaseContents, { CaseBackToContents } from "./components/CaseContents.jsx";
+import PlayOnceVideo from "./components/PlayOnceVideo.jsx";
 import AnnotatedMockup from "./components/mockups/AnnotatedMockup.jsx";
 import Figure from "./components/mockups/Figure.jsx";
 import VideoFigure from "./components/mockups/VideoFigure.jsx";
@@ -247,17 +243,13 @@ export default function MarceloGramasCase() {
     typeof window !== "undefined" ? window.innerWidth < 768 : false,
   );
   const { scrollY } = useScroll();
-  // Same layered hero as the other cases: text drifts and fades, the mockup rises.
-  const rawMockupY = useTransform(scrollY, [0, 500], [0, -60]);
+  // Same layered hero as the other cases: text drifts and fades over the film.
   const rawHeroTextY = useTransform(scrollY, [0, 500], [0, 34]);
   const rawBackdropY = useTransform(scrollY, [0, 600], [0, 120]);
   const heroTextFade = useTransform(scrollY, [0, 420], [1, 0]);
   const parallaxDisabled = isHeroMobile || prefersReducedMotion;
-  const heroMockupStyle = parallaxDisabled ? undefined : { y: rawMockupY };
   const heroTextStyle = parallaxDisabled ? undefined : { y: rawHeroTextY, opacity: heroTextFade };
   const heroBackdropStyle = parallaxDisabled ? undefined : { y: rawBackdropY };
-  const heroMockupRef = useRef(null);
-  const heroMockupInView = useInView(heroMockupRef);
   useEffect(() => {
     const updateHeroLayout = () => setIsHeroMobile(window.innerWidth < 768);
     updateHeroLayout();
@@ -288,23 +280,22 @@ export default function MarceloGramasCase() {
               </p>
             </motion.div>
 
-            <figure className="case-hero-mockup-wrap" ref={heroMockupRef}>
-              <motion.div style={heroMockupStyle}>
-                <motion.div
-                  className="case-hero-mockup"
-                  variants={floatLoop}
-                  animate={!prefersReducedMotion && heroMockupInView ? "animate" : undefined}
-                >
-                  <img
-                    src="/assets/portfolio/2026/10/marcelo-gramas/mockup.webp"
-                    alt="The Marcelo Gramas homepage on desktop and on a phone"
-                    loading="eager"
-                    decoding="async"
-                    width="1600"
-                    height="980"
-                  />
-                </motion.div>
-              </motion.div>
+            <figure className="case-film">
+              <PlayOnceVideo
+                className="case-film-frame"
+                sources={[{ src: "/media/marcelo-film.mp4", type: "video/mp4" }]}
+                poster="/media/marcelo-film-poster.jpg"
+                alt="Marcelo Gramas case film: the interviews, the live site, the proof on the homepage, the quote form, and the first month's numbers"
+                threshold={1}
+                requireScroll
+                controls
+                reducedMotion="player"
+                tracks={[{ src: "/media/marcelo-film.en.vtt", srcLang: "en", label: "English" }]}
+              />
+              <figcaption className="case-film-caption">
+                The case in 32 seconds, from the interviews to the first month. Silent, all text on
+                screen.
+              </figcaption>
             </figure>
 
             <motion.p className="case-hero-byline" {...fadeUpImmediate(0, prefersReducedMotion)}>

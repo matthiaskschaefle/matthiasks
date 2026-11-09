@@ -24,7 +24,13 @@ const WORK = [
       "A landscaping company with 30 years of work and no website. A homeowner, a city buyer, and the professionals on high-end builds each decided on different proof.",
     result: "8 contacts and 5 new jobs in its first month, 4 client interviews",
     imageSrc: "/assets/portfolio/2026/10/marcelo-gramas/mockup.webp",
-    imageAlt: "The Marcelo Gramas homepage on desktop and on a phone",
+    imageAlt:
+      "Clip from the Marcelo Gramas case film: the live site on desktop and phone, then 8 contacts and 5 new jobs in the first month",
+    video: {
+      sources: [{ src: "/media/marcelo-short.mp4", type: "video/mp4" }],
+      poster: "/media/marcelo-short-poster.jpg",
+      endFrame: "/media/marcelo-short-endframe.jpg",
+    },
     featured: true,
   },
   {
