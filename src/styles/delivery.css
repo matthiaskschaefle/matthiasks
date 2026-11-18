@@ -88,6 +88,7 @@ img {
 }
 .case-eyebrow {
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: var(--label-1-size);
   text-transform: uppercase;
   letter-spacing: var(--label-1-track);
@@ -95,6 +96,7 @@ img {
 }
 .case-title-main {
   font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
   font-size: 40px;
   font-weight: 500;
   letter-spacing: -0.02em;
@@ -142,6 +144,7 @@ img {
 }
 .case-meta-label {
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: var(--label-1-size);
   text-transform: uppercase;
   letter-spacing: var(--label-1-track);
@@ -176,6 +179,7 @@ img {
 }
 .in-short-label {
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: var(--label-1-size);
   text-transform: uppercase;
   letter-spacing: var(--label-1-track);
@@ -226,6 +230,7 @@ img {
   align-items: baseline;
   align-self: start;
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: var(--label-2-size);
   text-transform: uppercase;
   letter-spacing: var(--label-2-track);
@@ -269,6 +274,7 @@ img {
 }
 .case-subsection-title {
   font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
   font-size: 17px;
   font-weight: 600;
   margin: 18px 0 6px;
@@ -376,6 +382,7 @@ body.is-mobile .research-grid > * {
 }
 .research-title {
   font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
   font-size: 17px;
   font-weight: 700;
   margin: 0 0 10px;
@@ -395,6 +402,7 @@ body.is-mobile .research-grid > * {
 .wireframe-grid-label {
   display: block;
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: var(--label-1-size);
   font-weight: 500;
   text-transform: uppercase;
@@ -501,6 +509,7 @@ body.is-mobile .research-grid > * {
   top: -72px;
   right: 8px;
   font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
   font-size: 300px;
   font-weight: 700;
   line-height: 1;
@@ -521,6 +530,7 @@ body.is-mobile .research-grid > * {
 }
 .quote-band-text {
   font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
   font-size: 19px;
   font-weight: 500;
   line-height: 1.5;
@@ -531,6 +541,7 @@ body.is-mobile .research-grid > * {
 .quote-band-author {
   margin-top: 16px;
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: var(--label-1-size);
   text-transform: uppercase;
   letter-spacing: var(--label-1-track);
@@ -570,6 +581,7 @@ body.is-mobile .research-grid > * {
 }
 .kpi-card-value {
   font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
   font-size: 40px;
   font-weight: 600;
   line-height: 1;
@@ -590,6 +602,7 @@ body.is-mobile .research-grid > * {
 }
 .kpi-card-label {
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 13px;
   font-weight: 600;
   color: var(--ink-900);
@@ -613,6 +626,7 @@ body.is-mobile .research-grid > * {
 }
 .projection-block-label {
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: var(--label-1-size);
   font-weight: 500;
   text-transform: uppercase;
@@ -622,6 +636,7 @@ body.is-mobile .research-grid > * {
 }
 .projection-block-value {
   font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
   font-size: 28px;
   font-weight: 600;
   letter-spacing: -0.02em;
@@ -711,6 +726,7 @@ body.is-mobile .research-grid > * {
 }
 .context-card-label {
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: var(--label-1-size);
   font-weight: 500;
   text-transform: uppercase;
@@ -740,6 +756,7 @@ body.is-mobile .research-grid > * {
 }
 .context-card-number {
   font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
   font-size: 52px;
   font-weight: 600;
   line-height: 1;
@@ -748,6 +765,7 @@ body.is-mobile .research-grid > * {
 }
 .context-card-unit {
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: var(--label-1-size);
   font-weight: 500;
   text-transform: uppercase;
@@ -803,6 +821,7 @@ body.is-mobile .research-grid > * {
 }
 .case-pagination-label {
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: var(--label-1-size);
   text-transform: uppercase;
   letter-spacing: var(--label-1-track);
@@ -815,6 +834,7 @@ body.is-mobile .research-grid > * {
 }
 .case-pagination-title {
   font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
   font-size: 18px;
   font-weight: 600;
   color: var(--ink-900);
@@ -900,6 +920,7 @@ body.is-mobile .desktop-only {
   display: inline-flex;
   align-items: center;
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: var(--label-1-size);
   font-weight: 500;
   text-transform: uppercase;
@@ -931,6 +952,7 @@ body.is-mobile .desktop-only {
 }
 .alt-card-tag {
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: var(--label-1-size);
   font-weight: 500;
   text-transform: uppercase;
@@ -939,6 +961,7 @@ body.is-mobile .desktop-only {
 }
 .alt-card-title {
   font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
   font-size: 16px;
   font-weight: 600;
   color: var(--ink-900);
@@ -984,6 +1007,7 @@ body.is-mobile .desktop-only {
   color: var(--ink-900);
   text-decoration: none;
   font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
   font-size: 13px;
   font-weight: 600;
   letter-spacing: -0.01em;

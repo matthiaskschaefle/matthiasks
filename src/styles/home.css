@@ -171,7 +171,8 @@ img {
 
 .hero-title {
   font-family: var(--font-display);
-  font-size: 64px;
+  font-stretch: var(--display-stretch);
+  font-size: 58px;
   font-weight: 700;
   color: var(--ink-900);
   margin: 0;
@@ -182,6 +183,7 @@ img {
 .hero-role {
   margin: 0;
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-weight: 500;
   font-size: 15px;
   letter-spacing: 0.16em;
@@ -277,6 +279,7 @@ img {
 
 .section-label {
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.2em;
@@ -385,6 +388,7 @@ img {
   background: rgba(15, 14, 12, 0.62);
   color: var(--ink-50);
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 10px;
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -421,6 +425,7 @@ img {
 
 .work-index {
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 12px;
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -429,6 +434,7 @@ img {
 
 .work-context {
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.14em;
@@ -445,6 +451,7 @@ img {
 
 .work-title {
   font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
   font-size: 30px;
   font-weight: 600;
   letter-spacing: -0.015em;
@@ -513,6 +520,7 @@ img {
 
 .work-result {
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 12px;
   letter-spacing: 0.04em;
   color: var(--brand-700);
@@ -586,6 +594,7 @@ img {
 .tools-group-label {
   margin: 8px 0 0;
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: var(--label-2-size);
   letter-spacing: var(--label-2-track);
   text-transform: uppercase;
@@ -629,6 +638,7 @@ img {
 }
 .tool-name {
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 11px;
   line-height: 1.2;
   letter-spacing: 0.02em;

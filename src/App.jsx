@@ -50,6 +50,7 @@ const eyebrowStyle = {
 
 const headingStyle = {
   fontFamily: "var(--font-display)",
+  fontStretch: "var(--display-stretch)",
   fontSize: "clamp(34px, 6vw, 56px)",
   color: "var(--ink-900)",
   margin: "12px 0",

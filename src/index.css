@@ -33,22 +33,6 @@
 }
 
 @font-face {
-  font-family: "Inter";
-  src: url("/assets/fonts/inter-400-600-latin.woff2") format("woff2");
-  font-style: normal;
-  font-weight: 400 600;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "JetBrains Mono";
-  src: url("/assets/fonts/jetbrains-mono-400-500-latin.woff2") format("woff2");
-  font-style: normal;
-  font-weight: 400 500;
-  font-display: swap;
-}
-
-@font-face {
   font-family: "Montserrat";
   src: url("/assets/fonts/montserrat-400-700-latin.woff2") format("woff2");
   font-style: normal;
@@ -57,25 +41,26 @@
 }
 
 @font-face {
-  font-family: "Poppins";
-  src: url("/assets/fonts/poppins-500-latin.woff2") format("woff2");
+  font-family: "Mona Sans";
+  src: url("/assets/fonts/mona-sans-latin-standard.woff2") format("woff2");
   font-style: normal;
-  font-weight: 500;
+  font-weight: 200 900;
+  font-stretch: 75% 125%;
   font-display: swap;
 }
 
 @font-face {
-  font-family: "Space Grotesk";
-  src: url("/assets/fonts/space-grotesk-500-700-latin.woff2") format("woff2");
+  font-family: "Figtree";
+  src: url("/assets/fonts/figtree-latin-wght.woff2") format("woff2");
   font-style: normal;
-  font-weight: 500 700;
+  font-weight: 300 900;
   font-display: swap;
 }
 
 /* ════════════════════════════════════════════════════════════
    Design tokens: single source of truth
    Palette: warm ink neutrals / forest green brand / gold accent
-   Type: Space Grotesk (display) / Inter (body) / JetBrains Mono (labels)
+   Type: Mona Sans semi-expanded (display) / Figtree (body and labels), same as the Mappe design system
    ════════════════════════════════════════════════════════════ */
 :root {
   --ink-50: #fafaf9;
@@ -116,9 +101,11 @@
   --accent: var(--brand-600);
   --accent-rgb: 46, 73, 52;
 
-  --font-display: "Space Grotesk", system-ui, sans-serif;
-  --font-body: "Inter", system-ui, -apple-system, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  --font-display: "Mona Sans", system-ui, sans-serif;
+  --display-stretch: 112.5%;
+  --font-body: "Figtree", system-ui, -apple-system, sans-serif;
+  /* Labels and data: Figtree with tabular figures (no monospace face). */
+  --font-mono: "Figtree", system-ui, sans-serif;
 
   /* W3: grammar tokens (elevation, labels, measure) */
   --hairline: none;
@@ -217,6 +204,7 @@ body {
   border-radius: var(--radius-control);
   border: none;
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-weight: 500;
   text-transform: lowercase;
   letter-spacing: 0.04em;
@@ -398,6 +386,7 @@ body {
   gap: 20px;
   flex: 1 1 auto;
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 13px;
   text-transform: lowercase;
   letter-spacing: 0.06em;
@@ -493,6 +482,7 @@ body {
 }
 .footer-email-label {
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.18em;
@@ -547,6 +537,7 @@ body {
   justify-content: space-between;
   gap: 16px;
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 11px;
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -628,6 +619,7 @@ html {
 }
 .case-contents-summary {
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: var(--label-1-size);
   text-transform: uppercase;
   letter-spacing: var(--label-1-track);
@@ -669,6 +661,7 @@ html {
 }
 .case-contents-list a {
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 13px;
   letter-spacing: 0.04em;
   text-transform: lowercase;
@@ -691,6 +684,7 @@ html {
 }
 .case-contents-back a {
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: var(--label-1-size);
   letter-spacing: var(--label-1-track);
   text-transform: uppercase;
@@ -775,6 +769,7 @@ html {
 }
 .pinned-story-step-label {
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 11px;
   text-transform: uppercase;
   letter-spacing: 0.2em;
@@ -793,6 +788,7 @@ html {
 }
 .pinned-story-title {
   font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
   font-size: 30px;
   font-weight: 600;
   letter-spacing: -0.01em;
@@ -913,6 +909,7 @@ html {
   background: var(--ink-900);
   color: var(--ink-50);
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 12px;
   padding: 10px 14px;
   border-radius: 8px;

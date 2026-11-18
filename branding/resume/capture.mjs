@@ -103,7 +103,7 @@ try {
       intercambio: /Late 2014 to early 2016/.test(text),
       wbsAlemao: /Deutsch für den Beruf/.test(text),
       semFaseNaoIniciada: !/has not started|comes next/.test(text),
-      alemaoB2: /German \(B2, telc B1 certified\)/.test(text),
+      alemaoB2: /German \(B2\)/.test(text),
       links: {
         tel: hrefs.includes("tel:+4915205830511"),
         mail: hrefs.includes("mailto:matthias.k.schaefle@gmail.com"),

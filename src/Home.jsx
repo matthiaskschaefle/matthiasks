@@ -261,7 +261,7 @@ export default function HomePage() {
                     />
                   </defs>
                   <text
-                    fontFamily="'JetBrains Mono', ui-monospace, monospace"
+                    fontFamily="Figtree, system-ui, sans-serif"
                     fontSize="10"
                     fontWeight="500"
                     fill="#1A1815"

@@ -46,7 +46,7 @@ export const resume = {
       kind: "Paid freelance client project, Vulpes Studio",
       period: "2025",
       summary:
-        "Redesign of a delivery confirmation flow for a regional delivery company in Brazil.",
+        "Redesign of a delivery confirmation flow for a last-mile delivery app (client under NDA).",
       bullets: [
         "I led the field sessions and designed the receiver confirmation flow.",
         "Field research with 5 couriers. Pilot with 12 drivers over three weeks.",
@@ -94,7 +94,7 @@ export const resume = {
     },
     {
       title: "Languages",
-      body: "Portuguese (native), English (fluent), German (B2, telc B1 certified).",
+      body: "Portuguese (native), English (fluent), German (B2).",
     },
   ],
 
@@ -102,8 +102,8 @@ export const resume = {
     {
       name: "AI Software Development",
       where: "WBS Coding School, Berlin",
-      when: "2026 to present",
-      note: "Deutsch für den Beruf at WBS Coding School, until November 2026.",
+      when: "Aug 2026 to Mar 2027",
+      note: "Combined with Deutsch für den Beruf.",
     },
     {
       name: "Google UX Design Certificate",

@@ -78,6 +78,7 @@
 .story-hero-line {
   margin: 22px 0 0;
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: clamp(18px, 2.6vw, 24px);
   line-height: 1.45;
   min-height: 2.9em;
@@ -89,6 +90,7 @@
 .story-hero-line--static {
   min-height: 0;
   font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
   font-size: 32px;
   font-weight: 500;
   letter-spacing: -0.03em;

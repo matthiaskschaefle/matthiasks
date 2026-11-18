@@ -77,7 +77,7 @@ export default function AboutPage() {
                 </p>
                 <p>
                   Academic exchange in Munich, late 2014 to early 2016. I work in Portuguese and
-                  English. German is at B2, with a telc B1 certificate.
+                  English, and German at B2.
                 </p>
               </div>
             </div>
@@ -160,7 +160,8 @@ export default function AboutPage() {
                   <div>
                     <h3 className="about-skill-title">Currently studying</h3>
                     <p className="about-skill-note">
-                      Deutsch für den Beruf at WBS Coding School, until November 2026.
+                      AI Software Development with Deutsch für den Beruf at WBS Coding School, until
+                      March 2027.
                     </p>
                   </div>
                   <div>
@@ -168,7 +169,7 @@ export default function AboutPage() {
                     <ul className="about-skill-list">
                       <li className="about-skill-chip">Portuguese (native)</li>
                       <li className="about-skill-chip">English (fluent)</li>
-                      <li className="about-skill-chip">German (B2, telc B1 certified)</li>
+                      <li className="about-skill-chip">German (B2)</li>
                     </ul>
                   </div>
                 </div>
