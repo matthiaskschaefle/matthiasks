@@ -48,6 +48,7 @@
   position: relative;
   z-index: 1;
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: var(--label-1-size);
   text-transform: uppercase;
   letter-spacing: var(--label-1-track);
@@ -58,6 +59,7 @@
   position: relative;
   z-index: 1;
   font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
   font-size: 40px;
   font-weight: 500;
   letter-spacing: -0.02em;
@@ -92,6 +94,7 @@
   margin: 0;
   padding-top: 4px;
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: var(--label-2-size);
   font-weight: 400;
   text-transform: uppercase;
@@ -105,6 +108,7 @@
 }
 .legal-h3 {
   font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
   font-size: 21px;
   font-weight: 500;
   letter-spacing: -0.01em;
@@ -145,6 +149,7 @@
 }
 .legal-address-name {
   font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
   font-size: 19px;
   font-weight: 500;
   color: var(--ink);
@@ -207,6 +212,7 @@
 }
 .legal-fact-value {
   font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
   font-size: 38px;
   font-weight: 600;
   line-height: 1;
@@ -215,6 +221,7 @@
 }
 .legal-fact-label {
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 12px;
   font-weight: 600;
   color: var(--ink-900);
@@ -237,6 +244,7 @@
 
 .legal-updated {
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: var(--label-1-size);
   text-transform: uppercase;
   letter-spacing: var(--label-1-track);

@@ -81,6 +81,7 @@ img {
 
 .case-title-main {
   font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
   font-size: 40px;
   font-weight: 500;
   letter-spacing: -0.02em;
@@ -124,6 +125,7 @@ img {
 
 .case-meta-label {
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: var(--label-1-size);
   text-transform: uppercase;
   letter-spacing: var(--label-1-track);
@@ -151,6 +153,7 @@ img {
 
 .in-short-label {
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: var(--label-1-size);
   text-transform: uppercase;
   letter-spacing: var(--label-1-track);
@@ -246,6 +249,7 @@ img {
 
 .case-section-label {
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: var(--label-2-size);
   text-transform: uppercase;
   letter-spacing: var(--label-2-track);
@@ -305,6 +309,7 @@ img {
 
 .case-subsection-title {
   font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
   font-size: 17px;
   font-weight: 600;
   margin: 18px 0 6px;
@@ -498,6 +503,7 @@ img {
 }
 .case-pagination-label {
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: var(--label-1-size);
   text-transform: uppercase;
   letter-spacing: var(--label-1-track);
@@ -512,6 +518,7 @@ img {
   align-items: center;
   gap: 8px;
   font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
   font-size: 15px;
   font-weight: 600;
   color: var(--ink-900);
@@ -659,6 +666,7 @@ img {
 }
 .mg-table th {
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: var(--label-1-size);
   font-weight: 500;
   letter-spacing: var(--label-1-track);
@@ -675,6 +683,7 @@ img {
 }
 .mg-table-index {
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 13px;
   color: var(--brand-600);
   width: 48px;
@@ -702,6 +711,7 @@ img {
 .mg-findings h4 {
   margin: 0 0 6px;
   font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
   font-size: 17px;
   font-weight: 600;
   color: var(--ink-900);
@@ -710,6 +720,7 @@ img {
   content: "0" counter(finding);
   margin-right: 12px;
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: 13px;
   font-weight: 500;
   color: var(--brand-600);
@@ -720,6 +731,7 @@ img {
 .case-section-body .mg-findings .mg-findings-meta {
   margin-top: 8px;
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: var(--label-1-size);
   letter-spacing: var(--label-1-track);
   text-transform: uppercase;
@@ -742,6 +754,7 @@ img {
 .mg-counts dd {
   margin: 0;
   font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
   font-size: 26px;
   font-weight: 600;
   line-height: 1.2;
@@ -867,6 +880,7 @@ img {
 }
 .mg-sitemap-root strong {
   font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
   font-size: 20px;
   font-weight: 600;
   color: var(--ink-900);
@@ -915,6 +929,7 @@ img {
 .mg-sitemap-pages h4 {
   margin: 0;
   font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
   font-size: 17px;
   font-weight: 600;
   color: var(--ink-900);
@@ -922,6 +937,7 @@ img {
 .mg-sitemap .mg-sitemap-route {
   margin-bottom: 8px;
   font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
   font-size: var(--label-1-size);
   color: var(--brand-600);
 }
@@ -1043,6 +1059,7 @@ img {
   order: -1;
   margin: 0;
   font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
   font-size: 40px;
   font-weight: 600;
   line-height: 1;
@@ -1070,6 +1087,7 @@ img {
 .case-section-body .mg-quote blockquote p {
   margin: 0;
   font-family: var(--font-display);
+  font-stretch: var(--display-stretch);
   font-size: 20px;
   line-height: 1.5;
   color: var(--ink-900);
