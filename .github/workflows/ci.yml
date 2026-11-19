@@ -2,6 +2,8 @@ name: CI
 
 on:
   push:
+    # The deploy branch holds only built files, nothing to verify.
+    branches-ignore: [deploy]
   pull_request:
 
 permissions:
