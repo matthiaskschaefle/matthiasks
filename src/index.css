@@ -148,7 +148,7 @@ body {
   background: var(--bg);
 }
 
-/* Shared typewriter treatment for case-study section labels. */
+/* Shared layout for case-study section labels (they used to type themselves). */
 .case-section-label--typed {
   min-height: 1.3em;
   display: flex;

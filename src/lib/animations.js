@@ -2,7 +2,7 @@
 export const DURATION = {
   fast: 0.25,
   base: 0.4,
-  slow: 0.6,
+  slow: 0.45,
   float: 3.0,
 };
 
@@ -54,16 +54,10 @@ export const fadeScale = {
   },
 };
 
+// Kept for compatibility. Mockups used to bob up and down forever; motion
+// that never stops pulls the eye from the text, so they now stay still.
 export const floatLoop = {
-  animate: {
-    y: [0, -10, 0],
-    transition: {
-      duration: DURATION.float,
-      ease: EASE.inOut,
-      repeat: Infinity,
-      repeatType: "loop",
-    },
-  },
+  animate: { y: 0 },
 };
 
 // Section choreography: the section itself fades in while any motion
