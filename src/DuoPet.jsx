@@ -420,7 +420,7 @@ function SolutionComparisons({ prefersReducedMotion }) {
               animate={
                 prefersReducedMotion ? undefined : { opacity: [0.68, 1, 0.68], scale: [1, 0.96, 1] }
               }
-              transition={{ duration: 2.2, repeat: Infinity, ease: "easeInOut" }}
+              transition={{ duration: 2.2, repeat: 1, ease: "easeInOut" }}
             >
               <img
                 src="/assets/portfolio/2026/03/duopet-icons/back.png"
@@ -1162,7 +1162,7 @@ export function DesignProcessDiagram({ prefersReducedMotion }) {
               }
               transition={{
                 duration: 2.8,
-                repeat: Infinity,
+                repeat: 1,
                 ease: "easeInOut",
                 delay: index * 0.18,
               }}

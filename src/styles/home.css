@@ -114,6 +114,20 @@ img {
   height: 238px;
   transform-origin: center;
   animation: spin-slow 18s linear infinite;
+  animation-play-state: paused;
+}
+
+/* The ring turns only while someone is looking at the portrait. */
+@media (hover: hover) {
+  .hero-visual:hover .hero-badge-ring svg {
+    animation-play-state: running;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-badge-ring svg {
+    animation: none;
+  }
 }
 
 @keyframes spin-slow {
