@@ -938,3 +938,15 @@ html {
 .typs-card {
   box-shadow: var(--shadow-fine);
 }
+
+/* Display titles wrap evenly, so no lone word ends up on the last line. */
+h1,
+h2,
+h3 {
+  text-wrap: balance;
+}
+
+/* Breathing room between a case title and the line under it. */
+.case-title-main + .case-subtitle {
+  margin-top: 12px;
+}

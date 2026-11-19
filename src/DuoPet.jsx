@@ -1214,12 +1214,10 @@ export default function DuoPetCase() {
   // while the mockup rises in the opposite direction (parallax preserved).
   const rawMockupY = useTransform(scrollY, [0, 500], [0, -60]);
   const rawTextY = useTransform(scrollY, [0, 500], [0, 40]);
-  const rawBackdropY = useTransform(scrollY, [0, 600], [0, 120]);
   const heroTextFade = useTransform(scrollY, [0, 420], [1, 0]);
   const parallaxDisabled = isHeroMobile || prefersReducedMotion;
   const heroMockupStyle = parallaxDisabled ? undefined : { y: rawMockupY };
   const heroTextStyle = parallaxDisabled ? undefined : { y: rawTextY, opacity: heroTextFade };
-  const heroBackdropStyle = parallaxDisabled ? undefined : { y: rawBackdropY };
   // Reduced-motion variant: translate-based reveals collapse to plain fades.
   // Float loop only runs while the hero mockup is on screen.
   const heroMockupRef = useRef(null);
@@ -1258,19 +1256,11 @@ export default function DuoPetCase() {
         <div className="page-inner">
           {/* HERO CASE */}
           <section className="case-hero">
-            <motion.div
-              className="case-hero-backdrop"
-              aria-hidden="true"
-              style={heroBackdropStyle}
-            />
-            <motion.p className="case-label" style={heroTextStyle}>
-              EDUCATIONAL COURSE PROJECT, 2023
-            </motion.p>
             <motion.h1 className="case-title-main" style={heroTextStyle}>
-              DuoPet - Veterinary Appointment Prototype
+              DuoPet: a veterinary appointment prototype
             </motion.h1>
             <motion.p className="case-subtitle" style={heroTextStyle}>
-              A UX course prototype for booking vet visits, not a launched product.
+              A UX course project from 2023 for booking vet visits, not a launched product.
             </motion.p>
 
             <figure className="case-hero-mockup-wrap" ref={heroMockupRef}>

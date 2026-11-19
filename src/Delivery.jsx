@@ -97,8 +97,6 @@ export default function DeliveryCase() {
         <div className="page-inner">
           {/* ── HERO ── */}
           <section className="case-hero">
-            <div className="case-hero-backdrop" aria-hidden="true" />
-            <p className="case-eyebrow">CASE STUDY / DELIVERY</p>
             <h1 className="case-title-main">The New Delivery Experience</h1>
             <p className="case-engagement">
               Paid freelance client project via Vulpes Studio, 2025. A regional delivery company in

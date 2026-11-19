@@ -245,11 +245,9 @@ export default function MarceloGramasCase() {
   const { scrollY } = useScroll();
   // Same layered hero as the other cases: text drifts and fades over the film.
   const rawHeroTextY = useTransform(scrollY, [0, 500], [0, 34]);
-  const rawBackdropY = useTransform(scrollY, [0, 600], [0, 120]);
   const heroTextFade = useTransform(scrollY, [0, 420], [1, 0]);
   const parallaxDisabled = isHeroMobile || prefersReducedMotion;
   const heroTextStyle = parallaxDisabled ? undefined : { y: rawHeroTextY, opacity: heroTextFade };
-  const heroBackdropStyle = parallaxDisabled ? undefined : { y: rawBackdropY };
   useEffect(() => {
     const updateHeroLayout = () => setIsHeroMobile(window.innerWidth < 768);
     updateHeroLayout();
@@ -264,19 +262,13 @@ export default function MarceloGramasCase() {
       <main id="main" className="page">
         <div className="page-inner">
           <section className="case-hero">
-            <motion.div
-              className="case-hero-backdrop"
-              aria-hidden="true"
-              style={heroBackdropStyle}
-            />
             <motion.div style={heroTextStyle}>
-              <p className="case-label">PAID CLIENT PROJECT, 2026</p>
               <h1 className="case-title-main">
                 What clients needed to see before asking for a quote
               </h1>
               <p className="case-subtitle">
-                Paid work for Marcelo Gramas, a garden and landscaping company in Minas Gerais,
-                Brazil, active since 1996.
+                Paid work in 2026 for Marcelo Gramas, a garden and landscaping company in Minas
+                Gerais, Brazil, active since 1996.
               </p>
             </motion.div>
 

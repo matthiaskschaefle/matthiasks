@@ -23,27 +23,6 @@
   position: relative;
   margin-bottom: 8px;
 }
-.legal-hero-backdrop {
-  position: absolute;
-  top: -160px;
-  right: -200px;
-  width: 520px;
-  height: 520px;
-  border-radius: 50%;
-  pointer-events: none;
-  z-index: 0;
-  background: radial-gradient(
-    circle at 35% 35%,
-    rgba(var(--accent-rgb), 0.1) 0%,
-    rgba(var(--accent-rgb), 0.045) 40%,
-    transparent 70%
-  );
-}
-@media (max-width: 900px) {
-  .legal-hero-backdrop {
-    display: none;
-  }
-}
 .legal-eyebrow {
   position: relative;
   z-index: 1;

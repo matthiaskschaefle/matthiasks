@@ -52,22 +52,6 @@ img {
     linear-gradient(180deg, rgba(250, 250, 249, 0) 0%, var(--bg) 64%);
 }
 
-.home-page::before {
-  content: "";
-  position: absolute;
-  inset: 0 0 auto;
-  height: 760px;
-  z-index: -1;
-  pointer-events: none;
-  opacity: 0.34;
-  background-image:
-    linear-gradient(rgba(26, 24, 21, 0.055) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(26, 24, 21, 0.055) 1px, transparent 1px);
-  background-size: 48px 48px;
-  -webkit-mask-image: linear-gradient(to bottom, #000 0%, transparent 88%);
-  mask-image: linear-gradient(to bottom, #000 0%, transparent 88%);
-}
-
 @media (max-width: 768px) {
   .page {
     min-height: auto;

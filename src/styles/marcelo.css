@@ -56,29 +56,6 @@ img {
   position: relative;
 }
 
-.case-hero-backdrop {
-  position: absolute;
-  top: -140px;
-  right: -180px;
-  width: 560px;
-  height: 560px;
-  border-radius: 50%;
-  background: radial-gradient(
-    circle at 35% 35%,
-    rgba(var(--accent-rgb), 0.1) 0%,
-    rgba(var(--accent-rgb), 0.045) 40%,
-    transparent 70%
-  );
-  pointer-events: none;
-  z-index: 0;
-}
-
-@media (max-width: 900px) {
-  .case-hero-backdrop {
-    display: none;
-  }
-}
-
 .case-title-main {
   font-family: var(--font-display);
   font-stretch: var(--display-stretch);
@@ -1081,8 +1058,8 @@ img {
 
 .mg-quote {
   margin: 28px 0 8px;
-  padding-left: 20px;
-  border-left: 2px solid var(--brand-600);
+  padding-top: 16px;
+  border-top: 1px solid var(--ink-200);
 }
 .case-section-body .mg-quote blockquote p {
   margin: 0;
