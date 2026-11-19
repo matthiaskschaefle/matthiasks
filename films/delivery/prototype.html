@@ -1,0 +1,893 @@
+<!doctype html>
+<!--
+  Protótipo do fluxo redesenhado do Delivery, só para o filme.
+  Tudo aqui é inventado: códigos, nomes, endereços e fotos são desenhos.
+  Nada do cliente aparece (NDA). Estados de início: #route, #form, #photos.
+-->
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <title>Delivery, protótipo do filme</title>
+    <style>
+      @font-face {
+        font-family: Display;
+        src: url(../../public/assets/fonts/mona-sans-latin-standard.woff2);
+        font-weight: 200 900;
+        font-stretch: 75% 125%;
+      }
+      @font-face {
+        font-family: Body;
+        src: url(../../public/assets/fonts/figtree-latin-wght.woff2);
+        font-weight: 300 900;
+      }
+      :root {
+        --blue: #2563eb;
+        --blue-50: #eef3ff;
+        --ink: #16181d;
+        --muted: #6b7280;
+        --line: #e7e9ee;
+        --chip: #f2f4f7;
+        --warn: #d9480f;
+        --ok: #15803d;
+      }
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      html,
+      body {
+        width: 1024px;
+        height: 576px;
+        overflow: hidden;
+      }
+      body {
+        font-family: Body, system-ui, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        background: #eef1f6;
+        color: var(--ink);
+      }
+
+      /* Palco: texto à esquerda, celular no meio, espaço para as notas à direita */
+      .copy {
+        position: absolute;
+        left: 64px;
+        top: 0;
+        bottom: 0;
+        width: 360px;
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+      }
+      .copy .eyebrow {
+        font: 600 11px/1.2 Body;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: #4b5563;
+        margin-bottom: 14px;
+      }
+      .copy h2 {
+        font: 760 38px/1.06 Display;
+        font-stretch: 112.5%;
+        letter-spacing: -0.02em;
+        white-space: pre-line;
+      }
+      .copy p {
+        font: 500 15px/1.5 Body;
+        color: #374151;
+        margin-top: 16px;
+        max-width: 30ch;
+      }
+      .copy .swap {
+        transition: opacity 0.25s;
+      }
+      .copy.fading .swap {
+        opacity: 0;
+      }
+
+      .phone {
+        position: absolute;
+        left: 470px;
+        top: 16px;
+        width: 272px;
+        height: 544px;
+        border-radius: 40px;
+        background: #0d0f14;
+        padding: 8px;
+        box-shadow: 0 30px 60px -22px rgba(15, 27, 61, 0.5);
+      }
+      .screen {
+        position: relative;
+        width: 100%;
+        height: 100%;
+        border-radius: 32px;
+        overflow: hidden;
+        background: #fff;
+      }
+      .status {
+        height: 26px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 0 20px;
+        font: 600 10px Body;
+        color: #111;
+      }
+      .view {
+        position: absolute;
+        inset: 26px 0 0 0;
+        display: flex;
+        flex-direction: column;
+        background: #fff;
+        transition: transform 0.28s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .view.off {
+        transform: translateX(100%);
+      }
+      .view.under {
+        transform: translateX(-24%);
+      }
+      .bar {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        padding: 10px 14px;
+        font: 650 14px Body;
+        border-bottom: 1px solid var(--line);
+      }
+      .bar svg {
+        flex: none;
+      }
+      .body {
+        flex: 1;
+        overflow: hidden;
+        padding: 0 14px;
+      }
+
+      /* Rota */
+      .tabs {
+        display: flex;
+        gap: 12px;
+        padding: 8px 12px 0;
+        font: 600 10.5px Body;
+        white-space: nowrap;
+        color: var(--muted);
+        border-bottom: 1px solid var(--line);
+      }
+      .tabs span {
+        padding-bottom: 8px;
+      }
+      .tabs .on {
+        color: var(--ink);
+        box-shadow: inset 0 -2px 0 var(--ink);
+      }
+      .route {
+        background: #f5f6f8;
+        padding: 8px 10px;
+      }
+      .stop {
+        background: #fff;
+        border-radius: 12px;
+        padding: 10px 12px;
+        margin-bottom: 8px;
+        box-shadow: 0 1px 0 rgba(0, 0, 0, 0.04);
+      }
+      .stop h4 {
+        font: 700 12px Body;
+        display: flex;
+        justify-content: space-between;
+      }
+      .stop .code {
+        font: 600 10.5px Body;
+        color: var(--muted);
+        margin: 4px 0 6px;
+      }
+      .stop .addr {
+        font: 600 11.5px/1.3 Body;
+      }
+      .stop .who {
+        display: flex;
+        justify-content: space-between;
+        align-items: end;
+        margin-top: 6px;
+        font: 500 10.5px/1.35 Body;
+        color: var(--muted);
+      }
+      .tag {
+        display: inline-block;
+        margin-top: 4px;
+        font: 600 9.5px Body;
+        color: #374151;
+        border: 1px solid #c9ced8;
+        border-radius: 5px;
+        padding: 1px 6px;
+      }
+      .done-badge {
+        font: 700 9.5px Body;
+        color: var(--ok);
+        background: #e8f6ee;
+        border-radius: 5px;
+        padding: 2px 6px;
+      }
+
+      /* Pedido */
+      .card {
+        border: 1px solid var(--line);
+        border-radius: 12px;
+        padding: 12px;
+        margin-top: 10px;
+      }
+      .card .k {
+        font: 600 10px Body;
+        color: var(--muted);
+        text-transform: uppercase;
+        letter-spacing: 0.06em;
+      }
+      .card .v {
+        font: 650 13px/1.3 Body;
+        margin-top: 4px;
+      }
+      .actions {
+        display: flex;
+        gap: 8px;
+        padding: 10px 14px 16px;
+      }
+      .btn {
+        flex: 1;
+        height: 40px;
+        border-radius: 10px;
+        font: 700 13px Body;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border: 1.5px solid var(--ink);
+        background: #fff;
+        color: var(--ink);
+      }
+      .btn.primary {
+        background: var(--blue);
+        border-color: var(--blue);
+        color: #fff;
+      }
+      .btn.locked {
+        background: #fff;
+        border-color: #c7d2fe;
+        color: #a5b4fc;
+      }
+
+      /* Prova de entrega */
+      .row {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        min-height: 36px;
+        border-bottom: 1px solid var(--line);
+        font: 600 11.5px Body;
+      }
+      .row .req::after {
+        content: " *";
+        color: var(--warn);
+      }
+      .row .val {
+        font: 650 11.5px Body;
+        display: flex;
+        align-items: center;
+        gap: 6px;
+        white-space: nowrap;
+      }
+      .row .val.empty {
+        color: var(--muted);
+        font-weight: 500;
+      }
+      .from-route {
+        font: 700 8.5px Body;
+        color: var(--blue);
+        background: var(--blue-50);
+        border-radius: 4px;
+        padding: 2px 5px;
+        letter-spacing: 0.02em;
+      }
+      .seg {
+        display: flex;
+        gap: 6px;
+        padding: 6px 0 8px;
+        border-bottom: 1px solid var(--line);
+      }
+      .seg span {
+        flex: 1;
+        height: 28px;
+        border-radius: 7px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font: 650 11px Body;
+        background: var(--chip);
+        color: #9aa1ad;
+      }
+      .seg .on {
+        background: #fff;
+        border: 1.5px solid var(--blue);
+        color: var(--blue);
+      }
+      .photos-h {
+        display: flex;
+        justify-content: space-between;
+        font: 600 11.5px Body;
+        padding-top: 8px;
+      }
+      .photos-h .req::after {
+        content: " *";
+        color: var(--warn);
+      }
+      .slots {
+        display: flex;
+        gap: 7px;
+        margin: 8px 0 6px;
+      }
+      .slot {
+        position: relative;
+        width: 62px;
+        height: 62px;
+        border: 1.5px dashed #c3c8d2;
+        border-radius: 8px;
+        overflow: hidden;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: #9aa1ad;
+      }
+      .slot.filled {
+        border: none;
+      }
+      .slot svg.ph {
+        width: 100%;
+        height: 100%;
+        display: block;
+      }
+      .slot .chk {
+        position: absolute;
+        right: 3px;
+        bottom: 3px;
+        width: 16px;
+        height: 16px;
+        border-radius: 50%;
+        background: var(--ok);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .hints {
+        font: 500 9.5px/1.45 Body;
+        color: var(--muted);
+      }
+      .hints b {
+        font-weight: 650;
+        color: #374151;
+      }
+      .toast {
+        position: absolute;
+        left: 14px;
+        right: 14px;
+        bottom: 70px;
+        background: #1f2937;
+        color: #fff;
+        border-radius: 10px;
+        padding: 9px 11px;
+        font: 600 11px/1.35 Body;
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        opacity: 0;
+        transform: translateY(8px);
+        transition:
+          opacity 0.2s,
+          transform 0.2s;
+      }
+      .toast.show {
+        opacity: 1;
+        transform: none;
+      }
+      .toast.warn i {
+        background: #f59f00;
+      }
+      .toast i {
+        flex: none;
+        width: 18px;
+        height: 18px;
+        border-radius: 50%;
+        background: var(--ok);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font: 800 11px Body;
+        font-style: normal;
+        color: #111;
+      }
+      .flash {
+        position: absolute;
+        inset: 0;
+        background: #fff;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.12s;
+      }
+      .flash.on {
+        opacity: 0.9;
+      }
+
+      /* Folha do recebedor */
+      .scrim {
+        position: absolute;
+        inset: 0;
+        background: rgba(10, 14, 25, 0.42);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.22s;
+      }
+      .scrim.on {
+        opacity: 1;
+        pointer-events: auto;
+      }
+      .sheet {
+        position: absolute;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: #fff;
+        border-radius: 18px 18px 0 0;
+        padding: 12px 14px 18px;
+        transform: translateY(105%);
+        transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+      }
+      .sheet.on {
+        transform: none;
+      }
+      .sheet h3 {
+        font: 700 13px Body;
+        display: flex;
+        justify-content: space-between;
+        padding-bottom: 8px;
+        border-bottom: 1px solid var(--line);
+      }
+      .sheet h5 {
+        font: 650 11px Body;
+        color: #6b7280;
+        margin: 10px 0 6px;
+      }
+      .grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 6px;
+      }
+      .grid span {
+        height: 30px;
+        border-radius: 7px;
+        background: var(--chip);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+        font: 600 10px/1.1 Body;
+        color: #4b5563;
+        padding: 0 4px;
+      }
+      .grid span.pick {
+        background: var(--blue-50);
+        color: var(--blue);
+        box-shadow: inset 0 0 0 1.5px var(--blue);
+      }
+
+      /* Fim */
+      .success {
+        position: absolute;
+        inset: 26px 0 0 0;
+        background: #fff;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.25s;
+      }
+      .success.on {
+        opacity: 1;
+      }
+      .success .big {
+        width: 58px;
+        height: 58px;
+        border-radius: 50%;
+        background: #e8f6ee;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+      .success h3 {
+        font: 750 16px Body;
+      }
+      .success p {
+        font: 500 11px/1.5 Body;
+        color: var(--muted);
+        text-align: center;
+        max-width: 24ch;
+      }
+      .success ul {
+        list-style: none;
+        font: 600 10.5px/1.7 Body;
+        color: #374151;
+        border: 1px solid var(--line);
+        border-radius: 10px;
+        padding: 8px 12px;
+        width: 200px;
+      }
+      .success li {
+        display: flex;
+        justify-content: space-between;
+      }
+      .success li b {
+        color: var(--ok);
+      }
+    </style>
+  </head>
+  <body>
+    <div class="copy" id="copy">
+      <p class="eyebrow swap" id="eyebrow"></p>
+      <h2 class="swap" id="headline"></h2>
+      <p class="swap" id="sub"></p>
+    </div>
+
+    <div class="phone">
+      <div class="screen" id="screen">
+        <div class="status"><span>9:41</span><span>5G ▮▮▮</span></div>
+
+        <!-- 1. Rota do dia -->
+        <section class="view" id="v-route">
+          <div class="bar">
+            <svg width="16" height="16" viewBox="0 0 16 16">
+              <path
+                d="M2 4h12M2 8h12M2 12h12"
+                stroke="#111"
+                stroke-width="1.6"
+                stroke-linecap="round"
+              />
+            </svg>
+            Rota de hoje
+          </div>
+          <div class="tabs">
+            <span class="on">Pendente (96)</span><span>Ocorrência (1)</span
+            ><span>Entregue (21)</span>
+          </div>
+          <div class="body route">
+            <div class="stop" id="stop-1">
+              <h4>
+                Parada 1
+                <span id="stop-1-badge" style="display: none" class="done-badge">Entregue</span>
+              </h4>
+              <div class="code">Pedido PD-4471-0923</div>
+              <div class="addr">Rua das Acácias, 214, sala 3</div>
+              <div class="who">
+                <div>
+                  Destinatária<br /><b style="color: #111">Rosana Lima</b><br /><span class="tag"
+                    >Trabalho</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="stop">
+              <h4>Parada 2</h4>
+              <div class="code">Pedido PD-4471-0951</div>
+              <div class="addr">Av. Central, 1080, bloco B</div>
+              <div class="who">
+                <div>
+                  Destinatário<br /><b style="color: #111">Caio Mendes</b><br /><span class="tag"
+                    >Casa</span
+                  >
+                </div>
+              </div>
+            </div>
+            <div class="stop">
+              <h4>Parada 3</h4>
+              <div class="code">Pedido PD-4471-0967</div>
+              <div class="addr">Rua do Rosário, 57</div>
+            </div>
+          </div>
+        </section>
+
+        <!-- 2. Pedido -->
+        <section class="view off" id="v-order">
+          <div class="bar">
+            <svg width="16" height="16" viewBox="0 0 16 16">
+              <path
+                d="M10 3 5 8l5 5"
+                fill="none"
+                stroke="#111"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            Informações do pedido
+          </div>
+          <div class="body">
+            <div class="card">
+              <div class="k">Pedido</div>
+              <div class="v">PD-4471-0923</div>
+              <div class="v" style="font-weight: 600; color: #374151">
+                Rua das Acácias, 214, sala 3
+              </div>
+            </div>
+            <div class="card">
+              <div class="k">Recebedor</div>
+              <div class="v">Rosana Lima</div>
+              <div class="v" style="font-weight: 500; color: #6b7280; font-size: 11px">
+                Endereço de trabalho
+              </div>
+            </div>
+            <div class="card">
+              <div class="k">Hub</div>
+              <div class="v">Hub Centro</div>
+            </div>
+          </div>
+          <div class="actions">
+            <span class="btn" id="btn-incident">Ocorrência</span
+            ><span class="btn primary" id="btn-deliver">Entregar</span>
+          </div>
+        </section>
+
+        <!-- 3. Prova de entrega -->
+        <section class="view off" id="v-proof">
+          <div class="bar">
+            <svg width="16" height="16" viewBox="0 0 16 16">
+              <path
+                d="M10 3 5 8l5 5"
+                fill="none"
+                stroke="#111"
+                stroke-width="1.8"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+            Prova de entrega
+          </div>
+          <div class="body">
+            <div class="row" id="row-type">
+              <span class="req">Tipo de recebedor</span
+              ><span class="val empty" id="type-val"
+                >Escolher
+                <svg width="8" height="10" viewBox="0 0 8 10">
+                  <path
+                    d="m2 1 4 4-4 4"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.6"
+                  /></svg
+              ></span>
+            </div>
+            <div class="row" id="row-name">
+              <span class="req">Nome</span
+              ><span class="val">Rosana Lima <span class="from-route">DA ROTA</span></span>
+            </div>
+            <div class="row" style="border: none; min-height: 28px">
+              <span class="req">Documento</span>
+            </div>
+            <div class="seg" id="seg-doc"><span class="on">RG</span><span>CPF</span></div>
+            <div class="row" id="row-doc">
+              <span class="req">Número</span
+              ><span class="val">••••••696 <span class="from-route">DA ROTA</span></span>
+            </div>
+            <div class="row" style="border: none; min-height: 28px">
+              <span class="req">Tipo de endereço</span>
+            </div>
+            <div class="seg" id="seg-addr"><span class="on">Trabalho</span><span>Casa</span></div>
+            <div class="photos-h">
+              <span class="req">Fotos (2 necessárias)</span><span id="count">0/3</span>
+            </div>
+            <div class="slots" id="slots">
+              <div class="slot" id="slot-1">+</div>
+              <div class="slot" id="slot-2">+</div>
+              <div class="slot" id="slot-3">+</div>
+            </div>
+            <div class="hints">
+              Foto 1: código do pacote<br />Foto 2: local da entrega<br />Foto 3: comprovante, se
+              possível
+            </div>
+          </div>
+          <div class="actions"><span class="btn locked" id="btn-submit">Entregar</span></div>
+          <div class="toast" id="toast"><i>!</i><span id="toast-text"></span></div>
+          <div class="flash" id="flash"></div>
+        </section>
+
+        <div class="scrim" id="scrim"></div>
+        <div class="sheet" id="sheet">
+          <h3>Quem recebeu? <span style="color: #9aa1ad">✕</span></h3>
+          <h5>Com recebedor</h5>
+          <div class="grid" id="grid-attended">
+            <span>Comprador</span><span>Familiar</span><span>Vizinho</span> <span>Amigo</span
+            ><span>Segurança</span><span>Porteiro</span> <span>Funcionário</span
+            ><span>Colega de trabalho</span><span>Outro</span>
+          </div>
+          <h5>Sem recebedor</h5>
+          <div class="grid" id="grid-unattended">
+            <span>Caixa de correio</span><span>Porta</span><span>Varanda</span> <span>Portão</span
+            ><span>Ponto de coleta</span><span>Portaria</span> <span>Área externa</span
+            ><span>Outro</span>
+          </div>
+        </div>
+
+        <div class="success" id="success">
+          <div class="big">
+            <svg width="28" height="28" viewBox="0 0 28 28">
+              <path
+                d="m7 14 5 5 9-10"
+                fill="none"
+                stroke="#15803d"
+                stroke-width="3"
+                stroke-linecap="round"
+                stroke-linejoin="round"
+              />
+            </svg>
+          </div>
+          <h3>Entrega registrada</h3>
+          <ul>
+            <li>Recebedor <b>Comprador</b></li>
+            <li>Documento <b>Confirmado</b></li>
+            <li>Fotos <b>2 de 2 válidas</b></li>
+          </ul>
+          <p>Parada 2 é a próxima.</p>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      const $ = (s) => document.querySelector(s);
+      const COPY = {
+        route: [
+          "The same app drivers knew",
+          "Same screens.\nLess work.",
+          "No new screens and no retraining. The redesign lives inside the flow drivers already used.",
+        ],
+        form: [
+          "01 Confirmation",
+          "Already known.\nAlready filled.",
+          "Name, document and address type come from the route data. The driver confirms instead of typing.",
+        ],
+        sheet: [
+          "02 Receiver",
+          "Real deliveries.\nClear choices.",
+          "Who received it, or where it was left. Two labeled groups instead of free text.",
+        ],
+        photos: [
+          "03 Photo proof",
+          "Checked at\nthe door.",
+          "A dark or blurry photo is flagged at capture. Deliver unlocks after two valid photos.",
+        ],
+        done: [
+          "The record",
+          "One stop,\none complete record.",
+          "Receiver, document and photos, saved together.",
+        ],
+      };
+      let copyKey = null;
+      function setCopy(key) {
+        if (key === copyKey) return;
+        copyKey = key;
+        const [e, h, s] = COPY[key];
+        const c = $("#copy");
+        c.classList.add("fading");
+        setTimeout(
+          () => {
+            $("#eyebrow").textContent = e;
+            $("#headline").textContent = h;
+            $("#sub").textContent = s;
+            c.classList.remove("fading");
+          },
+          copyKey === key && $("#headline").textContent ? 250 : 0,
+        );
+      }
+      function show(id) {
+        const order = ["v-route", "v-order", "v-proof"];
+        const i = order.indexOf(id);
+        order.forEach((v, j) => {
+          const el = document.getElementById(v);
+          el.classList.toggle("off", j > i);
+          el.classList.toggle("under", j < i);
+        });
+      }
+
+      // Fotos desenhadas (nada de foto real)
+      const PACKAGE = `<svg class="ph" viewBox="0 0 62 62"><rect width="62" height="62" fill="#3f4a3c"/><rect x="8" y="10" width="46" height="44" rx="4" fill="#23282a"/><rect x="16" y="15" width="30" height="34" rx="2" fill="#f4f4f1"/><rect x="20" y="20" width="10" height="7" fill="#222"/><text x="35" y="27" font-family="Body" font-weight="800" font-size="8" fill="#222">B30</text><g fill="#222"><rect x="19" y="32" width="1.5" height="9"/><rect x="22" y="32" width="1" height="9"/><rect x="24" y="32" width="2" height="9"/><rect x="27.5" y="32" width="1" height="9"/><rect x="30" y="32" width="2" height="9"/><rect x="33.5" y="32" width="1" height="9"/><rect x="36" y="32" width="1.5" height="9"/><rect x="39" y="32" width="1" height="9"/><rect x="41" y="32" width="2" height="9"/></g><rect x="19" y="43" width="22" height="1.6" fill="#999"/></svg>`;
+      const DOOR = (dark) =>
+        `<svg class="ph" viewBox="0 0 62 62"><rect width="62" height="62" fill="#a9c6e8"/><rect x="0" y="40" width="62" height="22" fill="#b9b2a5"/><rect x="10" y="8" width="42" height="46" fill="#e08a3c"/><rect x="20" y="16" width="22" height="38" fill="#7a4a24"/><circle cx="37" cy="36" r="1.6" fill="#f2d48c"/><rect x="24" y="44" width="13" height="10" rx="1" fill="#c8a06a"/><rect x="24" y="44" width="13" height="2.5" fill="#a87e48"/>${dark ? '<rect width="62" height="62" fill="#0b0b0c" opacity=".86"/>' : ""}</svg>`;
+      const CHECK = `<span class="chk"><svg width="9" height="9" viewBox="0 0 9 9"><path d="m1.5 4.5 2 2 4-4.5" fill="none" stroke="#fff" stroke-width="1.6" stroke-linecap="round"/></svg></span>`;
+
+      let photos = 0;
+      let triedDark = false;
+      function toast(text, warn) {
+        const t = $("#toast");
+        $("#toast-text").textContent = text;
+        t.classList.toggle("warn", !!warn);
+        t.querySelector("i").textContent = warn ? "!" : "✓";
+        t.classList.add("show");
+        clearTimeout(toast.h);
+        toast.h = setTimeout(() => t.classList.remove("show"), 1900);
+      }
+      function capture(slot, html, ok) {
+        const f = $("#flash");
+        f.classList.add("on");
+        setTimeout(() => f.classList.remove("on"), 140);
+        slot.classList.add("filled");
+        slot.innerHTML = html + (ok ? CHECK : "");
+      }
+      function setPhotos(n) {
+        photos = n;
+        $("#count").textContent = `${n}/3`;
+        const b = $("#btn-submit");
+        b.classList.toggle("locked", n < 2);
+        b.classList.toggle("primary", n >= 2);
+      }
+      function pickReceiver(name) {
+        $("#type-val").classList.remove("empty");
+        $("#type-val").innerHTML =
+          `${name} <svg width="8" height="10" viewBox="0 0 8 10"><path d="m2 1 4 4-4 4" fill="none" stroke="currentColor" stroke-width="1.6"/></svg>`;
+      }
+
+      $("#stop-1").addEventListener("click", () => show("v-order"));
+      $("#btn-deliver").addEventListener("click", () => {
+        show("v-proof");
+        setCopy("form");
+      });
+      $("#row-type").addEventListener("click", () => {
+        $("#scrim").classList.add("on");
+        $("#sheet").classList.add("on");
+        setCopy("sheet");
+      });
+      document.querySelectorAll(".grid span").forEach((chip) =>
+        chip.addEventListener("click", () => {
+          document.querySelectorAll(".grid span").forEach((c) => c.classList.remove("pick"));
+          chip.classList.add("pick");
+          setTimeout(() => {
+            $("#scrim").classList.remove("on");
+            $("#sheet").classList.remove("on");
+            pickReceiver(chip.textContent);
+          }, 380);
+        }),
+      );
+      $("#slot-1").addEventListener("click", () => {
+        setCopy("photos");
+        capture($("#slot-1"), PACKAGE, true);
+        setPhotos(1);
+        toast("Etiqueta legível. Foto aceita.");
+      });
+      $("#slot-2").addEventListener("click", () => {
+        setCopy("photos");
+        if (!triedDark) {
+          triedDark = true;
+          capture($("#slot-2"), DOOR(true), false);
+          toast("Foto escura. Tire outra com mais luz.", true);
+          return;
+        }
+        capture($("#slot-2"), DOOR(false), true);
+        setPhotos(2);
+        toast("Local da entrega visível. Foto aceita.");
+      });
+      $("#btn-submit").addEventListener("click", () => {
+        if (photos < 2) return;
+        $("#success").classList.add("on");
+        setCopy("done");
+      });
+
+      // Estados de início, para cada cena do filme começar onde precisa
+      const start = location.hash.slice(1) || "route";
+      if (start === "route") setCopy("route");
+      if (start === "form" || start === "photos") {
+        show("v-proof");
+        setCopy("form");
+      }
+      if (start === "photos") {
+        pickReceiver("Comprador");
+        setCopy("photos");
+      }
+    </script>
+  </body>
+</html>

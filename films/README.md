@@ -36,3 +36,13 @@ Nunca filme as candidaturas reais.
 2. Troque `src/data/seed/applications.json` e `src/data/seed/jobs.json` pelos arquivos de `films/mappe/demo-data/`.
 3. Rode `npx vite --port 5175` nessa cópia, sem as variáveis do Supabase.
 4. Rode `npm run film -- mappe` aqui.
+
+## Delivery
+
+O app do cliente não pode aparecer (NDA). As cenas demo filmam `films/delivery/prototype.html`,
+um protótipo do fluxo redesenhado com códigos, nomes, endereços e fotos inventados.
+O `url` de uma cena demo pode ser um arquivo da pasta do filme (`"prototype.html#form"`), e
+`"pointer": "touch"` troca a seta por um dedo. Num `numbers`, um item com `text` aparece sem contagem.
+
+O corte da home (`delivery-short.mp4`) sai do filme pronto, sem render novo:
+`ffmpeg -ss 29.1 -to 40.5 -i delivery-film.mp4 -vf scale=1120:630 -an delivery-short.mp4`.

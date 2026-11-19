@@ -1,16 +1,15 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
+import useAutoplayInView from "../../lib/useAutoplayInView.js";
 
 /**
- * VideoFigure: UI flow video under the user's control (click-to-play).
+ * VideoFigure: a recording of a UI flow that plays on its own, muted and
+ * looping, while it is on screen, and pauses when it leaves.
  *
- * Default state: poster + 44px+ play button, preload="none" (nothing loads
- * until the gesture). After the gesture the video plays muted/loop/
- * playsInline with a PERMANENT pause/play toggle (WCAG 2.2.2: the user can
- * always stop the motion). No autoplay, no audio track (no captions needed);
- * `label` describes the flow for assistive tech.
+ * A pause/play toggle is always present (WCAG 2.2.2: the reader can stop the
+ * motion). The large play button only shows when the clip will not start by
+ * itself: reduced motion, or a browser that blocked autoplay.
  *
- * `ratio` (e.g. "9 / 19.5") reserves the box: zero CLS. RM users get the
- * same click-to-play poster (no motion until requested).
+ * `ratio` (e.g. "9 / 19.5") reserves the box: zero CLS.
  */
 export default function VideoFigure({
   src,
@@ -21,25 +20,8 @@ export default function VideoFigure({
   className = "",
 }) {
   const videoRef = useRef(null);
-  const [started, setStarted] = useState(false);
-  const [playing, setPlaying] = useState(false);
-
-  const start = () => {
-    const video = videoRef.current;
-    if (!video) return;
-    setStarted(true);
-    video.play();
-  };
-
-  const toggle = () => {
-    const video = videoRef.current;
-    if (!video) return;
-    if (video.paused) {
-      video.play();
-    } else {
-      video.pause();
-    }
-  };
+  const { playing, blocked, reduceMotion, toggle, bind } = useAutoplayInView(videoRef);
+  const waitingForReader = !playing && (reduceMotion || blocked);
 
   return (
     <figure className={`ms-video ${className}`.trim()}>
@@ -54,15 +36,14 @@ export default function VideoFigure({
           loop
           playsInline
           aria-label={label}
-          onPlay={() => setPlaying(true)}
-          onPause={() => setPlaying(false)}
+          {...bind}
         />
-        {!started ? (
+        {waitingForReader ? (
           <button
             type="button"
             className="ms-video__play"
             aria-label={`Play video: ${label}`}
-            onClick={start}
+            onClick={toggle}
           >
             <svg width="18" height="18" viewBox="0 0 18 18" fill="none" aria-hidden="true">
               <path d="M5 3.5v11l9-5.5-9-5.5z" fill="currentColor" />

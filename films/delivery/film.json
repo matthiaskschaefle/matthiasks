@@ -1,0 +1,116 @@
+{
+  "size": [1280, 720],
+  "theme": {
+    "light": "#eef1f6",
+    "ink": "#16181d",
+    "dark": "#0d1630",
+    "darkTop": "#1e3a8a",
+    "onDark": "#ffffff",
+    "accent": "#2563eb"
+  },
+  "poster": {
+    "scene": 3,
+    "at": 0.35
+  },
+  "scenes": [
+    {
+      "type": "statement",
+      "dark": true,
+      "duration": 4.5,
+      "eyebrow": "Delivery app, client project, 2025",
+      "text": "Paid deliveries\nwere being disputed.",
+      "sub": "The records could not settle the claim.",
+      "caption": "Delivery app, client project, 2025. Paid deliveries were being disputed. The records could not settle the claim."
+    },
+    {
+      "type": "statement",
+      "duration": 4.5,
+      "eyebrow": "Field research, 5 drivers, 2 days",
+      "text": "80 to 130 stops a day.\nThe same data, typed\nagain at every door.",
+      "caption": "Field research with 5 drivers over 2 days: 80 to 130 stops a day, and the same data typed again at every door."
+    },
+    {
+      "type": "demo",
+      "url": "prototype.html#route",
+      "viewport": [1024, 576],
+      "pointer": "touch",
+      "settle": 900,
+      "caption": "The redesigned flow, in a prototype with invented data. Same screens as before: the route, the order, then the proof of delivery, which arrives already filled from the route data.\n[Interface in Portuguese.]",
+      "steps": [
+        { "move": "#stop-1", "seconds": 0.8, "hold": 0.6 },
+        { "click": "#stop-1", "settle": 450, "hold": 0.7 },
+        { "click": "#btn-deliver", "settle": 650, "hold": 0.6 },
+        { "note": "#row-name", "text": "From the route data", "side": "right", "hold": 1.3 },
+        {
+          "note": "#row-doc",
+          "text": "Document masked, one tap to confirm",
+          "side": "right",
+          "hold": 1.6
+        },
+        { "clearNotes": true },
+        { "note": "#seg-addr", "text": "Address type, already set", "side": "right", "hold": 1.5 },
+        { "clearNotes": true, "hold": 0.2 }
+      ]
+    },
+    {
+      "type": "demo",
+      "url": "prototype.html#form",
+      "viewport": [1024, 576],
+      "pointer": "touch",
+      "settle": 900,
+      "caption": "Who received the package, or where it was left: two labeled groups replace free text.",
+      "steps": [
+        { "click": "#row-type", "seconds": 0.8, "settle": 550, "hold": 0.5 },
+        { "note": "#grid-attended", "text": "With a receiver", "side": "right", "hold": 1.1 },
+        { "note": "#grid-unattended", "text": "Left at the address", "side": "right", "hold": 1.4 },
+        { "clearNotes": true },
+        { "click": "#grid-attended span >> nth=0", "settle": 750, "hold": 0.4 },
+        { "note": "#row-type", "text": "One tap", "side": "right", "hold": 1.1 },
+        { "clearNotes": true, "hold": 0.2 }
+      ]
+    },
+    {
+      "type": "demo",
+      "url": "prototype.html#photos",
+      "viewport": [1024, 576],
+      "pointer": "touch",
+      "settle": 900,
+      "caption": "Photo proof is checked at capture. A dark photo is flagged and taken again, and Deliver unlocks after two valid photos.",
+      "steps": [
+        { "click": "#slot-1", "seconds": 0.8, "settle": 400, "hold": 1.2 },
+        { "click": "#slot-2", "seconds": 0.5, "settle": 400, "hold": 0.4 },
+        { "note": "#toast", "text": "Flagged at capture", "side": "right", "hold": 1.5 },
+        { "clearNotes": true },
+        { "click": "#slot-2", "seconds": 0.4, "settle": 400, "hold": 0.7 },
+        {
+          "note": "#btn-submit",
+          "text": "Unlocks after 2 valid photos",
+          "side": "right",
+          "hold": 1.4
+        },
+        { "clearNotes": true },
+        { "click": "#btn-submit", "seconds": 0.4, "settle": 500, "hold": 1.8 }
+      ]
+    },
+    {
+      "type": "numbers",
+      "dark": true,
+      "duration": 5.5,
+      "eyebrow": "Pilot, 12 drivers, 3 weeks",
+      "items": [
+        { "text": "7 to 8", "label": "seconds faster per stop" },
+        { "value": 2, "label": "fewer taps per stop" },
+        { "value": 98, "suffix": "%", "label": "record compliance, up from 92%" }
+      ],
+      "caption": "Pilot with 12 drivers over 3 weeks: 7 to 8 seconds faster per stop, 2 fewer taps per stop, record compliance up from 92% to 98%."
+    },
+    {
+      "type": "end",
+      "dark": true,
+      "duration": 4,
+      "text": "Same screens.\nStronger records.",
+      "sub": "Research and UI, 2025. Client anonymized.",
+      "caption": "Same screens, stronger records. Research and UI, 2025. Client anonymized."
+    }
+  ]
+}

@@ -42,14 +42,11 @@ const WORK = [
     result: "7 to 8s faster per stop, 2 fewer taps, 92% to 98% record compliance",
     imageSrc: "/assets/portfolio/2026/03/Mockup-Hero-scaled.png",
     imageAlt:
-      "Clip from the Delivery case film: the confirmation form arriving already filled from route data",
+      "Clip from the Delivery case film, with invented data: a dark photo is flagged at capture, and Deliver unlocks after two valid photos",
     video: {
-      sources: [
-        { src: "/media/delivery-short.webm", type: "video/webm" },
-        { src: "/media/delivery-short.mp4", type: "video/mp4" },
-      ],
-      poster: "/media/delivery-poster.jpg",
-      endFrame: "/media/delivery-endframe.jpg",
+      sources: [{ src: "/media/delivery-short.mp4", type: "video/mp4" }],
+      poster: "/media/delivery-short-poster.jpg",
+      endFrame: "/media/delivery-short-endframe.jpg",
     },
     featured: true,
   },

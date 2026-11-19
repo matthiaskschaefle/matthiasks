@@ -279,8 +279,7 @@ export default function MarceloGramasCase() {
                 sources={[{ src: "/media/marcelo-film.mp4", type: "video/mp4" }]}
                 poster="/media/marcelo-film-poster.jpg"
                 alt="Marcelo Gramas case film: the interviews, the live site, the proof on the homepage, the quote form, and the first month's numbers"
-                threshold={1}
-                requireScroll
+                threshold={0.6}
                 controls
                 reducedMotion="player"
                 tracks={[{ src: "/media/marcelo-film.en.vtt", srcLang: "en", label: "English" }]}
@@ -716,7 +715,7 @@ export default function MarceloGramasCase() {
                   <div className="research-full">
                     <VideoFigure
                       className="mg-video"
-                      src="/media/marcelo-quote-flow.webm"
+                      src="/media/marcelo-quote-flow.mp4"
                       poster="/media/marcelo-quote-poster.webp"
                       ratio="390 / 844"
                       label="The quote form on a phone: five questions, then the written WhatsApp message to review"

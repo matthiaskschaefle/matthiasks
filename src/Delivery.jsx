@@ -112,20 +112,17 @@ export default function DeliveryCase() {
             <figure className="case-film">
               <PlayOnceVideo
                 className="case-film-frame"
-                sources={[{ src: "/media/delivery-full-web.mp4", type: "video/mp4" }]}
-                poster="/media/delivery-poster.jpg"
-                alt="Delivery case film: the disputes, the field research, the redesigned confirmation flow and the pilot numbers"
-                threshold={1}
-                requireScroll
+                sources={[{ src: "/media/delivery-film.mp4", type: "video/mp4" }]}
+                poster="/media/delivery-film-poster.jpg"
+                alt="Delivery case film, in a prototype with invented data: a finger opens a stop, the proof of delivery arrives already filled, the receiver is picked in one tap, a dark photo is flagged, and the pilot numbers"
+                threshold={0.6}
                 controls
                 reducedMotion="player"
-                tracks={[
-                  { src: "/media/delivery-full-web.en.vtt", srcLang: "en", label: "English" },
-                ]}
+                tracks={[{ src: "/media/delivery-film.en.vtt", srcLang: "en", label: "English" }]}
               />
               <figcaption className="case-film-caption">
-                The case in 49 seconds, from the disputes to the pilot numbers. Silent, all text on
-                screen.
+                The case in 50 seconds, with the redesigned flow in use. Silent, all text on screen.
+                The prototype uses invented data.
               </figcaption>
             </figure>
 

@@ -125,7 +125,7 @@ function numbers(s) {
         ${s.items
           .map(
             (n, i) => `<div class="num in" style="--d:${250 + i * 350}ms">
-              <b class="count" style="--to:${n.value};--cd:${250 + i * 350}ms">${esc(n.prefix ?? "")}<span></span>${esc(n.suffix ?? "")}</b>
+              ${n.text ? `<b>${esc(n.text)}</b>` : `<b class="count" style="--to:${n.value};--cd:${250 + i * 350}ms">${esc(n.prefix ?? "")}<span></span>${esc(n.suffix ?? "")}</b>`}
               <span>${esc(n.label)}</span></div>`,
           )
           .join("")}
@@ -241,8 +241,19 @@ async function recordDemo(scene, push) {
     colorScheme: "light",
   });
   const pg = await ctx2.newPage();
-  await pg.goto(scene.url, { waitUntil: "networkidle" });
+  // Um arquivo da pasta do filme (um protótipo, por exemplo) também serve de url.
+  const url = /^(https?|file):/.test(scene.url)
+    ? scene.url
+    : fileUrl(join(filmDir, scene.url.split("#")[0])) +
+      (scene.url.includes("#") ? `#${scene.url.split("#")[1]}` : "");
+  await pg.goto(url, { waitUntil: "networkidle" });
   await pg.addStyleTag({ content: `:root{--film-accent:${film.theme.accent ?? "#4b37d1"}}` });
+  // "pointer": "touch" troca a seta por um dedo, para telas de celular.
+  if (scene.pointer === "touch")
+    await pg.addStyleTag({
+      content:
+        "#__film #__cur{width:30px;height:30px;transform:translate(-15px,-15px);border-radius:50%;background:rgba(17,24,39,.32);border:2px solid rgba(255,255,255,.95);filter:none;box-shadow:0 2px 6px rgba(0,0,0,.25)}#__film #__cur path{display:none}",
+    });
   await pg.evaluate(OVERLAY);
   await pg.waitForTimeout(scene.settle ?? 1200);
 
