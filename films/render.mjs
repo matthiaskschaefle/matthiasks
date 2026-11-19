@@ -92,6 +92,9 @@ function statement(s) {
 
 function frameFor(shot) {
   const src = asset(shot.src);
+  if (shot.frame === "plain") {
+    return `<img class="plain" style="${shot.style ?? ""}" src="${src}" alt="">`;
+  }
   if (shot.frame === "phone") {
     return `<div class="phone" style="${shot.style ?? ""}"><img src="${src}" alt=""></div>`;
   }
@@ -181,6 +184,7 @@ body{font-family:Body,sans-serif;-webkit-font-smoothing:antialiased}
 .browser-view{max-height:${H * 0.62}px;overflow:hidden;background:#fff}
 .browser-view img{width:100%;display:block;animation:pan 6000ms linear both;animation-delay:900ms}
 @keyframes pan{to{transform:translateY(calc(var(--pan) * -1))}}
+.plain{display:block;max-width:${W * 0.56}px;max-height:${H * 0.72}px;border-radius:10px;box-shadow:0 30px 60px -24px rgba(20,18,40,.35)}
 .phone{width:${H * 0.36}px;border-radius:${H * 0.035}px;padding:${H * 0.008}px;background:#111;box-shadow:0 30px 60px -20px rgba(20,18,40,.45)}
 .phone img{width:100%;display:block;border-radius:${H * 0.028}px}
 .nums{display:flex;gap:${W * 0.08}px}

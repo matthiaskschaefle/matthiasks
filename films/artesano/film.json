@@ -1,0 +1,126 @@
+{
+  "size": [1280, 720],
+  "theme": {
+    "light": "#f7f7f7",
+    "ink": "#3d2b29",
+    "dark": "#2e201e",
+    "darkTop": "#4a3633",
+    "onDark": "#ffffff",
+    "accent": "#3d2b29"
+  },
+  "poster": {
+    "scene": 3,
+    "at": 0.9
+  },
+  "scenes": [
+    {
+      "type": "statement",
+      "dark": true,
+      "duration": 4.5,
+      "eyebrow": "Artesano Cafeteria, brand identity, 2026",
+      "text": "The logo only\nexisted as a JPG.",
+      "caption": "Artesano Cafeteria, brand identity, 2026. The logo only existed as a JPG."
+    },
+    {
+      "type": "statement",
+      "duration": 5,
+      "eyebrow": "Starting point",
+      "text": "Rough edges.\nA fake transparent\nbackground.",
+      "sub": "And wheat that turned into a smudge at small sizes.",
+      "caption": "Starting point: rough edges, a fake transparent background, and wheat that turned into a smudge at small sizes."
+    },
+    {
+      "type": "statement",
+      "dark": true,
+      "duration": 4.5,
+      "eyebrow": "The question",
+      "text": "Clean up the old seal,\nor start again?",
+      "sub": "The café was new. There was no history to keep.",
+      "caption": "The question: clean up the old seal, or start again? The café was new, so there was no history to keep."
+    },
+    {
+      "type": "shot",
+      "duration": 6,
+      "eyebrow": "The mark",
+      "text": "Wheat, a cup,\nthree arcs.",
+      "sub": "Symbol options generated with AI. I chose one and finished it by hand in Figma.",
+      "shots": {
+        "src": "logo-principal.png",
+        "frame": "plain"
+      },
+      "caption": "The mark: wheat, a cup and three arcs. Symbol options generated with AI; I chose one and finished it by hand in Figma."
+    },
+    {
+      "type": "shot",
+      "dark": true,
+      "duration": 5,
+      "eyebrow": "One signature, three uses",
+      "text": "Main, negative,\nsymbol.",
+      "shots": [
+        {
+          "src": "logo-negativa.png",
+          "frame": "plain",
+          "style": "max-height:440px"
+        },
+        {
+          "src": "logo-simbolo.png",
+          "frame": "plain",
+          "style": "max-height:300px"
+        }
+      ],
+      "caption": "One signature, three uses: main, negative and symbol."
+    },
+    {
+      "type": "shot",
+      "duration": 5,
+      "eyebrow": "Two colors",
+      "text": "Coffee brown.\nWhite.",
+      "sub": "So it prints in one color, even on kraft paper.",
+      "shots": {
+        "src": "guia-paleta.jpg",
+        "frame": "plain"
+      },
+      "caption": "Two colors: coffee brown and white, so it prints in one color, even on kraft paper."
+    },
+    {
+      "type": "shot",
+      "duration": 5,
+      "eyebrow": "Type",
+      "text": "Garamond.\nMontserrat.",
+      "shots": {
+        "src": "guia-tipografia.jpg",
+        "frame": "plain"
+      },
+      "caption": "Type: Garamond for the name, Montserrat for the rest.",
+      "sub": "Garamond for the name, as the client asked. Montserrat for the descriptor and short labels."
+    },
+    {
+      "type": "shot",
+      "duration": 6,
+      "eyebrow": "Applications",
+      "text": "Cups, bags,\nboxes.",
+      "sub": "Mockups generated with AI, for illustration only.",
+      "shots": [
+        {
+          "src": "mockup-copos.jpg",
+          "frame": "plain",
+          "style": "max-width:560px"
+        },
+        {
+          "src": "mockup-torta.jpg",
+          "frame": "plain",
+          "style": "max-width:330px"
+        }
+      ],
+      "caption": "Applications: cups, bags and boxes. Mockups generated with AI, for illustration only."
+    },
+    {
+      "type": "end",
+      "dark": true,
+      "duration": 4.5,
+      "text": "Approved by the client\nthe next day.",
+      "sub": "14-page brand guide, 4 logo files, presentation film",
+      "caption": "Approved by the client the next day. A 14-page brand guide, 4 logo files and a presentation film."
+    }
+  ]
+}
