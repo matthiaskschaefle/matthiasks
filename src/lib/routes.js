@@ -88,6 +88,28 @@ export const ROUTES = [
     footerTagline: "Thanks for visiting. Research, interface design, and prototyping.",
   },
   {
+    path: "/mappe",
+    page: "mappe",
+    title: "Job Search Tracker Product Case Study | Matthias Schaefle",
+    description:
+      "Mappe, a personal product from 2026: a job application tracker I designed, built, and use every day, with a daily AI job search, inbox checks for replies, and its own design system.",
+    ogTitle: "The tracker I built for my own job search",
+    ogDescription:
+      "A personal product designed, built, and used every day, with demo data on every screen.",
+    footerTagline: "Thanks for visiting. Research, interface design, and prototyping.",
+  },
+  {
+    path: "/artesano",
+    page: "artesano",
+    title: "Café Brand Identity Case Study | Matthias Schaefle",
+    description:
+      "Brand identity for Artesano Cafeteria, a new café in Brazil: a logo that only existed as a JPG, rebuilt as a print-ready mark with a 14-page brand guide.",
+    ogTitle: "A café logo that only existed as a JPG",
+    ogDescription:
+      "A new mark and brand guide for a café in Brazil, approved the day after the brief.",
+    footerTagline: "Thanks for visiting. Research, interface design, and prototyping.",
+  },
+  {
     path: "/doctor",
     page: "doctor",
     title: "Healthcare Website UX Case Study | Matthias Schaefle",

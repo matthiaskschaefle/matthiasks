@@ -897,7 +897,17 @@ export default function MarceloGramasCase() {
                   <Link to="/duopet" className="case-pagination-card case-pagination-prev">
                     <div className="case-pagination-label">Previous case</div>
                     <div className="case-pagination-title">
-                      <PaginationArrow direction="prev" />
+                      <span className="case-pagination-arrow" aria-hidden="true">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                          <path
+                            d="M15 18l-6-6 6-6"
+                            stroke="currentColor"
+                            strokeWidth="2.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </span>
                       DuoPet
                     </div>
                     <div className="case-pagination-desc">
@@ -908,7 +918,17 @@ export default function MarceloGramasCase() {
                     <div className="case-pagination-label">Next case</div>
                     <div className="case-pagination-title">
                       Faster delivery confirmations, with complete records
-                      <PaginationArrow direction="next" />
+                      <span className="case-pagination-arrow" aria-hidden="true">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                          <path
+                            d="M9 18l6-6-6-6"
+                            stroke="currentColor"
+                            strokeWidth="2.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </span>
                     </div>
                     <div className="case-pagination-desc">
                       Redesigning the delivery confirmation flow for drivers.

@@ -1979,7 +1979,7 @@ export default function DuoPetCase() {
                   <Link to="/doctor" className="case-pagination-card case-pagination-prev">
                     <div className="case-pagination-label">Previous case</div>
                     <div className="case-pagination-title">
-                      <span className="case-pagination-arrow">
+                      <span className="case-pagination-arrow" aria-hidden="true">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
                           <path
                             d="M15 18l-6-6 6-6"
@@ -1993,14 +1993,14 @@ export default function DuoPetCase() {
                       The questions patients asked before booking
                     </div>
                     <div className="case-pagination-desc">
-                      Patients could not find procedures, prices, or insurance before booking.
+                      A website for a plastic surgeon, built around patient questions.
                     </div>
                   </Link>
                   <Link to="/marcelo-gramas" className="case-pagination-card case-pagination-next">
                     <div className="case-pagination-label">Next case</div>
                     <div className="case-pagination-title">
                       What clients needed to see before asking for a quote
-                      <span className="case-pagination-arrow">
+                      <span className="case-pagination-arrow" aria-hidden="true">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
                           <path
                             d="M9 18l6-6-6-6"
@@ -2013,7 +2013,7 @@ export default function DuoPetCase() {
                       </span>
                     </div>
                     <div className="case-pagination-desc">
-                      A landscaping website built around the proof clients asked for.
+                      A landscaping company with 30 years of work and no website.
                     </div>
                   </Link>
                 </div>

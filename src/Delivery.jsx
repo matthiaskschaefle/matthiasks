@@ -705,7 +705,7 @@ export default function DeliveryCase() {
                   <Link to="/marcelo-gramas" className="case-pagination-card case-pagination-prev">
                     <div className="case-pagination-label">Previous case</div>
                     <div className="case-pagination-title">
-                      <span className="case-pagination-arrow">
+                      <span className="case-pagination-arrow" aria-hidden="true">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
                           <path
                             d="M15 18l-6-6 6-6"
@@ -719,14 +719,14 @@ export default function DeliveryCase() {
                       What clients needed to see before asking for a quote
                     </div>
                     <div className="case-pagination-desc">
-                      A landscaping website built around the proof clients asked for.
+                      A landscaping company with 30 years of work and no website.
                     </div>
                   </Link>
-                  <Link to="/doctor" className="case-pagination-card case-pagination-next">
+                  <Link to="/mappe" className="case-pagination-card case-pagination-next">
                     <div className="case-pagination-label">Next case</div>
                     <div className="case-pagination-title">
-                      The questions patients asked before booking
-                      <span className="case-pagination-arrow">
+                      The tracker I built for my own job search
+                      <span className="case-pagination-arrow" aria-hidden="true">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
                           <path
                             d="M9 18l6-6-6-6"
@@ -739,7 +739,7 @@ export default function DeliveryCase() {
                       </span>
                     </div>
                     <div className="case-pagination-desc">
-                      Patients could not find procedures, prices, or insurance before booking.
+                      A personal product I designed, built, and use every day.
                     </div>
                   </Link>
                 </div>

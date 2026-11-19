@@ -13,7 +13,7 @@ const MotionLink = motion.create(Link);
 /*
  * Editorial work index: no cards, no borders. Each project is a media
  * stage plus a typographic row. The two paid, shipped projects with
- * measured results take the full column, the newest first; the other two share a two-up grid.
+ * measured results and the Mappe product take the full column; the other two share a two-up grid.
  */
 const WORK = [
   {
@@ -52,6 +52,33 @@ const WORK = [
       endFrame: "/media/delivery-endframe.jpg",
     },
     featured: true,
+  },
+  {
+    href: "/mappe",
+    context: "Personal product, UI, design system, front end, 2026",
+    title: "The tracker I built for my own job search",
+    description:
+      "Applications in a tracker file, replies in Gmail, PDFs in folders. I designed and built one app for all of it, and I use it every day.",
+    result: "Daily AI job search, 3 inbox checks a day, 16 automated tests",
+    imageSrc: "/assets/portfolio/2026/11/mappe/painel.webp",
+    imageAlt:
+      "Clip from the Mappe case film, with demo data: a cursor snoozes a late follow-up and filters the list by status",
+    video: {
+      sources: [{ src: "/media/mappe-short.mp4", type: "video/mp4" }],
+      poster: "/media/mappe-short-poster.jpg",
+      endFrame: "/media/mappe-short-endframe.jpg",
+    },
+    featured: true,
+  },
+  {
+    href: "/artesano",
+    context: "Client work, brand identity, 2026",
+    title: "A café logo that only existed as a JPG",
+    description:
+      "A new café's logo lived in a blurry image. I rebuilt it as a print-ready mark with a 14-page brand guide.",
+    result: "Approved the day after the brief, 4 logo files, 2-color system",
+    imageSrc: "/assets/portfolio/2026/10/artesano/mockup-copos.webp",
+    imageAlt: "AI mockup of two takeaway cups with the new Artesano Cafeteria logo",
   },
   {
     href: "/doctor",
@@ -309,10 +336,12 @@ export default function HomePage() {
 
             <WorkItem {...WORK[0]} order={0} />
             <WorkItem {...WORK[1]} order={0} />
+            <WorkItem {...WORK[2]} order={0} />
 
             <div className="work-pair">
-              <WorkItem {...WORK[2]} order={0} />
-              <WorkItem {...WORK[3]} order={1} />
+              {WORK.slice(3).map((item, i) => (
+                <WorkItem key={item.href} {...item} order={i % 2} />
+              ))}
             </div>
           </section>
 

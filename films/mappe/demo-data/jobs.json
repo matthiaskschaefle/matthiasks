@@ -1,0 +1,41 @@
+[
+  {
+    "id": "d1",
+    "found_on": "2026-11-18",
+    "company": "Grünfläche",
+    "role": "Junior Product Designer",
+    "link": "https://example.com/1",
+    "priority": "A",
+    "status": "nova",
+    "location": "Berlin",
+    "mode": "Híbrido",
+    "lang": "en",
+    "notes": "Equipe de design com mentoria. Pede Figma e protótipos. Alemão não é requisito."
+  },
+  {
+    "id": "d2",
+    "found_on": "2026-11-18",
+    "company": "Stadtgarten Tech",
+    "role": "UX/UI Designer",
+    "link": "https://example.com/2",
+    "priority": "B",
+    "status": "nova",
+    "location": "Berlin",
+    "mode": "Presencial",
+    "lang": "de",
+    "notes": "Produto para prefeituras. Pede alemão B2."
+  },
+  {
+    "id": "d3",
+    "found_on": "2026-11-17",
+    "company": "Wellenbad",
+    "role": "UI Designer (Junior)",
+    "link": "https://example.com/3",
+    "priority": "B",
+    "status": "quero",
+    "location": "Remoto",
+    "mode": "Remoto",
+    "lang": "en",
+    "notes": "Design system em crescimento."
+  }
+]

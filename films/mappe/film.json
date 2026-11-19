@@ -1,0 +1,198 @@
+{
+  "size": [1280, 720],
+  "theme": {
+    "light": "#f1f1f3",
+    "ink": "#18181b",
+    "dark": "#1f165a",
+    "darkTop": "#3c2baa",
+    "onDark": "#ffffff",
+    "accent": "#4b37d1"
+  },
+  "poster": {
+    "scene": 3,
+    "at": 0.15
+  },
+  "scenes": [
+    {
+      "type": "statement",
+      "dark": true,
+      "duration": 4.5,
+      "logo": "logo-white.svg",
+      "eyebrow": "Mappe, personal product, 2026",
+      "text": "My job search\nneeded a product.",
+      "caption": "[Mappe logo]\nMappe, personal product, 2026. My job search needed a product."
+    },
+    {
+      "type": "statement",
+      "duration": 5,
+      "eyebrow": "The problem",
+      "text": "Applications in a sheet.\nReplies in Gmail.\nPDFs in folders.",
+      "caption": "The problem: applications in a sheet, replies in Gmail, PDFs in folders."
+    },
+    {
+      "type": "statement",
+      "duration": 2.6,
+      "eyebrow": "Dashboard",
+      "text": "Summary first.\nThen the list.",
+      "caption": "Dashboard: summary first, then the list."
+    },
+    {
+      "type": "demo",
+      "url": "http://localhost:5175/#painel",
+      "settle": 1500,
+      "caption": "Dashboard, with demo data: the summary comes first. A late follow-up has its own buttons, and the list filters by status in one tap.\n[Interface in Portuguese.]",
+      "steps": [
+        {
+          "scroll": 170,
+          "seconds": 0.8
+        },
+        {
+          "note": ".c-stat--hero",
+          "text": "Summary first",
+          "hold": 1.6,
+          "side": "below"
+        },
+        {
+          "clearNotes": true
+        },
+        {
+          "move": ".c-alert >> nth=1",
+          "seconds": 0.8
+        },
+        {
+          "note": ".c-alert >> nth=1",
+          "text": "A late follow-up, with its own buttons",
+          "side": "left",
+          "hold": 1.4
+        },
+        {
+          "clearNotes": true
+        },
+        {
+          "click": "button:has-text(\"Adiar 3 dias\")",
+          "settle": 500,
+          "hold": 0.8
+        },
+        {
+          "scroll": 820,
+          "seconds": 1.2
+        },
+        {
+          "click": ".c-seg__opt:has-text(\"Sem resposta\")",
+          "settle": 500,
+          "scroll": 650
+        },
+        {
+          "note": ".c-seg__track",
+          "text": "Every status in words, not only color",
+          "hold": 1.8
+        }
+      ]
+    },
+    {
+      "type": "demo",
+      "url": "http://localhost:5175/#painel",
+      "settle": 1500,
+      "caption": "One sheet per application: status, next step and timeline. Changing the status is one click.",
+      "steps": [
+        {
+          "click": "button:has-text(\"Ver detalhes\")",
+          "settle": 700,
+          "hold": 0.6
+        },
+        {
+          "note": ".c-drawer .c-menu",
+          "text": "Status in one click",
+          "side": "left",
+          "hold": 1.2
+        },
+        {
+          "clearNotes": true
+        },
+        {
+          "click": ".c-drawer .c-menu >> text=Recusada",
+          "settle": 500,
+          "hold": 1.2
+        },
+        {
+          "key": "Escape",
+          "hold": 0.4
+        }
+      ]
+    },
+    {
+      "type": "statement",
+      "duration": 2.6,
+      "eyebrow": "Daily search",
+      "text": "A search\nevery morning.",
+      "caption": "Daily search: a search every morning."
+    },
+    {
+      "type": "demo",
+      "url": "http://localhost:5175/#vagas",
+      "settle": 1500,
+      "caption": "Jobs: Claude searches every morning and drops new jobs in an inbox. I decide to apply or discard.",
+      "steps": [
+        {
+          "scroll": 200,
+          "seconds": 0.8
+        },
+        {
+          "note": ".c-job >> nth=0",
+          "text": "Found this morning, with a note on why it fits",
+          "side": "below",
+          "hold": 1.6
+        },
+        {
+          "clearNotes": true
+        },
+        {
+          "click": ".c-job >> nth=0 >> button:has-text(\"Quero candidatar\")",
+          "settle": 600,
+          "hold": 1.4
+        }
+      ]
+    },
+    {
+      "type": "shot",
+      "duration": 5,
+      "eyebrow": "On the phone",
+      "text": "Same system,\nin my pocket.",
+      "shots": {
+        "src": "mobile.jpg",
+        "frame": "phone"
+      },
+      "caption": "On the phone: the same system, in my pocket."
+    },
+    {
+      "type": "numbers",
+      "dark": true,
+      "duration": 5.5,
+      "eyebrow": "Under the hood",
+      "items": [
+        {
+          "value": 1,
+          "label": "job search by Claude every day"
+        },
+        {
+          "value": 3,
+          "label": "inbox checks for replies a day"
+        },
+        {
+          "value": 16,
+          "label": "automated tests on every push"
+        }
+      ],
+      "caption": "Under the hood: 1 job search by Claude every day, 3 inbox checks for replies a day, 16 automated tests on every push."
+    },
+    {
+      "type": "end",
+      "dark": true,
+      "duration": 4,
+      "logo": "logo-white.svg",
+      "text": "Designed, built\nand used by me.",
+      "sub": "React, TypeScript, Supabase",
+      "caption": "Designed, built and used by me. React, TypeScript, Supabase."
+    }
+  ]
+}
