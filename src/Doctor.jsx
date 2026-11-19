@@ -486,12 +486,10 @@ export default function DoctorCase() {
   // fades all the way out while the mockup rises in the opposite direction.
   const rawMockupY = useTransform(scrollY, [0, 500], [0, -60]);
   const rawHeroTextY = useTransform(scrollY, [0, 500], [0, 34]);
-  const rawBackdropY = useTransform(scrollY, [0, 600], [0, 120]);
   const heroTextFade = useTransform(scrollY, [0, 420], [1, 0]);
   const parallaxDisabled = isHeroMobile || prefersReducedMotion;
   const heroMockupStyle = parallaxDisabled ? undefined : { y: rawMockupY };
   const heroTextStyle = parallaxDisabled ? undefined : { y: rawHeroTextY, opacity: heroTextFade };
-  const heroBackdropStyle = parallaxDisabled ? undefined : { y: rawBackdropY };
   // Reduced-motion variants: translate-based reveals collapse to plain fades.
   // Float loop only runs while the hero mockup is on screen.
   const heroMockupRef = useRef(null);
@@ -513,16 +511,10 @@ export default function DoctorCase() {
         <div className="page-inner">
           {/* HERO CASE */}
           <section className="case-hero">
-            <motion.div
-              className="case-hero-backdrop"
-              aria-hidden="true"
-              style={heroBackdropStyle}
-            />
             <motion.div style={heroTextStyle}>
-              <p className="case-label">PAID CLIENT PROJECT, 2024</p>
               <h1 className="case-title-main">The questions patients asked before booking</h1>
               <p className="case-subtitle">
-                Paid work for Dr. H&eacute;lio Alves, a plastic surgeon in Sao Paulo.
+                Paid work in 2024 for Dr. H&eacute;lio Alves, a plastic surgeon in Sao Paulo.
               </p>
             </motion.div>
 

@@ -62,7 +62,6 @@ export default function Legal() {
             animate="visible"
             variants={fadeUp}
           >
-            <div className="legal-hero-backdrop" aria-hidden="true" />
             <p className="legal-eyebrow">Impressum &amp; Datenschutz</p>
             <h1 className="legal-title">Who runs this site, and what it does with your data</h1>
             <p className="legal-lead">
