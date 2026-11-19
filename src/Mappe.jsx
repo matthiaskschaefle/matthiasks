@@ -68,8 +68,7 @@ export default function MappeCase() {
                 sources={[{ src: "/media/mappe-film.mp4", type: "video/mp4" }]}
                 poster="/media/mappe-film-poster.jpg"
                 alt="Mappe case film with demo data: a cursor uses the dashboard, snoozes a late follow-up, filters the list, changes a status, and saves a job from the daily search"
-                threshold={1}
-                requireScroll
+                threshold={0.6}
                 controls
                 reducedMotion="player"
                 tracks={[{ src: "/media/mappe-film.en.vtt", srcLang: "en", label: "English" }]}

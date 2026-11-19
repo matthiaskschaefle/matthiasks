@@ -18,6 +18,7 @@ import FullProcess from "./components/FullProcess.jsx";
 import PinnedStory from "./components/PinnedStory.jsx";
 import Figure from "./components/mockups/Figure.jsx";
 import SnapGallery from "./components/mockups/SnapGallery.jsx";
+import LoopVideo from "./components/LoopVideo.jsx";
 import TypedSectionLabel from "./components/TypedSectionLabel.jsx";
 import duopetCss from "./styles/duopet.css?inline";
 
@@ -1924,14 +1925,10 @@ export default function DuoPetCase() {
                             background: "#ffffff",
                           }}
                         >
-                          <video
+                          <LoopVideo
                             src={src}
                             poster={poster}
-                            controls
-                            preload="metadata"
-                            muted
-                            playsInline
-                            aria-label={label}
+                            label={label}
                             style={{
                               width: "100%",
                               height: "100%",

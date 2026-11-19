@@ -68,8 +68,7 @@ export default function ArtesanoCase() {
                 sources={[{ src: "/media/artesano-film.mp4", type: "video/mp4" }]}
                 poster="/media/artesano-film-poster.jpg"
                 alt="Artesano case film: the problem with the old logo, the new mark, its three versions, the two colors, the type, and AI mockups of cups and a pie box"
-                threshold={1}
-                requireScroll
+                threshold={0.6}
                 controls
                 reducedMotion="player"
                 tracks={[{ src: "/media/artesano-film.en.vtt", srcLang: "en", label: "English" }]}

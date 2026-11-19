@@ -125,6 +125,23 @@ export default function PlayOnceVideo({
     }
   };
 
+  // Blocked autoplay (iOS Low Power Mode, data saver): the controls are out,
+  // and the reader's next tap anywhere on the page counts as the gesture those
+  // browsers wait for, so try again then instead of waiting for the play icon.
+  useEffect(() => {
+    if (!playBlocked || hasStarted) return undefined;
+    const retry = () => {
+      const attempt = videoRef.current?.play();
+      if (attempt && typeof attempt.catch === "function") attempt.catch(() => {});
+    };
+    document.addEventListener("touchend", retry, { passive: true });
+    document.addEventListener("click", retry);
+    return () => {
+      document.removeEventListener("touchend", retry);
+      document.removeEventListener("click", retry);
+    };
+  }, [playBlocked, hasStarted]);
+
   const collapseToStill = failed || (reduceMotion && reducedMotion === "still");
 
   // The point of the piece is a still that comes to life on scroll, so the
