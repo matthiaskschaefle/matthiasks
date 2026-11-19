@@ -3,6 +3,7 @@ import { motion, useReducedMotion, useScroll, useTransform } from "framer-motion
 import { Link } from "react-router-dom";
 import { fadeUpImmediate, sectionStagger, viewport as motionViewport } from "@/lib/animations";
 import CaseContents, { CaseBackToContents } from "./components/CaseContents.jsx";
+import FullProcess from "./components/FullProcess.jsx";
 import PlayOnceVideo from "./components/PlayOnceVideo.jsx";
 import AnnotatedMockup from "./components/mockups/AnnotatedMockup.jsx";
 import Figure from "./components/mockups/Figure.jsx";
@@ -335,472 +336,505 @@ export default function MarceloGramasCase() {
 
           <div className="case-layout">
             <div className="case-content-column">
-              <Section id="brief" label="The brief" prefersReducedMotion={prefersReducedMotion}>
-                <div className="case-section-body">
-                  <h3 className="case-subsection-title">
-                    A family company with thirty years of work and no website
-                  </h3>
-                  <p>
-                    The company plants lawns, builds gardens, and does full landscaping with its own
-                    team.
-                  </p>
-                  <p>
-                    Some referrals went straight to WhatsApp, with no place to see the work first.
-                    City buyers follow another path altogether: a public tender (a{" "}
-                    <em lang="pt-BR">licitação</em>).
-                  </p>
-                  <p>
-                    Two constraints came with the photos: every real shot of the work was vertical,
-                    taken on a phone, and none showed a garden after it had grown in.
-                  </p>
-                </div>
-              </Section>
-
-              <Section id="research" label="Research" prefersReducedMotion={prefersReducedMotion}>
-                <div className="case-section-body">
-                  <h3 className="case-subsection-title">Hypothesis first, then four interviews</h3>
-                  <p>
-                    I started from AI-drafted personas and scenarios, marked as hypotheses to test,
-                    not research. Then I interviewed four people who had hired this kind of service.
-                    The interviews stay anonymous.
-                  </p>
-                </div>
-
-                <div className="research-full">
-                  <table className="mg-table">
-                    <caption className="ms-visually-hidden">
-                      The four interviews: who they were and what decided the hire
-                    </caption>
-                    <thead>
-                      <tr>
-                        <th scope="col">#</th>
-                        <th scope="col">Who</th>
-                        <th scope="col">What decided</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {INTERVIEWS.map((row, index) => (
-                        <tr key={row.who}>
-                          <td className="mg-table-index">0{index + 1}</td>
-                          <td>{row.who}</td>
-                          <td>{row.decided}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-
-                <div className="case-section-body case-section-body-secondary">
-                  <p>
-                    Four interviews are enough to see the main patterns repeat, not enough to
-                    generalize. Rural clients were not interviewed, so anything about them stays an
-                    assumption.
-                  </p>
-                </div>
-              </Section>
-
-              <Section
-                id="what-changed"
-                label="What changed"
-                prefersReducedMotion={prefersReducedMotion}
+              <FullProcess
+                ids={[
+                  "brief",
+                  "research",
+                  "what-changed",
+                  "structure",
+                  "decisions",
+                  "first-screen",
+                  "quote-flow",
+                  "references",
+                  "system",
+                ]}
+                minutes={7}
+                topics="the interviews, the structure, the design decisions and the design system"
               >
-                <div className="case-section-body">
-                  <h3 className="case-subsection-title">
-                    The interviews corrected two of my assumptions
-                  </h3>
-                  <ol className="mg-findings">
-                    {FINDINGS.map((finding) => (
-                      <li key={finding.title}>
-                        <h4>{finding.title}</h4>
-                        <p>{finding.text}</p>
-                        <p className="mg-findings-meta">{finding.meta}</p>
-                      </li>
-                    ))}
-                  </ol>
-                </div>
-              </Section>
-
-              <Section id="structure" label="Structure" prefersReducedMotion={prefersReducedMotion}>
-                <div className="case-section-body">
-                  <h3 className="case-subsection-title">
-                    A short home, and one page for each kind of doubt
-                  </h3>
-                  <p>
-                    Three kinds of buyer decide in three different ways, so one funnel could not
-                    serve them. The home stays short and routes people. The depth lives in four
-                    pages, each built around one question.
-                  </p>
-                </div>
-
-                <div className="research-full">
-                  <div className="mg-sitemap">
-                    <p className="mg-sitemap-root">
-                      <strong>Home</strong>
-                      <span>Who are they, and what have they done?</span>
+                <Section id="brief" label="The brief" prefersReducedMotion={prefersReducedMotion}>
+                  <div className="case-section-body">
+                    <h3 className="case-subsection-title">
+                      A family company with thirty years of work and no website
+                    </h3>
+                    <p>
+                      The company plants lawns, builds gardens, and does full landscaping with its
+                      own team.
                     </p>
-                    <ul className="mg-sitemap-pages">
-                      {SITE_PAGES.map((page) => (
-                        <li key={page.name}>
-                          <h4>{page.name}</h4>
-                          <p className="mg-sitemap-route">{page.route}</p>
-                          <p>{page.question}</p>
-                          {page.child ? (
-                            <p className="mg-sitemap-child">
-                              <strong>{page.child.name}</strong>
-                              <span className="mg-sitemap-route">{page.child.route}</span>
-                            </p>
-                          ) : null}
+                    <p>
+                      Some referrals went straight to WhatsApp, with no place to see the work first.
+                      City buyers follow another path altogether: a public tender (a{" "}
+                      <em lang="pt-BR">licitação</em>).
+                    </p>
+                    <p>
+                      Two constraints came with the photos: every real shot of the work was
+                      vertical, taken on a phone, and none showed a garden after it had grown in.
+                    </p>
+                  </div>
+                </Section>
+
+                <Section id="research" label="Research" prefersReducedMotion={prefersReducedMotion}>
+                  <div className="case-section-body">
+                    <h3 className="case-subsection-title">
+                      Hypothesis first, then four interviews
+                    </h3>
+                    <p>
+                      I started from AI-drafted personas and scenarios, marked as hypotheses to
+                      test, not research. Then I interviewed four people who had hired this kind of
+                      service. The interviews stay anonymous.
+                    </p>
+                  </div>
+
+                  <div className="research-full">
+                    <table className="mg-table">
+                      <caption className="ms-visually-hidden">
+                        The four interviews: who they were and what decided the hire
+                      </caption>
+                      <thead>
+                        <tr>
+                          <th scope="col">#</th>
+                          <th scope="col">Who</th>
+                          <th scope="col">What decided</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {INTERVIEWS.map((row, index) => (
+                          <tr key={row.who}>
+                            <td className="mg-table-index">0{index + 1}</td>
+                            <td>{row.who}</td>
+                            <td>{row.decided}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div className="case-section-body case-section-body-secondary">
+                    <p>
+                      Four interviews are enough to see the main patterns repeat, not enough to
+                      generalize. Rural clients were not interviewed, so anything about them stays
+                      an assumption.
+                    </p>
+                  </div>
+                </Section>
+
+                <Section
+                  id="what-changed"
+                  label="What changed"
+                  prefersReducedMotion={prefersReducedMotion}
+                >
+                  <div className="case-section-body">
+                    <h3 className="case-subsection-title">
+                      The interviews corrected two of my assumptions
+                    </h3>
+                    <ol className="mg-findings">
+                      {FINDINGS.map((finding) => (
+                        <li key={finding.title}>
+                          <h4>{finding.title}</h4>
+                          <p>{finding.text}</p>
+                          <p className="mg-findings-meta">{finding.meta}</p>
                         </li>
                       ))}
+                    </ol>
+                  </div>
+                </Section>
+
+                <Section
+                  id="structure"
+                  label="Structure"
+                  prefersReducedMotion={prefersReducedMotion}
+                >
+                  <div className="case-section-body">
+                    <h3 className="case-subsection-title">
+                      A short home, and one page for each kind of doubt
+                    </h3>
+                    <p>
+                      Three kinds of buyer decide in three different ways, so one funnel could not
+                      serve them. The home stays short and routes people. The depth lives in four
+                      pages, each built around one question.
+                    </p>
+                  </div>
+
+                  <div className="research-full">
+                    <div className="mg-sitemap">
+                      <p className="mg-sitemap-root">
+                        <strong>Home</strong>
+                        <span>Who are they, and what have they done?</span>
+                      </p>
+                      <ul className="mg-sitemap-pages">
+                        {SITE_PAGES.map((page) => (
+                          <li key={page.name}>
+                            <h4>{page.name}</h4>
+                            <p className="mg-sitemap-route">{page.route}</p>
+                            <p>{page.question}</p>
+                            {page.child ? (
+                              <p className="mg-sitemap-child">
+                                <strong>{page.child.name}</strong>
+                                <span className="mg-sitemap-route">{page.child.route}</span>
+                              </p>
+                            ) : null}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  </div>
+
+                  <div className="research-full">
+                    <table className="mg-table mg-table--paths">
+                      <caption className="ms-visually-hidden">
+                        The path each kind of buyer is meant to take through the site
+                      </caption>
+                      <thead>
+                        <tr>
+                          <th scope="col">Who</th>
+                          <th scope="col">Intended path</th>
+                          <th scope="col">Why</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {SITE_PATHS.map((row) => (
+                          <tr key={row.who}>
+                            <td>{row.who}</td>
+                            <td>
+                              <ol className="mg-path">
+                                {row.steps.map((step) => (
+                                  <li key={step}>{step}</li>
+                                ))}
+                              </ol>
+                            </td>
+                            <td>{row.why}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div className="case-section-body case-section-body-secondary">
+                    <p>
+                      These paths are the design intent and have not been tested yet. Left out on
+                      purpose: a blog, a page per service, a separate grass guide (now a section of
+                      Services), and a tender page (covered by Company, since the site cannot
+                      replace a public tender).
+                    </p>
+                  </div>
+                </Section>
+
+                <Section
+                  id="decisions"
+                  label="Decisions"
+                  prefersReducedMotion={prefersReducedMotion}
+                >
+                  <div className="case-section-body">
+                    <h3 className="case-subsection-title">
+                      Every decision points back to a finding
+                    </h3>
+                  </div>
+
+                  <div className="research-full">
+                    <table className="mg-table mg-table--decisions">
+                      <caption className="ms-visually-hidden">
+                        Each research finding and the design decision it led to
+                      </caption>
+                      <thead>
+                        <tr>
+                          <th scope="col">Finding</th>
+                          <th scope="col">Decision on the site</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {DECISIONS.map((row) => (
+                          <tr key={row.finding}>
+                            <td>{row.finding}</td>
+                            <td>{row.decision}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div className="case-section-body case-section-body-secondary">
+                    <h3 className="case-subsection-title">The homepage</h3>
+                    <p>The site is in Portuguese; the notes translate what each part does.</p>
+                  </div>
+                  <div className="research-full">
+                    <AnnotatedMockup
+                      src="/assets/portfolio/2026/10/marcelo-gramas/home-full.webp"
+                      alt="The homepage, cropped to the quick request form and the proof row, annotated with three decisions"
+                      width="1440"
+                      height="6107"
+                      bullets={HOME_PROOF_BULLETS}
+                      mapId="marcelo-home-proof"
+                      crop={{ start: 0.125, span: 0.113 }}
+                      observe="The homepage under the hero: the quick request and the proof row."
+                    />
+                  </div>
+                  <div className="research-full">
+                    <AnnotatedMockup
+                      src="/assets/portfolio/2026/10/marcelo-gramas/home-full.webp"
+                      alt="The homepage, cropped to the services block with real job photos, annotated with one decision"
+                      width="1440"
+                      height="6107"
+                      bullets={HOME_SERVICES_BULLETS}
+                      mapId="marcelo-home-services"
+                      crop={{ start: 0.37, span: 0.087 }}
+                      observe="The homepage: services, each with a real job photo."
+                    />
+                  </div>
+
+                  <div className="case-section-body case-section-body-secondary">
+                    <h3 className="case-subsection-title">Before and after</h3>
+                  </div>
+                  <div className="research-full">
+                    <div className="mg-pair mg-pair--photos">
+                      <Figure
+                        src="/assets/portfolio/2026/10/marcelo-gramas/backyard-before.webp"
+                        alt="A walled backyard of bare packed earth, before the work"
+                        zoom
+                        caption={{ kicker: "Before", text: "Bare packed earth." }}
+                      />
+                      <Figure
+                        src="/assets/portfolio/2026/10/marcelo-gramas/backyard-after.webp"
+                        alt="The same walled backyard covered in sod, after the work"
+                        zoom
+                        caption={{ kicker: "After", text: "Sod laid wall to wall." }}
+                      />
+                    </div>
+                    <p className="case-gallery-hint">
+                      Real photos from the team&apos;s own record, taken from different angles. The
+                      site says so under the pair.
+                    </p>
+                  </div>
+
+                  <div className="case-section-body case-section-body-secondary">
+                    <h3 className="case-subsection-title">Price and schedule</h3>
+                  </div>
+                  <div className="research-full">
+                    <AnnotatedMockup
+                      src="/assets/portfolio/2026/10/marcelo-gramas/services-full.webp"
+                      alt="The services page, cropped to the process and pricing block, annotated with two decisions"
+                      width="1440"
+                      height="4213"
+                      bullets={SERVICES_BULLETS}
+                      mapId="marcelo-services"
+                      crop={{ start: 0.584, span: 0.19 }}
+                      observe="The services page: how the schedule and the price are set."
+                    />
+                  </div>
+                </Section>
+
+                <Section
+                  id="first-screen"
+                  label="First screen"
+                  prefersReducedMotion={prefersReducedMotion}
+                >
+                  <div className="case-section-body">
+                    <h3 className="case-subsection-title">
+                      Three directions for the first screen, two thrown away
+                    </h3>
+                    <p>
+                      Everyone asked to see real work, so the first image carried the most weight. A
+                      real photo alone could not do it: every shot was vertical and went soft when
+                      cropped wide.
+                    </p>
+                    <ul>
+                      <li>
+                        <strong>A 3D garden, rotating with the scroll.</strong> Built, integrated,
+                        and reverted on review. The lawn read flat, the house came out as a narrow
+                        tower, and the palm took over the scene.
+                      </li>
+                      <li>
+                        <strong>An idealized landscape.</strong> The most attractive so far. A
+                        design critique ranked it the top problem: it showed the scale of a park,
+                        not his work, and made the real photos after it look like a smaller promise.
+                      </li>
+                      <li>
+                        <strong>One of his real jobs, grown in.</strong> The base is a job of his.
+                        The grown palm, the planting, and the clean site are illustrated, so it is a
+                        visualization, not a record.
+                      </li>
                     </ul>
                   </div>
-                </div>
 
-                <div className="research-full">
-                  <table className="mg-table mg-table--paths">
-                    <caption className="ms-visually-hidden">
-                      The path each kind of buyer is meant to take through the site
-                    </caption>
-                    <thead>
-                      <tr>
-                        <th scope="col">Who</th>
-                        <th scope="col">Intended path</th>
-                        <th scope="col">Why</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {SITE_PATHS.map((row) => (
-                        <tr key={row.who}>
-                          <td>{row.who}</td>
-                          <td>
-                            <ol className="mg-path">
-                              {row.steps.map((step) => (
-                                <li key={step}>{step}</li>
-                              ))}
-                            </ol>
-                          </td>
-                          <td>{row.why}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
+                  <div className="research-full">
+                    <div className="mg-trio">
+                      <Figure
+                        src="/assets/portfolio/2026/10/marcelo-gramas/hero-3d-rejected.webp"
+                        alt="The rejected 3D garden diorama: a flat lawn disc, a narrow house fragment, and a large palm"
+                        zoom
+                        caption={{ kicker: "Rejected", text: "3D garden, early September." }}
+                      />
+                      <Figure
+                        src="/assets/portfolio/2026/10/marcelo-gramas/hero-landscape-rejected.webp"
+                        alt="The rejected idealized landscape, generated with AI: rolling hills, a winding stone path, and large planted beds, not a job of the company"
+                        zoom
+                        caption={{
+                          kicker: "Rejected",
+                          text: "Idealized landscape, late September.",
+                        }}
+                      />
+                      <Figure
+                        src="/assets/portfolio/2026/10/marcelo-gramas/home-desktop.webp"
+                        alt="The shipped homepage hero, an AI visualization made from a real job photo"
+                        zoom
+                        caption={{ kicker: "Shipped", text: "Built on his real job, October." }}
+                      />
+                    </div>
+                  </div>
 
-                <div className="case-section-body case-section-body-secondary">
-                  <p>
-                    These paths are the design intent and have not been tested yet. Left out on
-                    purpose: a blog, a page per service, a separate grass guide (now a section of
-                    Services), and a tender page (covered by Company, since the site cannot replace
-                    a public tender).
-                  </p>
-                </div>
-              </Section>
+                  <div className="case-section-body case-section-body-secondary">
+                    <p>
+                      The trade-off: the image that opens the site is the one image that is not a
+                      photo, so it says what it is. The footer and alt text call it an AI
+                      visualization, and Marcelo approved it knowing that. The footer also says job
+                      photos were adjusted with AI, for light and color only.
+                    </p>
+                  </div>
+                </Section>
 
-              <Section id="decisions" label="Decisions" prefersReducedMotion={prefersReducedMotion}>
-                <div className="case-section-body">
-                  <h3 className="case-subsection-title">Every decision points back to a finding</h3>
-                </div>
+                <Section
+                  id="quote-flow"
+                  label="Quote flow"
+                  prefersReducedMotion={prefersReducedMotion}
+                >
+                  <div className="case-section-body">
+                    <h3 className="case-subsection-title">
+                      A form that writes the WhatsApp message
+                    </h3>
+                    <p>
+                      Five questions, and only the first two are required: the type of project and
+                      the place. The last step shows the message before anything leaves the page.
+                    </p>
+                    <p>
+                      The client sends the message from their own WhatsApp or copies it. Both phone
+                      numbers stay visible for those who prefer a call. Nothing is stored.
+                    </p>
+                    <p>
+                      The trade-off: the site itself cannot count requests. Its messages do say they
+                      came from the site, so Marcelo counts them in WhatsApp.
+                    </p>
+                  </div>
 
-                <div className="research-full">
-                  <table className="mg-table mg-table--decisions">
-                    <caption className="ms-visually-hidden">
-                      Each research finding and the design decision it led to
-                    </caption>
-                    <thead>
-                      <tr>
-                        <th scope="col">Finding</th>
-                        <th scope="col">Decision on the site</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {DECISIONS.map((row) => (
-                        <tr key={row.finding}>
-                          <td>{row.finding}</td>
-                          <td>{row.decision}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-
-                <div className="case-section-body case-section-body-secondary">
-                  <h3 className="case-subsection-title">The homepage</h3>
-                  <p>The site is in Portuguese; the notes translate what each part does.</p>
-                </div>
-                <div className="research-full">
-                  <AnnotatedMockup
-                    src="/assets/portfolio/2026/10/marcelo-gramas/home-full.webp"
-                    alt="The homepage, cropped to the quick request form and the proof row, annotated with three decisions"
-                    width="1440"
-                    height="6107"
-                    bullets={HOME_PROOF_BULLETS}
-                    mapId="marcelo-home-proof"
-                    crop={{ start: 0.125, span: 0.113 }}
-                    observe="The homepage under the hero: the quick request and the proof row."
-                  />
-                </div>
-                <div className="research-full">
-                  <AnnotatedMockup
-                    src="/assets/portfolio/2026/10/marcelo-gramas/home-full.webp"
-                    alt="The homepage, cropped to the services block with real job photos, annotated with one decision"
-                    width="1440"
-                    height="6107"
-                    bullets={HOME_SERVICES_BULLETS}
-                    mapId="marcelo-home-services"
-                    crop={{ start: 0.37, span: 0.087 }}
-                    observe="The homepage: services, each with a real job photo."
-                  />
-                </div>
-
-                <div className="case-section-body case-section-body-secondary">
-                  <h3 className="case-subsection-title">Before and after</h3>
-                </div>
-                <div className="research-full">
-                  <div className="mg-pair mg-pair--photos">
-                    <Figure
-                      src="/assets/portfolio/2026/10/marcelo-gramas/backyard-before.webp"
-                      alt="A walled backyard of bare packed earth, before the work"
-                      zoom
-                      caption={{ kicker: "Before", text: "Bare packed earth." }}
-                    />
-                    <Figure
-                      src="/assets/portfolio/2026/10/marcelo-gramas/backyard-after.webp"
-                      alt="The same walled backyard covered in sod, after the work"
-                      zoom
-                      caption={{ kicker: "After", text: "Sod laid wall to wall." }}
+                  <div className="research-full">
+                    <VideoFigure
+                      className="mg-video"
+                      src="/media/marcelo-quote-flow.webm"
+                      poster="/media/marcelo-quote-poster.webp"
+                      ratio="390 / 844"
+                      label="The quote form on a phone: five questions, then the written WhatsApp message to review"
+                      caption={{
+                        text: "Recorded on the live site. The last step shows the message; nothing was sent.",
+                      }}
                     />
                   </div>
-                  <p className="case-gallery-hint">
-                    Real photos from the team&apos;s own record, taken from different angles. The
-                    site says so under the pair.
-                  </p>
-                </div>
+                </Section>
 
-                <div className="case-section-body case-section-body-secondary">
-                  <h3 className="case-subsection-title">Price and schedule</h3>
-                </div>
-                <div className="research-full">
-                  <AnnotatedMockup
-                    src="/assets/portfolio/2026/10/marcelo-gramas/services-full.webp"
-                    alt="The services page, cropped to the process and pricing block, annotated with two decisions"
-                    width="1440"
-                    height="4213"
-                    bullets={SERVICES_BULLETS}
-                    mapId="marcelo-services"
-                    crop={{ start: 0.584, span: 0.19 }}
-                    observe="The services page: how the schedule and the price are set."
-                  />
-                </div>
-              </Section>
+                <Section
+                  id="references"
+                  label="References"
+                  prefersReducedMotion={prefersReducedMotion}
+                >
+                  <div className="case-section-body">
+                    <h3 className="case-subsection-title">
+                      What I took from the references, and what I refused
+                    </h3>
+                  </div>
 
-              <Section
-                id="first-screen"
-                label="First screen"
-                prefersReducedMotion={prefersReducedMotion}
-              >
-                <div className="case-section-body">
-                  <h3 className="case-subsection-title">
-                    Three directions for the first screen, two thrown away
-                  </h3>
-                  <p>
-                    Everyone asked to see real work, so the first image carried the most weight. A
-                    real photo alone could not do it: every shot was vertical and went soft when
-                    cropped wide.
-                  </p>
-                  <ul>
-                    <li>
-                      <strong>A 3D garden, rotating with the scroll.</strong> Built, integrated, and
-                      reverted on review. The lawn read flat, the house came out as a narrow tower,
-                      and the palm took over the scene.
-                    </li>
-                    <li>
-                      <strong>An idealized landscape.</strong> The most attractive so far. A design
-                      critique ranked it the top problem: it showed the scale of a park, not his
-                      work, and made the real photos after it look like a smaller promise.
-                    </li>
-                    <li>
-                      <strong>One of his real jobs, grown in.</strong> The base is a job of his. The
-                      grown palm, the planting, and the clean site are illustrated, so it is a
-                      visualization, not a record.
-                    </li>
-                  </ul>
-                </div>
+                  <div className="research-full">
+                    <table className="mg-table mg-table--decisions">
+                      <caption className="ms-visually-hidden">
+                        The three sites used as inspiration and what the site took from each
+                      </caption>
+                      <thead>
+                        <tr>
+                          <th scope="col">Inspiration</th>
+                          <th scope="col">What the site took</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {REFERENCES.map((row) => (
+                          <tr key={row.from}>
+                            <td>{row.from}</td>
+                            <td>{row.took}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
 
-                <div className="research-full">
-                  <div className="mg-trio">
+                  <div className="case-section-body case-section-body-secondary">
+                    <p>
+                      Text, photos, and brand were always this company&apos;s own. Later rounds also
+                      removed some of what the inspiration brought: rounded frames, pill buttons,
+                      and 3D objects.
+                    </p>
+                    <p>
+                      I refused what these sites use to build trust: star ratings, client counts,
+                      success percentages, testimonials, and brand logos. Nothing like that had been
+                      measured or collected here. The same space holds facts a client can check:
+                      since 1996, own team, a named sod producer, and named public works.
+                    </p>
+                  </div>
+                </Section>
+
+                <Section id="system" label="System" prefersReducedMotion={prefersReducedMotion}>
+                  <div className="case-section-body">
+                    <h3 className="case-subsection-title">One token set, in code and in Figma</h3>
+                    <p>
+                      Mata Nobre is the palette: deep green for actions, charcoal for text, ivory
+                      for the ground, and wood brown for earth.
+                    </p>
+
+                    <p>
+                      A design critique round consolidated the interface. The counts were measured
+                      on the built pages, not estimated:
+                    </p>
+                    <dl className="mg-counts">
+                      {SYSTEM_COUNTS.map((count) => (
+                        <div key={count.label}>
+                          <dt>{count.label}</dt>
+                          <dd>{count.value}</dd>
+                        </div>
+                      ))}
+                    </dl>
+                    <p>
+                      The same round found a closing button green on green, at 1.6:1 against its
+                      background, which became ivory. FAQ rows carried a chevron and looked
+                      clickable but did nothing, so they became plain rows.
+                    </p>
+                    <p>
+                      The tokens are exported to JSON, and a test fails if the code and the export
+                      diverge. The Figma variables carry the same names as the CSS tokens.
+                    </p>
+                  </div>
+
+                  <div className="research-full">
                     <Figure
-                      src="/assets/portfolio/2026/10/marcelo-gramas/hero-3d-rejected.webp"
-                      alt="The rejected 3D garden diorama: a flat lawn disc, a narrow house fragment, and a large palm"
+                      src="/assets/portfolio/2026/10/marcelo-gramas/design-system.webp"
+                      alt="The living design system page: Mata Nobre palette with token names, buttons, and the chevron cut from the logo"
                       zoom
-                      caption={{ kicker: "Rejected", text: "3D garden, early September." }}
-                    />
-                    <Figure
-                      src="/assets/portfolio/2026/10/marcelo-gramas/hero-landscape-rejected.webp"
-                      alt="The rejected idealized landscape, generated with AI: rolling hills, a winding stone path, and large planted beds, not a job of the company"
-                      zoom
-                      caption={{ kicker: "Rejected", text: "Idealized landscape, late September." }}
-                    />
-                    <Figure
-                      src="/assets/portfolio/2026/10/marcelo-gramas/home-desktop.webp"
-                      alt="The shipped homepage hero, an AI visualization made from a real job photo"
-                      zoom
-                      caption={{ kicker: "Shipped", text: "Built on his real job, October." }}
+                      caption={{
+                        text: "The design system page renders the site's own components, so the documentation cannot drift from the code.",
+                      }}
                     />
                   </div>
-                </div>
 
-                <div className="case-section-body case-section-body-secondary">
-                  <p>
-                    The trade-off: the image that opens the site is the one image that is not a
-                    photo, so it says what it is. The footer and alt text call it an AI
-                    visualization, and Marcelo approved it knowing that. The footer also says job
-                    photos were adjusted with AI, for light and color only.
-                  </p>
-                </div>
-              </Section>
+                  <div className="case-section-body case-section-body-secondary">
+                    <h3 className="case-subsection-title">Accessibility</h3>
+                    <p>
+                      Labels tied to every field, a skip link, a main landmark, a menu that closes
+                      on Escape and returns focus, 44 px text targets, and reduced motion respected.
+                      AA contrast was measured on every solid background.
+                    </p>
+                    <p>
+                      Text over the cover was measured pixel by pixel on the live site, at 1440 and
+                      390 px: 8.4:1 at worst for the headline, 4.9:1 for the line under it. The
+                      small labels on the before and after photos still need that check, and there
+                      has been no screen reader audit yet.
+                    </p>
+                  </div>
+                </Section>
 
-              <Section
-                id="quote-flow"
-                label="Quote flow"
-                prefersReducedMotion={prefersReducedMotion}
-              >
-                <div className="case-section-body">
-                  <h3 className="case-subsection-title">A form that writes the WhatsApp message</h3>
-                  <p>
-                    Five questions, and only the first two are required: the type of project and the
-                    place. The last step shows the message before anything leaves the page.
-                  </p>
-                  <p>
-                    The client sends the message from their own WhatsApp or copies it. Both phone
-                    numbers stay visible for those who prefer a call. Nothing is stored.
-                  </p>
-                  <p>
-                    The trade-off: the site itself cannot count requests. Its messages do say they
-                    came from the site, so Marcelo counts them in WhatsApp.
-                  </p>
-                </div>
-
-                <div className="research-full">
-                  <VideoFigure
-                    className="mg-video"
-                    src="/media/marcelo-quote-flow.webm"
-                    poster="/media/marcelo-quote-poster.webp"
-                    ratio="390 / 844"
-                    label="The quote form on a phone: five questions, then the written WhatsApp message to review"
-                    caption={{
-                      text: "Recorded on the live site. The last step shows the message; nothing was sent.",
-                    }}
-                  />
-                </div>
-              </Section>
-
-              <Section
-                id="references"
-                label="References"
-                prefersReducedMotion={prefersReducedMotion}
-              >
-                <div className="case-section-body">
-                  <h3 className="case-subsection-title">
-                    What I took from the references, and what I refused
-                  </h3>
-                </div>
-
-                <div className="research-full">
-                  <table className="mg-table mg-table--decisions">
-                    <caption className="ms-visually-hidden">
-                      The three sites used as inspiration and what the site took from each
-                    </caption>
-                    <thead>
-                      <tr>
-                        <th scope="col">Inspiration</th>
-                        <th scope="col">What the site took</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      {REFERENCES.map((row) => (
-                        <tr key={row.from}>
-                          <td>{row.from}</td>
-                          <td>{row.took}</td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-
-                <div className="case-section-body case-section-body-secondary">
-                  <p>
-                    Text, photos, and brand were always this company&apos;s own. Later rounds also
-                    removed some of what the inspiration brought: rounded frames, pill buttons, and
-                    3D objects.
-                  </p>
-                  <p>
-                    I refused what these sites use to build trust: star ratings, client counts,
-                    success percentages, testimonials, and brand logos. Nothing like that had been
-                    measured or collected here. The same space holds facts a client can check: since
-                    1996, own team, a named sod producer, and named public works.
-                  </p>
-                </div>
-              </Section>
-
-              <Section id="system" label="System" prefersReducedMotion={prefersReducedMotion}>
-                <div className="case-section-body">
-                  <h3 className="case-subsection-title">One token set, in code and in Figma</h3>
-                  <p>
-                    Mata Nobre is the palette: deep green for actions, charcoal for text, ivory for
-                    the ground, and wood brown for earth.
-                  </p>
-
-                  <p>
-                    A design critique round consolidated the interface. The counts were measured on
-                    the built pages, not estimated:
-                  </p>
-                  <dl className="mg-counts">
-                    {SYSTEM_COUNTS.map((count) => (
-                      <div key={count.label}>
-                        <dt>{count.label}</dt>
-                        <dd>{count.value}</dd>
-                      </div>
-                    ))}
-                  </dl>
-                  <p>
-                    The same round found a closing button green on green, at 1.6:1 against its
-                    background, which became ivory. FAQ rows carried a chevron and looked clickable
-                    but did nothing, so they became plain rows.
-                  </p>
-                  <p>
-                    The tokens are exported to JSON, and a test fails if the code and the export
-                    diverge. The Figma variables carry the same names as the CSS tokens.
-                  </p>
-                </div>
-
-                <div className="research-full">
-                  <Figure
-                    src="/assets/portfolio/2026/10/marcelo-gramas/design-system.webp"
-                    alt="The living design system page: Mata Nobre palette with token names, buttons, and the chevron cut from the logo"
-                    zoom
-                    caption={{
-                      text: "The design system page renders the site's own components, so the documentation cannot drift from the code.",
-                    }}
-                  />
-                </div>
-
-                <div className="case-section-body case-section-body-secondary">
-                  <h3 className="case-subsection-title">Accessibility</h3>
-                  <p>
-                    Labels tied to every field, a skip link, a main landmark, a menu that closes on
-                    Escape and returns focus, 44 px text targets, and reduced motion respected. AA
-                    contrast was measured on every solid background.
-                  </p>
-                  <p>
-                    Text over the cover was measured pixel by pixel on the live site, at 1440 and
-                    390 px: 8.4:1 at worst for the headline, 4.9:1 for the line under it. The small
-                    labels on the before and after photos still need that check, and there has been
-                    no screen reader audit yet.
-                  </p>
-                </div>
-              </Section>
-
-              <CaseBackToContents />
+                <CaseBackToContents />
+              </FullProcess>
               <Section id="outcome" label="Outcome" prefersReducedMotion={prefersReducedMotion}>
                 <div className="case-section-body">
                   <p>
@@ -873,7 +907,7 @@ export default function MarceloGramasCase() {
                   <Link to="/delivery" className="case-pagination-card case-pagination-next">
                     <div className="case-pagination-label">Next case</div>
                     <div className="case-pagination-title">
-                      The New Delivery Experience
+                      Faster delivery confirmations, with complete records
                       <PaginationArrow direction="next" />
                     </div>
                     <div className="case-pagination-desc">

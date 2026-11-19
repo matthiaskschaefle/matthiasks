@@ -14,6 +14,7 @@ import {
 } from "@/lib/animations";
 import CountUp from "./components/CountUp.jsx";
 import CaseContents, { CaseBackToContents } from "./components/CaseContents.jsx";
+import FullProcess from "./components/FullProcess.jsx";
 import PinnedStory from "./components/PinnedStory.jsx";
 import Figure from "./components/mockups/Figure.jsx";
 import SnapGallery from "./components/mockups/SnapGallery.jsx";
@@ -1303,7 +1304,10 @@ export default function DuoPetCase() {
               </div>
               <div className="in-short-item">
                 <div className="in-short-label">What we made</div>
-                <p className="in-short-text">A mobile prototype, tested twice in the course.</p>
+                <p className="in-short-text">
+                  A mobile prototype, tested in two rounds. The second round moved the calendar out
+                  of the vet profile into its own step.
+                </p>
               </div>
             </div>
 
@@ -1350,500 +1354,507 @@ export default function DuoPetCase() {
 
           <div className="case-layout">
             <div className="case-content-column">
-              <motion.section
-                id="overview"
-                className="case-section"
-                variants={sectionStagger}
-                initial="hidden"
-                whileInView="visible"
-                viewport={motionViewport}
+              <FullProcess
+                ids={["overview", "research", "decisions", "design"]}
+                minutes={3}
+                topics="the survey, the interviews, two rounds of testing and the design decisions"
               >
-                <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>
-                  Overview
-                </TypedSectionLabel>
-                <div className="case-section-body">
-                  <p>Educational UX course project from 2023.</p>
-                </div>
-              </motion.section>
-
-              <motion.section
-                id="research"
-                className="case-section"
-                variants={sectionStagger}
-                initial="hidden"
-                whileInView="visible"
-                viewport={motionViewport}
-              >
-                <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>
-                  Research
-                </TypedSectionLabel>
-                {/* [REVISÃO MATTHIAS] Research: empathize + define merged into one section; subheads and bridge copy rewritten in reader language, pending owner review */}
-                <div className="case-section-body">
-                  {/* [REVISÃO MATTHIAS] new subhead + compressed intro (was "Following in the footsteps of pet owners" + 2 paragraphs) */}
-                  <h3 className="case-subsection-title">Three kinds of evidence</h3>
-
-                  <p>
-                    The survey, the interviews, and the usability rounds used different samples.
-                    Findings from each method are labeled below.
-                  </p>
-
-                  <div style={{ marginTop: 16 }}>
-                    <a
-                      className="case-btn"
-                      href="https://www.figma.com/file/7k3qxR4TPjZkSt9zi5Byac/Affinity-Diagram?type=whiteboard&node-id=0%3A1&t=DeHD2TwEURvvyCPw-1"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{ width: "fit-content" }}
-                    >
-                      <span className="case-btn-icon" aria-hidden="true">
-                        <img
-                          src="/assets/portfolio/2026/01/twemoji_writing-hand.png"
-                          alt=""
-                          loading="lazy"
-                          decoding="async"
-                          width="24"
-                          height="24"
-                        />
-                      </span>
-                      <span className="case-btn-label">Affinity Diagram</span>
-                    </a>
+                <motion.section
+                  id="overview"
+                  className="case-section"
+                  variants={sectionStagger}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={motionViewport}
+                >
+                  <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>
+                    Overview
+                  </TypedSectionLabel>
+                  <div className="case-section-body">
+                    <p>Educational UX course project from 2023.</p>
                   </div>
-                </div>
+                </motion.section>
 
-                <div className="research-full" style={{ marginTop: 18 }}>
-                  <div className="research-grid">
-                    <article className="research-card">
-                      <h4 className="research-title">Demographic data of pet owners</h4>
-                      <p className="research-text">
-                        Millennials are 33% of pet owners in Brazil, mostly married women with a
-                        dog.
-                      </p>
-                      <p className="research-text" style={{ marginTop: 10 }}>
-                        <a
-                          className="case-inline-link"
-                          href="https://publicacoes.apamvet.com.br/PDFs/Artigos/58.pdf"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          Source (PDF, PT-BR) →
-                        </a>
-                      </p>
-                    </article>
+                <motion.section
+                  id="research"
+                  className="case-section"
+                  variants={sectionStagger}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={motionViewport}
+                >
+                  <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>
+                    Research
+                  </TypedSectionLabel>
+                  {/* [REVISÃO MATTHIAS] Research: empathize + define merged into one section; subheads and bridge copy rewritten in reader language, pending owner review */}
+                  <div className="case-section-body">
+                    {/* [REVISÃO MATTHIAS] new subhead + compressed intro (was "Following in the footsteps of pet owners" + 2 paragraphs) */}
+                    <h3 className="case-subsection-title">Three kinds of evidence</h3>
 
-                    <article className="research-card">
-                      <h4 className="research-title">Frequency of vet visits</h4>
-                      <p className="research-text">
-                        28% of dogs and 20% of cats visit the vet at least once a month.
-                      </p>
-                      <p className="research-text" style={{ marginTop: 10 }}>
-                        <a
-                          className="case-inline-link"
-                          href="https://www.institutoqualibest.com/wp-content/uploads/2020/02/Infografico-O-perfil-do-dono-de-pet-no-Brasil-v4.pdf"
-                          target="_blank"
-                          rel="noopener noreferrer"
-                        >
-                          Source (PDF, PT-BR) →
-                        </a>
-                      </p>
-                    </article>
-                  </div>
-                </div>
-
-                <div className="desktop-only" style={{ gridColumn: "1", marginTop: "62px" }}>
-                  <div>
-                    <a
-                      className="case-btn"
-                      href="https://drive.google.com/file/d/1gSYHBJogy_9tdDgBm7EMDbxamL4FVspx/view"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{ width: "fit-content" }}
-                    >
-                      <span className="case-btn-icon" aria-hidden="true">
-                        <img
-                          src="/assets/portfolio/2026/01/twemoji_writing-hand.png"
-                          alt=""
-                          loading="lazy"
-                          decoding="async"
-                          width="24"
-                          height="24"
-                        />
-                      </span>
-                      <span className="case-btn-label" style={{ textTransform: "uppercase" }}>
-                        Full Report
-                      </span>
-                    </a>
-                  </div>
-                </div>
-
-                <div className="case-section-body case-section-body-secondary">
-                  {/* [REVISÃO MATTHIAS] new subhead (was "Data that guides") + compressed intro sentence */}
-                  <h3 className="case-subsection-title">Survey: 164 pet owners</h3>
-                  <p>
-                    <strong>164 pet owners</strong> on how they schedule veterinary appointments.
-                    These percentages are from that questionnaire.
-                  </p>
-
-                  <div className="mobile-only" style={{ marginTop: 16 }}>
-                    <a
-                      className="case-btn"
-                      href="https://drive.google.com/file/d/1gSYHBJogy_9tdDgBm7EMDbxamL4FVspx/view"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{ width: "fit-content" }}
-                    >
-                      <span className="case-btn-icon" aria-hidden="true">
-                        <img
-                          src="/assets/portfolio/2026/01/twemoji_writing-hand.png"
-                          alt=""
-                          loading="lazy"
-                          decoding="async"
-                          width="24"
-                          height="24"
-                        />
-                      </span>
-                      <span className="case-btn-label" style={{ textTransform: "uppercase" }}>
-                        Full Report
-                      </span>
-                    </a>
-                  </div>
-
-                  <p className="hover-hint">
-                    Some findings raised follow-up questions. Hover over the icon
-                    <img
-                      className="hover-hint__emoji"
-                      src="/assets/portfolio/2026/07/lightbulb.svg"
-                      alt=""
-                      aria-hidden="true"
-                      loading="lazy"
-                      decoding="async"
-                      width="24"
-                      height="24"
-                    />
-                    .
-                  </p>
-
-                  <div className="insight-list" aria-label="Survey insights">
-                    <div className="insight-row">
-                      <div className="insight-left">
-                        <div className="insight-number">
-                          <CountUp value={56} suffix="%" />
-                        </div>
-                        <div className="insight-text">
-                          <div className="insight-title">WhatsApp scheduling</div>
-                          <div className="insight-desc">
-                            Share of pet owners who schedule appointments through WhatsApp.
-                          </div>
-                        </div>
-                      </div>
-                      <button
-                        className="tip tip--outside"
-                        type="button"
-                        aria-label="Insight about WhatsApp scheduling"
-                      >
-                        <img
-                          src="/assets/portfolio/2026/07/lightbulb.svg"
-                          alt=""
-                          aria-hidden="true"
-                          loading="lazy"
-                          decoding="async"
-                          width="24"
-                          height="24"
-                        />
-                        <span className="bubble bubble--from-icon">
-                          This number stands out. It made me wonder: how satisfied are people when
-                          booking appointments through WhatsApp?
-                        </span>
-                      </button>
-                    </div>
-
-                    <div className="insight-row">
-                      <div className="insight-left">
-                        <div className="insight-number">
-                          <CountUp value={52} suffix="%" />
-                        </div>
-                        <div className="insight-text">
-                          <div className="insight-title">Only go when symptoms appear</div>
-                          <div className="insight-desc">
-                            Some pet owners book routine checkups, while others only go when
-                            symptoms show up.
-                          </div>
-                        </div>
-                      </div>
-                      <button
-                        className="tip tip--outside"
-                        type="button"
-                        aria-label="Insight about routine vs symptoms"
-                      >
-                        <img
-                          src="/assets/portfolio/2026/07/lightbulb.svg"
-                          alt=""
-                          aria-hidden="true"
-                          loading="lazy"
-                          decoding="async"
-                          width="24"
-                          height="24"
-                        />
-                        <span className="bubble bubble--from-icon">
-                          What is the experience like when taking a pet to the vet in an emergency?
-                        </span>
-                      </button>
-                    </div>
-
-                    <div className="insight-row">
-                      <div className="insight-left">
-                        <div className="insight-number">
-                          <CountUp value={63} suffix="%" />
-                        </div>
-                        <div className="insight-text">
-                          <div className="insight-title">Nearby veterinarians</div>
-                          <div className="insight-desc">
-                            Share of pet owners who take their pets to the closest veterinarian.
-                          </div>
-                        </div>
-                      </div>
-                      <button
-                        className="tip tip--outside"
-                        type="button"
-                        aria-label="Insight about proximity"
-                      >
-                        <img
-                          src="/assets/portfolio/2026/07/lightbulb.svg"
-                          alt=""
-                          aria-hidden="true"
-                          loading="lazy"
-                          decoding="async"
-                          width="24"
-                          height="24"
-                        />
-                        <span className="bubble bubble--from-icon">
-                          It&apos;s a big number and shows that proximity matters to a lot of
-                          people. This points to a need to explore. It is not yet time to think
-                          about solutions.
-                        </span>
-                      </button>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="desktop-only" style={{ gridColumn: "1", marginTop: "62px" }}>
-                  <div>
-                    <a
-                      className="case-btn"
-                      href="https://docs.google.com/document/d/1Tpd8qc_dXaRJYhOZgxXumjD4bCVwoP7SFUEfpFkOMNc/edit?tab=t.0"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{ width: "fit-content" }}
-                    >
-                      <span className="case-btn-icon" aria-hidden="true">
-                        <img
-                          src="/assets/portfolio/2026/01/twemoji_writing-hand.png"
-                          alt=""
-                          loading="lazy"
-                          decoding="async"
-                          width="24"
-                          height="24"
-                        />
-                      </span>
-                      <span className="case-btn-label" style={{ textTransform: "uppercase" }}>
-                        Interview guide
-                      </span>
-                    </a>
-                    <p
-                      style={{
-                        marginTop: "12px",
-                        fontSize: "13px",
-                        lineHeight: "1.6",
-                        color: "#64748B",
-                      }}
-                    >
-                      Type: In-Person
-                      <br />
-                      Location: Brazil
-                      <br />
-                      Participants: 5 (20-40 years old)
-                      <br />
-                      Duration: 15 to 25 minutes each
+                    <p>
+                      The survey, the interviews, and the usability rounds used different samples.
+                      Findings from each method are labeled below.
                     </p>
+
+                    <div style={{ marginTop: 16 }}>
+                      <a
+                        className="case-btn"
+                        href="https://www.figma.com/file/7k3qxR4TPjZkSt9zi5Byac/Affinity-Diagram?type=whiteboard&node-id=0%3A1&t=DeHD2TwEURvvyCPw-1"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ width: "fit-content" }}
+                      >
+                        <span className="case-btn-icon" aria-hidden="true">
+                          <img
+                            src="/assets/portfolio/2026/01/twemoji_writing-hand.png"
+                            alt=""
+                            loading="lazy"
+                            decoding="async"
+                            width="24"
+                            height="24"
+                          />
+                        </span>
+                        <span className="case-btn-label">Affinity Diagram</span>
+                      </a>
+                    </div>
                   </div>
-                </div>
 
-                <div className="case-section-body case-section-body-secondary">
-                  {/* [REVISÃO MATTHIAS] new subhead (was "Connecting data and stories to impactful solutions") + compressed intro sentence */}
-                  <h3 className="case-subsection-title">What 5 interviews added</h3>
-                  <p>
-                    Five in-person interviews in Brazil, 20 to 40 years old, 15 to 25 minutes each.
-                    A different sample from the questionnaire.
-                  </p>
+                  <div className="research-full" style={{ marginTop: 18 }}>
+                    <div className="research-grid">
+                      <article className="research-card">
+                        <h4 className="research-title">Demographic data of pet owners</h4>
+                        <p className="research-text">
+                          Millennials are 33% of pet owners in Brazil, mostly married women with a
+                          dog.
+                        </p>
+                        <p className="research-text" style={{ marginTop: 10 }}>
+                          <a
+                            className="case-inline-link"
+                            href="https://publicacoes.apamvet.com.br/PDFs/Artigos/58.pdf"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            Source (PDF, PT-BR) →
+                          </a>
+                        </p>
+                      </article>
 
-                  <div className="mobile-only" style={{ marginTop: 16 }}>
-                    <a
-                      className="case-btn"
-                      href="https://docs.google.com/document/d/1Tpd8qc_dXaRJYhOZgxXumjD4bCVwoP7SFUEfpFkOMNc/edit?tab=t.0"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      style={{ width: "fit-content" }}
-                    >
-                      <span className="case-btn-icon" aria-hidden="true">
-                        <img
-                          src="/assets/portfolio/2026/01/twemoji_writing-hand.png"
-                          alt=""
-                          loading="lazy"
-                          decoding="async"
-                          width="24"
-                          height="24"
-                        />
-                      </span>
-                      <span className="case-btn-label" style={{ textTransform: "uppercase" }}>
-                        Interview guide
-                      </span>
-                    </a>
-                    <p
-                      style={{
-                        marginTop: "12px",
-                        fontSize: "13px",
-                        lineHeight: "1.6",
-                        color: "#64748B",
-                      }}
-                    >
-                      Type: In-Person
-                      <br />
-                      Location: Brazil
-                      <br />
-                      Participants: 5 (20-40 years old)
-                      <br />
-                      Duration: 15 to 25 minutes each
+                      <article className="research-card">
+                        <h4 className="research-title">Frequency of vet visits</h4>
+                        <p className="research-text">
+                          28% of dogs and 20% of cats visit the vet at least once a month.
+                        </p>
+                        <p className="research-text" style={{ marginTop: 10 }}>
+                          <a
+                            className="case-inline-link"
+                            href="https://www.institutoqualibest.com/wp-content/uploads/2020/02/Infografico-O-perfil-do-dono-de-pet-no-Brasil-v4.pdf"
+                            target="_blank"
+                            rel="noopener noreferrer"
+                          >
+                            Source (PDF, PT-BR) →
+                          </a>
+                        </p>
+                      </article>
+                    </div>
+                  </div>
+
+                  <div className="desktop-only" style={{ gridColumn: "1", marginTop: "62px" }}>
+                    <div>
+                      <a
+                        className="case-btn"
+                        href="https://drive.google.com/file/d/1gSYHBJogy_9tdDgBm7EMDbxamL4FVspx/view"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ width: "fit-content" }}
+                      >
+                        <span className="case-btn-icon" aria-hidden="true">
+                          <img
+                            src="/assets/portfolio/2026/01/twemoji_writing-hand.png"
+                            alt=""
+                            loading="lazy"
+                            decoding="async"
+                            width="24"
+                            height="24"
+                          />
+                        </span>
+                        <span className="case-btn-label" style={{ textTransform: "uppercase" }}>
+                          Full Report
+                        </span>
+                      </a>
+                    </div>
+                  </div>
+
+                  <div className="case-section-body case-section-body-secondary">
+                    {/* [REVISÃO MATTHIAS] new subhead (was "Data that guides") + compressed intro sentence */}
+                    <h3 className="case-subsection-title">Survey: 164 pet owners</h3>
+                    <p>
+                      <strong>164 pet owners</strong> on how they schedule veterinary appointments.
+                      These percentages are from that questionnaire.
                     </p>
-                  </div>
-                </div>
 
-                <div className="research-full">
-                  <div className="research-grid">
-                    <NumberCard
-                      title="Slow replies"
-                      description="Scheduling through WhatsApp can take too long, with some users waiting up to an hour for confirmation."
-                    />
-                    <NumberCard
-                      title="Emergency search is stressful"
-                      description="Pet owners struggle to quickly find clinics and veterinarians that can handle urgent situations."
-                    />
-                    <NumberCard
-                      title="Appointments are easy to miss"
-                      description="Busy routines make it hard to remember appointments, vaccines, and follow-up dates without reminders."
-                    />
-                    {/* [REVISÃO MATTHIAS] Card "Distance matters" removido a pedido: redundante
+                    <div className="mobile-only" style={{ marginTop: 16 }}>
+                      <a
+                        className="case-btn"
+                        href="https://drive.google.com/file/d/1gSYHBJogy_9tdDgBm7EMDbxamL4FVspx/view"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ width: "fit-content" }}
+                      >
+                        <span className="case-btn-icon" aria-hidden="true">
+                          <img
+                            src="/assets/portfolio/2026/01/twemoji_writing-hand.png"
+                            alt=""
+                            loading="lazy"
+                            decoding="async"
+                            width="24"
+                            height="24"
+                          />
+                        </span>
+                        <span className="case-btn-label" style={{ textTransform: "uppercase" }}>
+                          Full Report
+                        </span>
+                      </a>
+                    </div>
+
+                    <p className="hover-hint">
+                      Some findings raised follow-up questions. Hover over the icon
+                      <img
+                        className="hover-hint__emoji"
+                        src="/assets/portfolio/2026/07/lightbulb.svg"
+                        alt=""
+                        aria-hidden="true"
+                        loading="lazy"
+                        decoding="async"
+                        width="24"
+                        height="24"
+                      />
+                      .
+                    </p>
+
+                    <div className="insight-list" aria-label="Survey insights">
+                      <div className="insight-row">
+                        <div className="insight-left">
+                          <div className="insight-number">
+                            <CountUp value={56} suffix="%" />
+                          </div>
+                          <div className="insight-text">
+                            <div className="insight-title">WhatsApp scheduling</div>
+                            <div className="insight-desc">
+                              Share of pet owners who schedule appointments through WhatsApp.
+                            </div>
+                          </div>
+                        </div>
+                        <button
+                          className="tip tip--outside"
+                          type="button"
+                          aria-label="Insight about WhatsApp scheduling"
+                        >
+                          <img
+                            src="/assets/portfolio/2026/07/lightbulb.svg"
+                            alt=""
+                            aria-hidden="true"
+                            loading="lazy"
+                            decoding="async"
+                            width="24"
+                            height="24"
+                          />
+                          <span className="bubble bubble--from-icon">
+                            This number stands out. It made me wonder: how satisfied are people when
+                            booking appointments through WhatsApp?
+                          </span>
+                        </button>
+                      </div>
+
+                      <div className="insight-row">
+                        <div className="insight-left">
+                          <div className="insight-number">
+                            <CountUp value={52} suffix="%" />
+                          </div>
+                          <div className="insight-text">
+                            <div className="insight-title">Only go when symptoms appear</div>
+                            <div className="insight-desc">
+                              Some pet owners book routine checkups, while others only go when
+                              symptoms show up.
+                            </div>
+                          </div>
+                        </div>
+                        <button
+                          className="tip tip--outside"
+                          type="button"
+                          aria-label="Insight about routine vs symptoms"
+                        >
+                          <img
+                            src="/assets/portfolio/2026/07/lightbulb.svg"
+                            alt=""
+                            aria-hidden="true"
+                            loading="lazy"
+                            decoding="async"
+                            width="24"
+                            height="24"
+                          />
+                          <span className="bubble bubble--from-icon">
+                            What is the experience like when taking a pet to the vet in an
+                            emergency?
+                          </span>
+                        </button>
+                      </div>
+
+                      <div className="insight-row">
+                        <div className="insight-left">
+                          <div className="insight-number">
+                            <CountUp value={63} suffix="%" />
+                          </div>
+                          <div className="insight-text">
+                            <div className="insight-title">Nearby veterinarians</div>
+                            <div className="insight-desc">
+                              Share of pet owners who take their pets to the closest veterinarian.
+                            </div>
+                          </div>
+                        </div>
+                        <button
+                          className="tip tip--outside"
+                          type="button"
+                          aria-label="Insight about proximity"
+                        >
+                          <img
+                            src="/assets/portfolio/2026/07/lightbulb.svg"
+                            alt=""
+                            aria-hidden="true"
+                            loading="lazy"
+                            decoding="async"
+                            width="24"
+                            height="24"
+                          />
+                          <span className="bubble bubble--from-icon">
+                            It&apos;s a big number and shows that proximity matters to a lot of
+                            people. This points to a need to explore. It is not yet time to think
+                            about solutions.
+                          </span>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+
+                  <div className="desktop-only" style={{ gridColumn: "1", marginTop: "62px" }}>
+                    <div>
+                      <a
+                        className="case-btn"
+                        href="https://docs.google.com/document/d/1Tpd8qc_dXaRJYhOZgxXumjD4bCVwoP7SFUEfpFkOMNc/edit?tab=t.0"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ width: "fit-content" }}
+                      >
+                        <span className="case-btn-icon" aria-hidden="true">
+                          <img
+                            src="/assets/portfolio/2026/01/twemoji_writing-hand.png"
+                            alt=""
+                            loading="lazy"
+                            decoding="async"
+                            width="24"
+                            height="24"
+                          />
+                        </span>
+                        <span className="case-btn-label" style={{ textTransform: "uppercase" }}>
+                          Interview guide
+                        </span>
+                      </a>
+                      <p
+                        style={{
+                          marginTop: "12px",
+                          fontSize: "13px",
+                          lineHeight: "1.6",
+                          color: "#64748B",
+                        }}
+                      >
+                        Type: In-Person
+                        <br />
+                        Location: Brazil
+                        <br />
+                        Participants: 5 (20-40 years old)
+                        <br />
+                        Duration: 15 to 25 minutes each
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="case-section-body case-section-body-secondary">
+                    {/* [REVISÃO MATTHIAS] new subhead (was "Connecting data and stories to impactful solutions") + compressed intro sentence */}
+                    <h3 className="case-subsection-title">What 5 interviews added</h3>
+                    <p>
+                      Five in-person interviews in Brazil, 20 to 40 years old, 15 to 25 minutes
+                      each. A different sample from the questionnaire.
+                    </p>
+
+                    <div className="mobile-only" style={{ marginTop: 16 }}>
+                      <a
+                        className="case-btn"
+                        href="https://docs.google.com/document/d/1Tpd8qc_dXaRJYhOZgxXumjD4bCVwoP7SFUEfpFkOMNc/edit?tab=t.0"
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        style={{ width: "fit-content" }}
+                      >
+                        <span className="case-btn-icon" aria-hidden="true">
+                          <img
+                            src="/assets/portfolio/2026/01/twemoji_writing-hand.png"
+                            alt=""
+                            loading="lazy"
+                            decoding="async"
+                            width="24"
+                            height="24"
+                          />
+                        </span>
+                        <span className="case-btn-label" style={{ textTransform: "uppercase" }}>
+                          Interview guide
+                        </span>
+                      </a>
+                      <p
+                        style={{
+                          marginTop: "12px",
+                          fontSize: "13px",
+                          lineHeight: "1.6",
+                          color: "#64748B",
+                        }}
+                      >
+                        Type: In-Person
+                        <br />
+                        Location: Brazil
+                        <br />
+                        Participants: 5 (20-40 years old)
+                        <br />
+                        Duration: 15 to 25 minutes each
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="research-full">
+                    <div className="research-grid">
+                      <NumberCard
+                        title="Slow replies"
+                        description="Scheduling through WhatsApp can take too long, with some users waiting up to an hour for confirmation."
+                      />
+                      <NumberCard
+                        title="Emergency search is stressful"
+                        description="Pet owners struggle to quickly find clinics and veterinarians that can handle urgent situations."
+                      />
+                      <NumberCard
+                        title="Appointments are easy to miss"
+                        description="Busy routines make it hard to remember appointments, vaccines, and follow-up dates without reminders."
+                      />
+                      {/* [REVISÃO MATTHIAS] Card "Distance matters" removido a pedido: redundante
     com o insight de proximidade do survey (63% escolhem o vet mais próximo),
     exibido logo acima na mesma seção. */}
-                    {/* [REVISÃO MATTHIAS] side note cut: persona sourcing is stated with numbers on the persona card itself */}
+                      {/* [REVISÃO MATTHIAS] side note cut: persona sourcing is stated with numbers on the persona card itself */}
+                    </div>
                   </div>
-                </div>
-                <div className="case-section-body case-section-body-secondary">
-                  <h3 className="case-subsection-title">What that pointed to</h3>
-                  <p>
-                    Survey proximity, interview emergencies, and the booking-flow review pointed to
-                    nearby lists, emergency access, and a shorter path to a time slot.
-                  </p>
-                </div>
-
-                <div className="research-full">
-                  <div className="research-grid">
-                    <article className="research-card">
-                      <h4 className="research-title">Location-based search</h4>
-                      <p className="research-text">
-                        Many pet owners prefer nearby veterinarians, but competing apps did not make
-                        location the center of the experience.
-                      </p>
-                    </article>
-
-                    <article className="research-card">
-                      <h4 className="research-title">Emergency access</h4>
-                      <p className="research-text">
-                        A quick way to find emergency veterinarians could reduce stress in moments
-                        when users have little time to compare options.
-                      </p>
-                    </article>
+                  <div className="case-section-body case-section-body-secondary">
+                    <h3 className="case-subsection-title">What that pointed to</h3>
+                    <p>
+                      Survey proximity, interview emergencies, and the booking-flow review pointed
+                      to nearby lists, emergency access, and a shorter path to a time slot.
+                    </p>
                   </div>
-                </div>
 
-                <div className="case-section-body case-section-body-secondary">
-                  {/* [REVISÃO MATTHIAS] new subhead (was "Looking at usability") + compressed sentence naming the flows from the artifact */}
-                  <h3 className="case-subsection-title">Booking flows we reviewed</h3>
-                  <p>
-                    We looked at specific screens in Vetster and Vets. Those two flows showed extra
-                    steps before a time slot.
-                  </p>
-                </div>
+                  <div className="research-full">
+                    <div className="research-grid">
+                      <article className="research-card">
+                        <h4 className="research-title">Location-based search</h4>
+                        <p className="research-text">
+                          Many pet owners prefer nearby veterinarians, but competing apps did not
+                          make location the center of the experience.
+                        </p>
+                      </article>
 
-                <div className="research-full define-usability-block">
-                  <CompetitorFlaws prefersReducedMotion={prefersReducedMotion} />
-                </div>
-              </motion.section>
+                      <article className="research-card">
+                        <h4 className="research-title">Emergency access</h4>
+                        <p className="research-text">
+                          A quick way to find emergency veterinarians could reduce stress in moments
+                          when users have little time to compare options.
+                        </p>
+                      </article>
+                    </div>
+                  </div>
 
-              <motion.section
-                id="decisions"
-                className="case-section"
-                variants={sectionStagger}
-                initial="hidden"
-                whileInView="visible"
-                viewport={motionViewport}
-              >
-                <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>
-                  Decisions
-                </TypedSectionLabel>
-                {/* [REVISÃO MATTHIAS] empty course headline "Transforming ideas into impact" cut; intro paragraph kept as the section lead */}
-                <div className="case-section-body">
-                  <p>
-                    Each direction below maps a finding to a screen change. Round 1 used wireframes
-                    with 5 users. Round 2 used the resolved screens with 5 pet owners.
-                  </p>
-                </div>
+                  <div className="case-section-body case-section-body-secondary">
+                    {/* [REVISÃO MATTHIAS] new subhead (was "Looking at usability") + compressed sentence naming the flows from the artifact */}
+                    <h3 className="case-subsection-title">Booking flows we reviewed</h3>
+                    <p>
+                      We looked at specific screens in Vetster and Vets. Those two flows showed
+                      extra steps before a time slot.
+                    </p>
+                  </div>
 
-                <div
-                  className="case-section-body case-section-body-secondary"
-                  style={{ marginTop: 24 }}
+                  <div className="research-full define-usability-block">
+                    <CompetitorFlaws prefersReducedMotion={prefersReducedMotion} />
+                  </div>
+                </motion.section>
+
+                <motion.section
+                  id="decisions"
+                  className="case-section"
+                  variants={sectionStagger}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={motionViewport}
                 >
-                  <h3 className="case-subsection-title">From finding to screen</h3>
-                </div>
+                  <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>
+                    Decisions
+                  </TypedSectionLabel>
+                  {/* [REVISÃO MATTHIAS] empty course headline "Transforming ideas into impact" cut; intro paragraph kept as the section lead */}
+                  <div className="case-section-body">
+                    <p>
+                      Each direction below maps a finding to a screen change. Round 1 used
+                      wireframes with 5 users. Round 2 used the resolved screens with 5 pet owners.
+                    </p>
+                  </div>
 
-                <div className="research-full" style={{ marginTop: 32 }}>
-                  <SolutionComparisons prefersReducedMotion={prefersReducedMotion} />
-                </div>
-              </motion.section>
+                  <div
+                    className="case-section-body case-section-body-secondary"
+                    style={{ marginTop: 24 }}
+                  >
+                    <h3 className="case-subsection-title">From finding to screen</h3>
+                  </div>
 
-              <motion.section
-                id="design"
-                className="case-section"
-                variants={sectionStagger}
-                initial="hidden"
-                whileInView="visible"
-                viewport={motionViewport}
-              >
-                <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>
-                  Design
-                </TypedSectionLabel>
-                {/* [REVISÃO MATTHIAS] packaging headline "A lightweight system for consistency" cut; one factual intro sentence kept */}
-                <div className="case-section-body">
-                  <p>
-                    The screens and videos below are the course prototype. Blue for primary actions,
-                    a short type pair, and a small icon set kept the UI consistent while we
-                    iterated.
-                  </p>
-                </div>
-                <div className="research-full mobile-gallery-shell">
-                  <SnapGallery
-                    className="ms-snap--exported ms-snap--large ms-snap--depth"
-                    label="Prototype screens"
-                    items={MOBILE_SCREENS}
-                  />
-                </div>
-                <div
-                  className="case-section-body case-section-body-secondary"
-                  style={{ marginTop: 24 }}
+                  <div className="research-full" style={{ marginTop: 32 }}>
+                    <SolutionComparisons prefersReducedMotion={prefersReducedMotion} />
+                  </div>
+                </motion.section>
+
+                <motion.section
+                  id="design"
+                  className="case-section"
+                  variants={sectionStagger}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={motionViewport}
                 >
-                  <PaletteSpec prefersReducedMotion={prefersReducedMotion} />
-                </div>
-              </motion.section>
+                  <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>
+                    Design
+                  </TypedSectionLabel>
+                  {/* [REVISÃO MATTHIAS] packaging headline "A lightweight system for consistency" cut; one factual intro sentence kept */}
+                  <div className="case-section-body">
+                    <p>
+                      The screens and videos below are the course prototype. Blue for primary
+                      actions, a short type pair, and a small icon set kept the UI consistent while
+                      we iterated.
+                    </p>
+                  </div>
+                  <div className="research-full mobile-gallery-shell">
+                    <SnapGallery
+                      className="ms-snap--exported ms-snap--large ms-snap--depth"
+                      label="Prototype screens"
+                      items={MOBILE_SCREENS}
+                    />
+                  </div>
+                  <div
+                    className="case-section-body case-section-body-secondary"
+                    style={{ marginTop: 24 }}
+                  >
+                    <PaletteSpec prefersReducedMotion={prefersReducedMotion} />
+                  </div>
+                </motion.section>
 
-              <CaseBackToContents />
+                <CaseBackToContents />
+              </FullProcess>
               <motion.section
                 id="results"
                 className="case-section"

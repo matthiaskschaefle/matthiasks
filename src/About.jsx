@@ -85,11 +85,10 @@ export default function AboutPage() {
             <div className="about-row">
               <TypedSectionLabel
                 className="about-label"
-                lineBreakAfter="differentiates"
                 prefersReducedMotion={shouldReduceMotion}
                 standalone
               >
-                What differentiates me as a designer
+                How I work
               </TypedSectionLabel>
               <div className="about-body">
                 <div className="about-highlights">
@@ -102,10 +101,11 @@ export default function AboutPage() {
                   </div>
 
                   <div>
-                    <h3 className="about-highlight-title">Visual identity that stayed in use</h3>
+                    <h3 className="about-highlight-title">Work that holds up after launch</h3>
                     <div className="about-highlight-text">
-                      For <Link to="/doctor">Doctor</Link>, I delivered a WordPress site and the
-                      visual identity. The logo and palette remain in use.
+                      In its first month, the <Link to="/marcelo-gramas">Marcelo Gramas</Link> site
+                      brought eight contacts, and five became jobs. The logo and palette I made for{" "}
+                      <Link to="/doctor">Doctor</Link> are still in use.
                     </div>
                   </div>
 

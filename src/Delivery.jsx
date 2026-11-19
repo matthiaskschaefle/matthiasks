@@ -11,6 +11,7 @@ import {
   viewport as motionViewport,
 } from "@/lib/animations";
 import CaseContents, { CaseBackToContents } from "./components/CaseContents.jsx";
+import FullProcess from "./components/FullProcess.jsx";
 import PinnedStory from "./components/PinnedStory.jsx";
 import Figure from "./components/mockups/Figure.jsx";
 import BeforeAfter from "./components/mockups/BeforeAfter.jsx";
@@ -97,7 +98,9 @@ export default function DeliveryCase() {
         <div className="page-inner">
           {/* ── HERO ── */}
           <section className="case-hero">
-            <h1 className="case-title-main">The New Delivery Experience</h1>
+            <h1 className="case-title-main">
+              Faster delivery confirmations, with complete records
+            </h1>
             <p className="case-engagement">
               Paid freelance client project via Vulpes Studio, 2025. A regional delivery company in
               Brazil.
@@ -140,7 +143,8 @@ export default function DeliveryCase() {
               <div className="in-short-item">
                 <div className="in-short-label">My role</div>
                 <p className="in-short-text">
-                  I led the field sessions and designed the receiver confirmation flow.
+                  With one other designer and the client&apos;s operations lead, I led the field
+                  sessions and designed the receiver confirmation flow.
                 </p>
               </div>
               <div className="in-short-item">
@@ -201,379 +205,389 @@ export default function DeliveryCase() {
           {/* ── LAYOUT: TOC + CONTENT ── */}
           <div className="case-layout">
             <div className="case-content-column">
-              {/* ══ OVERVIEW ══ */}
-              <motion.section
-                id="overview"
-                className="case-section"
-                variants={sectionStagger}
-                initial="hidden"
-                whileInView="visible"
-                viewport={motionViewport}
+              <FullProcess
+                ids={["overview", "my-role", "research", "insights", "process", "solutions"]}
+                minutes={4}
+                topics="the field research, the insights, the process and the solutions"
               >
-                <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>
-                  Overview
-                </TypedSectionLabel>
-                <div className="case-section-body">
-                  <p className="case-disclaimer">
-                    App name and visual identity have been altered to comply with a non-disclosure
-                    agreement.
-                  </p>
-                  <p>
-                    The confirmation flow cost time and left records that could not settle Proof Not
-                    Received (PNR) disputes. The brief: close those gaps without new screens or
-                    retraining.
-                  </p>
-                </div>
-                <div className="context-card">
-                  <span className="context-card-label">Context</span>
-                  <div className="context-card-grid">
-                    <div className="context-card-item">
-                      <div className="context-card-number">80 to 130</div>
-                      <div className="context-card-unit">Stops per day</div>
-                      <div className="context-card-context">per driver, per route</div>
-                    </div>
-                    <div className="context-card-item">
-                      <div className="context-card-number">7 to 8s</div>
-                      <div className="context-card-unit">Faster per stop</div>
-                      <div className="context-card-context">12-driver, 3-week pilot</div>
-                    </div>
-                    <div className="context-card-item">
-                      <div className="context-card-number">
-                        <CountUp value={92} suffix="%" />
-                      </div>
-                      <div className="context-card-unit">Record compliance</div>
-                      <div className="context-card-context">before the redesign</div>
-                    </div>
-                  </div>
-                </div>
-              </motion.section>
-
-              {/* ══ MY ROLE ══ */}
-              <motion.section
-                id="my-role"
-                className="case-section"
-                variants={sectionStagger}
-                initial="hidden"
-                whileInView="visible"
-                viewport={motionViewport}
-              >
-                <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>
-                  My Role
-                </TypedSectionLabel>
-                <div className="case-section-body">
-                  <p>
-                    I led the field sessions and the receiver confirmation flow, with one other
-                    designer and the client&apos;s operations lead. No dedicated researcher.
-                    Constraints: no new screens, no retraining, about three weeks from first field
-                    session to handoff.
-                  </p>
-                </div>
-                <div className="research-full">
-                  <div className="research-grid research-grid--two">
-                    <NumberCard
-                      icon={
-                        <svg
-                          width="22"
-                          height="22"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          aria-hidden="true"
-                        >
-                          <path d="M12 20h9" />
-                          <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z" />
-                        </svg>
-                      }
-                      title="What I owned"
-                      description="Field observations, driver interviews, wireframes for confirmation and photo capture, and high-fidelity UI for those flows."
-                    />
-                    <NumberCard
-                      icon={
-                        <svg
-                          width="28"
-                          height="20"
-                          viewBox="0 0 28 20"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="2"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                          aria-hidden="true"
-                        >
-                          <circle cx="10" cy="10" r="7" />
-                          <circle cx="18" cy="10" r="7" />
-                        </svg>
-                      }
-                      title="What was shared"
-                      description="Research planning, which problems to prioritize, and the final design direction, with the other designer and the operations lead."
-                    />
-                  </div>
-                </div>
-              </motion.section>
-
-              {/* ══ RESEARCH ══ */}
-              <motion.section
-                id="research"
-                className="case-section"
-                variants={sectionStagger}
-                initial="hidden"
-                whileInView="visible"
-                viewport={motionViewport}
-              >
-                <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>
-                  Research
-                </TypedSectionLabel>
-                <div className="case-section-body">
-                  <h3 className="case-subsection-title">Two days on the road</h3>
-                  <p>
-                    Two days with five drivers, before the redesign and separate from the later
-                    12-driver pilot. I led the ride-alongs. We watched the app at each stop without
-                    directing them, then debriefed after each route.
-                  </p>
-                  <Figure
-                    className="research-field-figure"
-                    src="/assets/portfolio/2026/04/IMG-20260328-WA0013.jpg"
-                    alt="Package with shipping label and phone during field research"
-                    caption={{ text: "Field observation, driver route" }}
-                  />
-                  <QuoteBand
-                    quotes={[
-                      {
-                        text: "In stores it's almost always a coworker who receives the package, but there's no option for that in the app.",
-                        author: "Driver, 1 year of experience",
-                      },
-                      {
-                        text: "If the system already has the ID number, why do I need to type it again?",
-                        author: "Driver, 3 years of experience",
-                      },
-                    ]}
-                  />
-                </div>
-                <div className="research-full">
-                  <div className="research-grid research-grid--two">
-                    <NumberCard
-                      title="Retyping what the system already knew"
-                      description="Document numbers, recipient names, recurring notes. Drivers entered data the system already had."
-                    />
-                    <NumberCard
-                      title="No option for how deliveries actually happen"
-                      description="In commercial buildings, packages almost always go to a coworker or security guard. The app had no field for that, so drivers used free text."
-                    />
-                    <NumberCard
-                      title="Photos accepted regardless of quality"
-                      description="Dark, blurry, or off-angle shots were accepted. Proof of delivery depended on the driver's attention at that moment."
-                    />
-                    <NumberCard
-                      title="PNR disputes with no clear answer"
-                      description="When a customer disputed a delivery, the records were often too thin to settle it. The app had not captured enough."
-                    />
-                  </div>
-                </div>
-              </motion.section>
-
-              {/* ══ INSIGHTS ══ */}
-              <motion.section
-                id="insights"
-                className="case-section"
-                variants={sectionStagger}
-                initial="hidden"
-                whileInView="visible"
-                viewport={motionViewport}
-              >
-                <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>
-                  Insights
-                </TypedSectionLabel>
-                <div className="case-section-body">
-                  <p>
-                    One principle: confirmation should replace entry. Names and IDs were already in
-                    the system. Free text made coworker and doorman records inconsistent. Photo
-                    quality had to be caught at capture, while the driver was still at the door.
-                  </p>
-                </div>
-              </motion.section>
-
-              {/* ══ PROCESS ══ */}
-              <motion.section
-                id="process"
-                className="case-section"
-                variants={sectionStagger}
-                initial="hidden"
-                whileInView="visible"
-                viewport={motionViewport}
-              >
-                <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>
-                  Process
-                </TypedSectionLabel>
-                <div className="case-section-body">
-                  <h3 className="case-subsection-title">
-                    Informal wireframe check, not a usability test
-                  </h3>
-                  <p>
-                    We took the wireframes back to drivers. Informal feedback, not a structured
-                    usability test. No formal test before rollout.
-                  </p>
-                  <p>
-                    Most of the direction held. One gap: sometimes nobody is home, and packages go
-                    to the mailbox, the door, or building security. The receiver modal only covered
-                    attended deliveries, so we added a second group for unattended scenarios.
-                  </p>
-                </div>
-                <div className="research-full" style={{ marginTop: 24 }}>
-                  <span className="wireframe-grid-label">Wireframes</span>
-                  <div className="wireframe-grid">
-                    <Figure
-                      className="wireframe-glass-item"
-                      src="/assets/portfolio/2026/03/Mockup-01-Route-List.png"
-                      alt="Wireframe mockup: Route List"
-                      caption={{ text: "Route List" }}
-                    />
-                    <Figure
-                      className="wireframe-glass-item"
-                      src="/assets/portfolio/2026/03/Mockup-02-Receiver-Modal.png"
-                      alt="Wireframe mockup: Order Details"
-                      caption={{ text: "Order Details" }}
-                    />
-                    <Figure
-                      className="wireframe-glass-item"
-                      src="/assets/portfolio/2026/03/Mockup-03-Confirmation-Form.png"
-                      alt="Wireframe mockup: Confirmation Form"
-                      caption={{ text: "Confirmation" }}
-                    />
-                  </div>
-                </div>
-              </motion.section>
-
-              {/* ══ SOLUTIONS ══ */}
-              <motion.section
-                id="solutions"
-                className="case-section"
-                variants={sectionStagger}
-                initial="hidden"
-                whileInView="visible"
-                viewport={motionViewport}
-              >
-                <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>
-                  Solutions
-                </TypedSectionLabel>
-                <div className="case-section-body">
-                  <h3 className="case-subsection-title">From field observation to interface</h3>
-                  <p>Each change maps to a problem we watched on routes.</p>
-                </div>
-
-                {/* ── Considered and discarded ── */}
-                <div className="research-full alt-block">
-                  <span className="alt-block-label">Considered and discarded</span>
-                  <p className="alt-block-intro">
-                    Two directions were dropped before the receiver modal below:
-                  </p>
-                  <div className="alt-grid">
-                    <article className="alt-card">
-                      <h4 className="alt-card-title">A longer list of receiver-type buttons</h4>
-                      <p className="alt-card-text">
-                        One button per situation sounded thorough. On 80 to 130 stops a day, every
-                        extra option is one more thing to scan at the door. We kept the set short
-                        and grouped it around attended and unattended deliveries.
-                      </p>
-                    </article>
-                    <article className="alt-card">
-                      <h4 className="alt-card-title">Separate UI and journey per receiver group</h4>
-                      <p className="alt-card-text">
-                        Separate flows would simplify each case in isolation. They would also break
-                        the sequence drivers already knew and collide with no new screens and no
-                        retraining. One modal with two labeled groups kept that muscle memory.
-                      </p>
-                    </article>
-                  </div>
-                  <p className="alt-block-close">
-                    Both calls came back to the same test: does it hold up at the door, on stop 90
-                    of a 120-stop route?
-                  </p>
-                </div>
-
-                {/* ── Pair 01: Confirmation Form ── */}
-                <div className="research-full" style={{ marginTop: 32 }}>
-                  <BeforeAfter
-                    className="delivery-before-after"
-                    focus="top"
-                    zoom
-                    title="Data that shows itself"
-                    description="Observation: drivers retyped names and IDs the system already had. Decision: those fields appear from route data, one tap to confirm. Evidence: 7 to 8 seconds faster per stop in the 12-driver, 3-week pilot."
-                    caption="Empty name and ID fields before. After: filled from route data. Tap a screen to enlarge. Labels are in Portuguese."
-                    before={{
-                      src: "/assets/portfolio/2026/04/Mockup-01-Delivery-Proof-Wire.png",
-                      alt: "Before: empty receiver name and document fields on the confirmation screen",
-                    }}
-                    after={{
-                      src: "/assets/portfolio/2026/04/Mockup-01-Delivery-Proof.png",
-                      alt: "After: receiver name and document number filled from route data",
-                    }}
-                  />
-                </div>
-
-                {/* ── Pair 02: Receiver Modal ── */}
-                <div className="research-full" style={{ marginTop: 56 }}>
-                  <BeforeAfter
-                    className="delivery-before-after"
-                    zoom
-                    title="Receiver options that match delivery situations"
-                    description="Observation: commercial stops often go to a coworker or security, so drivers wrote free text. Decision: a short labeled set, grouped into attended and unattended deliveries, instead of one button per situation. The unattended group came from the informal wireframe check. Evidence: field quotes and that wireframe check. This case does not measure how often each option was used."
-                    caption="Wireframe: attended options only. After: two groups, attended and unattended. Tap a screen to enlarge. Labels are in Portuguese."
-                    before={{
-                      src: "/assets/portfolio/2026/04/Mockup-02-Modal-Wire.png",
-                      alt: "Before: wireframe of attended receiver options without an unattended group",
-                    }}
-                    after={{
-                      src: "/assets/portfolio/2026/04/Mockup-02-Modal.png",
-                      alt: "After: receiver options grouped into attended and unattended deliveries",
-                    }}
-                  />
-                </div>
-
-                {/* ── Pair 03: Photo Feedback ── */}
-                <div className="research-full" style={{ marginTop: 56 }}>
-                  <BeforeAfter
-                    className="delivery-before-after"
-                    focus="bottom"
-                    zoom
-                    title="Photo feedback before the moment passes"
-                    description="Observation: dark, blurry, or off-angle photos were accepted. Decision: the app flags the issue at capture. Evidence: record compliance moved from 92% to 98% in the 12-driver, 3-week pilot. This case does not document how the score was calculated, and does not report a result for each criterion."
-                    caption="After: missing photo lines turn red before delivery can finish. Tap a screen to enlarge. Labels are in Portuguese."
-                    before={{
-                      src: "/assets/portfolio/2026/04/Mockup-03-Proof-of-Delivery-Wire.png",
-                      alt: "Before: photo slots with no quality warning",
-                    }}
-                    after={{
-                      src: "/assets/portfolio/2026/04/Mockup-03-Proof-of-Delivery.png",
-                      alt: "After: missing photo labels shown in red on the confirmation screen",
-                    }}
-                  />
-                </div>
-
-                {/* ── Prototype CTA ── */}
-                <div
-                  className="research-full"
-                  style={{ marginTop: 56, display: "flex", justifyContent: "center" }}
+                {/* ══ OVERVIEW ══ */}
+                <motion.section
+                  id="overview"
+                  className="case-section"
+                  variants={sectionStagger}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={motionViewport}
                 >
-                  <a
-                    className="case-btn"
-                    href="https://www.figma.com/proto/9EZDFZqXsv48JWYctCQnvx/ReDesign-Delivery?node-id=16-12&p=f&m=draw&scaling=scale-down&content-scaling=fixed&starting-point-node-id=16%3A12&page-id=0%3A1&t=18dSu0uiezoT5rJm-1"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    style={{ width: "fit-content" }}
-                  >
-                    <span className="case-btn-icon" aria-hidden="true">
-                      <img src="/assets/icons/figma.svg" alt="" width="12" height="18" />
-                    </span>
-                    <span className="case-btn-label">View prototype</span>
-                  </a>
-                </div>
-              </motion.section>
+                  <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>
+                    Overview
+                  </TypedSectionLabel>
+                  <div className="case-section-body">
+                    <p className="case-disclaimer">
+                      App name and visual identity have been altered to comply with a non-disclosure
+                      agreement.
+                    </p>
+                    <p>
+                      The confirmation flow cost time and left records that could not settle Proof
+                      Not Received (PNR) disputes. The brief: close those gaps without new screens
+                      or retraining.
+                    </p>
+                  </div>
+                  <div className="context-card">
+                    <span className="context-card-label">Context</span>
+                    <div className="context-card-grid">
+                      <div className="context-card-item">
+                        <div className="context-card-number">80 to 130</div>
+                        <div className="context-card-unit">Stops per day</div>
+                        <div className="context-card-context">per driver, per route</div>
+                      </div>
+                      <div className="context-card-item">
+                        <div className="context-card-number">7 to 8s</div>
+                        <div className="context-card-unit">Faster per stop</div>
+                        <div className="context-card-context">12-driver, 3-week pilot</div>
+                      </div>
+                      <div className="context-card-item">
+                        <div className="context-card-number">
+                          <CountUp value={92} suffix="%" />
+                        </div>
+                        <div className="context-card-unit">Record compliance</div>
+                        <div className="context-card-context">before the redesign</div>
+                      </div>
+                    </div>
+                  </div>
+                </motion.section>
 
-              {/* ══ KPIs ══ */}
-              <CaseBackToContents />
+                {/* ══ MY ROLE ══ */}
+                <motion.section
+                  id="my-role"
+                  className="case-section"
+                  variants={sectionStagger}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={motionViewport}
+                >
+                  <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>
+                    My Role
+                  </TypedSectionLabel>
+                  <div className="case-section-body">
+                    <p>
+                      I led the field sessions and the receiver confirmation flow, with one other
+                      designer and the client&apos;s operations lead. No dedicated researcher.
+                      Constraints: no new screens, no retraining, about three weeks from first field
+                      session to handoff.
+                    </p>
+                  </div>
+                  <div className="research-full">
+                    <div className="research-grid research-grid--two">
+                      <NumberCard
+                        icon={
+                          <svg
+                            width="22"
+                            height="22"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            aria-hidden="true"
+                          >
+                            <path d="M12 20h9" />
+                            <path d="M16.5 3.5a2.121 2.121 0 0 1 3 3L7 19l-4 1 1-4 12.5-12.5z" />
+                          </svg>
+                        }
+                        title="What I owned"
+                        description="Field observations, driver interviews, wireframes for confirmation and photo capture, and high-fidelity UI for those flows."
+                      />
+                      <NumberCard
+                        icon={
+                          <svg
+                            width="28"
+                            height="20"
+                            viewBox="0 0 28 20"
+                            fill="none"
+                            stroke="currentColor"
+                            strokeWidth="2"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                            aria-hidden="true"
+                          >
+                            <circle cx="10" cy="10" r="7" />
+                            <circle cx="18" cy="10" r="7" />
+                          </svg>
+                        }
+                        title="What was shared"
+                        description="Research planning, which problems to prioritize, and the final design direction, with the other designer and the operations lead."
+                      />
+                    </div>
+                  </div>
+                </motion.section>
+
+                {/* ══ RESEARCH ══ */}
+                <motion.section
+                  id="research"
+                  className="case-section"
+                  variants={sectionStagger}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={motionViewport}
+                >
+                  <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>
+                    Research
+                  </TypedSectionLabel>
+                  <div className="case-section-body">
+                    <h3 className="case-subsection-title">Two days on the road</h3>
+                    <p>
+                      Two days with five drivers, before the redesign and separate from the later
+                      12-driver pilot. I led the ride-alongs. We watched the app at each stop
+                      without directing them, then debriefed after each route.
+                    </p>
+                    <Figure
+                      className="research-field-figure"
+                      src="/assets/portfolio/2026/04/IMG-20260328-WA0013.jpg"
+                      alt="Package with shipping label and phone during field research"
+                      caption={{ text: "Field observation, driver route" }}
+                    />
+                    <QuoteBand
+                      quotes={[
+                        {
+                          text: "In stores it's almost always a coworker who receives the package, but there's no option for that in the app.",
+                          author: "Driver, 1 year of experience",
+                        },
+                        {
+                          text: "If the system already has the ID number, why do I need to type it again?",
+                          author: "Driver, 3 years of experience",
+                        },
+                      ]}
+                    />
+                  </div>
+                  <div className="research-full">
+                    <div className="research-grid research-grid--two">
+                      <NumberCard
+                        title="Retyping what the system already knew"
+                        description="Document numbers, recipient names, recurring notes. Drivers entered data the system already had."
+                      />
+                      <NumberCard
+                        title="No option for how deliveries actually happen"
+                        description="In commercial buildings, packages almost always go to a coworker or security guard. The app had no field for that, so drivers used free text."
+                      />
+                      <NumberCard
+                        title="Photos accepted regardless of quality"
+                        description="Dark, blurry, or off-angle shots were accepted. Proof of delivery depended on the driver's attention at that moment."
+                      />
+                      <NumberCard
+                        title="PNR disputes with no clear answer"
+                        description="When a customer disputed a delivery, the records were often too thin to settle it. The app had not captured enough."
+                      />
+                    </div>
+                  </div>
+                </motion.section>
+
+                {/* ══ INSIGHTS ══ */}
+                <motion.section
+                  id="insights"
+                  className="case-section"
+                  variants={sectionStagger}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={motionViewport}
+                >
+                  <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>
+                    Insights
+                  </TypedSectionLabel>
+                  <div className="case-section-body">
+                    <p>
+                      One principle: confirmation should replace entry. Names and IDs were already
+                      in the system. Free text made coworker and doorman records inconsistent. Photo
+                      quality had to be caught at capture, while the driver was still at the door.
+                    </p>
+                  </div>
+                </motion.section>
+
+                {/* ══ PROCESS ══ */}
+                <motion.section
+                  id="process"
+                  className="case-section"
+                  variants={sectionStagger}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={motionViewport}
+                >
+                  <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>
+                    Process
+                  </TypedSectionLabel>
+                  <div className="case-section-body">
+                    <h3 className="case-subsection-title">
+                      Informal wireframe check, not a usability test
+                    </h3>
+                    <p>
+                      We took the wireframes back to drivers. Informal feedback, not a structured
+                      usability test. No formal test before rollout.
+                    </p>
+                    <p>
+                      Most of the direction held. One gap: sometimes nobody is home, and packages go
+                      to the mailbox, the door, or building security. The receiver modal only
+                      covered attended deliveries, so we added a second group for unattended
+                      scenarios.
+                    </p>
+                  </div>
+                  <div className="research-full" style={{ marginTop: 24 }}>
+                    <span className="wireframe-grid-label">Wireframes</span>
+                    <div className="wireframe-grid">
+                      <Figure
+                        className="wireframe-glass-item"
+                        src="/assets/portfolio/2026/03/Mockup-01-Route-List.png"
+                        alt="Wireframe mockup: Route List"
+                        caption={{ text: "Route List" }}
+                      />
+                      <Figure
+                        className="wireframe-glass-item"
+                        src="/assets/portfolio/2026/03/Mockup-02-Receiver-Modal.png"
+                        alt="Wireframe mockup: Order Details"
+                        caption={{ text: "Order Details" }}
+                      />
+                      <Figure
+                        className="wireframe-glass-item"
+                        src="/assets/portfolio/2026/03/Mockup-03-Confirmation-Form.png"
+                        alt="Wireframe mockup: Confirmation Form"
+                        caption={{ text: "Confirmation" }}
+                      />
+                    </div>
+                  </div>
+                </motion.section>
+
+                {/* ══ SOLUTIONS ══ */}
+                <motion.section
+                  id="solutions"
+                  className="case-section"
+                  variants={sectionStagger}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={motionViewport}
+                >
+                  <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>
+                    Solutions
+                  </TypedSectionLabel>
+                  <div className="case-section-body">
+                    <h3 className="case-subsection-title">From field observation to interface</h3>
+                    <p>Each change maps to a problem we watched on routes.</p>
+                  </div>
+
+                  {/* ── Considered and discarded ── */}
+                  <div className="research-full alt-block">
+                    <span className="alt-block-label">Considered and discarded</span>
+                    <p className="alt-block-intro">
+                      Two directions were dropped before the receiver modal below:
+                    </p>
+                    <div className="alt-grid">
+                      <article className="alt-card">
+                        <h4 className="alt-card-title">A longer list of receiver-type buttons</h4>
+                        <p className="alt-card-text">
+                          One button per situation sounded thorough. On 80 to 130 stops a day, every
+                          extra option is one more thing to scan at the door. We kept the set short
+                          and grouped it around attended and unattended deliveries.
+                        </p>
+                      </article>
+                      <article className="alt-card">
+                        <h4 className="alt-card-title">
+                          Separate UI and journey per receiver group
+                        </h4>
+                        <p className="alt-card-text">
+                          Separate flows would simplify each case in isolation. They would also
+                          break the sequence drivers already knew and collide with no new screens
+                          and no retraining. One modal with two labeled groups kept that muscle
+                          memory.
+                        </p>
+                      </article>
+                    </div>
+                    <p className="alt-block-close">
+                      Both calls came back to the same test: does it hold up at the door, on stop 90
+                      of a 120-stop route?
+                    </p>
+                  </div>
+
+                  {/* ── Pair 01: Confirmation Form ── */}
+                  <div className="research-full" style={{ marginTop: 32 }}>
+                    <BeforeAfter
+                      className="delivery-before-after"
+                      focus="top"
+                      zoom
+                      title="Data that shows itself"
+                      description="Observation: drivers retyped names and IDs the system already had. Decision: those fields appear from route data, one tap to confirm. Evidence: 7 to 8 seconds faster per stop in the 12-driver, 3-week pilot."
+                      caption="Empty name and ID fields before. After: filled from route data. Tap a screen to enlarge. Labels are in Portuguese."
+                      before={{
+                        src: "/assets/portfolio/2026/04/Mockup-01-Delivery-Proof-Wire.png",
+                        alt: "Before: empty receiver name and document fields on the confirmation screen",
+                      }}
+                      after={{
+                        src: "/assets/portfolio/2026/04/Mockup-01-Delivery-Proof.png",
+                        alt: "After: receiver name and document number filled from route data",
+                      }}
+                    />
+                  </div>
+
+                  {/* ── Pair 02: Receiver Modal ── */}
+                  <div className="research-full" style={{ marginTop: 56 }}>
+                    <BeforeAfter
+                      className="delivery-before-after"
+                      zoom
+                      title="Receiver options that match delivery situations"
+                      description="Observation: commercial stops often go to a coworker or security, so drivers wrote free text. Decision: a short labeled set, grouped into attended and unattended deliveries, instead of one button per situation. The unattended group came from the informal wireframe check. Evidence: field quotes and that wireframe check. This case does not measure how often each option was used."
+                      caption="Wireframe: attended options only. After: two groups, attended and unattended. Tap a screen to enlarge. Labels are in Portuguese."
+                      before={{
+                        src: "/assets/portfolio/2026/04/Mockup-02-Modal-Wire.png",
+                        alt: "Before: wireframe of attended receiver options without an unattended group",
+                      }}
+                      after={{
+                        src: "/assets/portfolio/2026/04/Mockup-02-Modal.png",
+                        alt: "After: receiver options grouped into attended and unattended deliveries",
+                      }}
+                    />
+                  </div>
+
+                  {/* ── Pair 03: Photo Feedback ── */}
+                  <div className="research-full" style={{ marginTop: 56 }}>
+                    <BeforeAfter
+                      className="delivery-before-after"
+                      focus="bottom"
+                      zoom
+                      title="Photo feedback before the moment passes"
+                      description="Observation: dark, blurry, or off-angle photos were accepted. Decision: the app flags the issue at capture. Evidence: record compliance moved from 92% to 98% in the 12-driver, 3-week pilot. This case does not document how the score was calculated, and does not report a result for each criterion."
+                      caption="After: missing photo lines turn red before delivery can finish. Tap a screen to enlarge. Labels are in Portuguese."
+                      before={{
+                        src: "/assets/portfolio/2026/04/Mockup-03-Proof-of-Delivery-Wire.png",
+                        alt: "Before: photo slots with no quality warning",
+                      }}
+                      after={{
+                        src: "/assets/portfolio/2026/04/Mockup-03-Proof-of-Delivery.png",
+                        alt: "After: missing photo labels shown in red on the confirmation screen",
+                      }}
+                    />
+                  </div>
+
+                  {/* ── Prototype CTA ── */}
+                  <div
+                    className="research-full"
+                    style={{ marginTop: 56, display: "flex", justifyContent: "center" }}
+                  >
+                    <a
+                      className="case-btn"
+                      href="https://www.figma.com/proto/9EZDFZqXsv48JWYctCQnvx/ReDesign-Delivery?node-id=16-12&p=f&m=draw&scaling=scale-down&content-scaling=fixed&starting-point-node-id=16%3A12&page-id=0%3A1&t=18dSu0uiezoT5rJm-1"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      style={{ width: "fit-content" }}
+                    >
+                      <span className="case-btn-icon" aria-hidden="true">
+                        <img src="/assets/icons/figma.svg" alt="" width="12" height="18" />
+                      </span>
+                      <span className="case-btn-label">View prototype</span>
+                    </a>
+                  </div>
+                </motion.section>
+
+                {/* ══ KPIs ══ */}
+                <CaseBackToContents />
+              </FullProcess>
               <motion.section
                 id="kpis"
                 className="case-section"
