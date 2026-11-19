@@ -71,6 +71,16 @@ const WORK = [
     featured: true,
   },
   {
+    href: "/artesano",
+    context: "Client work, brand identity, 2026",
+    title: "A café logo that only existed as a JPG",
+    description:
+      "A new café's logo lived in a blurry image. I rebuilt it as a print-ready mark with a 14-page brand guide.",
+    result: "Approved the day after the brief, 4 logo files, 2-color system",
+    imageSrc: "/assets/portfolio/2026/10/artesano/mockup-copos.webp",
+    imageAlt: "AI mockup of two takeaway cups with the new Artesano Cafeteria logo",
+  },
+  {
     href: "/doctor",
     context: "Paid client work, research, UI design, 2024",
     title: "The questions patients asked before booking",
@@ -329,8 +339,9 @@ export default function HomePage() {
             <WorkItem {...WORK[2]} order={0} />
 
             <div className="work-pair">
-              <WorkItem {...WORK[3]} order={0} />
-              <WorkItem {...WORK[4]} order={1} />
+              {WORK.slice(3).map((item, i) => (
+                <WorkItem key={item.href} {...item} order={i % 2} />
+              ))}
             </div>
           </section>
 

@@ -1072,10 +1072,10 @@ export default function DoctorCase() {
               {/* ── Paginação ── */}
               <section className="case-pagination" aria-label="Next and previous case">
                 <div className="case-pagination-inner">
-                  <Link to="/delivery" className="case-pagination-card case-pagination-prev">
+                  <Link to="/artesano" className="case-pagination-card case-pagination-prev">
                     <div className="case-pagination-label">Previous case</div>
                     <div className="case-pagination-title">
-                      <span className="case-pagination-arrow">
+                      <span className="case-pagination-arrow" aria-hidden="true">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
                           <path
                             d="M15 18l-6-6 6-6"
@@ -1086,17 +1086,17 @@ export default function DoctorCase() {
                           />
                         </svg>
                       </span>
-                      Faster delivery confirmations, with complete records
+                      A café logo that only existed as a JPG
                     </div>
                     <div className="case-pagination-desc">
-                      Redesigning the delivery confirmation flow for drivers.
+                      A print-ready mark and brand guide for a new café.
                     </div>
                   </Link>
                   <Link to="/duopet" className="case-pagination-card case-pagination-next">
                     <div className="case-pagination-label">Next case</div>
                     <div className="case-pagination-title">
                       DuoPet
-                      <span className="case-pagination-arrow">
+                      <span className="case-pagination-arrow" aria-hidden="true">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
                           <path
                             d="M9 18l6-6-6-6"

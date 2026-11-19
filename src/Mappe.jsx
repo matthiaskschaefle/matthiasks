@@ -287,20 +287,44 @@ export default function MappeCase() {
 
               <section className="case-pagination" aria-label="Next and previous case">
                 <div className="case-pagination-inner">
-                  <Link to="/duopet" className="case-pagination-card case-pagination-prev">
+                  <Link to="/delivery" className="case-pagination-card case-pagination-prev">
                     <div className="case-pagination-label">Previous case</div>
-                    <div className="case-pagination-title">DuoPet</div>
+                    <div className="case-pagination-title">
+                      <span className="case-pagination-arrow" aria-hidden="true">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                          <path
+                            d="M15 18l-6-6 6-6"
+                            stroke="currentColor"
+                            strokeWidth="2.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </span>
+                      Faster delivery confirmations, with complete records
+                    </div>
                     <div className="case-pagination-desc">
-                      Making veterinary appointment scheduling stress-free.
+                      Redesigning the delivery confirmation flow for drivers.
                     </div>
                   </Link>
-                  <Link to="/marcelo-gramas" className="case-pagination-card case-pagination-next">
+                  <Link to="/artesano" className="case-pagination-card case-pagination-next">
                     <div className="case-pagination-label">Next case</div>
                     <div className="case-pagination-title">
-                      What clients needed to see before asking for a quote
+                      A café logo that only existed as a JPG
+                      <span className="case-pagination-arrow" aria-hidden="true">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                          <path
+                            d="M9 18l6-6-6-6"
+                            stroke="currentColor"
+                            strokeWidth="2.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </span>
                     </div>
                     <div className="case-pagination-desc">
-                      A landscaping company with 30 years of work and no website.
+                      A print-ready mark and brand guide for a new café.
                     </div>
                   </Link>
                 </div>

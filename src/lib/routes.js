@@ -99,8 +99,6 @@ export const ROUTES = [
     footerTagline: "Thanks for visiting. Research, interface design, and prototyping.",
   },
   {
-    // Out of the sitemap and off the home page until the client agrees in
-    // writing to be shown (see the case doc in Claude).
     path: "/artesano",
     page: "artesano",
     title: "Café Brand Identity Case Study | Matthias Schaefle",
@@ -109,7 +107,6 @@ export const ROUTES = [
     ogTitle: "A café logo that only existed as a JPG",
     ogDescription:
       "A new mark and brand guide for a café in Brazil, approved the day after the brief.",
-    inSitemap: false,
     footerTagline: "Thanks for visiting. Research, interface design, and prototyping.",
   },
   {

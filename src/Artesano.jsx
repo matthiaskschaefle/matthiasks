@@ -281,20 +281,44 @@ export default function ArtesanoCase() {
 
               <section className="case-pagination" aria-label="Next and previous case">
                 <div className="case-pagination-inner">
-                  <Link to="/doctor" className="case-pagination-card case-pagination-prev">
+                  <Link to="/mappe" className="case-pagination-card case-pagination-prev">
                     <div className="case-pagination-label">Previous case</div>
                     <div className="case-pagination-title">
+                      <span className="case-pagination-arrow" aria-hidden="true">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                          <path
+                            d="M15 18l-6-6 6-6"
+                            stroke="currentColor"
+                            strokeWidth="2.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </span>
+                      The tracker I built for my own job search
+                    </div>
+                    <div className="case-pagination-desc">
+                      A personal product I designed, built, and use every day.
+                    </div>
+                  </Link>
+                  <Link to="/doctor" className="case-pagination-card case-pagination-next">
+                    <div className="case-pagination-label">Next case</div>
+                    <div className="case-pagination-title">
                       The questions patients asked before booking
+                      <span className="case-pagination-arrow" aria-hidden="true">
+                        <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
+                          <path
+                            d="M9 18l6-6-6-6"
+                            stroke="currentColor"
+                            strokeWidth="2.5"
+                            strokeLinecap="round"
+                            strokeLinejoin="round"
+                          />
+                        </svg>
+                      </span>
                     </div>
                     <div className="case-pagination-desc">
                       A website for a plastic surgeon, built around patient questions.
-                    </div>
-                  </Link>
-                  <Link to="/duopet" className="case-pagination-card case-pagination-next">
-                    <div className="case-pagination-label">Next case</div>
-                    <div className="case-pagination-title">DuoPet</div>
-                    <div className="case-pagination-desc">
-                      Making veterinary appointment scheduling stress-free.
                     </div>
                   </Link>
                 </div>
