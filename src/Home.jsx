@@ -36,7 +36,7 @@ const WORK = [
   {
     href: "/delivery",
     context: "Paid client work, product redesign, field research, 2025",
-    title: "The New Delivery Experience",
+    title: "Faster delivery confirmations, with complete records",
     description:
       "Drivers retyped data the system already had, and the app had no option for how packages actually changed hands.",
     result: "7 to 8s faster per stop, 2 fewer taps, 92% to 98% record compliance",

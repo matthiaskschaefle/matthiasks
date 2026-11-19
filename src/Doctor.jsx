@@ -10,6 +10,7 @@ import {
   viewport as motionViewport,
 } from "@/lib/animations";
 import CaseContents, { CaseBackToContents } from "./components/CaseContents.jsx";
+import FullProcess from "./components/FullProcess.jsx";
 import PinnedStory from "./components/PinnedStory.jsx";
 import Figure from "./components/mockups/Figure.jsx";
 import SnapGallery from "./components/mockups/SnapGallery.jsx";
@@ -608,426 +609,442 @@ export default function DoctorCase() {
           {/* LAYOUT PRINCIPAL */}
           <div className="case-layout">
             <div className="case-content-column">
-              {/* OVERVIEW */}
-              <motion.section
-                id="overview"
-                className="case-section"
-                variants={sectionStagger}
-                initial="hidden"
-                whileInView="visible"
-                viewport={motionViewport}
+              <FullProcess
+                ids={[
+                  "overview",
+                  "research",
+                  "evaluation",
+                  "wireframes",
+                  "ia",
+                  "the-mark",
+                  "style-guide",
+                  "the-redesign",
+                ]}
+                minutes={4}
+                topics="the patient research, the evaluation, wireframes, the logo and the style guide"
               >
-                <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>
-                  Overview
-                </TypedSectionLabel>
-                <div className="case-section-body">
-                  <p>
-                    Dr. H&eacute;lio Alves is a plastic surgeon in Sao Paulo, with 16 years of
-                    experience in corrective body surgery.
-                  </p>
-                </div>
-              </motion.section>
-
-              {/* RESEARCH */}
-              <motion.section
-                id="research"
-                className="case-section"
-                variants={sectionStagger}
-                initial="hidden"
-                whileInView="visible"
-                viewport={motionViewport}
-              >
-                <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>
-                  Research
-                </TypedSectionLabel>
-
-                <div className="case-section-body">
-                  <h3 className="case-subsection-title">
-                    What patients asked, and what the clinic needed
-                  </h3>
-                  <p>
-                    A stakeholder interview set the clinic&apos;s priorities: show the doctor&apos;s
-                    technique, attract new patients, and keep using the blue he already wore on
-                    coats and instruments. I then interviewed five patients and, with the social
-                    media team, collected Instagram question stickers. The same themes appeared in
-                    both: insurance, pricing, payment, procedures, recovery, and what a first visit
-                    involves.
-                  </p>
-                </div>
-
-                <div className="research-full">
-                  <div className="research-grid">
-                    <article className="research-card">
-                      <h4 className="research-title">Insurance, price, payment</h4>
-                      <p className="research-text">
-                        These were the first questions. They needed a visible place on the site, not
-                        a buried paragraph.
-                      </p>
-                    </article>
-
-                    <article className="research-card">
-                      <h4 className="research-title">Technique and credentials</h4>
-                      <p className="research-text">
-                        The doctor wanted his specialization easier to find. Patients wanted proof
-                        they were looking at the right surgeon, including a direct path to his page.
-                      </p>
-                    </article>
-
-                    <article className="research-card">
-                      <h4 className="research-title">How a first visit works</h4>
-                      <p className="research-text">
-                        Patients studied blogs and posts before booking. They needed indications,
-                        risks, recovery, and a simple account of the first consultation.
-                      </p>
-                    </article>
-                  </div>
-                </div>
-
-                <div className="research-full">
-                  <div className="case-gallery">
-                    <div className="case-gallery-grid">
-                      <Figure
-                        src="/assets/portfolio/2025/08/Feedback-Insurance-1.png"
-                        alt="Feedback about insurance information"
-                        zoom
-                        caption={{ text: "Insurance feedback" }}
-                      />
-                      <Figure
-                        src="/assets/portfolio/2025/08/Feedback-Prices-768x726.png"
-                        alt="Feedback about prices"
-                        zoom
-                        caption={{ text: "Price feedback" }}
-                      />
-                      <Figure
-                        src="/assets/portfolio/2025/08/Feedback-Information-1-768x726.png"
-                        alt="Feedback about information clarity"
-                        zoom
-                        caption={{ text: "Information feedback" }}
-                      />
-                      <Figure
-                        src="/assets/portfolio/2025/08/Feedback-Others-768x722.png"
-                        alt="Other qualitative feedback"
-                        zoom
-                        caption={{ text: "Other insights" }}
-                      />
-                    </div>
-
-                    <p className="case-gallery-hint">Click any screen to see it in detail.</p>
-                  </div>
-                </div>
-
-                <div className="case-section-body case-section-body-secondary">
-                  <p>
-                    Those themes drove the next decisions: a clearer surgery list, an FAQ, a
-                    first-consultation timeline, and a homepage that points to the doctor and to
-                    popular procedures. The interviews and stickers were qualitative, not a formal
-                    test.
-                  </p>
-                </div>
-              </motion.section>
-
-              {/* EVALUATION */}
-              <motion.section
-                id="evaluation"
-                className="case-section"
-                variants={sectionStagger}
-                initial="hidden"
-                whileInView="visible"
-                viewport={motionViewport}
-              >
-                <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>
-                  Evaluation
-                </TypedSectionLabel>
-                <div className="case-section-body">
-                  <h3 className="case-subsection-title">Gaps on the live homepage</h3>
-                  <p>
-                    I mapped the existing homepage against those findings. The notes below are the
-                    gaps that later became pages or components.
-                  </p>
-                </div>
-
-                <div className="research-full">
-                  <AnimatedBullets />
-                </div>
-              </motion.section>
-
-              {/* WIREFRAMES */}
-              <motion.section
-                id="wireframes"
-                className="case-section"
-                variants={sectionStagger}
-                initial="hidden"
-                whileInView="visible"
-                viewport={motionViewport}
-              >
-                <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>
-                  Wireframes
-                </TypedSectionLabel>
-                <div className="case-section-body">
-                  <h3 className="case-subsection-title">Pages before polish</h3>
-                  <p className="case-wireframes-text">
-                    Booking, procedure detail, and the landing structure from that map, before color
-                    and type.
-                  </p>
-                </div>
-
-                <div className="research-full">
-                  <div className="case-wireframes">
-                    <motion.div className="case-wireframes-grid" variants={gridStagger}>
-                      <Figure
-                        src="/assets/portfolio/2025/12/Wireframe-Agendar-consulta.png"
-                        alt="Wireframe: appointment booking flow"
-                        zoom
-                        variants={tiltIn(-1.2, prefersReducedMotion)}
-                      />
-                      <Figure
-                        src="/assets/portfolio/2025/12/Wireframe-Procedure-2.png"
-                        alt="Wireframe: procedure detail page"
-                        zoom
-                        variants={tiltIn(0, prefersReducedMotion)}
-                      />
-                      <Figure
-                        src="/assets/portfolio/2025/12/Wireframe-Landing-Page-1.png"
-                        alt="Wireframe: landing page structure"
-                        zoom
-                        variants={tiltIn(1.2, prefersReducedMotion)}
-                      />
-                    </motion.div>
-                  </div>
-                </div>
-              </motion.section>
-
-              {/* IA */}
-              <motion.section
-                id="ia"
-                className="case-section"
-                variants={sectionStagger}
-                initial="hidden"
-                whileInView="visible"
-                viewport={motionViewport}
-              >
-                <TypedSectionLabel
-                  prefersReducedMotion={prefersReducedMotion}
-                  lineBreakAfter="Information"
+                {/* OVERVIEW */}
+                <motion.section
+                  id="overview"
+                  className="case-section"
+                  variants={sectionStagger}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={motionViewport}
                 >
-                  Information architecture
-                </TypedSectionLabel>
-
-                <div className="case-section-body">
-                  <h3 className="case-subsection-title">From a question to a page</h3>
-                  <p>
-                    Insurance, pricing, procedures, recovery, and the first visit from the
-                    interviews sit on this tree. Patients move from a general interest to a
-                    procedure, then to how a first visit works, then to contact.
-                  </p>
-                </div>
-
-                <div className="research-full">
-                  <div className="case-ia">
-                    <Figure
-                      src="/assets/portfolio/2025/12/IA-image.png"
-                      alt="Information architecture diagram for the redesigned website"
-                      zoom
-                    />
+                  <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>
+                    Overview
+                  </TypedSectionLabel>
+                  <div className="case-section-body">
+                    <p>
+                      Dr. H&eacute;lio Alves is a plastic surgeon in Sao Paulo, with 16 years of
+                      experience in corrective body surgery.
+                    </p>
                   </div>
-                </div>
-              </motion.section>
+                </motion.section>
 
-              {/* THE MARK */}
-              <motion.section
-                id="the-mark"
-                className="case-section"
-                variants={sectionStagger}
-                initial="hidden"
-                whileInView="visible"
-                viewport={motionViewport}
-              >
-                <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>
-                  The mark
-                </TypedSectionLabel>
-                <div className="case-section-body">
-                  <h3 className="case-subsection-title">A color he already had</h3>
-                  <p>
-                    He had used the same blue since medical school, on instruments and coats, and
-                    asked to keep it. #092C4C became the primary, with a lighter blue for
-                    interactive states, amber for calls to action, and neutrals for hierarchy.
-                  </p>
+                {/* RESEARCH */}
+                <motion.section
+                  id="research"
+                  className="case-section"
+                  variants={sectionStagger}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={motionViewport}
+                >
+                  <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>
+                    Research
+                  </TypedSectionLabel>
 
-                  <div className="mark-swatches">
-                    {MARK_PALETTE.map((swatch) => (
-                      <div className="mark-swatch" key={swatch.hex}>
-                        <span
-                          className="mark-swatch-chip"
-                          style={{ background: swatch.hex }}
-                          aria-hidden="true"
+                  <div className="case-section-body">
+                    <h3 className="case-subsection-title">
+                      What patients asked, and what the clinic needed
+                    </h3>
+                    <p>
+                      A stakeholder interview set the clinic&apos;s priorities: show the
+                      doctor&apos;s technique, attract new patients, and keep using the blue he
+                      already wore on coats and instruments. I then interviewed five patients and,
+                      with the social media team, collected Instagram question stickers. The same
+                      themes appeared in both: insurance, pricing, payment, procedures, recovery,
+                      and what a first visit involves.
+                    </p>
+                  </div>
+
+                  <div className="research-full">
+                    <div className="research-grid">
+                      <article className="research-card">
+                        <h4 className="research-title">Insurance, price, payment</h4>
+                        <p className="research-text">
+                          These were the first questions. They needed a visible place on the site,
+                          not a buried paragraph.
+                        </p>
+                      </article>
+
+                      <article className="research-card">
+                        <h4 className="research-title">Technique and credentials</h4>
+                        <p className="research-text">
+                          The doctor wanted his specialization easier to find. Patients wanted proof
+                          they were looking at the right surgeon, including a direct path to his
+                          page.
+                        </p>
+                      </article>
+
+                      <article className="research-card">
+                        <h4 className="research-title">How a first visit works</h4>
+                        <p className="research-text">
+                          Patients studied blogs and posts before booking. They needed indications,
+                          risks, recovery, and a simple account of the first consultation.
+                        </p>
+                      </article>
+                    </div>
+                  </div>
+
+                  <div className="research-full">
+                    <div className="case-gallery">
+                      <div className="case-gallery-grid">
+                        <Figure
+                          src="/assets/portfolio/2025/08/Feedback-Insurance-1.png"
+                          alt="Feedback about insurance information"
+                          zoom
+                          caption={{ text: "Insurance feedback" }}
                         />
-                        <span className="mark-swatch-hex">{swatch.hex}</span>
+                        <Figure
+                          src="/assets/portfolio/2025/08/Feedback-Prices-768x726.png"
+                          alt="Feedback about prices"
+                          zoom
+                          caption={{ text: "Price feedback" }}
+                        />
+                        <Figure
+                          src="/assets/portfolio/2025/08/Feedback-Information-1-768x726.png"
+                          alt="Feedback about information clarity"
+                          zoom
+                          caption={{ text: "Information feedback" }}
+                        />
+                        <Figure
+                          src="/assets/portfolio/2025/08/Feedback-Others-768x722.png"
+                          alt="Other qualitative feedback"
+                          zoom
+                          caption={{ text: "Other insights" }}
+                        />
                       </div>
-                    ))}
-                  </div>
 
-                  <p>
-                    I drew the HA monogram in one stroke, the letters crossing. It keeps the gesture
-                    of a signature patients see on every prescription.
-                  </p>
-
-                  <div className="style-guide-logo-hero">
-                    <img
-                      src="/assets/portfolio/2025/12/helio-logo-mark.svg"
-                      alt="the HA monogram on its own"
-                      loading="lazy"
-                      decoding="async"
-                      width="119"
-                      height="91"
-                    />
-                  </div>
-
-                  <p>
-                    Three lockups: monogram, vertical for print and the header, horizontal for
-                    narrow spaces. Barlow for headings, Montserrat for body, both open license.
-                  </p>
-
-                  <div className="style-guide-logo-row">
-                    <div className="style-guide-logo-variant">
-                      <img
-                        src="/assets/portfolio/2025/12/helio-logo-vertical.svg"
-                        alt="the monogram above the doctor's full name"
-                        loading="lazy"
-                        decoding="async"
-                        width="339"
-                        height="170"
-                      />
-                    </div>
-                    <div className="style-guide-logo-variant">
-                      <img
-                        src="/assets/portfolio/2025/12/helio-logo-horizontal.svg"
-                        alt="the monogram beside the doctor's full name"
-                        loading="lazy"
-                        decoding="async"
-                        width="581"
-                        height="125"
-                      />
+                      <p className="case-gallery-hint">Click any screen to see it in detail.</p>
                     </div>
                   </div>
 
-                  <h3 className="case-subsection-title">Still in use</h3>
-                  <p>
-                    The logo and palette remain on the clinic, the prescription pad, the bags
-                    patients take home, and Instagram. When the practice added Est&eacute;tica to
-                    the descriptor, I extended the lockups without redrawing the mark. Continuity of
-                    the identity is adoption, not a measured UX or conversion result.
-                  </p>
+                  <div className="case-section-body case-section-body-secondary">
+                    <p>
+                      Those themes drove the next decisions: a clearer surgery list, an FAQ, a
+                      first-consultation timeline, and a homepage that points to the doctor and to
+                      popular procedures. The interviews and stickers were qualitative, not a formal
+                      test.
+                    </p>
+                  </div>
+                </motion.section>
 
-                  <figure className="style-guide-image">
-                    <div className="style-guide-image-inner">
-                      <img
-                        src="/assets/portfolio/2025/09/Logobags-image.png"
-                        alt="the mark on bags given to patients"
-                        loading="lazy"
-                        decoding="async"
-                        width="584"
-                        height="763"
-                      />
-                    </div>
-                  </figure>
-                </div>
-              </motion.section>
-
-              {/* STYLE GUIDE */}
-              <motion.section
-                id="style-guide"
-                className="case-section"
-                variants={sectionStagger}
-                initial="hidden"
-                whileInView="visible"
-                viewport={motionViewport}
-              >
-                <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>
-                  Style guide
-                </TypedSectionLabel>
-                <div className="case-section-body">
-                  <h3 className="case-subsection-title">A file the clinic could keep using</h3>
-                  <p>
-                    The style guide recorded spacing, type, color, and core components so new pages
-                    could be added after handoff. The block below is a reconstructed preview for
-                    this portfolio, not a screenshot of the live site.
-                  </p>
-
-                  <DoctorSystemPreview />
-                </div>
-              </motion.section>
-
-              {/* THE REDESIGN */}
-              <motion.section
-                id="the-redesign"
-                className="case-section"
-                variants={sectionStagger}
-                initial="hidden"
-                whileInView="visible"
-                viewport={motionViewport}
-              >
-                <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>
-                  The redesign
-                </TypedSectionLabel>
-
-                <div className="case-section-body">
-                  <h3 className="case-subsection-title">Pages as delivered</h3>
-                  <p>
-                    The screens below show the design delivered in this project, not the
-                    clinic&apos;s current site. The site was implemented in WordPress and later
-                    rebuilt by others.
-                  </p>
-                </div>
-
-                <div className="research-full" style={{ marginTop: "24px" }}>
-                  <AnimatedBulletsSecondary />
-                </div>
-
-                {/* Subpages: título + novo mockup com bullets */}
-                <div
-                  className="case-section-body case-section-body-secondary"
-                  style={{ marginTop: "32px" }}
+                {/* EVALUATION */}
+                <motion.section
+                  id="evaluation"
+                  className="case-section"
+                  variants={sectionStagger}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={motionViewport}
                 >
-                  <h3 className="case-subsection-title">Subpages</h3>
-                </div>
-
-                <div className="research-full" style={{ marginTop: "16px" }}>
-                  <AnimatedBulletsSubpages />
-                </div>
-
-                <div className="research-full" style={{ marginTop: "24px" }}>
-                  <AnimatedBulletsSubpages2 />
-                </div>
-
-                <div className="research-full" style={{ marginTop: "24px" }}>
-                  <AnimatedBulletsSubpages3 />
-                </div>
-
-                <div className="research-full" style={{ marginTop: "24px" }}>
-                  <AnimatedBulletsSubpages4 />
-                </div>
-                {/* Mobile version */}
-                <div
-                  className="case-section-body case-section-body-secondary"
-                  style={{ marginTop: "32px" }}
-                >
-                  <h3 className="case-subsection-title">Mobile version</h3>
-                </div>
-
-                <div className="research-full mobile-gallery-shell">
-                  <div className="mobile-version-block">
-                    <SnapGallery
-                      label="Mobile screens"
-                      items={MOBILE_SCREENS}
-                      className="ms-snap--exported ms-snap--large ms-snap--depth"
-                    />
+                  <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>
+                    Evaluation
+                  </TypedSectionLabel>
+                  <div className="case-section-body">
+                    <h3 className="case-subsection-title">Gaps on the live homepage</h3>
+                    <p>
+                      I mapped the existing homepage against those findings. The notes below are the
+                      gaps that later became pages or components.
+                    </p>
                   </div>
-                </div>
-              </motion.section>
 
-              {/* OUTCOME */}
+                  <div className="research-full">
+                    <AnimatedBullets />
+                  </div>
+                </motion.section>
 
-              <CaseBackToContents />
+                {/* WIREFRAMES */}
+                <motion.section
+                  id="wireframes"
+                  className="case-section"
+                  variants={sectionStagger}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={motionViewport}
+                >
+                  <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>
+                    Wireframes
+                  </TypedSectionLabel>
+                  <div className="case-section-body">
+                    <h3 className="case-subsection-title">Pages before polish</h3>
+                    <p className="case-wireframes-text">
+                      Booking, procedure detail, and the landing structure from that map, before
+                      color and type.
+                    </p>
+                  </div>
+
+                  <div className="research-full">
+                    <div className="case-wireframes">
+                      <motion.div className="case-wireframes-grid" variants={gridStagger}>
+                        <Figure
+                          src="/assets/portfolio/2025/12/Wireframe-Agendar-consulta.png"
+                          alt="Wireframe: appointment booking flow"
+                          zoom
+                          variants={tiltIn(-1.2, prefersReducedMotion)}
+                        />
+                        <Figure
+                          src="/assets/portfolio/2025/12/Wireframe-Procedure-2.png"
+                          alt="Wireframe: procedure detail page"
+                          zoom
+                          variants={tiltIn(0, prefersReducedMotion)}
+                        />
+                        <Figure
+                          src="/assets/portfolio/2025/12/Wireframe-Landing-Page-1.png"
+                          alt="Wireframe: landing page structure"
+                          zoom
+                          variants={tiltIn(1.2, prefersReducedMotion)}
+                        />
+                      </motion.div>
+                    </div>
+                  </div>
+                </motion.section>
+
+                {/* IA */}
+                <motion.section
+                  id="ia"
+                  className="case-section"
+                  variants={sectionStagger}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={motionViewport}
+                >
+                  <TypedSectionLabel
+                    prefersReducedMotion={prefersReducedMotion}
+                    lineBreakAfter="Information"
+                  >
+                    Information architecture
+                  </TypedSectionLabel>
+
+                  <div className="case-section-body">
+                    <h3 className="case-subsection-title">From a question to a page</h3>
+                    <p>
+                      Insurance, pricing, procedures, recovery, and the first visit from the
+                      interviews sit on this tree. Patients move from a general interest to a
+                      procedure, then to how a first visit works, then to contact.
+                    </p>
+                  </div>
+
+                  <div className="research-full">
+                    <div className="case-ia">
+                      <Figure
+                        src="/assets/portfolio/2025/12/IA-image.png"
+                        alt="Information architecture diagram for the redesigned website"
+                        zoom
+                      />
+                    </div>
+                  </div>
+                </motion.section>
+
+                {/* THE MARK */}
+                <motion.section
+                  id="the-mark"
+                  className="case-section"
+                  variants={sectionStagger}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={motionViewport}
+                >
+                  <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>
+                    The mark
+                  </TypedSectionLabel>
+                  <div className="case-section-body">
+                    <h3 className="case-subsection-title">A color he already had</h3>
+                    <p>
+                      He had used the same blue since medical school, on instruments and coats, and
+                      asked to keep it. #092C4C became the primary, with a lighter blue for
+                      interactive states, amber for calls to action, and neutrals for hierarchy.
+                    </p>
+
+                    <div className="mark-swatches">
+                      {MARK_PALETTE.map((swatch) => (
+                        <div className="mark-swatch" key={swatch.hex}>
+                          <span
+                            className="mark-swatch-chip"
+                            style={{ background: swatch.hex }}
+                            aria-hidden="true"
+                          />
+                          <span className="mark-swatch-hex">{swatch.hex}</span>
+                        </div>
+                      ))}
+                    </div>
+
+                    <p>
+                      I drew the HA monogram in one stroke, the letters crossing. It keeps the
+                      gesture of a signature patients see on every prescription.
+                    </p>
+
+                    <div className="style-guide-logo-hero">
+                      <img
+                        src="/assets/portfolio/2025/12/helio-logo-mark.svg"
+                        alt="the HA monogram on its own"
+                        loading="lazy"
+                        decoding="async"
+                        width="119"
+                        height="91"
+                      />
+                    </div>
+
+                    <p>
+                      Three lockups: monogram, vertical for print and the header, horizontal for
+                      narrow spaces. Barlow for headings, Montserrat for body, both open license.
+                    </p>
+
+                    <div className="style-guide-logo-row">
+                      <div className="style-guide-logo-variant">
+                        <img
+                          src="/assets/portfolio/2025/12/helio-logo-vertical.svg"
+                          alt="the monogram above the doctor's full name"
+                          loading="lazy"
+                          decoding="async"
+                          width="339"
+                          height="170"
+                        />
+                      </div>
+                      <div className="style-guide-logo-variant">
+                        <img
+                          src="/assets/portfolio/2025/12/helio-logo-horizontal.svg"
+                          alt="the monogram beside the doctor's full name"
+                          loading="lazy"
+                          decoding="async"
+                          width="581"
+                          height="125"
+                        />
+                      </div>
+                    </div>
+
+                    <h3 className="case-subsection-title">Still in use</h3>
+                    <p>
+                      The logo and palette remain on the clinic, the prescription pad, the bags
+                      patients take home, and Instagram. When the practice added Est&eacute;tica to
+                      the descriptor, I extended the lockups without redrawing the mark. Continuity
+                      of the identity is adoption, not a measured UX or conversion result.
+                    </p>
+
+                    <figure className="style-guide-image">
+                      <div className="style-guide-image-inner">
+                        <img
+                          src="/assets/portfolio/2025/09/Logobags-image.png"
+                          alt="the mark on bags given to patients"
+                          loading="lazy"
+                          decoding="async"
+                          width="584"
+                          height="763"
+                        />
+                      </div>
+                    </figure>
+                  </div>
+                </motion.section>
+
+                {/* STYLE GUIDE */}
+                <motion.section
+                  id="style-guide"
+                  className="case-section"
+                  variants={sectionStagger}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={motionViewport}
+                >
+                  <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>
+                    Style guide
+                  </TypedSectionLabel>
+                  <div className="case-section-body">
+                    <h3 className="case-subsection-title">A file the clinic could keep using</h3>
+                    <p>
+                      The style guide recorded spacing, type, color, and core components so new
+                      pages could be added after handoff. The block below is a reconstructed preview
+                      for this portfolio, not a screenshot of the live site.
+                    </p>
+
+                    <DoctorSystemPreview />
+                  </div>
+                </motion.section>
+
+                {/* THE REDESIGN */}
+                <motion.section
+                  id="the-redesign"
+                  className="case-section"
+                  variants={sectionStagger}
+                  initial="hidden"
+                  whileInView="visible"
+                  viewport={motionViewport}
+                >
+                  <TypedSectionLabel prefersReducedMotion={prefersReducedMotion}>
+                    The redesign
+                  </TypedSectionLabel>
+
+                  <div className="case-section-body">
+                    <h3 className="case-subsection-title">Pages as delivered</h3>
+                    <p>
+                      The screens below show the design delivered in this project, not the
+                      clinic&apos;s current site. The site was implemented in WordPress and later
+                      rebuilt by others.
+                    </p>
+                  </div>
+
+                  <div className="research-full" style={{ marginTop: "24px" }}>
+                    <AnimatedBulletsSecondary />
+                  </div>
+
+                  {/* Subpages: título + novo mockup com bullets */}
+                  <div
+                    className="case-section-body case-section-body-secondary"
+                    style={{ marginTop: "32px" }}
+                  >
+                    <h3 className="case-subsection-title">Subpages</h3>
+                  </div>
+
+                  <div className="research-full" style={{ marginTop: "16px" }}>
+                    <AnimatedBulletsSubpages />
+                  </div>
+
+                  <div className="research-full" style={{ marginTop: "24px" }}>
+                    <AnimatedBulletsSubpages2 />
+                  </div>
+
+                  <div className="research-full" style={{ marginTop: "24px" }}>
+                    <AnimatedBulletsSubpages3 />
+                  </div>
+
+                  <div className="research-full" style={{ marginTop: "24px" }}>
+                    <AnimatedBulletsSubpages4 />
+                  </div>
+                  {/* Mobile version */}
+                  <div
+                    className="case-section-body case-section-body-secondary"
+                    style={{ marginTop: "32px" }}
+                  >
+                    <h3 className="case-subsection-title">Mobile version</h3>
+                  </div>
+
+                  <div className="research-full mobile-gallery-shell">
+                    <div className="mobile-version-block">
+                      <SnapGallery
+                        label="Mobile screens"
+                        items={MOBILE_SCREENS}
+                        className="ms-snap--exported ms-snap--large ms-snap--depth"
+                      />
+                    </div>
+                  </div>
+                </motion.section>
+
+                {/* OUTCOME */}
+
+                <CaseBackToContents />
+              </FullProcess>
               <motion.section
                 id="outcome"
                 className="case-section"
@@ -1069,7 +1086,7 @@ export default function DoctorCase() {
                           />
                         </svg>
                       </span>
-                      The New Delivery Experience
+                      Faster delivery confirmations, with complete records
                     </div>
                     <div className="case-pagination-desc">
                       Redesigning the delivery confirmation flow for drivers.
