@@ -28,6 +28,7 @@ const PAGES = {
   marcelo: () => import("./MarceloGramas.jsx"),
   doctor: () => import("./Doctor.jsx"),
   duopet: () => import("./DuoPet.jsx"),
+  mappe: () => import("./Mappe.jsx"),
   legal: () => import("./Legal.jsx"),
 };
 

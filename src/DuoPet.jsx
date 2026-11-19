@@ -1996,10 +1996,10 @@ export default function DuoPetCase() {
                       Patients could not find procedures, prices, or insurance before booking.
                     </div>
                   </Link>
-                  <Link to="/marcelo-gramas" className="case-pagination-card case-pagination-next">
+                  <Link to="/mappe" className="case-pagination-card case-pagination-next">
                     <div className="case-pagination-label">Next case</div>
                     <div className="case-pagination-title">
-                      What clients needed to see before asking for a quote
+                      The tracker I built for my own job search
                       <span className="case-pagination-arrow">
                         <svg width="14" height="14" viewBox="0 0 24 24" fill="none">
                           <path
@@ -2013,7 +2013,7 @@ export default function DuoPetCase() {
                       </span>
                     </div>
                     <div className="case-pagination-desc">
-                      A landscaping website built around the proof clients asked for.
+                      A personal product I designed, built, and use every day.
                     </div>
                   </Link>
                 </div>

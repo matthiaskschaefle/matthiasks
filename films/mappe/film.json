@@ -1,0 +1,110 @@
+{
+  "size": [1280, 720],
+  "theme": {
+    "light": "#f1f1f3",
+    "ink": "#18181b",
+    "dark": "#1f165a",
+    "darkTop": "#3c2baa",
+    "onDark": "#ffffff"
+  },
+  "poster": {
+    "scene": 2,
+    "at": 0.9
+  },
+  "scenes": [
+    {
+      "type": "statement",
+      "dark": true,
+      "duration": 4.5,
+      "logo": "logo-white.svg",
+      "eyebrow": "Mappe, personal product, 2026",
+      "text": "My job search\nneeded a product.",
+      "caption": "[Mappe logo]\nMappe, personal product, 2026. My job search needed a product."
+    },
+    {
+      "type": "statement",
+      "duration": 5,
+      "eyebrow": "The problem",
+      "text": "Applications in a sheet.\nReplies in Gmail.\nPDFs in folders.",
+      "caption": "The problem: applications in a sheet, replies in Gmail, PDFs in folders."
+    },
+    {
+      "type": "shot",
+      "duration": 6,
+      "eyebrow": "Dashboard",
+      "text": "Summary first.\nThen the list.",
+      "sub": "What needs action sits next to the numbers. Demo data.",
+      "shots": {
+        "src": "painel.jpg",
+        "url": "mappe-iota.vercel.app",
+        "pan": 0
+      },
+      "caption": "Dashboard: summary first, then the list. What needs action sits next to the numbers.\n[The dashboard, with demo data. Interface in Portuguese.]"
+    },
+    {
+      "type": "shot",
+      "duration": 6,
+      "eyebrow": "Detail",
+      "text": "One sheet\nper application.",
+      "sub": "Status, next step and timeline. Every change is one tap away.",
+      "shots": {
+        "src": "drawer.jpg",
+        "url": "mappe-iota.vercel.app"
+      },
+      "caption": "Detail: one sheet per application, with status, next step and timeline. Every change is one tap away."
+    },
+    {
+      "type": "shot",
+      "duration": 6,
+      "eyebrow": "Daily search",
+      "text": "A search\nevery morning.",
+      "sub": "Claude looks for jobs and drops them in an inbox. I decide: apply or discard.",
+      "shots": {
+        "src": "vagas.jpg",
+        "url": "mappe-iota.vercel.app"
+      },
+      "caption": "Daily search: a search every morning. Claude looks for jobs and drops them in an inbox, and I decide to apply or discard."
+    },
+    {
+      "type": "shot",
+      "duration": 5,
+      "eyebrow": "On the phone",
+      "text": "Same system,\nin my pocket.",
+      "shots": {
+        "src": "mobile.jpg",
+        "frame": "phone"
+      },
+      "caption": "On the phone: the same system, in my pocket."
+    },
+    {
+      "type": "numbers",
+      "dark": true,
+      "duration": 5.5,
+      "eyebrow": "Under the hood",
+      "items": [
+        {
+          "value": 1,
+          "label": "job search by Claude every day"
+        },
+        {
+          "value": 3,
+          "label": "inbox checks for replies a day"
+        },
+        {
+          "value": 16,
+          "label": "automated tests on every push"
+        }
+      ],
+      "caption": "Under the hood: 1 job search by Claude every day, 3 inbox checks for replies a day, 16 automated tests on every push."
+    },
+    {
+      "type": "end",
+      "dark": true,
+      "duration": 4,
+      "logo": "logo-white.svg",
+      "text": "Designed, built\nand used by me.",
+      "sub": "React, TypeScript, Supabase",
+      "caption": "Designed, built and used by me. React, TypeScript, Supabase."
+    }
+  ]
+}

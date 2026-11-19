@@ -1,0 +1,27 @@
+WEBVTT
+
+00:00.000 --> 00:04.500
+[Mappe logo]
+Mappe, personal product, 2026. My job search needed a product.
+
+00:04.500 --> 00:09.500
+The problem: applications in a sheet, replies in Gmail, PDFs in folders.
+
+00:09.500 --> 00:15.500
+Dashboard: summary first, then the list. What needs action sits next to the numbers.
+[The dashboard, with demo data. Interface in Portuguese.]
+
+00:15.500 --> 00:21.500
+Detail: one sheet per application, with status, next step and timeline. Every change is one tap away.
+
+00:21.500 --> 00:27.500
+Daily search: a search every morning. Claude looks for jobs and drops them in an inbox, and I decide to apply or discard.
+
+00:27.500 --> 00:32.500
+On the phone: the same system, in my pocket.
+
+00:32.500 --> 00:38.000
+Under the hood: 1 job search by Claude every day, 3 inbox checks for replies a day, 16 automated tests on every push.
+
+00:38.000 --> 00:42.000
+Designed, built and used by me. React, TypeScript, Supabase.

@@ -894,14 +894,14 @@ export default function MarceloGramasCase() {
 
               <section className="case-pagination" aria-label="Next and previous case">
                 <div className="case-pagination-inner">
-                  <Link to="/duopet" className="case-pagination-card case-pagination-prev">
+                  <Link to="/mappe" className="case-pagination-card case-pagination-prev">
                     <div className="case-pagination-label">Previous case</div>
                     <div className="case-pagination-title">
                       <PaginationArrow direction="prev" />
-                      DuoPet
+                      The tracker I built for my own job search
                     </div>
                     <div className="case-pagination-desc">
-                      Making veterinary appointment scheduling stress-free.
+                      A personal product I designed, built, and use every day.
                     </div>
                   </Link>
                   <Link to="/delivery" className="case-pagination-card case-pagination-next">

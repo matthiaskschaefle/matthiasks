@@ -13,7 +13,7 @@ const MotionLink = motion.create(Link);
 /*
  * Editorial work index: no cards, no borders. Each project is a media
  * stage plus a typographic row. The two paid, shipped projects with
- * measured results take the full column, the newest first; the other two share a two-up grid.
+ * measured results and the Mappe product take the full column; the other two share a two-up grid.
  */
 const WORK = [
   {
@@ -50,6 +50,23 @@ const WORK = [
       ],
       poster: "/media/delivery-poster.jpg",
       endFrame: "/media/delivery-endframe.jpg",
+    },
+    featured: true,
+  },
+  {
+    href: "/mappe",
+    context: "Personal product, UI, design system, front end, 2026",
+    title: "The tracker I built for my own job search",
+    description:
+      "Applications in a tracker file, replies in Gmail, PDFs in folders. I designed and built one app for all of it, and I use it every day.",
+    result: "Daily AI job search, 3 inbox checks a day, 16 automated tests",
+    imageSrc: "/assets/portfolio/2026/11/mappe/painel.webp",
+    imageAlt:
+      "Clip from the Mappe case film, with demo data: the dashboard, then the detail sheet of one application",
+    video: {
+      sources: [{ src: "/media/mappe-short.mp4", type: "video/mp4" }],
+      poster: "/media/mappe-short-poster.jpg",
+      endFrame: "/media/mappe-short-endframe.jpg",
     },
     featured: true,
   },
@@ -309,10 +326,11 @@ export default function HomePage() {
 
             <WorkItem {...WORK[0]} order={0} />
             <WorkItem {...WORK[1]} order={0} />
+            <WorkItem {...WORK[2]} order={0} />
 
             <div className="work-pair">
-              <WorkItem {...WORK[2]} order={0} />
-              <WorkItem {...WORK[3]} order={1} />
+              <WorkItem {...WORK[3]} order={0} />
+              <WorkItem {...WORK[4]} order={1} />
             </div>
           </section>
 
