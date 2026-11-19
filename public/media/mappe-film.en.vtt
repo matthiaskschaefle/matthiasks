@@ -7,21 +7,27 @@ Mappe, personal product, 2026. My job search needed a product.
 00:04.500 --> 00:09.500
 The problem: applications in a sheet, replies in Gmail, PDFs in folders.
 
-00:09.500 --> 00:15.500
-Dashboard: summary first, then the list. What needs action sits next to the numbers.
-[The dashboard, with demo data. Interface in Portuguese.]
+00:09.500 --> 00:12.100
+Dashboard: summary first, then the list.
 
-00:15.500 --> 00:21.500
-Detail: one sheet per application, with status, next step and timeline. Every change is one tap away.
+00:12.100 --> 00:24.367
+Dashboard, with demo data: the summary comes first. A late follow-up has its own buttons, and the list filters by status in one tap.
+[Interface in Portuguese.]
 
-00:21.500 --> 00:27.500
-Daily search: a search every morning. Claude looks for jobs and drops them in an inbox, and I decide to apply or discard.
+00:24.367 --> 00:31.067
+One sheet per application: status, next step and timeline. Changing the status is one click.
 
-00:27.500 --> 00:32.500
+00:31.067 --> 00:33.667
+Daily search: a search every morning.
+
+00:33.667 --> 00:39.700
+Jobs: Claude searches every morning and drops new jobs in an inbox. I decide to apply or discard.
+
+00:39.700 --> 00:44.700
 On the phone: the same system, in my pocket.
 
-00:32.500 --> 00:38.000
+00:44.700 --> 00:50.200
 Under the hood: 1 job search by Claude every day, 3 inbox checks for replies a day, 16 automated tests on every push.
 
-00:38.000 --> 00:42.000
+00:50.200 --> 00:54.200
 Designed, built and used by me. React, TypeScript, Supabase.

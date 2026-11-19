@@ -9,6 +9,12 @@
 // Só uma cena (para ajustar):   node films/render.mjs mappe --scene 3
 // Só quadros de conferência, sem vídeo:   node films/render.mjs mappe --stills
 //
+// Cenas "demo" filmam o produto de verdade: o navegador abre a URL da cena,
+// (notas com side: right, left ou below)
+// um cursor desenhado anda até cada alvo, clica, digita e rola, e setas com
+// notas apontam para o que importa. A página roda com movimento reduzido, então
+// o que muda na tela muda num quadro só, e o ritmo vem do cursor.
+//
 // Saída: public/media/<nome>-film.mp4, <nome>-film.en.vtt e <nome>-film-poster.jpg.
 
 import { spawn } from "node:child_process";
@@ -190,6 +196,187 @@ ${film.css ?? ""}
 </style></head><body>${TYPES[scene.type](scene)}</body></html>`;
 }
 
+// ── Demo: o produto em uso ────────────────────────────────────────────────
+
+const OVERLAY = `
+(() => {
+  if (document.getElementById("__film")) return;
+  const root = document.createElement("div");
+  root.id = "__film";
+  root.innerHTML = \`
+    <style>
+      #__film{position:fixed;inset:0;pointer-events:none;z-index:2147483647}
+      #__cur{position:absolute;left:0;top:0;width:26px;height:26px;transform:translate(-3px,-2px);filter:drop-shadow(0 2px 3px rgba(0,0,0,.35))}
+      #__rip{position:absolute;width:44px;height:44px;margin:-22px 0 0 -22px;border-radius:50%;border:2.5px solid var(--film-accent);opacity:0}
+      .__note{position:absolute;display:flex;align-items:center;gap:10px;opacity:0;transition:none}
+      .__note b{font:700 15px/1.25 Figtree,system-ui,sans-serif;color:#fff;background:var(--film-accent);padding:8px 12px;border-radius:10px;max-width:260px;box-shadow:0 8px 20px -8px rgba(0,0,0,.4)}
+      .__note svg{flex:none}
+      .__ring{position:absolute;border:2.5px solid var(--film-accent);border-radius:12px;opacity:0}
+    </style>
+    <svg id="__cur" viewBox="0 0 26 26"><path d="M3 2l18 9.5-7.6 2.1L10 21z" fill="#111" stroke="#fff" stroke-width="1.6" stroke-linejoin="round"/></svg>
+    <div id="__rip"></div>\`;
+  document.body.appendChild(root);
+})();`;
+
+const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+
+async function centerOf(pg, selector) {
+  const loc = pg.locator(selector).first();
+  await loc.scrollIntoViewIfNeeded().catch(() => {});
+  const box = await loc.boundingBox();
+  if (!box) throw new Error(`Alvo não encontrado na tela: ${selector}`);
+  return { x: box.x + box.width / 2, y: box.y + box.height / 2, box };
+}
+
+async function recordDemo(scene, push) {
+  const vp = scene.viewport ?? [W, H];
+  const ctx2 = await browser.newContext({
+    viewport: { width: vp[0], height: vp[1] },
+    deviceScaleFactor: W / vp[0],
+    reducedMotion: "reduce",
+    colorScheme: "light",
+  });
+  const pg = await ctx2.newPage();
+  await pg.goto(scene.url, { waitUntil: "networkidle" });
+  await pg.addStyleTag({ content: `:root{--film-accent:${film.theme.accent ?? "#4b37d1"}}` });
+  await pg.evaluate(OVERLAY);
+  await pg.waitForTimeout(scene.settle ?? 1200);
+
+  let cur = { x: vp[0] * 0.62, y: vp[1] * 0.7 };
+  const setCursor = (p) =>
+    pg.evaluate(({ x, y }) => {
+      const c = document.getElementById("__cur");
+      c.style.left = `${x}px`;
+      c.style.top = `${y}px`;
+    }, p);
+  const frame = async () => push(await pg.screenshot({ type: "jpeg", quality: 92 }));
+  const hold = async (seconds) => {
+    const buf = await pg.screenshot({ type: "jpeg", quality: 92 });
+    for (let i = 0; i < Math.round(seconds * FPS); i += 1) push(buf);
+  };
+  const moveTo = async (to, seconds = 0.7) => {
+    const n = Math.max(1, Math.round(seconds * FPS));
+    const from = { ...cur };
+    for (let i = 1; i <= n; i += 1) {
+      const t = ease(i / n);
+      cur = { x: from.x + (to.x - from.x) * t, y: from.y + (to.y - from.y) * t };
+      await setCursor(cur);
+      await frame();
+    }
+  };
+  const ripple = async () => {
+    for (let i = 0; i <= 8; i += 1) {
+      await pg.evaluate(
+        ({ x, y, k }) => {
+          const r = document.getElementById("__rip");
+          r.style.left = `${x}px`;
+          r.style.top = `${y}px`;
+          r.style.opacity = String(1 - k);
+          r.style.transform = `scale(${0.4 + k * 0.9})`;
+        },
+        { ...cur, k: i / 8 },
+      );
+      await frame();
+    }
+  };
+  const note = async (step) => {
+    const { box } = await centerOf(pg, step.note);
+    await pg.evaluate(
+      ({ box, text, side, id }) => {
+        const root = document.getElementById("__film");
+        const ring = document.createElement("div");
+        ring.className = "__ring";
+        ring.dataset.n = id;
+        Object.assign(ring.style, {
+          left: `${box.x - 6}px`,
+          top: `${box.y - 6}px`,
+          width: `${box.width + 12}px`,
+          height: `${box.height + 12}px`,
+        });
+        const n = document.createElement("div");
+        n.className = "__note";
+        n.dataset.n = id;
+        const arrow =
+          side === "left"
+            ? '<svg width="46" height="20" viewBox="0 0 46 20"><path d="M2 10h38m-8-7 8 7-8 7" fill="none" stroke="var(--film-accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>'
+            : '<svg width="46" height="20" viewBox="0 0 46 20"><path d="M44 10H6m8-7-8 7 8 7" fill="none" stroke="var(--film-accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        const up =
+          '<svg width="20" height="34" viewBox="0 0 20 34"><path d="M10 32V6M3 13l7-8 7 8" fill="none" stroke="var(--film-accent)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+        if (side === "below") {
+          n.style.flexDirection = "column";
+          n.style.alignItems = "flex-start";
+          n.innerHTML = `${up}<b>${text}</b>`;
+        } else {
+          n.innerHTML = side === "left" ? `<b>${text}</b>${arrow}` : `${arrow}<b>${text}</b>`;
+        }
+        root.append(ring, n);
+        const r = n.getBoundingClientRect();
+        let y = box.y + box.height / 2 - r.height / 2;
+        let x = side === "left" ? box.x - 12 - r.width : box.x + box.width + 12;
+        if (side === "below") {
+          x = box.x + 24;
+          y = box.y + box.height + 10;
+        }
+        Object.assign(n.style, { left: `${Math.max(8, x)}px`, top: `${Math.max(8, y)}px` });
+      },
+      { box, text: step.text, side: step.side ?? "right", id: String(step.note) },
+    );
+    for (let i = 1; i <= 9; i += 1) {
+      await pg.evaluate(
+        ({ id, k }) => {
+          for (const el of document.querySelectorAll(`[data-n="${CSS.escape(id)}"]`))
+            el.style.opacity = String(k);
+        },
+        { id: String(step.note), k: i / 9 },
+      );
+      await frame();
+    }
+  };
+  const clearNotes = () =>
+    pg.evaluate(() => document.querySelectorAll(".__note,.__ring").forEach((e) => e.remove()));
+
+  await setCursor(cur);
+  await hold(0.3);
+  for (const step of scene.steps) {
+    if (step.move) await moveTo(await centerOf(pg, step.move), step.seconds);
+    else if (step.click) {
+      const target = await centerOf(pg, step.click);
+      await moveTo(target, step.seconds);
+      await ripple();
+      await pg.mouse.click(target.x, target.y);
+      await pg.waitForTimeout(step.settle ?? 400);
+      await pg.evaluate(OVERLAY);
+      await setCursor(cur);
+      await frame();
+    } else if (step.type) {
+      const target = await centerOf(pg, step.type);
+      await moveTo(target, step.seconds);
+      await pg.mouse.click(target.x, target.y);
+      for (const ch of step.text) {
+        await pg.keyboard.type(ch);
+        await frame();
+        await frame();
+      }
+    } else if (step.scroll !== undefined) {
+      const n = Math.round((step.seconds ?? 1) * FPS);
+      const start = await pg.evaluate(() => window.scrollY);
+      for (let i = 1; i <= n; i += 1) {
+        await pg.evaluate((y) => window.scrollTo(0, y), start + step.scroll * ease(i / n));
+        await frame();
+      }
+    } else if (step.note) await note(step);
+    else if (step.clearNotes) await clearNotes();
+    else if (step.key) {
+      await pg.keyboard.press(step.key);
+      await pg.waitForTimeout(300);
+      await frame();
+    }
+    if (step.hold) await hold(step.hold);
+  }
+  await hold(scene.tail ?? 0.6);
+  await ctx2.close();
+}
+
 // ── Captura e montagem ───────────────────────────────────────────────────
 
 function run(bin, argv, input) {
@@ -227,11 +414,67 @@ const cues = [];
 
 try {
   for (const [index, scene] of film.scenes.entries()) {
+    const out = join(workDir, `scene-${String(index).padStart(2, "0")}.mp4`);
+    parts.push(out);
+    if (scene.type === "demo") {
+      if (onlyScene !== null && onlyScene !== index) {
+        throw new Error("--scene ainda não sabe pular cenas demo: rode o filme inteiro.");
+      }
+      const bufs = [];
+      await recordDemo(scene, (b) => bufs.push(b));
+      if (stillsOnly) {
+        for (const at of [0.35, 0.7, 0.98]) {
+          writeFileSync(
+            join(workDir, `still-${index}-${Math.round(at * 100)}.jpg`),
+            bufs[Math.floor((bufs.length - 1) * at)],
+          );
+        }
+        continue;
+      }
+      const dur = bufs.length / FPS;
+      cues.push({ start: clock, end: clock + dur, text: scene.caption ?? "" });
+      clock += dur;
+      const bg = film.theme.light.replace("#", "0x");
+      const tmp = out.replace(/\.mp4$/, ".tmp.mp4");
+      await run(
+        ffmpeg,
+        [
+          "-y",
+          "-f",
+          "image2pipe",
+          "-framerate",
+          String(FPS),
+          "-c:v",
+          "mjpeg",
+          "-i",
+          "-",
+          "-vf",
+          `fade=t=in:st=0:d=0.25:color=${bg},fade=t=out:st=${Math.max(0, dur - 0.3)}:d=0.3:color=${bg}`,
+          "-c:v",
+          "libx264",
+          "-crf",
+          "18",
+          "-preset",
+          "veryfast",
+          "-pix_fmt",
+          "yuv420p",
+          "-r",
+          String(FPS),
+          tmp,
+        ],
+        async (stdin) => {
+          for (const b of bufs)
+            if (!stdin.write(b)) await new Promise((r) => stdin.once("drain", r));
+          stdin.end();
+        },
+      );
+      renameSync(tmp, out);
+      console.log(`cena ${index} (demo) pronta (${dur.toFixed(1)}s)`);
+      continue;
+    }
     const dur = scene.duration;
     cues.push({ start: clock, end: clock + dur, text: scene.caption ?? scene.text });
     clock += dur;
-    const out = join(workDir, `scene-${String(index).padStart(2, "0")}.mp4`);
-    parts.push(out);
     if (onlyScene !== null && onlyScene !== index) continue;
 
     const htmlPath = join(workDir, `scene-${index}.html`);

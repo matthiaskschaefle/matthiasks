@@ -67,7 +67,7 @@ export default function MappeCase() {
                 className="case-film-frame"
                 sources={[{ src: "/media/mappe-film.mp4", type: "video/mp4" }]}
                 poster="/media/mappe-film-poster.jpg"
-                alt="Mappe case film: the problem, the dashboard, one application in detail, the daily job search, the phone view, and the automation behind it, all with demo data"
+                alt="Mappe case film with demo data: a cursor uses the dashboard, snoozes a late follow-up, filters the list, changes a status, and saves a job from the daily search"
                 threshold={1}
                 requireScroll
                 controls
@@ -75,7 +75,8 @@ export default function MappeCase() {
                 tracks={[{ src: "/media/mappe-film.en.vtt", srcLang: "en", label: "English" }]}
               />
               <figcaption className="case-film-caption">
-                The case in 42 seconds. Silent, all text on screen. Every screen shows demo data.
+                The case in 54 seconds, with the product in use. Silent, all text on screen. Every
+                screen shows demo data.
               </figcaption>
             </figure>
 

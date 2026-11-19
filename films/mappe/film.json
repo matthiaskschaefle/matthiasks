@@ -5,11 +5,12 @@
     "ink": "#18181b",
     "dark": "#1f165a",
     "darkTop": "#3c2baa",
-    "onDark": "#ffffff"
+    "onDark": "#ffffff",
+    "accent": "#4b37d1"
   },
   "poster": {
-    "scene": 2,
-    "at": 0.9
+    "scene": 3,
+    "at": 0.15
   },
   "scenes": [
     {
@@ -29,41 +30,128 @@
       "caption": "The problem: applications in a sheet, replies in Gmail, PDFs in folders."
     },
     {
-      "type": "shot",
-      "duration": 6,
+      "type": "statement",
+      "duration": 2.6,
       "eyebrow": "Dashboard",
       "text": "Summary first.\nThen the list.",
-      "sub": "What needs action sits next to the numbers. Demo data.",
-      "shots": {
-        "src": "painel.jpg",
-        "url": "mappe-iota.vercel.app",
-        "pan": 0
-      },
-      "caption": "Dashboard: summary first, then the list. What needs action sits next to the numbers.\n[The dashboard, with demo data. Interface in Portuguese.]"
+      "caption": "Dashboard: summary first, then the list."
     },
     {
-      "type": "shot",
-      "duration": 6,
-      "eyebrow": "Detail",
-      "text": "One sheet\nper application.",
-      "sub": "Status, next step and timeline. Every change is one tap away.",
-      "shots": {
-        "src": "drawer.jpg",
-        "url": "mappe-iota.vercel.app"
-      },
-      "caption": "Detail: one sheet per application, with status, next step and timeline. Every change is one tap away."
+      "type": "demo",
+      "url": "http://localhost:5175/#painel",
+      "settle": 1500,
+      "caption": "Dashboard, with demo data: the summary comes first. A late follow-up has its own buttons, and the list filters by status in one tap.\n[Interface in Portuguese.]",
+      "steps": [
+        {
+          "scroll": 170,
+          "seconds": 0.8
+        },
+        {
+          "note": ".c-stat--hero",
+          "text": "Summary first",
+          "hold": 1.6,
+          "side": "below"
+        },
+        {
+          "clearNotes": true
+        },
+        {
+          "move": ".c-alert >> nth=1",
+          "seconds": 0.8
+        },
+        {
+          "note": ".c-alert >> nth=1",
+          "text": "A late follow-up, with its own buttons",
+          "side": "left",
+          "hold": 1.4
+        },
+        {
+          "clearNotes": true
+        },
+        {
+          "click": "button:has-text(\"Adiar 3 dias\")",
+          "settle": 500,
+          "hold": 0.8
+        },
+        {
+          "scroll": 820,
+          "seconds": 1.2
+        },
+        {
+          "click": ".c-seg__opt:has-text(\"Sem resposta\")",
+          "settle": 500,
+          "scroll": 650
+        },
+        {
+          "note": ".c-seg__track",
+          "text": "Every status in words, not only color",
+          "hold": 1.8
+        }
+      ]
     },
     {
-      "type": "shot",
-      "duration": 6,
+      "type": "demo",
+      "url": "http://localhost:5175/#painel",
+      "settle": 1500,
+      "caption": "One sheet per application: status, next step and timeline. Changing the status is one click.",
+      "steps": [
+        {
+          "click": "button:has-text(\"Ver detalhes\")",
+          "settle": 700,
+          "hold": 0.6
+        },
+        {
+          "note": ".c-drawer .c-menu",
+          "text": "Status in one click",
+          "side": "left",
+          "hold": 1.2
+        },
+        {
+          "clearNotes": true
+        },
+        {
+          "click": ".c-drawer .c-menu >> text=Recusada",
+          "settle": 500,
+          "hold": 1.2
+        },
+        {
+          "key": "Escape",
+          "hold": 0.4
+        }
+      ]
+    },
+    {
+      "type": "statement",
+      "duration": 2.6,
       "eyebrow": "Daily search",
       "text": "A search\nevery morning.",
-      "sub": "Claude looks for jobs and drops them in an inbox. I decide: apply or discard.",
-      "shots": {
-        "src": "vagas.jpg",
-        "url": "mappe-iota.vercel.app"
-      },
-      "caption": "Daily search: a search every morning. Claude looks for jobs and drops them in an inbox, and I decide to apply or discard."
+      "caption": "Daily search: a search every morning."
+    },
+    {
+      "type": "demo",
+      "url": "http://localhost:5175/#vagas",
+      "settle": 1500,
+      "caption": "Jobs: Claude searches every morning and drops new jobs in an inbox. I decide to apply or discard.",
+      "steps": [
+        {
+          "scroll": 200,
+          "seconds": 0.8
+        },
+        {
+          "note": ".c-job >> nth=0",
+          "text": "Found this morning, with a note on why it fits",
+          "side": "below",
+          "hold": 1.6
+        },
+        {
+          "clearNotes": true
+        },
+        {
+          "click": ".c-job >> nth=0 >> button:has-text(\"Quero candidatar\")",
+          "settle": 600,
+          "hold": 1.4
+        }
+      ]
     },
     {
       "type": "shot",

@@ -62,7 +62,7 @@ const WORK = [
     result: "Daily AI job search, 3 inbox checks a day, 16 automated tests",
     imageSrc: "/assets/portfolio/2026/11/mappe/painel.webp",
     imageAlt:
-      "Clip from the Mappe case film, with demo data: the dashboard, then the detail sheet of one application",
+      "Clip from the Mappe case film, with demo data: a cursor snoozes a late follow-up and filters the list by status",
     video: {
       sources: [{ src: "/media/mappe-short.mp4", type: "video/mp4" }],
       poster: "/media/mappe-short-poster.jpg",
